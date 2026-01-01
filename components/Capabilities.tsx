@@ -56,14 +56,15 @@ const Capabilities: React.FC = () => {
 
           {/* Header Section - Now Left Aligned & Standardized */}
           <div className="mb-20 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-6">
-              <Puzzle size={14} className="text-indigo-400" />
-              <span className="text-xs font-bold tracking-widest text-indigo-400 uppercase">{t('capabilities.badge')}</span>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-2.5 h-2.5 bg-orange-500 rounded-sm"></div>
+              <span className="text-xs font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">{t('capabilities.badge')}</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-normal">
+            <div className="w-full h-px bg-slate-200 dark:bg-white/10 mb-8"></div>
+            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 leading-normal font-serif">
               <Trans i18nKey="capabilities.title" components={{ br: <br />, span: <span className="text-slate-600" /> }} />
             </h2>
-            <p className="text-lg text-slate-400 leading-relaxed">
+            <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
               {t('capabilities.subtitle')}
             </p>
           </div>

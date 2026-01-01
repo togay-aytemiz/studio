@@ -109,30 +109,30 @@
     "services": {
         "badge": "Hizmetlerimiz",
         "title": "Neler Yapıyoruz?",
-        "subtitle": "Web ve mobil uygulama geliştirme. Fikirden lansmana, tam kapsamlı yazılım hizmeti.",
+        "subtitle": "Fikirden yayına kadar tüm süreci uçtan uca yönetiyoruz. Ürünü sadece geliştiriyor değil, birlikte şekillendiriyoruz.",
         "items": {
             "strategy": {
                 "title": "Ürün Stratejisi",
-                "description": "Kod yazmadan önce doğru ürünü ve yol haritasını belirliyoruz."
+                "description": "Doğru problemi tanımlar, hedefleri netleştirir ve yol haritasını birlikte oluşturuyoruz."
             },
             "webDev": {
-                "title": "Web Uygulaması",
-                "description": "Next.js ve React ile yüksek performanslı, ölçeklenebilir web uygulamaları."
+                "title": "Web Uygulamaları",
+                "description": "Ölçeklenebilir, güvenli ve performanslı web çözümleri geliştiriyoruz."
             },
             "mobileDev": {
-                "title": "Mobil Uygulama",
-                "description": "React Native ile iOS ve Android için native performansta uygulamalar."
+                "title": "Mobil Uygulamalar",
+                "description": "iOS ve Android için kullanıcı odaklı, modern uygulamalar üretiyoruz."
             },
             "mvp": {
                 "title": "MVP Geliştirme",
-                "description": "Hızlı pazara giriş için yalın ve çevik yazılım geliştirme."
+                "description": "Fikrinizi hızlıca test edebilmeniz için yalın ve ölçülebilir çözümler sunuyoruz."
             }
         }
     },
     "capabilities": {
         "badge": "Uzmanlık Alanlarımız",
-        "title": "Deneyimli Olduğumuz Konular.",
-        "subtitle": "Bu alanlarda güçlü bir teknik altyapıya sahibiz. Ödeme, bildirim, harita gibi yaygın entegrasyonlarda derin deneyimimiz var.",
+        "title": "Deneyimli Olduğumuz Alanlar",
+        "subtitle": "Farklı sektörlerde edindiğimiz deneyimle, karmaşık problemleri yalın çözümlere dönüştürüyoruz.",
         "groups": {
             "fintech": {
                 "title": "Ödeme & Finans",
@@ -179,23 +179,23 @@
     "process": {
         "badge": "Çalışma Sürecimiz",
         "title": "Nasıl Çalışıyoruz?",
-        "subtitle": "Şeffaf ve hızlı bir geliştirme süreci. Her adımda sizinle birlikte.",
+        "subtitle": "Şeffaf, planlı ve sonuç odaklı bir süreçle ilerliyoruz.",
         "steps": {
             "1": {
                 "title": "Keşif",
-                "description": "İhtiyaçlarınızı ve hedeflerinizi anlıyoruz."
+                "description": "İhtiyacı, hedefleri ve problemi netleştiriyoruz."
             },
             "2": {
                 "title": "Tasarım",
-                "description": "Kullanıcı deneyimi ve arayüz tasarımı yapıyoruz."
+                "description": "Kullanıcı deneyimini merkeze alan çözümler üretiyoruz."
             },
             "3": {
                 "title": "Geliştirme",
-                "description": "Modern teknolojilerle yazılım geliştiriyoruz."
+                "description": "Modern teknolojilerle ölçeklenebilir ürünler inşa ediyoruz."
             },
             "4": {
-                "title": "Yayın",
-                "description": "Uygulamanızı canlıya alıyor ve destekliyoruz."
+                "title": "Yayın & Destek",
+                "description": "Yayına alıyor, birlikte geliştiriyoruz."
             }
         }
     },
@@ -228,10 +228,10 @@
     "founder": {
         "badge": "Kurucudan",
         "quote": "Kod yazmak kolay. <br/> <span>Doğru ürünü yapmak zor.</span>",
-        "p1": "İyi kod yetmez, doğru ürün lazım. Strateji ve mühendislik birlikte gitmeli.",
-        "p2": "Sadece sipariş almıyoruz. Projeniz başarılı olana kadar yanınızdayız.",
+        "p1": "İyi bir ürün yalnızca koddan ibaret değildir. Doğru problemi anlamak, doğru çözümü tasarlamak ve sürdürülebilir şekilde hayata geçirmek gerekir.",
+        "p2": "Biz, projelere sadece geliştirici olarak değil; ürün ortağı olarak yaklaşıyoruz. Hedefimiz, birlikte değer üreten işler ortaya koymak.",
         "name": "Alex Voser",
-        "role": "Kurucu"
+        "role": "Kurucu & Ürün Lideri"
     },
     "team": {
         "studio": {

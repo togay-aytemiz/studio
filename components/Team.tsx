@@ -114,12 +114,13 @@ const Team: React.FC = () => {
 
                   {/* Left: Text Content - Studio & Expertise Focused */}
                   <div className="lg:w-1/2">
-                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 mb-6 backdrop-blur-md">
-                        <Users size={14} className="text-indigo-500 dark:text-indigo-400" />
-                        <span className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">{t('team.studio.badge')}</span>
+                     <div className="flex items-center gap-3 mb-6">
+                        <div className="w-2.5 h-2.5 bg-orange-500 rounded-sm"></div>
+                        <span className="text-xs font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">{t('team.studio.badge')}</span>
                      </div>
+                     <div className="w-full h-px bg-slate-200 dark:bg-white/10 mb-8"></div>
 
-                     <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 leading-normal">
+                     <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 leading-normal font-serif">
                         <Trans i18nKey="team.studio.title" components={{ br: <br />, span: <span className="text-indigo-600 dark:text-indigo-400" /> }} />
                      </h2>
 

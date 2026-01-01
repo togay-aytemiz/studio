@@ -109,11 +109,12 @@ const AIValidator: React.FC = () => {
       <div className="container mx-auto px-6 relative z-10">
         <ScrollReveal width="100%" className="max-w-3xl mx-auto">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 mb-6">
-              <BrainCircuit size={14} className="text-indigo-600 dark:text-indigo-400" />
-              <span className="text-xs font-bold tracking-widest text-indigo-600 dark:text-indigo-300 uppercase">{t('aiValidator.badge')}</span>
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="w-2.5 h-2.5 bg-orange-500 rounded-sm"></div>
+              <span className="text-xs font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">{t('aiValidator.badge')}</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">
+            <div className="w-full h-px bg-slate-200 dark:bg-white/10 mb-8"></div>
+            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 font-serif">
               <Trans i18nKey="aiValidator.title" components={{ br: <br />, span: <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 dark:from-indigo-400 to-purple-500 dark:to-purple-400" /> }} />
             </h2>
             <p className="text-slate-600 dark:text-slate-400 text-lg">
