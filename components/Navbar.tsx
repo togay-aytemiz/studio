@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { NAV_LINKS } from '../constants';
 import Button from './Button';
+import LanguageSwitcher from './LanguageSwitcher';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -71,10 +74,9 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled && !mobileMenuOpen ? 'bg-slate-950/80 backdrop-blur-md border-b border-white/5' : 'bg-transparent'
-      }`}
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled && !mobileMenuOpen ? 'bg-slate-950/80 backdrop-blur-md border-b border-white/5' : 'bg-transparent'
+        }`}
     >
       <div className="container mx-auto px-6 h-20 flex items-center justify-between relative z-50">
         {/* Logo */}
@@ -88,26 +90,27 @@ const Navbar: React.FC = () => {
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map((link) => (
-            <a 
-              key={link.label} 
-              href={link.href} 
+            <a
+              key={link.label}
+              href={link.href}
               onClick={(e) => handleNavClick(e, link.href)}
               className="text-sm font-medium text-slate-300 hover:text-white transition-colors"
             >
-              {link.label}
+              {t(`nav.${link.label.toLowerCase()}`)}
             </a>
           ))}
         </div>
 
         {/* Desktop CTA */}
-        <div className="hidden md:block">
+        <div className="hidden md:flex items-center gap-4">
+          <LanguageSwitcher />
           <Button variant="primary" size="sm" onClick={(e) => handleNavClick(e, '#contact')}>
-            Start a project
+            {t('nav.startProject')}
           </Button>
         </div>
 
         {/* Mobile Menu Toggle Button */}
-        <button 
+        <button
           className="md:hidden text-white p-2 z-50 relative focus:outline-none"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
@@ -127,36 +130,40 @@ const Navbar: React.FC = () => {
           >
             {/* Background decoration */}
             <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-indigo-600/20 rounded-full blur-[100px] pointer-events-none"></div>
-            
+
             <div className="flex flex-col gap-8 relative z-10">
               {NAV_LINKS.map((link) => (
-                <motion.a 
-                  key={link.label} 
-                  href={link.href} 
+                <motion.a
+                  key={link.label}
+                  href={link.href}
                   variants={linkVariants}
                   className="text-4xl font-bold text-white hover:text-indigo-400 transition-colors flex items-center gap-4 group"
                   onClick={(e) => handleNavClick(e, link.href)}
                 >
-                  {link.label}
+                  {t(`nav.${link.label.toLowerCase()}`)}
                   <ArrowRight className="opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 text-indigo-500" size={32} />
                 </motion.a>
               ))}
-              
-              <motion.div variants={linkVariants} className="pt-8">
-                <Button 
-                  variant="primary" 
-                  size="lg" 
+
+              <motion.div variants={linkVariants} className="pt-8 flex flex-col gap-6">
+                <Button
+                  variant="primary"
+                  size="lg"
                   className="w-full justify-between group"
                   onClick={(e) => handleNavClick(e, '#contact')}
                 >
-                  Start a project
+                  {t('nav.startProject')}
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </Button>
+
+                <div className="flex justify-center">
+                  <LanguageSwitcher />
+                </div>
               </motion.div>
             </div>
 
             <motion.div variants={linkVariants} className="absolute bottom-10 left-8 right-8 border-t border-white/10 pt-6">
-                <p className="text-slate-500 text-sm font-medium">hello@nexus.studio</p>
+              <p className="text-slate-500 text-sm font-medium">hello@nexus.studio</p>
             </motion.div>
           </motion.div>
         )}

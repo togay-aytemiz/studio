@@ -1,0 +1,297 @@
+{
+    "welcome": "Hoşgeldiniz",
+    "language": "Dil",
+    "nav": {
+        "expertise": "Uzmanlık",
+        "process": "Süreç",
+        "work": "Çalışmalar",
+        "team": "Ekip",
+        "startProject": "Proje Başlat"
+    },
+    "hero": {
+        "tagline": "Ürün Odaklı Yazılım Stüdyosu",
+        "title": "Fikirlerinizi <br /> ölçeklenebilir dijital ürünlere dönüştürüyoruz.",
+        "subtitle": "Sadece bir yazılım şirketi değiliz. Ölçeklenebilir, yüksek performanslı ve yapay zeka destekli web ve mobil uygulamalar inşa etmek için teknik ortağınızız.",
+        "startProject": "Proje Başlat",
+        "viewWork": "Çalışmalarımızı Gör",
+        "stats": {
+            "lighthouse": "Lighthouse Skoru",
+            "seo": "SEO Uyumlu",
+            "quality": "Kod Kalitesi"
+        },
+        "features": {
+            "smartContext": "Akıllı Bağlam",
+            "dataGrounding": "Veri Temellendirme",
+            "llmIntegration": "LLM Entegrasyonu",
+            "aiMemory": "Yapay Zeka Belleği",
+            "semanticSearch": "Semantik Arama",
+            "enterpriseAi": "Kurumsal YZ",
+            "securePrivate": "Güvenli & Özel",
+            "strategy": "Strateji",
+            "productFirst": "Önce Ürün",
+            "uiUx": "UI / UX",
+            "pixelPerfect": "Kusursuz Tasarım",
+            "promptEng": "Prompt Müh.",
+            "fineTuning": "İnce Ayar",
+            "scalable": "Ölçeklenebilir",
+            "builtToGrow": "Büyümeye Hazır",
+            "smartAgents": "Akıllı Ajanlar",
+            "automation": "7/24 Otomasyon",
+            "global": "Küresel",
+            "edgeCdn": "Edge CDN"
+        },
+        "marquee": {
+            "highPerformance": "Yüksek Performans",
+            "genAi": "Üretken YZ",
+            "aiMemory": "YZ Belleği",
+            "mobileFirst": "Önce Mobil",
+            "secure": "Güvenli",
+            "globalCdn": "Küresel CDN",
+            "autoAgents": "Otonom Ajanlar",
+            "cleanCode": "Temiz Kod",
+            "naturalLang": "Doğal Dil",
+            "neuralSearch": "Nöral Arama"
+        }
+    },
+    "footer": {
+        "explore": "Keşfet",
+        "expertise": "Uzmanlık",
+        "studio": "Stüdyo",
+        "description": "Tutkulu girişimler ve kurumsal yenilikçiler için ölçeklenebilir dijital ürünler tasarlıyoruz.",
+        "rights": "Tüm hakları saklıdır.",
+        "privacy": "Gizlilik Politikası",
+        "terms": "Hizmet Şartları",
+        "address": "123 İnovasyon Cad.<br/>İstanbul, TR",
+        "services": {
+            "strategy": "Ürün Stratejisi",
+            "uiUx": "UI/UX Tasarım",
+            "webDev": "Web Geliştirme",
+            "mobileApps": "Mobil Uygulamalar",
+            "selectedWork": "Seçilmiş İşler",
+            "ourProcess": "Sürecimiz",
+            "contact": "İletişim"
+        }
+    },
+    "aiValidator": {
+        "badge": "Nexus YZ Doğrulayıcı",
+        "title": "Fikrinizi teknik olarak<br />doğrulayın.",
+        "subtitle": "Aklınızdaki proje teknolojik olarak ne kadar mümkün? Hangi altyapıyı kullanmalı? Nexus AI saniyeler içinde analiz etsin.",
+        "placeholder": "Örn: Yapay zeka destekli bir hukuk asistanı uygulaması...",
+        "analyze": "Analiz Et",
+        "analyzing": "Analiz Ediliyor...",
+        "report": {
+            "title": "Teknik Fizibilite Raporu",
+            "mvp": "MVP",
+            "complexity": "Karmaşıklık Dağılımı",
+            "technicalLoad": "Teknik Yük",
+            "risk": "Risk Analizi",
+            "monetization": "Gelir Modeli Önerisi",
+            "insight": "Nexus Stratejik Tavsiye"
+        },
+        "complexity": {
+            "frontend": "Frontend & UX",
+            "backend": "Backend & Mantık",
+            "ai": "YZ & Veri"
+        },
+        "stack": {
+            "title": "Önerilen Stack",
+            "frontend": "Frontend",
+            "backend": "Backend",
+            "infrastructure": "Altyapı"
+        },
+        "reset": "Farklı bir analiz yap",
+        "consult": "Ücretsiz Danışmanlık Al"
+    },
+    "services": {
+        "badge": "Uzmanlık",
+        "title": "Kapsamlı ürün <br/> geliştirme.",
+        "subtitle": "Sadece kod yazmıyoruz. İlk stratejiden lansman sonrası ölçeklendirmeye kadar tam döngü ürün yeteneği sunuyoruz.",
+        "items": {
+            "strategy": {
+                "title": "Ürün Stratejisi",
+                "description": "Kod yazmadan önce doğru ürünü, özellikleri ve yol haritasını tanımlamanıza yardımcı oluyoruz."
+            },
+            "webDev": {
+                "title": "Web Geliştirme",
+                "description": "Next.js, React ve Node.js ile oluşturulmuş ölçeklenebilir, yüksek performanslı web uygulamaları."
+            },
+            "mobileDev": {
+                "title": "Mobil Geliştirme",
+                "description": "React Native ve modern araçlarla hazırlanmış native hissi veren iOS ve Android uygulamaları."
+            },
+            "mvp": {
+                "title": "MVP & Lansman",
+                "description": "Girişimler için hızlı doğrulama, yalın geliştirme ve sorunsuz ürün lansmanları."
+            }
+        }
+    },
+    "capabilities": {
+        "badge": "Teknik Uzmanlık",
+        "title": "Sıfırdan başlamayın.",
+        "subtitle": "Hız önemlidir. Derin alan uzmanlığımızı ve kanıtlanmış mimari desenleri uygulayarak geliştirmeyi hızlandırıyoruz. Tekerleği yeniden icat etmeden sağlam sistemler kuruyoruz.",
+        "groups": {
+            "fintech": {
+                "title": "Ticaret & Finans",
+                "items": [
+                    "Ödeme Geçitleri (Stripe, Iyzico)",
+                    "E-Fatura / E-Arşiv Entegrasyonu",
+                    "Abonelik & Tekrarlayan Faturalandırma",
+                    "Dijital Cüzdan Sistemleri",
+                    "Pazaryeri Ödeme Dağıtımı"
+                ]
+            },
+            "saas": {
+                "title": "SaaS Çekirdeği",
+                "items": [
+                    "Çoklu Kiracı (Multi-tenant) Mimarisi",
+                    "Gelişmiş B2B Panelleri",
+                    "Rol Tabanlı Erişim Kontrolü (RBAC)",
+                    "Denetim Günlüğü & Etkinlik Akışları",
+                    "Özel CMS Geliştirme"
+                ]
+            },
+            "ops": {
+                "title": "Operasyon & Mantık",
+                "items": [
+                    "Karmaşık Rezervasyon/Randevu Sistemleri",
+                    "Gerçek Zamanlı Sipariş Takibi",
+                    "Konum & Harita Servisleri",
+                    "Bildirim Motorları (Push/Email/SMS)",
+                    "QR & Barkod Tarama Akışları"
+                ]
+            },
+            "ai": {
+                "title": "Zeka & Veri",
+                "items": [
+                    "RAG (Geri Getirme Destekli Üretim)",
+                    "Vektör Arama Entegrasyonu",
+                    "LLM Ajan İş Akışları",
+                    "Gerçek Zamanlı Analitik Boru Hatları",
+                    "Otomatik Belge İşleme"
+                ]
+            }
+        }
+    },
+    "process": {
+        "badge": "Metodoloji",
+        "title": "Konseptten koda.",
+        "subtitle": "Sadece yazılım üretmiyoruz; hız ve ölçeklenebilirlik için tasarlanmış kanıtlanmış bir süreç kullanarak dijital ürünler tasarlıyoruz.",
+        "steps": {
+            "1": {
+                "title": "Keşif",
+                "description": "Sorunu, pazarı ve temel iş hedeflerini anlamak için derinlemesine iniyoruz."
+            },
+            "2": {
+                "title": "Tasarım",
+                "description": "Kullanıcı deneyimini mimari ediyor ve çarpıcı bir görsel arayüz hazırlıyoruz."
+            },
+            "3": {
+                "title": "Geliştirme",
+                "description": "Modern çerçeveler ve en iyi uygulamaları kullanarak temiz, ölçeklenebilir kod yazıyoruz."
+            },
+            "4": {
+                "title": "Lansman & İyileştirme",
+                "description": "Canlıya alıyor ve gerçek kullanıcı verilerine dayanarak geliştiriyoruz."
+            }
+        }
+    },
+    "work": {
+        "badge": "Seçilmiş İşler",
+        "title": "İddialı şirketler için <br/> gerçek sonuçlar.",
+        "subtitle": "Fark yaratan ürünler inşa ediyoruz. İşte stüdyomuzdan birkaç yeni başarı hikayesi.",
+        "impact": "Etki",
+        "projects": {
+            "fintech-app": {
+                "category": "Fintech Mobil Uygulama",
+                "title": "Nova Finance",
+                "solution": "Platformlar arası verimlilik için React Native kullanarak mobil mimariyi yeniden inşa ettik ve AWS üzerinde Olay Güdümlü sunucusuz backend uyguladık. Biyometrik güvenlik ve gerçek zamanlı piyasa verileri için WebSocket entegre ettik.",
+                "outcome": "İlk 3 ayda 2M$+ işlem gerçekleştirildi."
+            },
+            "saas-dashboard": {
+                "category": "SaaS Platformu",
+                "title": "Orbital Analytics",
+                "solution": "GPU hızlandırmalı render için WebGL kullanarak yüksek performanslı bir frontend tasarladık. Backend, karmaşık toplamaları önceden işlemek için Python ve Redis önbellekleme katmanlarıyla optimize edildi.",
+                "outcome": "Kurumsal müşteriler için veri raporlama süresi %85 azaldı."
+            },
+            "health-portal": {
+                "category": "Sağlık Web Uygulaması",
+                "title": "Vital Sync",
+                "solution": "Eski veritabanlarını taşımadan veri kaynaklarını birleştirmek için federe bir GraphQL API tasarladık. Frontend, SEO ve hız için Next.js ile oluşturuldu ve uçtan uca şifreli bir güvenlik katmanıyla sarıldı.",
+                "outcome": "50k+ hastaya gerçek zamanlı güncellemelerle güvenli hizmet."
+            }
+        }
+    },
+    "founder": {
+        "badge": "Kurucudan Not",
+        "quote": "Yazılım ajansları genellikle bir şeyi unutur: <br/> <span class=\"text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-purple-300 to-indigo-300\">Kod sadece bir amaca giden araçtır.</span>",
+        "p1": "Nexus'u kurdum çünkü kurucuların harika kodlara sahip olup başarısız ürünler elde etmesinden bıkmıştım. Mühendislik ve ürün stratejisi arasındaki kopukluk, çoğu girişimin öldüğü yerdir.",
+        "p2": "Sadece özellik listenizi alıp kaybolmuyoruz. Teknik ortağınız olarak hareket ediyor, varsayımları sorguluyor ve vizyonunuz sadece canlı değil, gelişen bir ürün olana kadar kullanıcı deneyimine odaklanıyoruz.",
+        "name": "Alex Voser",
+        "role": "Kurucu & CEO"
+    },
+    "team": {
+        "studio": {
+            "badge": "Stüdyo",
+            "title": "Fabrika değil. <br/> <span class=\"text-indigo-400\">Özel bir ürün stüdyosu.</span>",
+            "p1": "Amaca yönelik bir dijital ürün stüdyosuyuz. Küçük, otonom uzman ekiplerin her zaman büyük, parçalanmış ajanslardan daha iyi performans gösterdiğine inanıyoruz.",
+            "p2": "Vizyonunuza tam olarak odaklanmak için aktif projelerimizi kasıtlı olarak sınırlıyoruz. Butik tasarım zanaatini elit mühendislikle birleştiren özel bir ortaka sahip olursunuz.",
+            "checklist": {
+                "inHouse": "%100 Kurum içi kıdemli yetenek",
+                "aiExpertise": "Yerel Üretken YZ & LLM Uzmanlığı",
+                "partnership": "Özel ortaklık modeli"
+            }
+        },
+        "squad": {
+            "badge": "Proje Ekibiniz",
+            "footer": "Mühendislik, tasarım ve makine zekasının birleşimi."
+        },
+        "disciplines": {
+            "eng": {
+                "title": "Mühendislik",
+                "role": "Full-Stack Mimarlar",
+                "desc": "React, Node.js, YZ Ajanları"
+            },
+            "des": {
+                "title": "Tasarım",
+                "role": "Ürün Tasarımcıları",
+                "desc": "Sistemler, UI/UX, Hareket"
+            },
+            "prod": {
+                "title": "Strateji",
+                "role": "Teknik Liderler",
+                "desc": "YZ Yol Haritası, Pazar Uyumu"
+            }
+        }
+    },
+    "contact": {
+        "title": "Göndermeye hazır mısınız?",
+        "subtitle": "Vizyonunuzu bize anlatın. Nasıl inşa edebileceğimizi söyleyelim.",
+        "ai": {
+            "title": "Nereden başlayacağınızdan emin değil misiniz?",
+            "subtitle": "Önce YZ ile fikir fizibilitenizi test edin.",
+            "button": "Doğrulayıcıyı Test Et",
+            "autoBrief": "YZ Oto-Özet",
+            "suggestion": "YZ Önerisi"
+        },
+        "form": {
+            "name": "İsim",
+            "email": "İş E-postası",
+            "project": "Proje Detayları",
+            "namePlaceholder": "Ad Soyad",
+            "emailPlaceholder": "isim@sirket.com",
+            "projectPlaceholder": "Şöyle bir mobil uygulama yapmak istiyoruz...",
+            "submit": "Başvuruyu Gönder"
+        },
+        "sidebar": {
+            "directLine": "Doğrudan Hat",
+            "newBusiness": "Yeni İş",
+            "phone": "Telefon",
+            "responseTime": "Yanıt Süresi",
+            "responseDesc": "Zamanınıza değer veriyoruz. <span class=\"text-white font-medium\">24 saat</span> içinde detaylı bir yanıt bekleyin."
+        },
+        "alerts": {
+            "shortDescription": "Lütfen önce fikrinizin kısa bir açıklamasını girin.",
+            "success": "Teşekkürler! Kısa süre içinde iletişime geçeceğiz."
+        }
+    }
+}
