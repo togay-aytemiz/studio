@@ -103,7 +103,7 @@ const Team: React.FC = () => {
    ], [t]);
 
    return (
-      <section id="team" className="py-20 md:py-40 bg-white dark:bg-[#030712] relative overflow-hidden">
+      <section id="team" className="py-12 md:py-40 bg-white dark:bg-[#030712] relative overflow-hidden">
 
          {/* New Background Animation */}
          <UserCentricOrbit />
@@ -115,7 +115,7 @@ const Team: React.FC = () => {
                   {/* Left: Text Content - Studio & Expertise Focused */}
                   <div className="lg:w-1/2">
                      <div className="flex items-center gap-3 mb-6">
-                        <div className="w-2.5 h-2.5 bg-orange-500 rounded-sm"></div>
+                        <div className="w-2.5 h-2.5 bg-indigo-500 rounded-sm"></div>
                         <span className="text-xs font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">{t('team.studio.badge')}</span>
                      </div>
                      <div className="w-full h-px bg-slate-200 dark:bg-white/10 mb-8"></div>
@@ -124,11 +124,11 @@ const Team: React.FC = () => {
                         <Trans i18nKey="team.studio.title" components={{ br: <br />, span: <span className="text-indigo-600 dark:text-indigo-400" /> }} />
                      </h2>
 
-                     <p className="text-lg text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
+                     <p className="text-sm md:text-lg text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
                         {t('team.studio.p1')}
                      </p>
 
-                     <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+                     <p className="text-sm md:text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
                         {t('team.studio.p2')}
                      </p>
 

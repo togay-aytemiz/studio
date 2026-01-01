@@ -207,265 +207,134 @@ const Hero: React.FC = () => {
   return (
     <section className="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden min-h-screen flex flex-col justify-center">
 
-      {/* 1. Base Gradient Mesh */}
-      <motion.div
-        style={{ y: yBackground }}
-        className="absolute top-0 right-0 w-[800px] h-[800px] opacity-20 pointer-events-none z-0"
-      >
-        <div className="absolute inset-0 bg-gradient-to-bl from-indigo-500 via-purple-500 to-pink-500 rounded-full blur-[120px] mix-blend-screen animate-pulse duration-[10s]" />
-      </motion.div>
-
-      {/* 2. NEW: Orbital System Animation */}
-      <OrbitalSystem />
+      {/* Background Image with Gradient Fade - Intercom Style */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="/herobg.webp"
+          alt=""
+          className="w-full h-full object-cover object-center"
+        />
+        {/* Bottom gradient fade for smooth transition */}
+        <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-[#030712] via-transparent to-transparent"></div>
+        {/* Additional subtle top fade */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/30 dark:from-[#030712]/50 via-transparent to-transparent"></div>
+      </div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-
-          {/* Left: Content (Centered on Mobile, Left on Desktop) */}
-          <motion.div
-            style={{ opacity }}
-            className="max-w-3xl mx-auto lg:mx-0 text-center lg:text-left flex flex-col items-center lg:items-start relative z-10"
+        {/* Centered Content - Intercom Style */}
+        <motion.div
+          style={{ opacity }}
+          className="max-w-5xl mx-auto text-center flex flex-col items-center relative z-10"
+        >
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-5xl md:text-8xl font-normal tracking-tight text-white mb-8 leading-[1.15] font-serif"
           >
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-100 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 mb-8 backdrop-blur-sm shadow-[0_0_15px_rgba(99,102,241,0.1)] dark:shadow-[0_0_15px_rgba(99,102,241,0.2)]"
-            >
-              <Sparkles size={14} className="text-indigo-600 dark:text-indigo-400" />
-              <span className="text-xs font-semibold text-indigo-700 dark:text-indigo-100 uppercase tracking-wider">{t('hero.tagline')}</span>
-            </motion.div>
+            <Trans
+              i18nKey="hero.title"
+              components={{
+                br: <br />,
+                span: <span className="text-white" />
+              }}
+            />
+          </motion.h1>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-[1.2] font-serif"
-            >
-              <Trans
-                i18nKey="hero.title"
-                components={{
-                  br: <br />,
-                  span: <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-purple-300 to-indigo-300" />
-                }}
-              />
-            </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-base md:text-lg text-white/70 mb-12 leading-relaxed max-w-xl"
+          >
+            {t('hero.subtitle')}
+          </motion.p>
 
-            <motion.p
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-lg md:text-xl text-slate-400 mb-10 leading-relaxed max-w-2xl"
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="flex flex-row items-center justify-center gap-3"
+          >
+            <button
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-5 py-2.5 md:px-6 md:py-3 bg-white text-slate-900 text-sm md:text-base font-medium rounded-full hover:bg-white/90 transition-all shadow-lg"
             >
-              {t('hero.subtitle')}
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
+              {t('hero.startProject')}
+            </button>
+            <button
+              onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}
+              className="px-5 py-2.5 md:px-6 md:py-3 bg-transparent text-white text-sm md:text-base font-medium rounded-full border border-white/30 hover:bg-white/10 hover:border-white/50 transition-all"
             >
-              <Button
-                variant="primary"
-                size="lg"
-                className="w-full sm:w-auto"
-                icon={<ArrowRight size={18} />}
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                {t('hero.startProject')}
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="w-full sm:w-auto"
-                onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                {t('hero.viewWork')}
-              </Button>
-            </motion.div>
-
-            {/* Highlights */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.8 }}
-              className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mt-6"
-            >
-              <div className="flex items-center gap-2">
-                <CheckCircle2 size={16} className="text-emerald-500" />
-                <span className="text-sm text-slate-500 dark:text-slate-400">{t('hero.highlights.aiPowered')}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 size={16} className="text-emerald-500" />
-                <span className="text-sm text-slate-500 dark:text-slate-400">{t('hero.highlights.fastDelivery')}</span>
-              </div>
-            </motion.div>
+              {t('hero.viewWork')}
+            </button>
           </motion.div>
 
-          {/* Right: Fully Dynamic Bento Grid (Hidden on Mobile) */}
-          <div className="relative h-[500px] w-full hidden lg:block perspective-1000 z-10">
-            {/* Abstract Ring */}
-            <div className="absolute inset-0 border border-slate-800/50 rounded-full opacity-30 scale-125"></div>
-
-            {/* DYNAMIC SLOT 1: Metrics (Top Left) */}
-            <div className="absolute top-10 left-0 w-64 h-36 z-20">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={POOL_TOP_LEFT[topLeftIndex].label}
-                  variants={cardVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  className="absolute inset-0 bg-slate-900/40 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-2xl"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <div className={`p-2 rounded-lg ${POOL_TOP_LEFT[topLeftIndex].bg} ${POOL_TOP_LEFT[topLeftIndex].color}`}>
-                      <React.Fragment>
-                        {React.createElement(POOL_TOP_LEFT[topLeftIndex].icon, { size: 20, fill: "currentColor" })}
-                      </React.Fragment>
-                    </div>
-                    <span className="text-2xl font-bold text-white">
-                      {POOL_TOP_LEFT[topLeftIndex].value}
-                      <span className="text-slate-500 text-sm">{POOL_TOP_LEFT[topLeftIndex].max}</span>
-                    </span>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: "100%" }}
-                        transition={{ delay: 0.2, duration: 1 }}
-                        className={`h-full ${POOL_TOP_LEFT[topLeftIndex].barColor}`}
-                      />
-                    </div>
-                    <p className="text-xs text-slate-400 font-medium uppercase tracking-wide">
-                      {POOL_TOP_LEFT[topLeftIndex].label}
-                    </p>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
+          {/* Highlights */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.8 }}
+            className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mt-6"
+          >
+            <div className="flex items-center gap-2">
+              <CheckCircle2 size={16} className="text-emerald-500" />
+              <span className="text-sm text-slate-500 dark:text-slate-400">{t('hero.highlights.aiPowered')}</span>
             </div>
-
-            {/* DYNAMIC SLOT 2: Tech (Top Right) */}
-            <div className="absolute top-24 right-10 w-56 h-32 z-10">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={POOL_TOP_RIGHT[topRightIndex].label}
-                  variants={cardVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  className="absolute inset-0 bg-gradient-to-br from-slate-900/80 to-slate-900/60 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-2xl flex items-center gap-4"
-                >
-                  <div className={`p-2 rounded-lg ${POOL_TOP_RIGHT[topRightIndex].bg} ${POOL_TOP_RIGHT[topRightIndex].color}`}>
-                    <React.Fragment>
-                      {React.createElement(POOL_TOP_RIGHT[topRightIndex].icon, { size: 22 })}
-                    </React.Fragment>
-                  </div>
-                  <div className="flex flex-col justify-center">
-                    <span className="block text-white font-bold text-lg leading-tight">{POOL_TOP_RIGHT[topRightIndex].label}</span>
-                    {/* Only show subtext if it exists */}
-                    {POOL_TOP_RIGHT[topRightIndex].sub && (
-                      <span className="text-xs text-slate-400">{POOL_TOP_RIGHT[topRightIndex].sub}</span>
-                    )}
-                  </div>
-                </motion.div>
-              </AnimatePresence>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 size={16} className="text-emerald-500" />
+              <span className="text-sm text-slate-500 dark:text-slate-400">{t('hero.highlights.fastDelivery')}</span>
             </div>
+          </motion.div>
+        </motion.div>
+      </div>
 
-            {/* DYNAMIC SLOT 3: Process (Bottom Left) */}
-            <div className="absolute bottom-24 left-12 w-64 h-24 z-10">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={POOL_BOTTOM_LEFT[bottomLeftIndex].label}
-                  variants={cardVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  className="absolute inset-0 bg-slate-900/60 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl flex items-center gap-4"
-                >
-                  <div className={`p-2 rounded-lg ${POOL_BOTTOM_LEFT[bottomLeftIndex].bg} ${POOL_BOTTOM_LEFT[bottomLeftIndex].color}`}>
-                    <React.Fragment>
-                      {React.createElement(POOL_BOTTOM_LEFT[bottomLeftIndex].icon, { size: 20 })}
-                    </React.Fragment>
-                  </div>
-                  <div>
-                    <div className="text-white font-semibold text-sm">{POOL_BOTTOM_LEFT[bottomLeftIndex].label}</div>
-                    <div className="text-xs text-slate-500">{POOL_BOTTOM_LEFT[bottomLeftIndex].sub}</div>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-
-            {/* DYNAMIC SLOT 4: Growth (Bottom Right) */}
-            <div className="absolute bottom-10 right-0 w-60 h-24 z-20">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={POOL_BOTTOM_RIGHT[bottomRightIndex].label}
-                  variants={cardVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  className="absolute inset-0 bg-slate-900/40 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-2xl flex items-center gap-4"
-                  whileHover={{ x: -5 }}
-                >
-                  <div className={`p-3 rounded-full ${POOL_BOTTOM_RIGHT[bottomRightIndex].bg} ${POOL_BOTTOM_RIGHT[bottomRightIndex].color}`}>
-                    <React.Fragment>
-                      {React.createElement(POOL_BOTTOM_RIGHT[bottomRightIndex].icon, { size: 24 })}
-                    </React.Fragment>
-                  </div>
-                  <div>
-                    <div className="text-white font-bold text-lg">{POOL_BOTTOM_RIGHT[bottomRightIndex].label}</div>
-                    <div className="text-xs text-slate-500">{POOL_BOTTOM_RIGHT[bottomRightIndex].sub}</div>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
+      {/* MOBILE ONLY: Architect-style 2-Row Marquee */}
+      <div
+        className="mt-8 lg:hidden relative w-full overflow-hidden z-10 flex flex-col gap-2"
+        style={{
+          maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
+          WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)'
+        }}
+      >
+        {/* Row 1: Left to Right */}
+        <div className="flex overflow-hidden p-1">
+          <motion.div
+            className="flex shrink-0 gap-2"
+            animate={{ x: "-50%" }}
+            transition={{ duration: 40, ease: "linear", repeat: Infinity }}
+          >
+            {[...marqueeRow1, ...marqueeRow1, ...marqueeRow1, ...marqueeRow1].map((item, idx) => (
+              <div
+                key={`row1-${idx}`}
+                className="flex items-center gap-2 rounded-full py-2 px-4 border border-white/20 bg-transparent whitespace-nowrap"
+              >
+                <item.icon size={14} className="text-white/60" />
+                <span className="text-xs text-white/70">{item.label}</span>
+              </div>
+            ))}
+          </motion.div>
         </div>
 
-        {/* MOBILE ONLY: 2-Row Infinite Marquee Scroll */}
-        <div className="mt-16 lg:hidden relative w-screen -ml-6 overflow-hidden z-10 flex flex-col gap-3">
-          <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-white dark:from-slate-950 to-transparent z-10 pointer-events-none"></div>
-          <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-white dark:from-slate-950 to-transparent z-10 pointer-events-none"></div>
-
-          {/* Row 1: Right to Left */}
-          <div className="flex w-[200%]">
-            <motion.div
-              className="flex gap-3 pr-4"
-              animate={{ x: "-50%" }}
-              transition={{ duration: 25, ease: "linear", repeat: Infinity }}
-            >
-              {[...marqueeRow1, ...marqueeRow1, ...marqueeRow1, ...marqueeRow1].map((item, idx) => (
-                <div key={`row1-${idx}`} className="flex items-center gap-2 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-white/10 px-4 py-2.5 rounded-xl whitespace-nowrap backdrop-blur-sm shadow-sm dark:shadow-none">
-                  <item.icon size={16} className="text-indigo-400" />
-                  <span className="text-slate-300 text-sm font-medium">{item.label}</span>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-
-          {/* Row 2: Left to Right */}
-          <div className="flex w-[200%]">
-            <motion.div
-              className="flex gap-3 pr-4"
-              initial={{ x: "-50%" }}
-              animate={{ x: "0%" }}
-              transition={{ duration: 30, ease: "linear", repeat: Infinity }}
-            >
-              {[...marqueeRow2, ...marqueeRow2, ...marqueeRow2, ...marqueeRow2].map((item, idx) => (
-                <div key={`row2-${idx}`} className="flex items-center gap-2 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-white/10 px-4 py-2.5 rounded-xl whitespace-nowrap backdrop-blur-sm shadow-sm dark:shadow-none">
-                  <item.icon size={16} className="text-purple-400" />
-                  <span className="text-slate-300 text-sm font-medium">{item.label}</span>
-                </div>
-              ))}
-            </motion.div>
-          </div>
+        {/* Row 2: Right to Left (reverse) */}
+        <div className="flex overflow-hidden p-1">
+          <motion.div
+            className="flex shrink-0 gap-2"
+            initial={{ x: "-50%" }}
+            animate={{ x: "0%" }}
+            transition={{ duration: 45, ease: "linear", repeat: Infinity }}
+          >
+            {[...marqueeRow2, ...marqueeRow2, ...marqueeRow2, ...marqueeRow2].map((item, idx) => (
+              <div
+                key={`row2-${idx}`}
+                className="flex items-center gap-2 rounded-full py-2 px-4 border border-white/20 bg-transparent whitespace-nowrap"
+              >
+                <item.icon size={14} className="text-white/60" />
+                <span className="text-xs text-white/70">{item.label}</span>
+              </div>
+            ))}
+          </motion.div>
         </div>
-
-
-
       </div>
 
       {/* Animated Scroll Down Arrow - Fixed to bottom of hero section */}

@@ -20,7 +20,7 @@ const Process: React.FC = () => {
   };
 
   return (
-    <section id="process" className="py-20 md:py-40 bg-white dark:bg-[#040814] relative overflow-hidden">
+    <section id="process" className="py-12 md:py-40 bg-white dark:bg-[#040814] relative overflow-hidden">
       {/* CSS Overrides to defeat aggressive global styles */}
 
 
@@ -30,14 +30,14 @@ const Process: React.FC = () => {
       <div className="container mx-auto px-6 relative z-10">
         <ScrollReveal width="100%" className="max-w-3xl mb-12 md:mb-24">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-2.5 h-2.5 bg-orange-500 rounded-sm"></div>
+            <div className="w-2.5 h-2.5 bg-indigo-500 rounded-sm"></div>
             <span className="text-xs font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">{t('process.badge')}</span>
           </div>
           <div className="w-full h-px bg-slate-200 dark:bg-white/10 mb-8"></div>
           <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight leading-normal font-serif">
             {t('process.title')}
           </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+          <p className="text-sm md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
             {t('process.subtitle')}
           </p>
         </ScrollReveal>

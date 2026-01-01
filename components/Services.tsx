@@ -24,19 +24,19 @@ const Services: React.FC = () => {
   };
 
   return (
-    <section id="services" className="py-20 md:py-40 bg-slate-950 relative">
+    <section id="services" className="py-12 md:py-40 bg-slate-950 relative">
       <div className="container mx-auto px-6">
         <ScrollReveal>
           <div className="mb-20 max-w-2xl">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-2.5 h-2.5 bg-orange-500 rounded-sm"></div>
+              <div className="w-2.5 h-2.5 bg-indigo-500 rounded-sm"></div>
               <span className="text-xs font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">{t('services.badge')}</span>
             </div>
             <div className="w-full h-px bg-slate-200 dark:bg-white/10 mb-8"></div>
             <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 font-serif" style={{ lineHeight: 1.3 }}>
               <Trans i18nKey="services.title" components={{ br: <br /> }} />
             </h2>
-            <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p className="text-sm md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
               {t('services.subtitle')}
             </p>
           </div>

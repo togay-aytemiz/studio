@@ -37,55 +37,52 @@ const TechStack: React.FC = () => {
                 <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-slate-50 dark:from-[#020617] to-transparent"></div>
                 <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-slate-50 dark:from-[#020617] to-transparent"></div>
 
-                {/* Marquee Container */}
-                <motion.div
-                    className="flex gap-12 items-center flex-nowrap"
-                    animate={{
-                        x: [0, -2000], // Increased scroll distance
-                    }}
-                    transition={{
-                        x: {
-                            repeat: Infinity,
-                            repeatType: "loop",
-                            duration: 40, // Slower
+                {/* Marquee Container - Seamless infinite loop */}
+                <div className="flex overflow-hidden">
+                    <motion.div
+                        className="flex shrink-0 gap-6 md:gap-10 items-center"
+                        animate={{ x: "-50%" }}
+                        transition={{
+                            duration: 100,
                             ease: "linear",
-                        },
-                    }}
-                >
-                    {/* Quadruple the list for smooth loop */}
-                    {[...TECHNOLOGIES, ...TECHNOLOGIES, ...TECHNOLOGIES, ...TECHNOLOGIES].map((tech, index) => (
-                        <div
-                            key={`${tech.name}-${index}`}
-                            className="flex items-center justify-center min-w-[140px] grayscale hover:grayscale-0 transition-all duration-300 opacity-80 hover:opacity-100 cursor-default group"
-                            title={tech.name}
-                        >
-                            {tech.darkIcon ? (
-                                <>
+                            repeat: Infinity,
+                        }}
+                    >
+                        {/* Double the list for seamless loop */}
+                        {[...TECHNOLOGIES, ...TECHNOLOGIES, ...TECHNOLOGIES, ...TECHNOLOGIES].map((tech, index) => (
+                            <div
+                                key={`${tech.name}-${index}`}
+                                className="flex items-center justify-center min-w-[100px] md:min-w-[140px] grayscale hover:grayscale-0 transition-all duration-300 opacity-80 hover:opacity-100 cursor-default group"
+                                title={tech.name}
+                            >
+                                {tech.darkIcon ? (
+                                    <>
+                                        <img
+                                            src={tech.icon}
+                                            alt={tech.name}
+                                            className="h-6 w-6 md:h-10 md:w-10 object-contain dark:hidden group-hover:scale-110 transition-transform duration-300"
+                                        />
+                                        <img
+                                            src={tech.darkIcon}
+                                            alt={tech.name}
+                                            className="h-6 w-6 md:h-10 md:w-10 object-contain hidden dark:block group-hover:scale-110 transition-transform duration-300"
+                                        />
+                                    </>
+                                ) : (
                                     <img
                                         src={tech.icon}
                                         alt={tech.name}
-                                        className="h-10 w-10 object-contain dark:hidden group-hover:scale-110 transition-transform duration-300"
+                                        className={`h-6 w-6 md:h-10 md:w-10 object-contain group-hover:scale-110 transition-transform duration-300 ${tech.invertDark ? 'dark:invert dark:brightness-200' : ''}`}
                                     />
-                                    <img
-                                        src={tech.darkIcon}
-                                        alt={tech.name}
-                                        className="h-10 w-10 object-contain hidden dark:block group-hover:scale-110 transition-transform duration-300"
-                                    />
-                                </>
-                            ) : (
-                                <img
-                                    src={tech.icon}
-                                    alt={tech.name}
-                                    className={`h-10 w-10 object-contain group-hover:scale-110 transition-transform duration-300 ${tech.invertDark ? 'dark:invert dark:brightness-200' : ''}`}
-                                />
-                            )}
-                            {/* Always visible text, colored on hover */}
-                            <span className="ml-3 text-sm font-semibold text-slate-700 dark:text-slate-300 block opacity-100 group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors duration-300">
-                                {tech.name}
-                            </span>
-                        </div>
-                    ))}
-                </motion.div>
+                                )}
+                                {/* Always visible text, colored on hover */}
+                                <span className="ml-2 md:ml-3 text-xs md:text-sm font-semibold text-slate-700 dark:text-slate-300 block opacity-100 group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors duration-300">
+                                    {tech.name}
+                                </span>
+                            </div>
+                        ))}
+                    </motion.div>
+                </div>
             </div>
         </section>
     );

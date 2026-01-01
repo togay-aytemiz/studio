@@ -37,7 +37,7 @@ const Contact: React.FC = () => {
   const labelClasses = "block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-2 ml-1";
 
   return (
-    <section id="contact" className="py-20 md:py-32 bg-[#020617] relative overflow-hidden min-h-screen flex items-center justify-center">
+    <section id="contact" className="py-12 md:py-32 bg-[#020617] relative overflow-hidden min-h-screen flex items-center justify-center">
 
       {/* Abstract Map Background */}
       <div className="absolute inset-0 opacity-20 pointer-events-none select-none">
@@ -67,10 +67,10 @@ const Contact: React.FC = () => {
           <div className="max-w-4xl mx-auto">
             {/* Header Area */}
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">
+              <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight font-serif">
                 {t('contact.title')}
               </h2>
-              <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+              <p className="text-base md:text-xl text-slate-400 max-w-2xl mx-auto">
                 {t('contact.subtitle')}
               </p>
             </div>

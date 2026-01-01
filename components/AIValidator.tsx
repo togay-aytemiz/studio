@@ -103,21 +103,21 @@ const AIValidator: React.FC = () => {
   };
 
   return (
-    <section className="py-36 md:py-40 bg-slate-50 dark:bg-[#030712] relative border-t border-slate-200 dark:border-white/5">
+    <section className="py-12 md:py-40 bg-slate-50 dark:bg-[#030712] relative border-t border-slate-200 dark:border-white/5">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[500px] bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
 
       <div className="container mx-auto px-6 relative z-10">
         <ScrollReveal width="100%" className="max-w-3xl mx-auto">
           <div className="text-center mb-16">
             <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="w-2.5 h-2.5 bg-orange-500 rounded-sm"></div>
+              <div className="w-2.5 h-2.5 bg-indigo-500 rounded-sm"></div>
               <span className="text-xs font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">{t('aiValidator.badge')}</span>
             </div>
             <div className="w-full h-px bg-slate-200 dark:bg-white/10 mb-8"></div>
             <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 font-serif">
               <Trans i18nKey="aiValidator.title" components={{ br: <br />, span: <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 dark:from-indigo-400 to-purple-500 dark:to-purple-400" /> }} />
             </h2>
-            <p className="text-slate-600 dark:text-slate-400 text-lg">
+            <p className="text-slate-600 dark:text-slate-400 text-sm md:text-lg">
               {t('aiValidator.subtitle')}
             </p>
           </div>
