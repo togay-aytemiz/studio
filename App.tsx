@@ -13,12 +13,15 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ValidatePage from './pages/ValidatePage';
 
+import TechStack from './components/TechStack';
+
 // Home page component
 const HomePage = () => (
   <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 selection:bg-indigo-500/30">
     <Navbar />
     <main>
       <Hero />
+      <TechStack />
 
       <Services />
       <Capabilities />

@@ -20,7 +20,7 @@ const Process: React.FC = () => {
   };
 
   return (
-    <section id="process" className="py-36 md:py-40 bg-white dark:bg-[#040814] relative overflow-hidden border-t border-slate-200 dark:border-white/5">
+    <section id="process" className="py-20 md:py-40 bg-white dark:bg-[#040814] relative overflow-hidden">
       {/* CSS Overrides to defeat aggressive global styles */}
       <style>{`
         /* Force icon stroke to white on hover */
@@ -56,7 +56,7 @@ const Process: React.FC = () => {
           {/* Connector Line (Desktop) - Adjusted z-index and opacity */}
           <div className="hidden lg:block absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent -translate-y-1/2 z-0 opacity-30"></div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 relative z-10">
             {PROCESS_STEPS.map((step, index) => (
               <motion.div
                 key={step.id}
@@ -67,15 +67,15 @@ const Process: React.FC = () => {
                 className="group relative"
               >
                 {/* Card Container */}
-                <div className="h-full bg-white dark:bg-slate-900/60 backdrop-blur-sm border border-slate-200 dark:border-white/5 rounded-2xl p-8 hover:bg-slate-50 dark:hover:bg-slate-900/90 hover:border-indigo-400 dark:hover:border-indigo-500/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl dark:hover:shadow-2xl hover:shadow-indigo-500/10 dark:hover:shadow-indigo-500/10 flex flex-col items-start overflow-hidden shadow-sm dark:shadow-none">
+                <div className="h-full bg-white dark:bg-slate-900/60 backdrop-blur-sm border border-slate-200 dark:border-white/5 rounded-2xl p-5 md:p-8 hover:bg-slate-50 dark:hover:bg-slate-900/90 hover:border-indigo-400 dark:hover:border-indigo-500/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl dark:hover:shadow-2xl hover:shadow-indigo-500/10 dark:hover:shadow-indigo-500/10 flex flex-col items-start overflow-hidden shadow-sm dark:shadow-none">
 
                   {/* Large Background Number */}
-                  <div className="absolute -right-4 -top-6 text-[100px] font-bold text-slate-200 dark:text-white/[0.03] select-none group-hover:text-slate-300 dark:group-hover:text-white/[0.06] transition-colors duration-500 font-serif">
+                  <div className="absolute -right-4 -top-6 text-[60px] md:text-[100px] font-bold text-slate-200 dark:text-white/[0.03] select-none group-hover:text-slate-300 dark:group-hover:text-white/[0.06] transition-colors duration-500 font-serif">
                     0{step.id}
                   </div>
 
                   {/* Icon Badge - Added icon-wrapper class */}
-                  <div className="icon-wrapper w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-700 dark:text-white mb-8 group-hover:text-[#ffffff] group-hover:scale-110 transition-all duration-300 shadow-lg relative z-10">
+                  <div className="icon-wrapper w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-700 dark:text-white mb-4 md:mb-8 group-hover:text-[#ffffff] group-hover:scale-110 transition-all duration-300 shadow-lg relative z-10">
                     {getIcon(step.id)}
                   </div>
 

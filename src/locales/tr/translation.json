@@ -9,7 +9,7 @@
         "startProject": "Ücretsiz Danışmanlık"
     },
     "hero": {
-        "tagline": "Yazılım Geliştirme Şirketi",
+        "tagline": "Dijital Ürün Stüdyosu",
         "title": "Yazılım <br /> <span>Geliştiriyoruz.</span>",
         "subtitle": "Web, mobil ve yapay zeka destekli uygulamalar. Fikirden ürüne, teknik ortağınız.",
         "startProject": "Ücretsiz Danışmanlık",
@@ -262,6 +262,9 @@
                 "desc": "Planlama, Koordinasyon"
             }
         }
+    },
+    "techStack": {
+        "title": "Kullandığımız Teknolojiler"
     },
     "contact": {
         "title": "Projenizi Konuşalım",

@@ -9,7 +9,7 @@ const Work: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <section id="work" className="py-36 md:py-40 bg-slate-950 border-t border-white/5">
+    <section id="work" className="py-20 md:py-40 bg-slate-950">
       <div className="container mx-auto px-6">
         <ScrollReveal width="100%">
           <div className="mb-20 max-w-2xl">

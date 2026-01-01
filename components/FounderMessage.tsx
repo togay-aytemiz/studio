@@ -8,7 +8,7 @@ const FounderMessage: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="py-36 md:py-40 bg-[#020617] relative overflow-hidden border-t border-white/5">
+    <section className="py-20 md:py-40 bg-[#020617] relative overflow-hidden">
 
       {/* Background Elements */}
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 mix-blend-soft-light pointer-events-none"></div>

@@ -47,7 +47,7 @@ const Capabilities: React.FC = () => {
   ], [t]);
 
   return (
-    <section className="py-36 md:py-40 bg-[#020617] relative border-t border-white/5">
+    <section className="py-20 md:py-40 bg-[#020617] relative">
       {/* Background Decor */}
       <div className="absolute right-0 top-1/4 w-[500px] h-[500px] bg-slate-800/20 rounded-full blur-[100px] pointer-events-none opacity-40"></div>
 
@@ -99,10 +99,8 @@ const Capabilities: React.FC = () => {
                 </ul>
 
                 {/* Bottom Visual */}
-                <div className="mt-8 pt-4 border-t border-slate-200 dark:border-white/5 flex items-center justify-between opacity-50 group-hover:opacity-100 transition-opacity">
-                  <span className="text-[10px] font-mono text-slate-500 uppercase">Proficiency: High</span>
-                  <div className={`w-1.5 h-1.5 rounded-full ${group.color.replace('text-', 'bg-')} animate-pulse`}></div>
-                </div>
+                {/* Bottom Visual - Removed as per request */}
+
               </motion.div>
             ))}
           </div>

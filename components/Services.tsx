@@ -24,7 +24,7 @@ const Services: React.FC = () => {
   };
 
   return (
-    <section id="services" className="py-36 md:py-40 bg-slate-950 relative">
+    <section id="services" className="py-20 md:py-40 bg-slate-950 relative">
       <div className="container mx-auto px-6">
         <ScrollReveal>
           <div className="mb-20 max-w-2xl">

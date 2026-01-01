@@ -56,7 +56,7 @@ const Contact: React.FC = () => {
   const labelClasses = "block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-2 ml-1";
 
   return (
-    <section id="contact" className="py-32 bg-[#020617] relative overflow-hidden min-h-screen flex items-center justify-center">
+    <section id="contact" className="py-20 md:py-32 bg-[#020617] relative overflow-hidden min-h-screen flex items-center justify-center">
 
       {/* Abstract Map Background */}
       <div className="absolute inset-0 opacity-20 pointer-events-none select-none">

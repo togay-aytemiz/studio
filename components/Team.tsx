@@ -103,7 +103,7 @@ const Team: React.FC = () => {
    ], [t]);
 
    return (
-      <section id="team" className="py-36 md:py-40 bg-white dark:bg-[#030712] relative overflow-hidden border-t border-slate-200 dark:border-white/5">
+      <section id="team" className="py-20 md:py-40 bg-white dark:bg-[#030712] relative overflow-hidden">
 
          {/* New Background Animation */}
          <UserCentricOrbit />
