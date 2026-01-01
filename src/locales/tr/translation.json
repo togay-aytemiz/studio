@@ -106,6 +106,15 @@
         "reset": "Yeni Analiz",
         "consult": "Ücretsiz Görüşme"
     },
+    "expertise": {
+        "badge": "Yeteneklerimiz",
+        "title": "Uçtan Uca <br /> <span>Dijital Çözümler.</span>",
+        "subtitle": "Hem teknik uygulama hem de sektörel deneyim. İhtiyacınız olan tüm yetkinlikler tek bir noktada.",
+        "tabs": {
+            "services": "Hizmetler",
+            "capabilities": "Sektörel Deneyim"
+        }
+    },
     "services": {
         "badge": "Hizmetlerimiz",
         "title": "Neler Yapıyoruz?",

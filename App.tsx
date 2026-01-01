@@ -2,8 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Services from './components/Services';
-import Capabilities from './components/Capabilities';
+import Expertise from './components/Expertise';
 import Process from './components/Process';
 import Work from './components/Work';
 import FounderMessage from './components/FounderMessage';
@@ -23,8 +22,7 @@ const HomePage = () => (
       <Hero />
       <TechStack />
 
-      <Services />
-      <Capabilities />
+      <Expertise />
       <Process />
       <Work />
       <FounderMessage />
