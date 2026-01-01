@@ -61,7 +61,7 @@ const Expertise: React.FC = () => {
     };
 
     return (
-        <section id="services" className="bg-slate-50 dark:bg-slate-950 relative overflow-hidden pb-20 md:pb-32">
+        <section id="services" className="bg-slate-50 dark:bg-slate-950 relative pb-20 md:pb-32">
             {/* Background Decor */}
             <div className="absolute left-0 top-0 w-full h-[500px] bg-indigo-500/5 blur-[120px] pointer-events-none"></div>
 
@@ -91,7 +91,7 @@ const Expertise: React.FC = () => {
             </div>
 
             {/* Sticky Tabs Navigation - Intercom Style */}
-            <div className="sticky top-[80px] z-30 bg-slate-50/95 dark:bg-slate-950/95 backdrop-blur-md border-y border-slate-200 dark:border-white/10 mb-12">
+            <div className="sticky top-[80px] z-30 bg-slate-50/95 dark:bg-slate-950/95 backdrop-blur-md border-y border-slate-200 dark:border-white/10 mb-12 shadow-sm">
                 <div className="container mx-auto px-6">
                     <div className="flex gap-8 overflow-x-auto no-scrollbar">
                         <button
