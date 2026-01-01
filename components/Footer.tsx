@@ -1,0 +1,126 @@
+import React from 'react';
+import { Linkedin, Twitter, Github, Instagram, ArrowUpRight, Mail, MapPin, Phone } from 'lucide-react';
+
+const Footer: React.FC = () => {
+  const currentYear = new Date().getFullYear();
+
+  const footerLinks = {
+    company: [
+      { label: 'Selected Work', href: '#work' },
+      { label: 'Our Process', href: '#process' },
+      { label: 'Expertise', href: '#services' },
+      { label: 'Contact', href: '#contact' },
+    ],
+    services: [
+      { label: 'Product Strategy', href: '#services' },
+      { label: 'UI/UX Design', href: '#services' },
+      { label: 'Web Development', href: '#services' },
+      { label: 'Mobile Apps', href: '#services' },
+    ],
+    social: [
+      { icon: Linkedin, href: '#' },
+      { icon: Twitter, href: '#' },
+      { icon: Github, href: '#' },
+      { icon: Instagram, href: '#' },
+    ]
+  };
+
+  return (
+    <footer className="bg-[#020617] border-t border-white/5 pt-20 pb-10 relative overflow-hidden">
+      
+      {/* Background Decor - Subtle bottom glow */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-indigo-900/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
+          
+          {/* Brand Column */}
+          <div className="lg:col-span-5 flex flex-col gap-6">
+            <div className="flex items-center gap-2 mb-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                <span className="text-white font-bold text-lg">N</span>
+              </div>
+              <span className="text-2xl font-bold tracking-tight text-white">Nexus</span>
+            </div>
+            <p className="text-slate-400 text-lg leading-relaxed max-w-sm">
+              We engineer scalable digital products for ambitious startups and enterprise innovators.
+            </p>
+            <div className="flex items-center gap-4 mt-2">
+              {footerLinks.social.map((item, idx) => (
+                <a 
+                  key={idx} 
+                  href={item.href}
+                  className="w-10 h-10 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-indigo-500/10 hover:border-indigo-500/30 transition-all duration-300"
+                >
+                  <item.icon size={18} />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Links Column 1 */}
+          <div className="lg:col-span-2 lg:col-start-7">
+            <h4 className="text-white font-bold mb-6">Explore</h4>
+            <ul className="space-y-4">
+              {footerLinks.company.map((link) => (
+                <li key={link.label}>
+                  <a href={link.href} className="text-slate-400 hover:text-indigo-400 transition-colors text-sm font-medium flex items-center gap-1 group">
+                    {link.label}
+                    {link.href.startsWith('#') ? null : <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Links Column 2 */}
+          <div className="lg:col-span-2">
+            <h4 className="text-white font-bold mb-6">Expertise</h4>
+            <ul className="space-y-4">
+              {footerLinks.services.map((link) => (
+                <li key={link.label}>
+                  <a href={link.href} className="text-slate-400 hover:text-indigo-400 transition-colors text-sm font-medium">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Info Column */}
+          <div className="lg:col-span-2">
+             <h4 className="text-white font-bold mb-6">Studio</h4>
+             <ul className="space-y-4">
+                <li className="flex items-start gap-3 text-slate-400 text-sm">
+                   <MapPin size={16} className="mt-1 text-indigo-500 flex-shrink-0" />
+                   <span>123 Innovation Dr.<br/>San Francisco, CA</span>
+                </li>
+                <li className="flex items-center gap-3 text-slate-400 text-sm">
+                   <Mail size={16} className="text-indigo-500 flex-shrink-0" />
+                   <a href="mailto:hello@nexus.studio" className="hover:text-white transition-colors">hello@nexus.studio</a>
+                </li>
+                <li className="flex items-center gap-3 text-slate-400 text-sm">
+                   <Phone size={16} className="text-indigo-500 flex-shrink-0" />
+                   <a href="tel:+15550123456" className="hover:text-white transition-colors">+1 (555) 012-3456</a>
+                </li>
+             </ul>
+          </div>
+
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-slate-500 text-sm">
+            &copy; {currentYear} Nexus Product Studio. All rights reserved.
+          </p>
+          <div className="flex gap-6 text-sm">
+             <a href="#" className="text-slate-500 hover:text-white transition-colors">Privacy Policy</a>
+             <a href="#" className="text-slate-500 hover:text-white transition-colors">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
