@@ -187,7 +187,7 @@ const ValidatePage: React.FC = () => {
                                         <input
                                             type="text"
                                             placeholder={displayedPlaceholder + "|"}
-                                            className="flex-1 bg-transparent text-slate-900 dark:text-white px-6 py-4 outline-none placeholder:text-slate-400 dark:placeholder:text-slate-500 text-lg"
+                                            className="flex-1 bg-transparent text-slate-900 dark:text-white px-4 py-3 md:px-6 md:py-4 outline-none placeholder:text-slate-400 dark:placeholder:text-slate-500 text-base md:text-lg"
                                             value={ideaInput}
                                             onChange={(e) => setIdeaInput(e.target.value)}
                                             disabled={isAnalyzing}
@@ -195,8 +195,8 @@ const ValidatePage: React.FC = () => {
                                         <Button
                                             onClick={handleAnalyze}
                                             disabled={isAnalyzing || !ideaInput.trim()}
-                                            className="md:w-auto w-full shrink-0 min-w-[160px]"
-                                            icon={isAnalyzing ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Sparkles size={18} />}
+                                            className="w-full md:w-auto md:min-w-[160px] py-3 md:py-4 text-sm md:text-base"
+                                            icon={isAnalyzing ? <div className="w-4 h-4 md:w-5 md:h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Sparkles size={16} className="md:w-[18px] md:h-[18px]" />}
                                         >
                                             {isAnalyzing ? 'Analiz Ediliyor...' : 'Analiz Et'}
                                         </Button>

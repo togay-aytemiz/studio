@@ -1,54 +1,35 @@
 import React, { useState } from 'react';
 import Button from './Button';
-import { Send, Loader2, Sparkles, Mail, Phone, CheckCircle2, ArrowRight, ArrowUpRight, BrainCircuit } from 'lucide-react';
-import { generateProjectBrief } from '../services/geminiService';
+import { Send, Mail, Phone, CheckCircle2, ArrowRight, ArrowUpRight, BrainCircuit } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation, Trans } from 'react-i18next';
 
+import { useNavigate } from 'react-router-dom';
+
 const Contact: React.FC = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
   });
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [aiResponse, setAiResponse] = useState<string | null>(null);
   const { t } = useTranslation();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleAiAssist = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (formData.message.length < 10) {
-      alert(t('contact.alerts.shortDescription'));
-      return;
-    }
 
-    setIsGenerating(true);
-    setAiResponse(null);
-    try {
-      const result = await generateProjectBrief(formData.message);
-      setAiResponse(result);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsGenerating(false);
-    }
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     alert(t('contact.alerts.success'));
     setFormData({ name: '', email: '', message: '' });
-    setAiResponse(null);
   };
 
-  const scrollToValidator = () => {
-    const element = document.querySelector('section:nth-of-type(2)'); // Assuming Validator is the 2nd section based on App.tsx order
-    if (element) element.scrollIntoView({ behavior: 'smooth' });
+  const handleValidateClick = () => {
+    navigate('/validate');
   };
 
   // Helper for consistent input styling
@@ -107,9 +88,9 @@ const Contact: React.FC = () => {
                   <div className="col-span-1 md:col-span-8 p-8 md:p-12 border-r border-white/5">
 
                     {/* AI Nudge */}
-                    <div className="mb-8 p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/10 flex items-center justify-between">
+                    <div className="mb-8 p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/10 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 md:gap-0">
                       <div className="flex items-center gap-3">
-                        <div className="p-2 bg-indigo-500/20 rounded-lg text-indigo-400">
+                        <div className="p-2 bg-indigo-500/20 rounded-lg text-indigo-400 shrink-0">
                           <BrainCircuit size={18} />
                         </div>
                         <div>
@@ -117,7 +98,7 @@ const Contact: React.FC = () => {
                           <p className="text-slate-400 text-xs">{t('contact.ai.subtitle')}</p>
                         </div>
                       </div>
-                      <button onClick={scrollToValidator} className="text-xs font-bold text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
+                      <button onClick={handleValidateClick} className="text-xs font-bold text-white bg-indigo-600 md:bg-transparent md:text-indigo-400 md:hover:text-indigo-300 py-3 md:py-0 rounded-lg md:rounded-none flex items-center justify-center gap-2 transition-all hover:bg-indigo-700 md:hover:bg-transparent">
                         {t('contact.ai.button')} <ArrowUpRight size={14} />
                       </button>
                     </div>
@@ -155,15 +136,6 @@ const Contact: React.FC = () => {
                           <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 ml-1">
                             {t('contact.form.project')}
                           </label>
-                          <button
-                            type="button"
-                            onClick={handleAiAssist}
-                            disabled={isGenerating || !formData.message}
-                            className="text-[10px] font-bold uppercase tracking-wider text-indigo-400 hover:text-indigo-300 flex items-center gap-1 disabled:opacity-50 transition-colors"
-                          >
-                            {isGenerating ? <Loader2 size={10} className="animate-spin" /> : <Sparkles size={10} />}
-                            {t('contact.ai.autoBrief')}
-                          </button>
                         </div>
                         <textarea
                           name="message"
@@ -176,24 +148,7 @@ const Contact: React.FC = () => {
                         ></textarea>
                       </div>
 
-                      <AnimatePresence>
-                        {aiResponse && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            className="bg-indigo-950/20 border border-indigo-500/20 rounded-xl p-4 overflow-hidden"
-                          >
-                            <div className="flex items-center gap-2 mb-2 text-indigo-400">
-                              <Sparkles size={14} />
-                              <span className="text-xs font-bold uppercase">{t('contact.ai.suggestion')}</span>
-                            </div>
-                            <div className="text-slate-300 text-sm prose prose-invert max-w-none">
-                              <div dangerouslySetInnerHTML={{ __html: aiResponse.replace(/\n/g, '<br />') }} />
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+
 
                       <div className="pt-2">
                         <Button type="submit" size="lg" className="w-full md:w-auto group">

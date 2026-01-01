@@ -172,17 +172,17 @@ const Team: React.FC = () => {
                                     initial={{ x: 20, opacity: 0 }}
                                     whileInView={{ x: 0, opacity: 1 }}
                                     transition={{ delay: index * 0.1 }}
-                                    className={`group flex items-center gap-4 p-4 rounded-xl border border-slate-200 dark:border-transparent ${item.border} bg-slate-50 dark:bg-transparent ${item.bg} hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors`}
+                                    className={`group flex items-center gap-3 md:gap-4 p-3 md:p-4 rounded-xl border border-slate-200 dark:border-transparent ${item.border} bg-slate-50 dark:bg-transparent ${item.bg} md:hover:bg-slate-100 md:dark:hover:bg-slate-800 transition-colors`}
                                  >
-                                    <div className={`p-3 rounded-lg bg-white dark:bg-slate-950 border border-slate-200 dark:border-white/10 ${item.color}`}>
-                                       <item.icon size={24} />
+                                    <div className={`p-2 md:p-3 rounded-lg bg-white dark:bg-slate-950 border border-slate-200 dark:border-white/10 ${item.color}`}>
+                                       <item.icon className="w-5 h-5 md:w-6 md:h-6" />
                                     </div>
-                                    <div className="flex-1">
-                                       <h4 className="text-slate-900 dark:text-white font-bold">{item.title}</h4>
-                                       <div className="flex items-center gap-2 text-xs md:text-sm text-slate-500 dark:text-slate-400">
+                                    <div className="flex-1 min-w-0">
+                                       <h4 className="text-sm md:text-base text-slate-900 dark:text-white font-bold">{item.title}</h4>
+                                       <div className="flex flex-col md:flex-row md:items-center md:gap-2 text-xs md:text-sm text-slate-500 dark:text-slate-400">
                                           <span className="font-medium text-slate-700 dark:text-slate-300">{item.role}</span>
-                                          <span className="w-1 h-1 bg-slate-400 dark:bg-slate-600 rounded-full"></span>
-                                          <span>{item.desc}</span>
+                                          <span className="hidden md:block w-1 h-1 bg-slate-400 dark:bg-slate-600 rounded-full"></span>
+                                          <span className="text-slate-400 dark:text-slate-500">{item.desc}</span>
                                        </div>
                                     </div>
                                     <div className="opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0">
