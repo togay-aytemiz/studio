@@ -77,8 +77,9 @@ html:not(.dark) [class*="rounded-xl"] {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* Bento grid items specifically */
-html:not(.dark) [class*="bg-gradient-to-br"][class*="rounded"] {
+/* Bento grid items specifically - exclude small decorative circles */
+html:not(.dark) [class*="bg-gradient-to-br"][class*="rounded-2xl"],
+html:not(.dark) [class*="bg-gradient-to-br"][class*="rounded-3xl"] {
   background: linear-gradient(to bottom right, #f8fafc, #f1f5f9) !important;
 }
 
@@ -136,24 +137,26 @@ html:not(.dark) [class*="border-slate"] {
 }
 
 /* === BUTTONS === */
-/* Primary button - indigo in light mode */
-html:not(.dark) button[class*="bg-white"][class*="text-slate"] {
+/* Primary button - indigo in light mode (only for primary variant with text-slate-950) */
+html:not(.dark) button[class*="bg-white"][class*="text-slate-950"] {
   background-color: var(--btn-primary-bg) !important;
   color: var(--btn-primary-text) !important;
   box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25) !important;
 }
 
-html:not(.dark) button[class*="bg-white"][class*="text-slate"]:hover {
+html:not(.dark) button[class*="bg-white"][class*="text-slate-950"]:hover {
   background-color: #4338ca !important;
 }
 
-/* Outline button */
-html:not(.dark) button[class*="border"][class*="bg-transparent"] {
+/* Outline button - keep white background in light mode */
+html:not(.dark) button[class*="border"][class*="text-slate-700"] {
+  background-color: #ffffff !important;
   border-color: var(--btn-outline-border) !important;
   color: var(--btn-outline-text) !important;
 }
 
-html:not(.dark) button[class*="border"][class*="bg-transparent"]:hover {
+html:not(.dark) button[class*="border"][class*="text-slate-700"]:hover {
+  background-color: #f8fafc !important;
   border-color: #94a3b8 !important;
   color: var(--text-primary) !important;
 }

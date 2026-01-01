@@ -158,9 +158,7 @@ const Team: React.FC = () => {
                               <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">{t('team.squad.badge')}</span>
                               <div className="flex -space-x-2">
                                  {[1, 2, 3].map(i => (
-                                    <div key={i} className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 border-2 border-white dark:border-slate-900 flex items-center justify-center text-xs text-slate-500">
-                                       <div className={`w-full h-full rounded-full bg-gradient-to-br ${i === 1 ? 'from-blue-400 to-blue-600' : i === 2 ? 'from-purple-400 to-purple-600' : 'from-emerald-400 to-emerald-600'} opacity-80`}></div>
-                                    </div>
+                                    <div key={i} className={`w-5 h-5 rounded-full bg-gradient-to-br ${i === 1 ? 'from-blue-500 to-blue-600' : i === 2 ? 'from-purple-500 to-purple-600' : 'from-emerald-500 to-emerald-600'} border-2 border-white dark:border-slate-900 shadow-sm transition-transform hover:scale-110`}></div>
                                  ))}
                               </div>
                            </div>
@@ -178,11 +176,12 @@ const Team: React.FC = () => {
                                        <item.icon className="w-5 h-5 md:w-6 md:h-6" />
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                       <h4 className="text-sm md:text-base text-slate-900 dark:text-white font-bold">{item.title}</h4>
-                                       <div className="flex flex-col md:flex-row md:items-center md:gap-2 text-xs md:text-sm text-slate-500 dark:text-slate-400">
-                                          <span className="font-medium text-slate-700 dark:text-slate-300">{item.role}</span>
-                                          <span className="hidden md:block w-1 h-1 bg-slate-400 dark:bg-slate-600 rounded-full"></span>
-                                          <span className="text-slate-400 dark:text-slate-500">{item.desc}</span>
+                                       <h4 className="text-sm md:text-lg text-slate-900 dark:text-white font-bold mb-0.5">{item.title}</h4>
+                                       <div className="flex flex-col gap-1">
+                                          <span className="text-xs md:text-sm font-semibold text-slate-700 dark:text-indigo-300">{item.role}</span>
+                                          <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-md">
+                                             {item.desc}
+                                          </p>
                                        </div>
                                     </div>
                                     <div className="opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0">
@@ -192,11 +191,7 @@ const Team: React.FC = () => {
                               ))}
                            </div>
 
-                           <div className="mt-6 pt-4 border-t border-slate-200 dark:border-white/5 text-center">
-                              <p className="text-xs text-slate-500 font-medium">
-                                 {t('team.squad.footer')}
-                              </p>
-                           </div>
+
                         </div>
                      </div>
                   </div>

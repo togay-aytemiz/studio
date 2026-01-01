@@ -284,6 +284,23 @@ const Hero: React.FC = () => {
                 {t('hero.viewWork')}
               </Button>
             </motion.div>
+
+            {/* Highlights */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+              className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mt-6"
+            >
+              <div className="flex items-center gap-2">
+                <CheckCircle2 size={16} className="text-emerald-500" />
+                <span className="text-sm text-slate-500 dark:text-slate-400">{t('hero.highlights.aiPowered')}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle2 size={16} className="text-emerald-500" />
+                <span className="text-sm text-slate-500 dark:text-slate-400">{t('hero.highlights.fastDelivery')}</span>
+              </div>
+            </motion.div>
           </motion.div>
 
           {/* Right: Fully Dynamic Bento Grid (Hidden on Mobile) */}

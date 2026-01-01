@@ -14,6 +14,10 @@
         "subtitle": "Web, mobil ve yapay zeka destekli uygulamalar. Fikirden ürüne, teknik ortağınız.",
         "startProject": "Ücretsiz Danışmanlık",
         "viewWork": "Neler Yaptık",
+        "highlights": {
+            "aiPowered": "Yapay zeka destekli süreçler",
+            "fastDelivery": "Hızlı ve şeffaf teslimat"
+        },
         "stats": {
             "lighthouse": "Lighthouse Skoru",
             "seo": "SEO Uyumlu",
@@ -128,7 +132,7 @@
     "capabilities": {
         "badge": "Uzmanlık Alanlarımız",
         "title": "Deneyimli Olduğumuz Konular.",
-        "subtitle": "Bu alanlarda onlarca proje geliştirdik. Ödeme, bildirim, harita gibi yaygın entegrasyonlarda derin deneyimimiz var.",
+        "subtitle": "Bu alanlarda güçlü bir teknik altyapıya sahibiz. Ödeme, bildirim, harita gibi yaygın entegrasyonlarda derin deneyimimiz var.",
         "groups": {
             "fintech": {
                 "title": "Ödeme & Finans",
@@ -233,12 +237,12 @@
         "studio": {
             "badge": "Hakkımızda",
             "title": "Küçük ekip. <br/> <span class=\"text-indigo-400\">Büyük işler.</span>",
-            "p1": "Küçük, uzman bir yazılım ekibiyiz. Büyük ajanslardaki karmaşıklık yok.",
-            "p2": "Projenize tam odaklanıyoruz. Kaliteli tasarım, güçlü mühendislik.",
+            "p1": "İnsan uzmanlığını yapay zeka ile birleştirerek kaliteli ve verimli sonuçlar üretiyoruz.",
+            "p2": "Ürün odaklı ve çevik ekibimizle fikirleri, ajans karmaşasından uzak, ölçeklenebilir dijital ürünlere dönüştürüyoruz.",
             "checklist": {
-                "inHouse": "Kurum içi uzman ekip",
-                "aiExpertise": "Yapay zeka uzmanlığı",
-                "partnership": "Uzun vadeli ortaklık"
+                "inHouse": "Kıdemli ve odaklı ekip yapısı",
+                "aiExpertise": "Yapay zeka destekli geliştirme süreçleri",
+                "partnership": "Sürdürülebilir ürün iş birlikleri"
             }
         },
         "squad": {
@@ -248,18 +252,18 @@
         "disciplines": {
             "dev": {
                 "title": "Yazılım",
-                "role": "Geliştiriciler",
-                "desc": "React, Node.js, Python"
+                "role": "Kıdemli Mühendisler",
+                "desc": "Modern, ölçeklenebilir ve sürdürülebilir mimari çözümler."
             },
             "des": {
                 "title": "Tasarım",
-                "role": "Ürün Tasarımcısı",
-                "desc": "UI/UX, Prototip"
+                "role": "Yaratıcı Tasarımcılar",
+                "desc": "Kullanıcıyı merkeze alan arayüzler, prototipleme ve ürün deneyimi tasarımı."
             },
             "prod": {
                 "title": "Strateji",
-                "role": "Proje Yöneticisi",
-                "desc": "Planlama, Koordinasyon"
+                "role": "Ürün ve Proje Yöneticileri",
+                "desc": "Planlama, ürün yol haritası ve stratejik ürün kararları."
             }
         }
     },

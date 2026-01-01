@@ -6,12 +6,14 @@ import ThemeToggle from './ThemeToggle';
 import { Menu, X, ArrowRight, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { t } = useTranslation();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,9 +32,35 @@ const Navbar: React.FC = () => {
     }
   }, [mobileMenuOpen]);
 
+  // Handle hash scrolling on route change
+  useEffect(() => {
+    if (location.pathname === '/' && location.hash) {
+      const targetId = location.hash.replace('#', '');
+      const element = document.getElementById(targetId);
+
+      if (element) {
+        setTimeout(() => {
+          const headerOffset = 80;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          });
+        }, 100);
+      }
+    }
+  }, [location]);
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, href: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
+
+    if (location.pathname !== '/') {
+      navigate('/' + href);
+      return;
+    }
 
     const targetId = href.replace('#', '');
     const element = document.getElementById(targetId);
@@ -75,6 +103,18 @@ const Navbar: React.FC = () => {
     open: { x: 0, opacity: 1, transition: { type: "spring", stiffness: 300, damping: 24 } }
   };
 
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    if (location.pathname !== '/') {
+      navigate('/');
+    }
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  };
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled && !mobileMenuOpen ? 'bg-slate-950/80 backdrop-blur-md border-b border-white/5' : 'bg-transparent'
@@ -82,12 +122,12 @@ const Navbar: React.FC = () => {
     >
       <div className="container mx-auto px-6 h-20 flex items-center justify-between relative z-50">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 group">
+        <a href="/" onClick={handleLogoClick} className="flex items-center gap-2 group">
           <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center group-hover:shadow-lg group-hover:shadow-indigo-500/25 transition-all">
             <span className="text-white font-bold text-lg">N</span>
           </div>
           <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Nexus</span>
-        </Link>
+        </a>
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8">
