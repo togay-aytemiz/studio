@@ -3,7 +3,7 @@ import { PROCESS_STEPS } from '../constants';
 import { motion } from 'framer-motion';
 import ScrollReveal from './ScrollReveal';
 import { Search, PenTool, Code2, Rocket, ArrowRight, GitBranch } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 
 const Process: React.FC = () => {
   const { t } = useTranslation();
@@ -34,8 +34,14 @@ const Process: React.FC = () => {
             <span className="text-xs font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">{t('process.badge')}</span>
           </div>
           <div className="w-full h-px bg-slate-200 dark:bg-white/10 mb-8"></div>
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight leading-normal font-serif">
-            {t('process.title')}
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight leading-[1.1] font-serif">
+            <Trans
+              i18nKey="process.title"
+              components={{
+                br: <br />,
+                span: <span className="text-slate-400 dark:text-slate-600" />
+              }}
+            />
           </h2>
           <p className="text-sm md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
             {t('process.subtitle')}
@@ -46,7 +52,7 @@ const Process: React.FC = () => {
           {/* Connector Line (Desktop) - Adjusted z-index and opacity */}
           <div className="hidden lg:block absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent -translate-y-1/2 z-0 opacity-30"></div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 relative z-10">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8 relative z-10">
             {PROCESS_STEPS.map((step, index) => (
               <motion.div
                 key={step.id}
@@ -57,24 +63,24 @@ const Process: React.FC = () => {
                 className="group relative"
               >
                 {/* Card Container */}
-                <div className="h-full bg-white dark:bg-slate-900/60 backdrop-blur-sm border border-slate-200 dark:border-white/5 rounded-2xl p-5 md:p-8 md:hover:bg-slate-50 md:dark:hover:bg-slate-900/90 md:hover:border-indigo-400 md:dark:hover:border-indigo-500/30 transition-all duration-500 md:hover:-translate-y-2 md:hover:shadow-xl md:dark:hover:shadow-2xl md:hover:shadow-indigo-500/10 md:dark:hover:shadow-indigo-500/10 flex flex-col items-start overflow-hidden shadow-sm dark:shadow-none group/card">
+                <div className="h-full bg-white dark:bg-slate-900/60 backdrop-blur-sm border border-slate-200 dark:border-white/5 rounded-2xl p-3.5 md:p-8 md:hover:bg-slate-50 md:dark:hover:bg-slate-900/90 md:hover:border-indigo-400 md:dark:hover:border-indigo-500/30 transition-all duration-500 md:hover:-translate-y-2 md:hover:shadow-xl md:dark:hover:shadow-2xl md:hover:shadow-indigo-500/10 md:dark:hover:shadow-indigo-500/10 flex flex-col items-start overflow-hidden shadow-sm dark:shadow-none group/card">
 
                   {/* Large Background Number */}
-                  <div className="absolute right-2 md:-right-4 -top-6 text-[60px] md:text-[100px] font-bold text-slate-200 dark:text-white/[0.08] select-none md:group-hover:text-slate-300 md:dark:group-hover:text-white/[0.12] transition-colors duration-500 font-serif">
+                  <div className="absolute right-1 -top-2 md:-right-4 md:-top-6 text-[40px] md:text-[100px] font-bold text-slate-200 dark:text-white/[0.08] select-none md:group-hover:text-slate-300 md:dark:group-hover:text-white/[0.12] transition-colors duration-500 font-serif z-0">
                     {step.id}
                   </div>
 
                   {/* Icon Badge - Added icon-wrapper class */}
-                  <div className="icon-wrapper w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-700 dark:text-white mb-4 md:mb-6 md:group-hover/card:text-[#ffffff] md:group-hover/card:bg-indigo-600 md:group-hover/card:border-indigo-500 group-hover:scale-110 transition-all duration-300 shadow-lg relative z-10">
+                  <div className="icon-wrapper w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-700 dark:text-white mb-2 md:mb-6 md:group-hover/card:text-[#ffffff] md:group-hover/card:bg-indigo-600 md:group-hover/card:border-indigo-500 group-hover:scale-110 transition-all duration-300 shadow-lg relative z-10">
                     {getIcon(step.id)}
                   </div>
 
                   {/* Content */}
                   <div className="relative z-10">
-                    <h3 className="text-sm md:text-xl font-bold text-slate-900 dark:text-white mb-2 md:mb-3 md:group-hover:text-indigo-600 md:dark:group-hover:text-indigo-300 transition-colors">
+                    <h3 className="text-sm md:text-xl font-bold text-slate-900 dark:text-white mb-1 md:mb-3 md:group-hover:text-indigo-600 md:dark:group-hover:text-indigo-300 transition-colors">
                       {t(`process.steps.${step.id}.title`)}
                     </h3>
-                    <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+                    <p className="text-slate-600 dark:text-slate-400 text-xs md:text-sm leading-relaxed">
                       {t(`process.steps.${step.id}.description`)}
                     </p>
                   </div>

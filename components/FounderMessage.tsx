@@ -43,9 +43,7 @@ const FounderMessage: React.FC = () => {
                 </div>
 
                 {/* Decorative Elements around image */}
-                <div className="absolute -bottom-4 -right-4 md:-bottom-6 md:-right-6 w-16 h-16 md:w-24 md:h-24 bg-slate-950 border border-white/10 rounded-full flex items-center justify-center z-20 shadow-xl">
-                  <Sparkles className="text-indigo-400" size={24} />
-                </div>
+
                 <div className="absolute -top-3 -left-3 md:-top-4 md:-left-4 w-full h-full border border-indigo-500/30 rounded-2xl -z-10"></div>
               </motion.div>
 
@@ -68,7 +66,7 @@ const FounderMessage: React.FC = () => {
                     <span className="text-indigo-400 font-medium uppercase tracking-widest text-xs">{t('founder.badge')}</span>
                   </div>
 
-                  <h3 className="text-3xl md:text-5xl font-serif text-white mb-8 leading-normal">
+                  <h3 className="text-2xl md:text-5xl font-serif text-white mb-8 leading-[1.15] md:leading-normal">
                     "<Trans i18nKey="founder.quote" components={{ br: <br />, span: <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-purple-300 to-indigo-300" /> }} />"
                   </h3>
 
