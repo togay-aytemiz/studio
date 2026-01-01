@@ -27,7 +27,7 @@ const FounderMessage: React.FC = () => {
 
               {/* Image Section (Left) - Editorial Style */}
               <motion.div
-                className="col-span-1 md:col-span-5 relative"
+                className="col-span-1 md:col-span-5 relative max-w-[280px] mx-auto md:max-w-none"
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -43,10 +43,10 @@ const FounderMessage: React.FC = () => {
                 </div>
 
                 {/* Decorative Elements around image */}
-                <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-slate-950 border border-white/10 rounded-full flex items-center justify-center z-20 shadow-xl">
-                  <Sparkles className="text-indigo-400" size={32} />
+                <div className="absolute -bottom-4 -right-4 md:-bottom-6 md:-right-6 w-16 h-16 md:w-24 md:h-24 bg-slate-950 border border-white/10 rounded-full flex items-center justify-center z-20 shadow-xl">
+                  <Sparkles className="text-indigo-400" size={24} />
                 </div>
-                <div className="absolute -top-4 -left-4 w-full h-full border border-indigo-500/30 rounded-2xl -z-10"></div>
+                <div className="absolute -top-3 -left-3 md:-top-4 md:-left-4 w-full h-full border border-indigo-500/30 rounded-2xl -z-10"></div>
               </motion.div>
 
               {/* Text Section (Right) */}

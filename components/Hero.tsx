@@ -410,8 +410,8 @@ const Hero: React.FC = () => {
 
         {/* MOBILE ONLY: 2-Row Infinite Marquee Scroll */}
         <div className="mt-16 lg:hidden relative w-screen -ml-6 overflow-hidden z-10 flex flex-col gap-3">
-          <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-slate-950 to-transparent z-10 pointer-events-none"></div>
-          <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-slate-950 to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-white dark:from-slate-950 to-transparent z-10 pointer-events-none"></div>
+          <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-white dark:from-slate-950 to-transparent z-10 pointer-events-none"></div>
 
           {/* Row 1: Right to Left */}
           <div className="flex w-[200%]">
@@ -421,7 +421,7 @@ const Hero: React.FC = () => {
               transition={{ duration: 25, ease: "linear", repeat: Infinity }}
             >
               {[...marqueeRow1, ...marqueeRow1, ...marqueeRow1, ...marqueeRow1].map((item, idx) => (
-                <div key={`row1-${idx}`} className="flex items-center gap-2 bg-slate-900/50 border border-white/10 px-4 py-2.5 rounded-xl whitespace-nowrap backdrop-blur-sm">
+                <div key={`row1-${idx}`} className="flex items-center gap-2 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-white/10 px-4 py-2.5 rounded-xl whitespace-nowrap backdrop-blur-sm shadow-sm dark:shadow-none">
                   <item.icon size={16} className="text-indigo-400" />
                   <span className="text-slate-300 text-sm font-medium">{item.label}</span>
                 </div>
@@ -438,7 +438,7 @@ const Hero: React.FC = () => {
               transition={{ duration: 30, ease: "linear", repeat: Infinity }}
             >
               {[...marqueeRow2, ...marqueeRow2, ...marqueeRow2, ...marqueeRow2].map((item, idx) => (
-                <div key={`row2-${idx}`} className="flex items-center gap-2 bg-slate-900/50 border border-white/10 px-4 py-2.5 rounded-xl whitespace-nowrap backdrop-blur-sm">
+                <div key={`row2-${idx}`} className="flex items-center gap-2 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-white/10 px-4 py-2.5 rounded-xl whitespace-nowrap backdrop-blur-sm shadow-sm dark:shadow-none">
                   <item.icon size={16} className="text-purple-400" />
                   <span className="text-slate-300 text-sm font-medium">{item.label}</span>
                 </div>

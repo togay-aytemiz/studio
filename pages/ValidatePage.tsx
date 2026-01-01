@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, BrainCircuit, ArrowRight, Cpu, RefreshCw, AlertCircle, AlertTriangle, Code2, Layers, Clock, BarChart3, Wallet, Info, Activity, ArrowLeft } from 'lucide-react';
+import { Sparkles, BrainCircuit, ArrowRight, Cpu, RefreshCw, AlertCircle, AlertTriangle, Code2, Layers, Clock, BarChart3, Wallet, Info, Activity } from 'lucide-react';
 import { useProductAnalysis } from '../hooks/useAI';
 import Button from '../components/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation, Trans } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import ThemeToggle from '../components/ThemeToggle';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const PLACEHOLDER_IDEAS = [
     "Sağlık takibi için yapay zeka asistanı",
@@ -63,6 +64,11 @@ const ValidatePage: React.FC = () => {
             clearTimeout(pauseTimeout);
         };
     }, [placeholderIndex, isTyping]);
+
+    // Scroll to top on mount
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     const handleAnalyze = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -141,22 +147,11 @@ const ValidatePage: React.FC = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/20 dark:from-[#030712] dark:via-[#030712] dark:to-[#030712] flex flex-col">
-            {/* Header */}
-            <header className="fixed top-0 left-0 right-0 z-50 px-6 py-4">
-                <div className="max-w-6xl mx-auto flex items-center justify-between">
-                    <Link
-                        to="/"
-                        className="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-white transition-colors"
-                    >
-                        <ArrowLeft size={20} />
-                        <span className="text-sm font-medium">Ana Sayfa</span>
-                    </Link>
-                    <ThemeToggle />
-                </div>
-            </header>
+            {/* Navbar */}
+            <Navbar />
 
-            {/* Main Content - Centered */}
-            <main className="flex-1 flex items-center justify-center px-6 py-20">
+            {/* Main Content - Full viewport height */}
+            <main className="min-h-screen flex items-center justify-center px-6 pt-20">
                 <div className="w-full max-w-3xl">
                     <AnimatePresence mode="wait">
                         {!analysis ? (
@@ -174,7 +169,7 @@ const ValidatePage: React.FC = () => {
                                     className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-100 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 mb-8"
                                 >
                                     <BrainCircuit size={16} className="text-indigo-600 dark:text-indigo-400" />
-                                    <span className="text-sm font-semibold text-indigo-700 dark:text-indigo-300">YZ Fikir Doğrulayıcı</span>
+                                    <span className="text-sm font-semibold text-indigo-700 dark:text-indigo-300">AI Fikir Doğrulayıcı</span>
                                 </motion.div>
 
                                 {/* Title */}
@@ -242,7 +237,7 @@ const ValidatePage: React.FC = () => {
                                         </div>
                                         <div>
                                             <h2 className="font-bold text-slate-900 dark:text-white">Analiz Sonucu</h2>
-                                            <p className="text-sm text-slate-500 dark:text-slate-400">YZ değerlendirmesi tamamlandı</p>
+                                            <p className="text-sm text-slate-500 dark:text-slate-400">AI değerlendirmesi tamamlandı</p>
                                         </div>
                                     </div>
                                     <Button variant="outline" size="sm" onClick={handleReset} icon={<RefreshCw size={16} />}>
@@ -308,6 +303,8 @@ const ValidatePage: React.FC = () => {
                     </AnimatePresence>
                 </div>
             </main>
+            {/* Footer */}
+            <Footer />
         </div>
     );
 };

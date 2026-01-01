@@ -21,6 +21,20 @@ const Process: React.FC = () => {
 
   return (
     <section id="process" className="py-36 md:py-40 bg-white dark:bg-[#040814] relative overflow-hidden border-t border-slate-200 dark:border-white/5">
+      {/* CSS Overrides to defeat aggressive global styles */}
+      <style>{`
+        /* Force icon stroke to white on hover */
+        #process .group:hover svg path {
+          stroke: white !important;
+        }
+        
+        /* Force icon box background to Indigo/Purple on hover */
+        #process .group:hover .icon-wrapper {
+          background-color: #4f46e5 !important; /* Indigo-600 */
+          border-color: #6366f1 !important; /* Indigo-500 */
+        }
+      `}</style>
+
       {/* Abstract Background Elements */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-900/5 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
 
@@ -60,8 +74,8 @@ const Process: React.FC = () => {
                     0{step.id}
                   </div>
 
-                  {/* Icon Badge */}
-                  <div className="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-700 dark:text-white mb-8 group-hover:bg-indigo-600 group-hover:border-indigo-500 group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-lg relative z-10">
+                  {/* Icon Badge - Added icon-wrapper class */}
+                  <div className="icon-wrapper w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-700 dark:text-white mb-8 group-hover:text-[#ffffff] group-hover:scale-110 transition-all duration-300 shadow-lg relative z-10">
                     {getIcon(step.id)}
                   </div>
 

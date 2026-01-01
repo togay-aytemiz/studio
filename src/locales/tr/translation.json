@@ -23,9 +23,9 @@
             "smartContext": "Akıllı Bağlam",
             "dataGrounding": "Veri Temeli",
             "llmIntegration": "LLM Entegre",
-            "aiMemory": "YZ Belleği",
+            "aiMemory": "AI Belleği",
             "semanticSearch": "Semantik Arama",
-            "enterpriseAi": "Kurumsal YZ",
+            "enterpriseAi": "Kurumsal AI",
             "securePrivate": "Güvenli & Özel",
             "strategy": "Strateji",
             "productFirst": "Önce Ürün",
@@ -43,7 +43,7 @@
         "marquee": {
             "highPerformance": "Yüksek Performans",
             "genAi": "Yapay Zeka",
-            "aiMemory": "YZ Belleği",
+            "aiMemory": "AI Belleği",
             "mobileFirst": "Mobil Uygulama",
             "secure": "Güvenlik",
             "globalCdn": "Küresel CDN",
@@ -73,7 +73,7 @@
         }
     },
     "aiValidator": {
-        "badge": "YZ Fikir Doğrulayıcı",
+        "badge": "AI Fikir Doğrulayıcı",
         "title": "Fikrinizi teknik olarak<br />doğrulayın.",
         "subtitle": "Projeniz ne kadar uygulanabilir? Hangi teknolojiler gerekir? Saniyeler içinde analiz edin.",
         "placeholder": "Örn: Yapay zeka destekli bir hukuk asistanı...",
@@ -91,7 +91,7 @@
         "complexity": {
             "frontend": "Frontend & UX",
             "backend": "Backend & Mantık",
-            "ai": "YZ & Veri"
+            "ai": "AI & Veri"
         },
         "stack": {
             "title": "Önerilen Teknolojiler",
@@ -268,10 +268,10 @@
         "subtitle": "Fikrinizi anlatın, birlikte geliştirelim.",
         "ai": {
             "title": "Emin değil misiniz?",
-            "subtitle": "YZ ile fikrinizi test edin.",
+            "subtitle": "AI ile fikrinizi test edin.",
             "button": "Fikir Doğrula",
             "autoBrief": "Otomatik Özet",
-            "suggestion": "YZ Önerisi"
+            "suggestion": "AI Önerisi"
         },
         "form": {
             "name": "İsim",

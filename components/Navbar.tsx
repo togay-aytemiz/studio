@@ -3,9 +3,10 @@ import { NAV_LINKS } from '../constants';
 import Button from './Button';
 import LanguageSwitcher from './LanguageSwitcher';
 import ThemeToggle from './ThemeToggle';
-import { Menu, X, ArrowRight } from 'lucide-react';
+import { Menu, X, ArrowRight, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -81,12 +82,12 @@ const Navbar: React.FC = () => {
     >
       <div className="container mx-auto px-6 h-20 flex items-center justify-between relative z-50">
         {/* Logo */}
-        <a href="#" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2 group">
+        <Link to="/" className="flex items-center gap-2 group">
           <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center group-hover:shadow-lg group-hover:shadow-indigo-500/25 transition-all">
             <span className="text-white font-bold text-lg">N</span>
           </div>
-          <span className="text-xl font-bold tracking-tight text-white">Nexus</span>
-        </a>
+          <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Nexus</span>
+        </Link>
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-8">
@@ -105,6 +106,13 @@ const Navbar: React.FC = () => {
         {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-4">
           <ThemeToggle />
+          <Link
+            to="/validate"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 text-sm font-medium text-indigo-400 hover:text-indigo-300 hover:border-indigo-400/30 transition-all"
+          >
+            <Sparkles size={14} />
+            <span>AI Fikir Asistanı</span>
+          </Link>
           <Button variant="primary" size="sm" onClick={(e) => handleNavClick(e, '#contact')}>
             {t('nav.startProject')}
           </Button>
@@ -146,7 +154,19 @@ const Navbar: React.FC = () => {
                 </motion.a>
               ))}
 
-              <motion.div variants={linkVariants} className="pt-8 flex flex-col gap-6">
+              <motion.div variants={linkVariants} className="pt-8 flex flex-col gap-4">
+                <Link
+                  to="/validate"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full flex items-center justify-between gap-4 px-6 py-4 rounded-full bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 text-indigo-400 font-bold hover:bg-indigo-500/20 transition-all group"
+                >
+                  <div className="flex items-center gap-4">
+                    <Sparkles size={18} />
+                    <span>AI Fikir Asistanı</span>
+                  </div>
+                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                </Link>
+
                 <Button
                   variant="primary"
                   size="lg"
@@ -156,15 +176,12 @@ const Navbar: React.FC = () => {
                   {t('nav.startProject')}
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </Button>
-
-                <div className="flex justify-center gap-4">
-                  <ThemeToggle />
-                </div>
               </motion.div>
             </div>
 
-            <motion.div variants={linkVariants} className="absolute bottom-10 left-8 right-8 border-t border-white/10 pt-6">
+            <motion.div variants={linkVariants} className="absolute bottom-10 left-8 right-8 border-t border-white/10 pt-6 flex items-center justify-between">
               <p className="text-slate-500 text-sm font-medium">hello@nexus.studio</p>
+              <ThemeToggle />
             </motion.div>
           </motion.div>
         )}

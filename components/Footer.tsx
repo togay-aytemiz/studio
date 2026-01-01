@@ -29,10 +29,13 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-700 dark:from-[#020617] dark:via-[#020617] dark:to-[#020617] border-t border-indigo-500/20 dark:border-white/5 pt-20 pb-10 relative overflow-hidden">
+    <footer
+      className="dark border-t border-white/5 pt-20 pb-10 relative overflow-hidden"
+      style={{ backgroundColor: '#020617' }} /* Inline style to bypass global CSS override */
+    >
 
       {/* Background Decor - Subtle bottom glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-white/5 dark:bg-indigo-900/5 rounded-full blur-[100px] pointer-events-none"></div>
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-indigo-900/5 rounded-full blur-[100px] pointer-events-none"></div>
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
@@ -40,12 +43,15 @@ const Footer: React.FC = () => {
           {/* Brand Column */}
           <div className="lg:col-span-5 flex flex-col gap-6">
             <div className="flex items-center gap-2 mb-2">
-              <div className="w-8 h-8 bg-white/20 dark:bg-gradient-to-br dark:from-indigo-500 dark:to-purple-500 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/20">
+              <div
+                className="w-8 h-8 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/20"
+                style={{ background: 'linear-gradient(to bottom right, #6366f1, #a855f7)' }}
+              >
                 <span className="text-white font-bold text-lg">N</span>
               </div>
               <span className="text-2xl font-bold tracking-tight text-white">Nexus</span>
             </div>
-            <p className="text-white/80 dark:text-slate-400 text-lg leading-relaxed max-w-sm">
+            <p className="text-slate-400 text-lg leading-relaxed max-w-sm">
               {t('footer.description')}
             </p>
             <div className="flex items-center gap-4 mt-2">
@@ -53,7 +59,8 @@ const Footer: React.FC = () => {
                 <a
                   key={idx}
                   href={item.href}
-                  className="w-10 h-10 rounded-full bg-white/20 dark:bg-slate-900 border border-white/30 dark:border-white/10 flex items-center justify-center text-white hover:bg-white/30 dark:text-slate-400 dark:hover:text-white dark:hover:bg-indigo-500/10 dark:hover:border-indigo-500/30 transition-all duration-300"
+                  className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-indigo-500/10 hover:border-indigo-500/30 transition-all duration-300"
+                  style={{ backgroundColor: '#0f172a' }} /* Inline style to bypass override */
                 >
                   <item.icon size={18} />
                 </a>
@@ -67,7 +74,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-4">
               {footerLinks.company.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-white/70 dark:text-slate-400 hover:text-white transition-colors text-sm font-medium flex items-center gap-1 group">
+                  <a href={link.href} className="text-slate-400 hover:text-white transition-colors text-sm font-medium flex items-center gap-1 group">
                     {link.label}
                     {link.href.startsWith('#') ? null : <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />}
                   </a>
@@ -82,7 +89,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-4">
               {footerLinks.services.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-white/70 dark:text-slate-400 hover:text-white transition-colors text-sm font-medium">
+                  <a href={link.href} className="text-slate-400 hover:text-white transition-colors text-sm font-medium">
                     {link.label}
                   </a>
                 </li>
@@ -94,16 +101,16 @@ const Footer: React.FC = () => {
           <div className="lg:col-span-2">
             <h4 className="text-white font-bold mb-6">{t('footer.studio')}</h4>
             <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-white/70 dark:text-slate-400 text-sm">
-                <MapPin size={16} className="mt-1 text-white/90 dark:text-indigo-500 flex-shrink-0" />
+              <li className="flex items-start gap-3 text-slate-400 text-sm">
+                <MapPin size={16} className="mt-1 text-indigo-500 flex-shrink-0" />
                 <span><Trans i18nKey="footer.address" components={{ br: <br /> }} /></span>
               </li>
-              <li className="flex items-center gap-3 text-white/70 dark:text-slate-400 text-sm">
-                <Mail size={16} className="text-white/90 dark:text-indigo-500 flex-shrink-0" />
+              <li className="flex items-center gap-3 text-slate-400 text-sm">
+                <Mail size={16} className="text-indigo-500 flex-shrink-0" />
                 <a href="mailto:hello@nexus.studio" className="hover:text-white transition-colors">hello@nexus.studio</a>
               </li>
-              <li className="flex items-center gap-3 text-white/70 dark:text-slate-400 text-sm">
-                <Phone size={16} className="text-white/90 dark:text-indigo-500 flex-shrink-0" />
+              <li className="flex items-center gap-3 text-slate-400 text-sm">
+                <Phone size={16} className="text-indigo-500 flex-shrink-0" />
                 <a href="tel:+15550123456" className="hover:text-white transition-colors">+1 (555) 012-3456</a>
               </li>
             </ul>
@@ -112,13 +119,13 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/10 dark:border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-white/60 dark:text-slate-500 text-sm">
+        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-slate-500 text-sm">
             &copy; {currentYear} Nexus Product Studio. {t('footer.rights')}
           </p>
           <div className="flex items-center gap-6 text-sm">
-            <a href="#" className="text-white/60 dark:text-slate-500 hover:text-white transition-colors">{t('footer.privacy')}</a>
-            <a href="#" className="text-white/60 dark:text-slate-500 hover:text-white transition-colors">{t('footer.terms')}</a>
+            <a href="#" className="text-slate-500 hover:text-white transition-colors">{t('footer.privacy')}</a>
+            <a href="#" className="text-slate-500 hover:text-white transition-colors">{t('footer.terms')}</a>
             <LanguageSwitcher />
           </div>
         </div>
