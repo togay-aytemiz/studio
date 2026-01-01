@@ -150,8 +150,8 @@ const Contact: React.FC = () => {
 
 
 
-                      <div className="pt-2">
-                        <Button type="submit" size="lg" className="w-full md:w-auto group">
+                      <div className="pt-2 flex justify-end md:justify-start">
+                        <Button type="submit" size="md" className="group !px-5 !py-2.5 !text-sm md:!px-6 md:!py-3 md:!text-base">
                           {t('contact.form.submit')}
                           <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
                         </Button>

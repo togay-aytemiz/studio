@@ -132,18 +132,18 @@ const Team: React.FC = () => {
                         {t('team.studio.p2')}
                      </p>
 
-                     <div className="flex flex-col gap-4">
+                     <div className="flex flex-col gap-6">
                         <div className="flex items-center gap-3 text-slate-300">
                            <CheckCircle2 size={18} className="text-indigo-500" />
-                           <span>{t('team.studio.checklist.inHouse')}</span>
+                           <span className="text-sm md:text-lg">{t('team.studio.checklist.inHouse')}</span>
                         </div>
                         <div className="flex items-center gap-3 text-slate-300">
                            <CheckCircle2 size={18} className="text-indigo-500" />
-                           <span className="font-medium text-white">{t('team.studio.checklist.aiExpertise')}</span>
+                           <span className="font-medium text-white text-sm md:text-lg">{t('team.studio.checklist.aiExpertise')}</span>
                         </div>
                         <div className="flex items-center gap-3 text-slate-300">
                            <CheckCircle2 size={18} className="text-indigo-500" />
-                           <span>{t('team.studio.checklist.partnership')}</span>
+                           <span className="text-sm md:text-lg">{t('team.studio.checklist.partnership')}</span>
                         </div>
                      </div>
                   </div>

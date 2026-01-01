@@ -65,13 +65,13 @@ const Process: React.FC = () => {
                   </div>
 
                   {/* Icon Badge - Added icon-wrapper class */}
-                  <div className="icon-wrapper w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-700 dark:text-white mb-4 md:mb-8 md:group-hover/card:text-[#ffffff] md:group-hover/card:bg-indigo-600 md:group-hover/card:border-indigo-500 group-hover:scale-110 transition-all duration-300 shadow-lg relative z-10">
+                  <div className="icon-wrapper w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-700 dark:text-white mb-4 md:mb-6 md:group-hover/card:text-[#ffffff] md:group-hover/card:bg-indigo-600 md:group-hover/card:border-indigo-500 group-hover:scale-110 transition-all duration-300 shadow-lg relative z-10">
                     {getIcon(step.id)}
                   </div>
 
                   {/* Content */}
                   <div className="relative z-10">
-                    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4 md:group-hover:text-indigo-600 md:dark:group-hover:text-indigo-300 transition-colors">
+                    <h3 className="text-sm md:text-xl font-bold text-slate-900 dark:text-white mb-2 md:mb-3 md:group-hover:text-indigo-600 md:dark:group-hover:text-indigo-300 transition-colors">
                       {t(`process.steps.${step.id}.title`)}
                     </h3>
                     <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">

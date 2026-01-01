@@ -141,12 +141,12 @@ const Expertise: React.FC = () => {
                                     <motion.div
                                         key={service.id}
                                         variants={itemVariants}
-                                        className="h-full p-8 rounded-2xl bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-white/5 relative overflow-hidden flex flex-col hover:border-indigo-500/30 transition-all duration-300 group shadow-sm dark:shadow-none"
+                                        className="h-full p-5 md:p-8 rounded-2xl bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-white/5 relative overflow-hidden flex flex-col hover:border-indigo-500/30 transition-all duration-300 group shadow-sm dark:shadow-none"
                                     >
-                                        <div className="w-14 h-14 bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 rounded-xl flex items-center justify-center mb-6 text-indigo-500 dark:text-indigo-400 group-hover:scale-110 transition-transform duration-300">
+                                        <div className="w-12 h-12 md:w-14 md:h-14 bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 rounded-xl flex items-center justify-center mb-4 md:mb-6 text-indigo-500 dark:text-indigo-400 group-hover:scale-110 transition-transform duration-300">
                                             <service.icon size={26} strokeWidth={1.5} />
                                         </div>
-                                        <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">
+                                        <h3 className="text-sm md:text-xl font-bold text-slate-900 dark:text-white mb-2 md:mb-3 tracking-tight">
                                             {t(`services.items.${keyId}.title`)}
                                         </h3>
                                         <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm flex-grow">

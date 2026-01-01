@@ -72,7 +72,7 @@ const FounderMessage: React.FC = () => {
                     "<Trans i18nKey="founder.quote" components={{ br: <br />, span: <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-purple-300 to-indigo-300" /> }} />"
                   </h3>
 
-                  <div className="space-y-6 text-slate-400 text-lg leading-relaxed font-light">
+                  <div className="space-y-6 text-slate-400 text-sm md:text-lg leading-relaxed font-light">
                     <p>
                       {t('founder.p1')}
                     </p>
