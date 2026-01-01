@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { NAV_LINKS } from '../constants';
 import Button from './Button';
 import LanguageSwitcher from './LanguageSwitcher';
-import ThemeToggle from './ThemeToggle';
 import { Menu, X, ArrowRight, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
@@ -145,10 +144,9 @@ const Navbar: React.FC = () => {
 
         {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-4">
-          <ThemeToggle />
           <Link
             to="/validate"
-            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 text-sm font-medium text-indigo-400 hover:text-indigo-300 hover:border-indigo-400/30 transition-all"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-transparent border border-white/30 text-sm font-medium text-white hover:bg-white/10 hover:border-white/50 transition-all"
           >
             <Sparkles size={14} />
             <span>AI Fikir Asistanı</span>
@@ -221,7 +219,6 @@ const Navbar: React.FC = () => {
 
             <motion.div variants={linkVariants} className="absolute bottom-10 left-8 right-8 border-t border-white/10 pt-6 flex items-center justify-between">
               <p className="text-slate-500 text-sm font-medium">hello@nexus.studio</p>
-              <ThemeToggle />
             </motion.div>
           </motion.div>
         )}

@@ -241,7 +241,7 @@ const Hero: React.FC = () => {
               i18nKey="hero.title"
               components={{
                 br: <br />,
-                span: <span className="text-white" />
+                span: <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]" />
               }}
             />
           </motion.h1>
