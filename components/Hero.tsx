@@ -209,15 +209,20 @@ const Hero: React.FC = () => {
 
       {/* Background Image with Gradient Fade - Intercom Style */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="/herobg.webp"
-          alt=""
-          className="w-full h-full object-cover object-center"
-        />
-        {/* Bottom gradient fade for smooth transition */}
-        <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-[#030712] via-transparent to-transparent"></div>
-        {/* Additional subtle top fade */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white/30 dark:from-[#030712]/50 via-transparent to-transparent"></div>
+        <picture>
+          <source media="(max-width: 768px)" srcSet="/herobg-mobile.webp" />
+          <img
+            src="/herobg.webp"
+            alt="Hero Background"
+            className="w-full h-full object-cover object-center"
+          />
+        </picture>
+        {/* Bottom gradient fade for smooth transition - Lighter/More balanced */}
+        <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-[#030712] via-transparent to-transparent opacity-90 dark:opacity-70"></div>
+        {/* Additional subtle top fade - Reduced opacity for better visibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/30 dark:from-[#030712]/20 via-transparent to-transparent"></div>
+        {/* Overall subtle overly to ensure text readability without being too dark */}
+        <div className="absolute inset-0 bg-black/5 dark:bg-black/10"></div>
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
