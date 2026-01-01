@@ -61,7 +61,7 @@ const Expertise: React.FC = () => {
     };
 
     return (
-        <section id="services" className="bg-slate-50 dark:bg-slate-950 relative pb-20 md:pb-32">
+        <section id="services" className="bg-slate-50 dark:bg-slate-950 relative pb-20 md:pb-8">
             {/* Background Decor */}
             <div className="absolute left-0 top-0 w-full h-[500px] bg-indigo-500/5 blur-[120px] pointer-events-none"></div>
 
@@ -83,7 +83,7 @@ const Expertise: React.FC = () => {
                                 components={{ br: <br />, span: <span className="text-slate-500 dark:text-slate-500" /> }}
                             />
                         </h2>
-                        <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
+                        <p className="text-sm md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
                             {t('expertise.subtitle', 'Hem teknik uygulama hem de sektörel deneyim. İhtiyacınız olan tüm yetkinlikler tek bir noktada.')}
                         </p>
                     </div>

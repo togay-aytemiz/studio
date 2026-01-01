@@ -20,7 +20,7 @@ const Process: React.FC = () => {
   };
 
   return (
-    <section id="process" className="py-12 md:py-40 bg-white dark:bg-[#040814] relative overflow-hidden">
+    <section id="process" className="py-12 md:pt-10 md:pb-24 bg-white dark:bg-[#040814] relative overflow-hidden">
       {/* CSS Overrides to defeat aggressive global styles */}
 
 
