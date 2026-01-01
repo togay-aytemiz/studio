@@ -60,7 +60,7 @@ const Capabilities: React.FC = () => {
               <Puzzle size={14} className="text-indigo-400" />
               <span className="text-xs font-bold tracking-widest text-indigo-400 uppercase">{t('capabilities.badge')}</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-normal">
               <Trans i18nKey="capabilities.title" components={{ br: <br />, span: <span className="text-slate-600" /> }} />
             </h2>
             <p className="text-lg text-slate-400 leading-relaxed">

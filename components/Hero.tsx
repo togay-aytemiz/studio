@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Button from './Button';
-import { ArrowRight, Zap, BrainCircuit, Layers, TrendingUp, CheckCircle2, ShieldCheck, Cloud, Code2, Smartphone, Palette, Globe, Rocket, Search, Server, Database, Bot, Sparkles, MessageSquare } from 'lucide-react';
+import { ArrowRight, Zap, BrainCircuit, Layers, TrendingUp, CheckCircle2, ShieldCheck, Cloud, Code2, Smartphone, Palette, Globe, Rocket, Search, Server, Database, Bot, Sparkles, MessageSquare, ChevronDown } from 'lucide-react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 
 // --- BACKGROUND ANIMATION COMPONENT: ORBITAL SYSTEM ---
@@ -205,7 +205,7 @@ const Hero: React.FC = () => {
   const marqueeRow2 = MARQUEE_ITEMS.slice(marqueeHalf);
 
   return (
-    <section className="relative pt-32 pb-12 md:pt-48 md:pb-32 overflow-hidden min-h-[90vh] flex flex-col justify-center">
+    <section className="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden min-h-screen flex flex-col justify-center">
 
       {/* 1. Base Gradient Mesh */}
       <motion.div
@@ -240,9 +240,15 @@ const Hero: React.FC = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-[1.1]"
+              className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-[1.2]"
             >
-              <Trans i18nKey="hero.title" components={{ br: <br /> }} />
+              <Trans
+                i18nKey="hero.title"
+                components={{
+                  br: <br />,
+                  span: <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-purple-300 to-indigo-300" />
+                }}
+              />
             </motion.h1>
 
             <motion.p
@@ -441,7 +447,30 @@ const Hero: React.FC = () => {
           </div>
         </div>
 
+
+
       </div>
+
+      {/* Animated Scroll Down Arrow - Fixed to bottom of hero section */}
+      <motion.div
+        className="absolute bottom-4 md:bottom-8 inset-x-0 flex justify-center cursor-pointer z-20"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1, duration: 0.5 }}
+        onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+      >
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          className="flex flex-col items-center gap-2"
+        >
+          <span className="text-xs text-slate-500 uppercase tracking-widest font-medium">Keşfet</span>
+          <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center backdrop-blur-sm bg-white/5 hover:bg-white/10 hover:border-white/30 transition-all">
+            <ChevronDown size={20} className="text-white/70" />
+          </div>
+        </motion.div>
+      </motion.div>
+
     </section>
   );
 };

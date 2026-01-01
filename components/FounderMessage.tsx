@@ -68,7 +68,7 @@ const FounderMessage: React.FC = () => {
                     <span className="text-indigo-400 font-medium uppercase tracking-widest text-xs">{t('founder.badge')}</span>
                   </div>
 
-                  <h3 className="text-3xl md:text-5xl font-serif text-white mb-8 leading-tight">
+                  <h3 className="text-3xl md:text-5xl font-serif text-white mb-8 leading-normal">
                     "<Trans i18nKey="founder.quote" components={{ br: <br />, span: <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-purple-300 to-indigo-300" /> }} />"
                   </h3>
 

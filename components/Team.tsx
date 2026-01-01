@@ -119,7 +119,7 @@ const Team: React.FC = () => {
                         <span className="text-xs font-bold text-slate-300 uppercase tracking-widest">{t('team.studio.badge')}</span>
                      </div>
 
-                     <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                     <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-normal">
                         <Trans i18nKey="team.studio.title" components={{ br: <br />, span: <span className="text-indigo-400" /> }} />
                      </h2>
 

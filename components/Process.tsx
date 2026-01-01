@@ -30,7 +30,7 @@ const Process: React.FC = () => {
             <GitBranch size={14} className="text-indigo-400" />
             <span className="text-xs font-bold tracking-widest text-indigo-400 uppercase">{t('process.badge')}</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight leading-normal">
             {t('process.title')}
           </h2>
           <p className="text-lg text-slate-400 leading-relaxed">

@@ -2,18 +2,18 @@
     "welcome": "Welcome",
     "language": "Language",
     "nav": {
-        "expertise": "Expertise",
+        "expertise": "Services",
         "process": "Process",
-        "work": "Work",
-        "team": "Team",
-        "startProject": "Start a project"
+        "work": "Projects",
+        "team": "About",
+        "startProject": "Free Consultation"
     },
     "hero": {
-        "tagline": "Product-Minded Software Studio",
-        "title": "We turn ideas into <br /> scalable digital products.",
-        "subtitle": "Not just a dev shop. We are your technical partners for building high-performance, AI-ready web and mobile applications that scale.",
-        "startProject": "Start a project",
-        "viewWork": "View our work",
+        "tagline": "Software Development Company",
+        "title": "We Build <br /> <span>Software.</span>",
+        "subtitle": "Web, mobile, and AI-powered applications. From idea to product, your technical partner.",
+        "startProject": "Free Consultation",
+        "viewWork": "Our Work",
         "stats": {
             "lighthouse": "Lighthouse Score",
             "seo": "SEO Optimized",
@@ -42,9 +42,9 @@
         },
         "marquee": {
             "highPerformance": "High Performance",
-            "genAi": "Generative AI",
+            "genAi": "AI Powered",
             "aiMemory": "AI Memory",
-            "mobileFirst": "Mobile First",
+            "mobileFirst": "Mobile Apps",
             "secure": "Secure",
             "globalCdn": "Global CDN",
             "autoAgents": "Autonomous Agents",
@@ -57,7 +57,7 @@
         "explore": "Explore",
         "expertise": "Expertise",
         "studio": "Studio",
-        "description": "We engineer scalable digital products for ambitious startups and enterprise innovators.",
+        "description": "Engineering scalable digital products for ambitious startups.",
         "rights": "All rights reserved.",
         "privacy": "Privacy Policy",
         "terms": "Terms of Service",
@@ -75,7 +75,7 @@
     "aiValidator": {
         "badge": "Nexus AI Validator",
         "title": "Validate your idea <br /> technically.",
-        "subtitle": "How feasible is your project? Which infrastructure to use? Let Nexus AI analyze it in seconds.",
+        "subtitle": "How feasible is your project? Let Nexus AI analyze technical load and infrastructure in seconds.",
         "placeholder": "Ex: An AI-powered legal assistant app...",
         "analyze": "Analyze",
         "analyzing": "Analyzing...",
@@ -85,7 +85,7 @@
             "complexity": "Complexity Breakdown",
             "technicalLoad": "Technical Load",
             "risk": "Risk Analysis",
-            "monetization": "Monetization Strategy Recommendation",
+            "monetization": "Monetization Strategy",
             "insight": "Nexus Strategic Insight"
         },
         "complexity": {
@@ -104,171 +104,171 @@
     },
     "services": {
         "badge": "Expertise",
-        "title": "Comprehensive product <br/> development.",
-        "subtitle": "We don't just write code. We provide a full-cycle product capability, from initial strategy to post-launch scaling.",
+        "title": "End-to-End <br/> Engineering.",
+        "subtitle": "We define, design, and deploy. A full-cycle product capability, from initial strategy to post-launch scaling.",
         "items": {
             "strategy": {
                 "title": "Product Strategy",
-                "description": "We help define the right product, features, and roadmap before writing code."
+                "description": "Defining the roadmap and core features before writing a single line of code."
             },
             "webDev": {
                 "title": "Web Development",
-                "description": "Scalable, high-performance web applications built with Next.js, React, and Node.js."
+                "description": "Scalable, high-performance web applications built with Next.js and React."
             },
             "mobileDev": {
                 "title": "Mobile Development",
-                "description": "Native-feel iOS and Android applications crafted with React Native and modern tools."
+                "description": "Native-grade iOS and Android applications crafted with React Native."
             },
             "mvp": {
                 "title": "MVP & Launch",
-                "description": "Fast validation, lean development, and smooth product launches for startups."
+                "description": "Rapid prototyping and lean development for fast market entry."
             }
         }
     },
     "capabilities": {
         "badge": "Technical Expertise",
-        "title": "Don't start from <br/> <span class=\"text-slate-600\">scratch.</span>",
-        "subtitle": "Speed matters. We accelerate development by applying deep domain expertise and proven architectural patterns. We have already mastered these complex integrations, enabling us to build robust systems faster without reinventing the wheel.",
+        "title": "Speed & <br/> <span class=\"text-slate-600\">Precision.</span>",
+        "subtitle": "We accelerate development by applying deep domain expertise and proven architectural patterns. Robust systems, built faster.",
         "groups": {
             "fintech": {
                 "title": "Commerce & Finance",
                 "items": [
                     "Payment Gateways (Stripe, Iyzico)",
-                    "E-Invoice / E-Archive Integration",
-                    "Subscription & Recurring Billing",
-                    "Digital Wallet Systems",
-                    "Marketplace Split Payments"
+                    "E-Invoice Integration",
+                    "Subscription Billing",
+                    "Digital Wallets",
+                    "Marketplace Payments"
                 ]
             },
             "saas": {
                 "title": "SaaS Core",
                 "items": [
                     "Multi-tenant Architecture",
-                    "Advanced B2B Dashboards",
-                    "RBAC (Role-Based Access Control)",
-                    "Audit Logging & Activity Streams",
-                    "Custom CMS Development"
+                    "B2B Dashboards",
+                    "RBAC Systems",
+                    "Audit Logging",
+                    "Custom CMS"
                 ]
             },
             "ops": {
                 "title": "Operations & Logic",
                 "items": [
-                    "Complex Booking/Appointment Systems",
-                    "Real-time Order Tracking",
-                    "Geolocation & Map Services",
-                    "Notification Engines (Push/Email/SMS)",
-                    "QR & Barcode Scanning Flows"
+                    "Booking Systems",
+                    "Real-time Tracking",
+                    "Geolocation Services",
+                    "Notification Engines",
+                    "QR/Barcode Scanning"
                 ]
             },
             "ai": {
                 "title": "Intelligence & Data",
                 "items": [
-                    "RAG (Retrieval-Augmented Generation)",
-                    "Vector Search Integration",
-                    "LLM Agent Workflows",
-                    "Real-time Analytics Pipelines",
-                    "Automated Document Processing"
+                    "RAG Pipelines",
+                    "Vector Search",
+                    "LLM Agents",
+                    "Real-time Analytics",
+                    "Document Processing"
                 ]
             }
         }
     },
     "process": {
         "badge": "Methodology",
-        "title": "From concept to code.",
-        "subtitle": "We don't just build software; we engineer digital products using a proven, agile process designed for speed and scalability.",
+        "title": "Idea to Launch.",
+        "subtitle": "A proven agile process designed for clarity, speed, and scalability.",
         "steps": {
             "1": {
                 "title": "Discover",
-                "description": "We dive deep to understand the problem, market, and core business goals."
+                "description": "Understanding core business goals and market fit."
             },
             "2": {
                 "title": "Design",
-                "description": "Architecting the user experience and crafting a stunning visual interface."
+                "description": "Architecting UX and crafting stunning interfaces."
             },
             "3": {
                 "title": "Build",
-                "description": "Writing clean, scalable code using modern frameworks and best practices."
+                "description": "Writing clean, scalable code with modern frameworks."
             },
             "4": {
-                "title": "Launch & Iterate",
-                "description": "Deploying to production and improving based on real user data."
+                "title": "Launch",
+                "description": "Deploying, measuring, and iterating based on real data."
             }
         }
     },
     "work": {
         "badge": "Selected Work",
-        "title": "Real results for <br/> ambitious companies.",
-        "subtitle": "We build products that move the needle. Here are a few recent success stories from our studio.",
+        "title": "Real Impact.",
+        "subtitle": "Success stories from our studio. Products that move the needle.",
         "impact": "Impact",
         "projects": {
             "fintech-app": {
                 "category": "Fintech Mobile App",
                 "title": "Nova Finance",
-                "solution": "We rebuilt the mobile architecture using React Native for cross-platform efficiency and implemented an Event-Driven serverless backend on AWS. We integrated biometric security and WebSocket feeds for real-time market data.",
-                "outcome": "Processed $2M+ in transactions within first 3 months."
+                "solution": "Rebuilt mobile architecture with React Native. Implemented serverless backend and biometric security.",
+                "outcome": "$2M+ processed in 3 months."
             },
             "saas-dashboard": {
                 "category": "SaaS Platform",
                 "title": "Orbital Analytics",
-                "solution": "We engineered a high-performance frontend using WebGL for GPU-accelerated rendering. The backend was optimized with Python and Redis caching layers to pre-process complex aggregations.",
-                "outcome": "Reduced data reporting time by 85% for enterprise clients."
+                "solution": "High-performance WebGL frontend. Python/Redis optimized backend for complex aggregations.",
+                "outcome": "85% faster reporting."
             },
             "health-portal": {
                 "category": "Healthcare Web App",
                 "title": "Vital Sync",
-                "solution": "We designed a federated GraphQL API to unify data sources without migrating legacy databases. The frontend was built with Next.js for SEO and speed, wrapped in an end-to-end encrypted security layer.",
-                "outcome": "Securely serving 50k+ patients with real-time updates."
+                "solution": "Federated GraphQL API unifying data sources. End-to-end encrypted Next.js frontend.",
+                "outcome": "Serving 50k+ patients securely."
             }
         }
     },
     "founder": {
         "badge": "A Note from the Founder",
-        "quote": "Software agencies often forget one thing: <br/> <span class=\"text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-purple-300 to-indigo-300\">Code is just a means to an end.</span>",
-        "p1": "I started Nexus because I was tired of seeing founders get great code but failed products. The disconnect between engineering and product strategy is where most startups die.",
-        "p2": "We don't just take your specs and disappear. We act as your technical co-founder, challenging assumptions and obsessing over the user experience until your vision isn't just live—it's thriving.",
+        "quote": "Software agencies often forget one thing: <br/> <span>Code is just a means to an end.</span>",
+        "p1": "I started Nexus to end the disconnect between engineering and strategy. Great code means nothing if the product fails.",
+        "p2": "We act as your technical co-founder. We challenge assumptions and obsess over user experience until your vision thrives.",
         "name": "Alex Voser",
         "role": "Founder & CEO"
     },
     "team": {
         "studio": {
             "badge": "The Studio",
-            "title": "Not a factory. <br/> <span class=\"text-indigo-400\">A dedicated product studio.</span>",
-            "p1": "We are a purpose-built digital product studio. We believe that small, autonomous squads of experts outperform large, fragmented agencies every time.",
-            "p2": "We intentionally cap our active projects to ensure total immersion in your vision. You get a dedicated partner that combines boutique design craft with elite engineering.",
+            "title": "Not a factory. <br/> <span class=\"text-indigo-400\">A product studio.</span>",
+            "p1": "We are a purpose-built digital product studio. Small, autonomous squads outperform fragmented agencies.",
+            "p2": "We cap active projects to ensure total immersion. Boutique craft meets elite engineering.",
             "checklist": {
                 "inHouse": "100% In-house senior talent",
-                "aiExpertise": "Native Generative AI & LLM Expertise",
+                "aiExpertise": "Native Generative AI Expertise",
                 "partnership": "Exclusive partnership model"
             }
         },
         "squad": {
             "badge": "Your Project Squad",
-            "footer": "Fusion of engineering, design, and machine intelligence."
+            "footer": "Fusion of engineering, design, and AI."
         },
         "disciplines": {
             "eng": {
                 "title": "Engineering",
                 "role": "Full-Stack Architects",
-                "desc": "React, Node.js, AI Agents"
+                "desc": "React, Node.js, AI"
             },
             "des": {
                 "title": "Design",
                 "role": "Product Designers",
-                "desc": "Systems, UI/UX, Motion"
+                "desc": "Systems, UI, Motion"
             },
             "prod": {
                 "title": "Strategy",
                 "role": "Technical Leads",
-                "desc": "AI Roadmap, Market Fit"
+                "desc": "Roadmap, Market Fit"
             }
         }
     },
     "contact": {
-        "title": "Ready to ship?",
-        "subtitle": "Tell us about your vision. We'll tell you how we can build it.",
+        "title": "Ready to build?",
+        "subtitle": "Tell us about your vision.",
         "ai": {
             "title": "Not sure where to start?",
-            "subtitle": "Test your idea feasibility with our AI first.",
+            "subtitle": "Test feasibility with AI.",
             "button": "Test Validator",
             "autoBrief": "AI Auto-Brief",
             "suggestion": "AI Suggestion"
@@ -279,7 +279,7 @@
             "project": "Project Details",
             "namePlaceholder": "Jane Doe",
             "emailPlaceholder": "jane@company.com",
-            "projectPlaceholder": "We are looking to build a mobile app that...",
+            "projectPlaceholder": "We want to build...",
             "submit": "Send Application"
         },
         "sidebar": {
@@ -287,11 +287,11 @@
             "newBusiness": "New Business",
             "phone": "Phone",
             "responseTime": "Response Time",
-            "responseDesc": "We value your time. Expect a detailed reply within <span class=\"text-white font-medium\">24 hours</span>."
+            "responseDesc": "Detailed reply within <span class=\"text-white font-medium\">24 hours</span>."
         },
         "alerts": {
-            "shortDescription": "Please enter a short description of your idea first.",
-            "success": "Thanks! We'll be in touch shortly."
+            "shortDescription": "Please describe your idea.",
+            "success": "Thanks! We'll be in touch."
         }
     }
 }

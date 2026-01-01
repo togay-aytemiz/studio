@@ -32,7 +32,7 @@ const Services: React.FC = () => {
               <Sparkles size={14} className="text-indigo-400" />
               <span className="text-xs font-bold tracking-widest text-indigo-400 uppercase">{t('services.badge')}</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6" style={{ lineHeight: 1.3 }}>
               <Trans i18nKey="services.title" components={{ br: <br /> }} />
             </h2>
             <p className="text-lg text-slate-400 leading-relaxed">
