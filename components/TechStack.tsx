@@ -25,7 +25,7 @@ const TechStack: React.FC = () => {
     const { t } = useTranslation();
 
     return (
-        <section className="py-12 bg-slate-50 dark:bg-[#020617]/50 overflow-hidden">
+        <section id="tech-stack" className="py-12 bg-slate-50 dark:bg-[#020617]/50 overflow-hidden scroll-mt-24 md:scroll-mt-32">
             <div className="container mx-auto px-6 mb-12 text-center">
                 <p className="text-sm font-semibold tracking-widest text-slate-500 dark:text-slate-400 uppercase">
                     {t('techStack.title', 'Technologies We Master')}

@@ -275,21 +275,19 @@ const Hero: React.FC = () => {
             </button>
           </motion.div>
 
-          {/* Highlights */}
+          {/* Highlights - Intercom Style */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.8 }}
-            className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mt-6"
+            className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-8 mt-12 text-center"
           >
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={16} className="text-emerald-500" />
-              <span className="text-sm text-slate-500 dark:text-slate-400">{t('hero.highlights.aiPowered')}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle2 size={16} className="text-emerald-500" />
-              <span className="text-sm text-slate-500 dark:text-slate-400">{t('hero.highlights.fastDelivery')}</span>
-            </div>
+            <span className="text-white/80 font-mono uppercase text-[0.75rem] md:text-[0.875rem] tracking-[0.063rem] md:tracking-[0.094rem] leading-tight">
+              {t('hero.highlights.aiPowered')}
+            </span>
+            <span className="text-white/80 font-mono uppercase text-[0.75rem] md:text-[0.875rem] tracking-[0.063rem] md:tracking-[0.094rem] leading-tight">
+              {t('hero.highlights.fastDelivery')}
+            </span>
           </motion.div>
         </motion.div>
       </div>
@@ -348,7 +346,7 @@ const Hero: React.FC = () => {
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 0.5 }}
-        onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+        onClick={() => document.getElementById('tech-stack')?.scrollIntoView({ behavior: 'smooth' })}
       >
         <motion.div
           animate={{ y: [0, 8, 0] }}
