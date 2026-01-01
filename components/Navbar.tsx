@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NAV_LINKS } from '../constants';
 import Button from './Button';
 import LanguageSwitcher from './LanguageSwitcher';
+import ThemeToggle from './ThemeToggle';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
@@ -103,7 +104,7 @@ const Navbar: React.FC = () => {
 
         {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-4">
-          <LanguageSwitcher />
+          <ThemeToggle />
           <Button variant="primary" size="sm" onClick={(e) => handleNavClick(e, '#contact')}>
             {t('nav.startProject')}
           </Button>
@@ -156,8 +157,8 @@ const Navbar: React.FC = () => {
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </Button>
 
-                <div className="flex justify-center">
-                  <LanguageSwitcher />
+                <div className="flex justify-center gap-4">
+                  <ThemeToggle />
                 </div>
               </motion.div>
             </div>

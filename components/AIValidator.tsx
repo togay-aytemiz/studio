@@ -103,20 +103,20 @@ const AIValidator: React.FC = () => {
   };
 
   return (
-    <section className="py-36 md:py-40 bg-[#030712] relative border-t border-white/5">
+    <section className="py-36 md:py-40 bg-slate-50 dark:bg-[#030712] relative border-t border-slate-200 dark:border-white/5">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[500px] bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
 
       <div className="container mx-auto px-6 relative z-10">
         <ScrollReveal width="100%" className="max-w-3xl mx-auto">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-6">
-              <BrainCircuit size={14} className="text-indigo-400" />
-              <span className="text-xs font-bold tracking-widest text-indigo-300 uppercase">{t('aiValidator.badge')}</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-100 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 mb-6">
+              <BrainCircuit size={14} className="text-indigo-600 dark:text-indigo-400" />
+              <span className="text-xs font-bold tracking-widest text-indigo-600 dark:text-indigo-300 uppercase">{t('aiValidator.badge')}</span>
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-              <Trans i18nKey="aiValidator.title" components={{ br: <br />, span: <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400" /> }} />
+            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">
+              <Trans i18nKey="aiValidator.title" components={{ br: <br />, span: <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 dark:from-indigo-400 to-purple-500 dark:to-purple-400" /> }} />
             </h2>
-            <p className="text-slate-400 text-lg">
+            <p className="text-slate-600 dark:text-slate-400 text-lg">
               {t('aiValidator.subtitle')}
             </p>
           </div>
@@ -127,12 +127,12 @@ const AIValidator: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20, height: 0 }}
-                className="bg-slate-900/80 backdrop-blur-md border border-white/10 rounded-2xl p-2 md:p-3 flex flex-col md:flex-row gap-2 shadow-2xl relative overflow-hidden"
+                className="bg-white dark:bg-slate-900/80 backdrop-blur-md border border-slate-200 dark:border-white/10 rounded-2xl p-2 md:p-3 flex flex-col md:flex-row gap-2 shadow-lg dark:shadow-2xl relative overflow-hidden"
               >
                 <input
                   type="text"
                   placeholder={t('aiValidator.placeholder')}
-                  className="flex-1 bg-transparent text-white px-6 py-4 outline-none placeholder:text-slate-600 text-lg"
+                  className="flex-1 bg-transparent text-slate-900 dark:text-white px-6 py-4 outline-none placeholder:text-slate-400 dark:placeholder:text-slate-600 text-lg"
                   value={ideaInput}
                   onChange={(e) => setIdeaInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleAnalyze(e)}

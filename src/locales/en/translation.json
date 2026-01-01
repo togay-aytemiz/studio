@@ -246,9 +246,9 @@
             "footer": "Fusion of engineering, design, and AI."
         },
         "disciplines": {
-            "eng": {
+            "dev": {
                 "title": "Engineering",
-                "role": "Full-Stack Architects",
+                "role": "Developers",
                 "desc": "React, Node.js, AI"
             },
             "des": {

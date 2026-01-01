@@ -126,9 +126,9 @@
         }
     },
     "capabilities": {
-        "badge": "Teknik Uzmanlık",
-        "title": "Hazır Modüller.",
-        "subtitle": "Sıfırdan başlamıyoruz. Ödeme, bildirim, harita gibi yaygın entegrasyonlarda derin deneyimimiz var.",
+        "badge": "Uzmanlık Alanlarımız",
+        "title": "Deneyimli Olduğumuz Konular.",
+        "subtitle": "Bu alanlarda onlarca proje geliştirdik. Ödeme, bildirim, harita gibi yaygın entegrasyonlarda derin deneyimimiz var.",
         "groups": {
             "fintech": {
                 "title": "Ödeme & Finans",
@@ -246,9 +246,9 @@
             "footer": "Yazılım, tasarım ve yapay zeka."
         },
         "disciplines": {
-            "eng": {
+            "dev": {
                 "title": "Yazılım",
-                "role": "Full-Stack Geliştirici",
+                "role": "Geliştiriciler",
                 "desc": "React, Node.js, Python"
             },
             "des": {

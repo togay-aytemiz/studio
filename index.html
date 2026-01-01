@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
+        darkMode: 'class',
         theme: {
           extend: {
             fontFamily: {
@@ -18,9 +19,9 @@
               serif: ['Playfair Display', 'serif'],
             },
             colors: {
-              background: '#030712', // slate-950
-              surface: '#0f172a', // slate-900
-              primary: '#6366f1', // indigo-500
+              background: 'var(--bg-primary)',
+              surface: 'var(--bg-secondary)',
+              primary: 'var(--primary)',
             },
             backgroundImage: {
               'grid-pattern': "linear-gradient(to right, #1e293b 1px, transparent 1px), linear-gradient(to bottom, #1e293b 1px, transparent 1px)",
@@ -29,26 +30,6 @@
         }
       }
     </script>
-    <style>
-      body {
-        background-color: #030712;
-        color: #f8fafc;
-      }
-      /* Custom scrollbar for premium feel */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #030712;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #1e293b;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #334155;
-      }
-    </style>
   <script type="importmap">
 {
   "imports": {

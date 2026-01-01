@@ -77,21 +77,21 @@ const Capabilities: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
                 viewport={{ once: true }}
-                className={`bg-slate-900/40 backdrop-blur-sm border border-white/5 rounded-2xl p-6 hover:bg-slate-900/60 transition-colors duration-300 group`}
+                className={`bg-white dark:bg-slate-900/40 backdrop-blur-sm border border-slate-200 dark:border-white/5 rounded-2xl p-6 hover:bg-slate-50 dark:hover:bg-slate-900/60 transition-colors duration-300 group shadow-sm dark:shadow-none`}
               >
                 {/* Card Header */}
                 <div className="flex items-center gap-4 mb-6">
                   <div className={`p-3 rounded-xl ${group.bg} border ${group.border} ${group.color}`}>
                     <group.icon size={24} />
                   </div>
-                  <h3 className="font-bold text-white text-lg">{group.title}</h3>
+                  <h3 className="font-bold text-slate-900 dark:text-white text-lg">{group.title}</h3>
                 </div>
 
                 {/* List Items */}
                 <ul className="space-y-3">
                   {/* Check if items is array before mapping to support i18n returnObjects safety */}
                   {Array.isArray(group.items) && group.items.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5 text-sm text-slate-400 group-hover:text-slate-300 transition-colors">
+                    <li key={idx} className="flex items-start gap-2.5 text-sm text-slate-600 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors">
                       <ChevronRight size={14} className={`mt-0.5 ${group.color} opacity-50`} />
                       <span>{item}</span>
                     </li>
@@ -99,7 +99,7 @@ const Capabilities: React.FC = () => {
                 </ul>
 
                 {/* Bottom Visual */}
-                <div className="mt-8 pt-4 border-t border-white/5 flex items-center justify-between opacity-50 group-hover:opacity-100 transition-opacity">
+                <div className="mt-8 pt-4 border-t border-slate-200 dark:border-white/5 flex items-center justify-between opacity-50 group-hover:opacity-100 transition-opacity">
                   <span className="text-[10px] font-mono text-slate-500 uppercase">Proficiency: High</span>
                   <div className={`w-1.5 h-1.5 rounded-full ${group.color.replace('text-', 'bg-')} animate-pulse`}></div>
                 </div>

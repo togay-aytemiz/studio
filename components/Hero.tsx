@@ -49,7 +49,7 @@ const OrbitalSystem = () => {
 
         {/* --- ORBIT 1 (INNER - Structure) --- */}
         {/* Track - More visible now */}
-        <path d={orbit1} stroke="rgba(255,255,255,0.08)" strokeWidth="1.5" fill="none" />
+        <path d={orbit1} stroke="currentColor" strokeWidth="1.5" fill="none" className="text-white/10 dark:text-white/10" style={{ stroke: 'var(--orbit-stroke, rgba(99, 102, 241, 0.3))' }} />
         {/* Moving Particle */}
         <circle r="3" fill="#818cf8">
           <animateMotion dur="12s" repeatCount="indefinite" path={orbit1} />
@@ -62,7 +62,7 @@ const OrbitalSystem = () => {
 
         {/* --- ORBIT 2 (MIDDLE - Tech/Data) --- */}
         {/* Track - Dashed line for UI/HUD feel */}
-        <path d={orbit2} stroke="rgba(255,255,255,0.06)" strokeWidth="1" fill="none" strokeDasharray="4 6" />
+        <path d={orbit2} stroke="currentColor" strokeWidth="1" fill="none" strokeDasharray="4 6" style={{ stroke: 'var(--orbit-stroke, rgba(99, 102, 241, 0.2))' }} />
         {/* Secondary Solid Arc just for aesthetics on part of the ring */}
         <path d={orbit2} stroke="rgba(99, 102, 241, 0.2)" strokeWidth="1" fill="none" strokeDasharray="200 1500" strokeDashoffset="500" />
 
@@ -78,7 +78,7 @@ const OrbitalSystem = () => {
 
         {/* --- ORBIT 3 (OUTER - Boundary) --- */}
         {/* Track - Very faint */}
-        <path d={orbit3} stroke="rgba(255,255,255,0.03)" strokeWidth="1" fill="none" />
+        <path d={orbit3} stroke="currentColor" strokeWidth="1" fill="none" style={{ stroke: 'var(--orbit-stroke, rgba(99, 102, 241, 0.15))' }} />
 
 
         {/* --- THE COMET (Idea -> Product) --- */}
@@ -86,7 +86,7 @@ const OrbitalSystem = () => {
         <path id="cometTrack" d={cometPath} fill="none" />
 
         {/* The Comet Head */}
-        <circle r="3" fill="white" filter="drop-shadow(0 0 4px white)">
+        <circle r="3" fill="#6366f1" filter="drop-shadow(0 0 4px #6366f1)">
           <animateMotion dur="15s" repeatCount="indefinite" path={cometPath} rotate="auto">
             {/* Optional: Ease-in-out for more natural flyby */}
             <mpath xlinkHref="#cometTrack" />
@@ -230,10 +230,10 @@ const Hero: React.FC = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-8 backdrop-blur-sm shadow-[0_0_15px_rgba(99,102,241,0.2)]"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-100 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 mb-8 backdrop-blur-sm shadow-[0_0_15px_rgba(99,102,241,0.1)] dark:shadow-[0_0_15px_rgba(99,102,241,0.2)]"
             >
-              <Sparkles size={14} className="text-indigo-400" />
-              <span className="text-xs font-semibold text-indigo-100 uppercase tracking-wider">{t('hero.tagline')}</span>
+              <Sparkles size={14} className="text-indigo-600 dark:text-indigo-400" />
+              <span className="text-xs font-semibold text-indigo-700 dark:text-indigo-100 uppercase tracking-wider">{t('hero.tagline')}</span>
             </motion.div>
 
             <motion.h1
@@ -464,9 +464,9 @@ const Hero: React.FC = () => {
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
           className="flex flex-col items-center gap-2"
         >
-          <span className="text-xs text-slate-500 uppercase tracking-widest font-medium">Keşfet</span>
-          <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center backdrop-blur-sm bg-white/5 hover:bg-white/10 hover:border-white/30 transition-all">
-            <ChevronDown size={20} className="text-white/70" />
+          <span className="text-xs text-slate-600 dark:text-slate-500 uppercase tracking-widest font-medium">Keşfet</span>
+          <div className="w-10 h-10 rounded-full border border-slate-300 dark:border-white/20 flex items-center justify-center backdrop-blur-sm bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 hover:border-slate-400 dark:hover:border-white/30 transition-all">
+            <ChevronDown size={20} className="text-slate-500 dark:text-white/70" />
           </div>
         </motion.div>
       </motion.div>

@@ -71,10 +71,10 @@ const Team: React.FC = () => {
 
    const DISCIPLINES = useMemo(() => [
       {
-         id: "eng",
-         title: t('team.disciplines.eng.title'),
-         role: t('team.disciplines.eng.role'),
-         desc: t('team.disciplines.eng.desc'),
+         id: "dev",
+         title: t('team.disciplines.dev.title'),
+         role: t('team.disciplines.dev.role'),
+         desc: t('team.disciplines.dev.desc'),
          icon: Terminal,
          color: "text-blue-400",
          bg: "bg-blue-500/10",
@@ -103,7 +103,7 @@ const Team: React.FC = () => {
    ], [t]);
 
    return (
-      <section id="team" className="py-36 md:py-40 bg-[#030712] relative overflow-hidden border-t border-white/5">
+      <section id="team" className="py-36 md:py-40 bg-white dark:bg-[#030712] relative overflow-hidden border-t border-slate-200 dark:border-white/5">
 
          {/* New Background Animation */}
          <UserCentricOrbit />
@@ -114,20 +114,20 @@ const Team: React.FC = () => {
 
                   {/* Left: Text Content - Studio & Expertise Focused */}
                   <div className="lg:w-1/2">
-                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/50 border border-slate-700 mb-6 backdrop-blur-md">
-                        <Users size={14} className="text-indigo-400" />
-                        <span className="text-xs font-bold text-slate-300 uppercase tracking-widest">{t('team.studio.badge')}</span>
+                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 mb-6 backdrop-blur-md">
+                        <Users size={14} className="text-indigo-500 dark:text-indigo-400" />
+                        <span className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest">{t('team.studio.badge')}</span>
                      </div>
 
-                     <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-normal">
-                        <Trans i18nKey="team.studio.title" components={{ br: <br />, span: <span className="text-indigo-400" /> }} />
+                     <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 leading-normal">
+                        <Trans i18nKey="team.studio.title" components={{ br: <br />, span: <span className="text-indigo-600 dark:text-indigo-400" /> }} />
                      </h2>
 
-                     <p className="text-lg text-slate-400 mb-6 leading-relaxed">
+                     <p className="text-lg text-slate-600 dark:text-slate-400 mb-6 leading-relaxed">
                         {t('team.studio.p1')}
                      </p>
 
-                     <p className="text-lg text-slate-400 mb-8 leading-relaxed">
+                     <p className="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
                         {t('team.studio.p2')}
                      </p>
 
@@ -151,14 +151,14 @@ const Team: React.FC = () => {
                   <div className="lg:w-1/2 w-full">
                      <div className="relative">
                         {/* Decorative backdrop */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 rounded-3xl transform rotate-3 scale-105 border border-white/5"></div>
+                        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 rounded-3xl transform rotate-3 scale-105 border border-slate-200 dark:border-white/5"></div>
 
-                        <div className="bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-3xl p-6 md:p-8 relative shadow-2xl">
-                           <div className="mb-6 flex justify-between items-center border-b border-white/5 pb-4">
-                              <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">{t('team.squad.badge')}</span>
+                        <div className="bg-white dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-3xl p-6 md:p-8 relative shadow-xl dark:shadow-2xl">
+                           <div className="mb-6 flex justify-between items-center border-b border-slate-200 dark:border-white/5 pb-4">
+                              <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">{t('team.squad.badge')}</span>
                               <div className="flex -space-x-2">
                                  {[1, 2, 3].map(i => (
-                                    <div key={i} className="w-8 h-8 rounded-full bg-slate-800 border-2 border-slate-900 flex items-center justify-center text-xs text-slate-500">
+                                    <div key={i} className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 border-2 border-white dark:border-slate-900 flex items-center justify-center text-xs text-slate-500">
                                        <div className={`w-full h-full rounded-full bg-gradient-to-br ${i === 1 ? 'from-blue-400 to-blue-600' : i === 2 ? 'from-purple-400 to-purple-600' : 'from-emerald-400 to-emerald-600'} opacity-80`}></div>
                                     </div>
                                  ))}
@@ -172,27 +172,27 @@ const Team: React.FC = () => {
                                     initial={{ x: 20, opacity: 0 }}
                                     whileInView={{ x: 0, opacity: 1 }}
                                     transition={{ delay: index * 0.1 }}
-                                    className={`group flex items-center gap-4 p-4 rounded-xl border ${item.border} ${item.bg} hover:bg-slate-800 transition-colors`}
+                                    className={`group flex items-center gap-4 p-4 rounded-xl border border-slate-200 dark:border-transparent ${item.border} bg-slate-50 dark:bg-transparent ${item.bg} hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors`}
                                  >
-                                    <div className={`p-3 rounded-lg bg-slate-950 border border-white/10 ${item.color}`}>
+                                    <div className={`p-3 rounded-lg bg-white dark:bg-slate-950 border border-slate-200 dark:border-white/10 ${item.color}`}>
                                        <item.icon size={24} />
                                     </div>
                                     <div className="flex-1">
-                                       <h4 className="text-white font-bold">{item.title}</h4>
-                                       <div className="flex items-center gap-2 text-xs md:text-sm text-slate-400">
-                                          <span className="font-medium text-slate-300">{item.role}</span>
-                                          <span className="w-1 h-1 bg-slate-600 rounded-full"></span>
+                                       <h4 className="text-slate-900 dark:text-white font-bold">{item.title}</h4>
+                                       <div className="flex items-center gap-2 text-xs md:text-sm text-slate-500 dark:text-slate-400">
+                                          <span className="font-medium text-slate-700 dark:text-slate-300">{item.role}</span>
+                                          <span className="w-1 h-1 bg-slate-400 dark:bg-slate-600 rounded-full"></span>
                                           <span>{item.desc}</span>
                                        </div>
                                     </div>
                                     <div className="opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0">
-                                       <ArrowRight size={18} className="text-slate-500" />
+                                       <ArrowRight size={18} className="text-slate-400 dark:text-slate-500" />
                                     </div>
                                  </motion.div>
                               ))}
                            </div>
 
-                           <div className="mt-6 pt-4 border-t border-white/5 text-center">
+                           <div className="mt-6 pt-4 border-t border-slate-200 dark:border-white/5 text-center">
                               <p className="text-xs text-slate-500 font-medium">
                                  {t('team.squad.footer')}
                               </p>

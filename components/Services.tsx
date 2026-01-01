@@ -56,20 +56,20 @@ const Services: React.FC = () => {
               <motion.div
                 key={service.id}
                 variants={itemVariants}
-                className="h-full p-8 rounded-2xl bg-slate-900/20 border border-white/5 relative overflow-hidden flex flex-col"
+                className="h-full p-8 rounded-2xl bg-white dark:bg-slate-900/20 border border-slate-200 dark:border-white/5 relative overflow-hidden flex flex-col shadow-sm dark:shadow-none"
               >
                 {/* Subtle top gradient line */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500/0 via-indigo-500/20 to-indigo-500/0 opacity-50"></div>
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500/0 via-indigo-500/30 dark:via-indigo-500/20 to-indigo-500/0 opacity-50"></div>
 
-                <div className="w-14 h-14 bg-slate-950 border border-white/10 rounded-xl flex items-center justify-center mb-6 text-indigo-400 shadow-sm">
+                <div className="w-14 h-14 bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-white/10 rounded-xl flex items-center justify-center mb-6 text-indigo-500 dark:text-indigo-400 shadow-sm">
                   <service.icon size={26} strokeWidth={1.5} />
                 </div>
 
-                <h3 className="text-xl font-bold text-white mb-3 tracking-tight">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">
                   {t(`services.items.${keyId}.title`)}
                 </h3>
 
-                <p className="text-slate-400 leading-relaxed text-sm flex-grow">
+                <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm flex-grow">
                   {t(`services.items.${keyId}.description`)}
                 </p>
 
