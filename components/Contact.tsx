@@ -37,7 +37,7 @@ const Contact: React.FC = () => {
   const labelClasses = "block text-[11px] font-bold uppercase tracking-widest text-white/70 mb-2 ml-1";
 
   return (
-    <section id="contact" className="py-12 md:py-32 bg-[#020617] relative overflow-hidden min-h-screen flex items-center justify-center">
+    <section id="contact" className="scroll-mt-28 py-12 md:py-24 bg-[#020617] relative overflow-hidden flex flex-col items-center justify-start">
 
       {/* Background Image - Mobile */}
       <div
