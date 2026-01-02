@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Button from './Button';
-import { Send, Mail, Phone, CheckCircle2, ArrowRight, ArrowUpRight, BrainCircuit } from 'lucide-react';
+import { Send, Mail, Phone, CheckCircle2, ArrowRight, ArrowUpRight, BrainCircuit, Loader2 } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation, Trans } from 'react-i18next';
@@ -12,8 +12,10 @@ const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     message: ''
   });
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const { t } = useTranslation();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -22,10 +24,31 @@ const Contact: React.FC = () => {
 
 
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert(t('contact.alerts.success'));
-    setFormData({ name: '', email: '', message: '' });
+    if ((!formData.email && !formData.phone) || !formData.name || !formData.message) return;
+
+    setStatus('sending');
+
+    try {
+      await import('../services/emailService').then(mod =>
+        mod.sendEmail({
+          type: 'contact',
+          name: formData.name,
+          email: formData.email || 'Telefon ile iletişim',
+          phone: formData.phone,
+          message: formData.message
+        })
+      );
+
+      setStatus('success');
+      setFormData({ name: '', email: '', phone: '', message: '' });
+      setTimeout(() => setStatus('idle'), 3000);
+    } catch (error) {
+      console.error('Email error:', error);
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 3000);
+    }
   };
 
   const handleValidateClick = () => {
@@ -99,19 +122,33 @@ const Contact: React.FC = () => {
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-6">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="group">
-                          <label className={labelClasses}>{t('contact.form.name')}</label>
-                          <input
-                            type="text"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            className={inputClasses}
-                            placeholder={t('contact.form.namePlaceholder')}
-                            required
-                          />
+                      <div className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div className="group">
+                            <label className={labelClasses}>{t('contact.form.name')}</label>
+                            <input
+                              type="text"
+                              name="name"
+                              value={formData.name}
+                              onChange={handleChange}
+                              className={inputClasses}
+                              placeholder={t('contact.form.namePlaceholder')}
+                              required
+                            />
+                          </div>
+                          <div className="group">
+                            <label className={labelClasses}>Telefon</label>
+                            <input
+                              type="tel"
+                              name="phone"
+                              value={formData.phone}
+                              onChange={handleChange}
+                              className={inputClasses}
+                              placeholder="0555 555 55 55"
+                            />
+                          </div>
                         </div>
+
                         <div className="group">
                           <label className={labelClasses}>{t('contact.form.email')}</label>
                           <input
@@ -121,7 +158,6 @@ const Contact: React.FC = () => {
                             onChange={handleChange}
                             className={inputClasses}
                             placeholder={t('contact.form.emailPlaceholder')}
-                            required
                           />
                         </div>
                       </div>
@@ -150,7 +186,7 @@ const Contact: React.FC = () => {
                           type="submit"
                           size="md"
                           className="group !px-5 !py-2.5 !text-sm md:!px-6 md:!py-3 md:!text-base"
-                          disabled={!formData.name.trim() || !formData.email.trim() || !formData.message.trim()}
+                          disabled={!formData.name.trim() || (!formData.email.trim() && !formData.phone.trim()) || !formData.message.trim() || status === 'sending'}
                         >
                           {t('contact.form.submit')}
                           <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
@@ -166,20 +202,11 @@ const Contact: React.FC = () => {
                       <div className="space-y-8">
                         <div className="flex items-start gap-4 group">
                           <div className="p-2 bg-slate-800/50 rounded-lg text-slate-400 group-hover:text-indigo-400 group-hover:bg-indigo-500/10 transition-colors">
-                            <Mail size={18} />
-                          </div>
-                          <div>
-                            <p className="text-slate-500 text-xs uppercase font-bold tracking-wider mb-1">{t('contact.sidebar.newBusiness')}</p>
-                            <a href="mailto:hello@agens.studio" className="text-white hover:text-indigo-400 transition-colors font-medium">hello@agens.studio</a>
-                          </div>
-                        </div>
-                        <div className="flex items-start gap-4 group">
-                          <div className="p-2 bg-slate-800/50 rounded-lg text-slate-400 group-hover:text-indigo-400 group-hover:bg-indigo-500/10 transition-colors">
                             <Phone size={18} />
                           </div>
                           <div>
                             <p className="text-slate-500 text-xs uppercase font-bold tracking-wider mb-1">{t('contact.sidebar.phone')}</p>
-                            <p className="text-white font-medium">+1 (555) 012-3456</p>
+                            <p className="text-white font-medium">+90 (507) 469 9692</p>
                           </div>
                         </div>
                       </div>

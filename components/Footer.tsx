@@ -49,7 +49,7 @@ const Footer: React.FC = () => {
               <span className="text-2xl font-semibold tracking-[0.4em] text-white font-brand">AGENS</span>
             </div>
             <p className="text-slate-400 text-lg leading-relaxed max-w-sm">
-              {t('footer.description')}
+              Web ve mobil uygulamalardan, ölçeklenebilir altyapılara kadar ürün geliştirme sürecinin tamamını tek çatı altında yönetiyoruz.
             </p>
             <div className="flex items-center gap-4 mt-2">
               {footerLinks.social.map((item, idx) => (
@@ -96,19 +96,15 @@ const Footer: React.FC = () => {
 
           {/* Contact Info Column */}
           <div className="lg:col-span-2">
-            <h4 className="text-white font-bold mb-6">{t('footer.studio')}</h4>
+            <h4 className="text-white font-bold mb-6">İletişim</h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-slate-400 text-sm">
                 <MapPin size={16} className="mt-1 text-indigo-500 flex-shrink-0" />
-                <span><Trans i18nKey="footer.address" components={{ br: <br /> }} /></span>
-              </li>
-              <li className="flex items-center gap-3 text-slate-400 text-sm">
-                <Mail size={16} className="text-indigo-500 flex-shrink-0" />
-                <a href="mailto:hello@agens.studio" className="hover:text-white transition-colors">hello@agens.studio</a>
+                <span>Ankara, Türkiye</span>
               </li>
               <li className="flex items-center gap-3 text-slate-400 text-sm">
                 <Phone size={16} className="text-indigo-500 flex-shrink-0" />
-                <a href="tel:+15550123456" className="hover:text-white transition-colors">+1 (555) 012-3456</a>
+                <a href="tel:+905074699692" className="hover:text-white transition-colors">+90 (507) 469 9692</a>
               </li>
             </ul>
           </div>

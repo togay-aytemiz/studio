@@ -218,9 +218,7 @@ const Navbar: React.FC = () => {
               </motion.div>
             </div>
 
-            <motion.div variants={linkVariants} className="absolute bottom-10 left-8 right-8 border-t border-white/10 pt-6 flex items-center justify-between">
-              <p className="text-slate-500 text-sm font-medium">hello@agens.studio</p>
-            </motion.div>
+
           </motion.div>
         )}
       </AnimatePresence>

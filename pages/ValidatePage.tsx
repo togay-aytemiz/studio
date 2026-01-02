@@ -606,6 +606,8 @@ const ValidatePage: React.FC = () => {
                                                     <input
                                                         type="text"
                                                         required
+                                                        value={contactForm.name}
+                                                        onChange={(e) => setContactForm(prev => ({ ...prev, name: e.target.value }))}
                                                         className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 pl-4 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                                                         placeholder="Adınız Soyadınız"
                                                     />
@@ -619,7 +621,8 @@ const ValidatePage: React.FC = () => {
                                                     </div>
                                                     <input
                                                         type="tel"
-                                                        required
+                                                        value={contactForm.phone}
+                                                        onChange={(e) => setContactForm(prev => ({ ...prev, phone: e.target.value }))}
                                                         className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 pl-10 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                                                         placeholder="0555 555 55 55"
                                                     />
@@ -654,6 +657,8 @@ const ValidatePage: React.FC = () => {
                                         <div className="flex justify-center md:justify-end">
                                             <Button
                                                 size="md"
+                                                onClick={handleContactSubmit}
+                                                disabled={emailStatus === 'sending' || !contactForm.name || (!contactForm.email && !contactForm.phone)}
                                                 className="group !px-5 !py-2.5 !text-sm md:!px-6 md:!py-3 md:!text-base w-full md:w-auto"
                                             >
                                                 Gönder
