@@ -80,7 +80,7 @@ const Expertise: React.FC = () => {
                             <Trans
                                 i18nKey="expertise.title"
                                 defaults="Uçtan Uca <br /> <span>Dijital Çözümler.</span>"
-                                components={{ br: <br />, span: <span className="text-slate-500 dark:text-slate-500" /> }}
+                                components={{ br: <br />, span: <span className="text-indigo-400" /> }}
                             />
                         </h2>
                         <p className="text-sm md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">

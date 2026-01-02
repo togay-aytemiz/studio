@@ -55,7 +55,7 @@ const Process: React.FC = () => {
               i18nKey="process.title"
               components={{
                 br: <br />,
-                span: <span className="text-slate-400 dark:text-slate-600" />
+                span: <span className="text-indigo-400" />
               }}
             />
           </h2>
