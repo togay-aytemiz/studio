@@ -73,7 +73,7 @@
         }
     },
     "aiValidator": {
-        "badge": "Nexus AI Validator",
+        "badge": "AI Idea Analysis",
         "title": "Validate your idea <br /> technically.",
         "subtitle": "How feasible is your project? Let Nexus AI analyze technical load and infrastructure in seconds.",
         "placeholder": "Ex: An AI-powered legal assistant app...",
@@ -127,7 +127,7 @@
     },
     "capabilities": {
         "badge": "Technical Expertise",
-        "title": "Speed & <br/> <span class=\"text-slate-600\">Precision.</span>",
+        "title": "Speed & <br/> <span className=\"text-slate-600\">Precision.</span>",
         "subtitle": "We accelerate development by applying deep domain expertise and proven architectural patterns. Robust systems, built faster.",
         "groups": {
             "fintech": {
@@ -232,7 +232,7 @@
     "team": {
         "studio": {
             "badge": "The Studio",
-            "title": "Not a factory. <br/> <span class=\"text-indigo-400\">A product studio.</span>",
+            "title": "Not a factory. <br/> <span className=\"text-indigo-400\">A product studio.</span>",
             "p1": "We are a purpose-built digital product studio. Small, autonomous squads outperform fragmented agencies.",
             "p2": "We cap active projects to ensure total immersion. Boutique craft meets elite engineering.",
             "checklist": {
@@ -287,7 +287,7 @@
             "newBusiness": "New Business",
             "phone": "Phone",
             "responseTime": "Response Time",
-            "responseDesc": "Detailed reply within <span class=\"text-white font-medium\">24 hours</span>."
+            "responseDesc": "Detailed reply within <span className=\"text-white font-medium\">24 hours</span>."
         },
         "alerts": {
             "shortDescription": "Please describe your idea.",

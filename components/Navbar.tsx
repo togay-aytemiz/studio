@@ -149,7 +149,7 @@ const Navbar: React.FC = () => {
             className="flex items-center gap-2 px-4 py-2 rounded-full bg-transparent border border-white/30 text-sm font-medium text-white hover:bg-white/10 hover:border-white/50 transition-all"
           >
             <Sparkles size={14} />
-            <span>AI Fikir Asistanı</span>
+            <span>AI Fikir Analizi</span>
           </Link>
           <Button variant="primary" size="sm" onClick={(e) => handleNavClick(e, '#contact')}>
             {t('nav.startProject')}
@@ -200,7 +200,7 @@ const Navbar: React.FC = () => {
                 >
                   <div className="flex items-center gap-4">
                     <Sparkles size={18} />
-                    <span>AI Fikir Asistanı</span>
+                    <span>AI Fikir Analizi</span>
                   </div>
                   <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </Link>

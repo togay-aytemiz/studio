@@ -168,18 +168,18 @@ const ValidatePage: React.FC = () => {
                                     animate={{ opacity: 1, scale: 1 }}
                                     className="flex items-center justify-center gap-3 mb-6"
                                 >
-                                    <div className="w-2.5 h-2.5 bg-orange-500 rounded-sm"></div>
-                                    <span className="text-xs font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">AI Fikir Doğrulayıcı</span>
+                                    <div className="w-2.5 h-2.5 bg-indigo-500 rounded-sm"></div>
+                                    <span className="text-xs font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">AI Fikir Analizi</span>
                                 </motion.div>
                                 <div className="w-full h-px bg-slate-200 dark:bg-white/10 mb-8"></div>
 
                                 {/* Title */}
                                 <h1 className="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-6 leading-tight font-serif">
-                                    Fikrinizi <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500">teknik olarak</span><br />doğrulayın.
+                                    Fikrinizi <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500">saniyeler içinde</span><br />analiz edin.
                                 </h1>
 
                                 <p className="text-lg text-slate-600 dark:text-slate-400 mb-12 max-w-xl mx-auto">
-                                    Yapay zeka ile fikrinizin teknik fizibilitesini, pazar potansiyelini ve geliştirme sürecini analiz edin.
+                                    Yapay zeka ile projenizin teknik fizibilitesini, tahmini süresini ve maliyetini öğrenin — ücretsiz.
                                 </p>
 
                                 {/* Input Form */}

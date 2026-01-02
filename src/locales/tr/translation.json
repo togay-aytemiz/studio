@@ -77,7 +77,7 @@
         }
     },
     "aiValidator": {
-        "badge": "AI Fikir Doğrulayıcı",
+        "badge": "AI Fikir Analizi",
         "title": "Fikrinizi teknik olarak<br />doğrulayın.",
         "subtitle": "Projeniz ne kadar uygulanabilir? Hangi teknolojiler gerekir? Saniyeler içinde analiz edin.",
         "placeholder": "Örn: Yapay zeka destekli bir hukuk asistanı...",
@@ -245,7 +245,7 @@
     "team": {
         "studio": {
             "badge": "Hakkımızda",
-            "title": "Küçük ekip. <br/> <span class=\"text-indigo-400\">Büyük işler.</span>",
+            "title": "Küçük ekip. <br/> <span className=\"text-indigo-400\">Büyük işler.</span>",
             "p1": "İnsan uzmanlığını yapay zeka ile birleştirerek kaliteli ve verimli sonuçlar üretiyoruz.",
             "p2": "Ürün odaklı ve çevik ekibimizle fikirleri, ajans karmaşasından uzak, ölçeklenebilir dijital ürünlere dönüştürüyoruz.",
             "checklist": {
@@ -303,7 +303,7 @@
             "newBusiness": "Yeni Proje",
             "phone": "Telefon",
             "responseTime": "Yanıt Süresi",
-            "responseDesc": "<span class=\"text-white font-medium\">24 saat</span> içinde dönüş yapıyoruz."
+            "responseDesc": "<span className=\"text-white font-medium\">24 saat</span> içinde dönüş yapıyoruz."
         },
         "alerts": {
             "shortDescription": "Lütfen projenizi kısaca anlatın.",
