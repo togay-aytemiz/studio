@@ -125,7 +125,7 @@ const Navbar: React.FC = () => {
           <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center group-hover:shadow-lg group-hover:shadow-indigo-500/25 transition-all">
             <span className="text-white font-bold text-lg">N</span>
           </div>
-          <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Nexus</span>
+          <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Agens</span>
         </a>
 
         {/* Desktop Links */}
@@ -218,7 +218,7 @@ const Navbar: React.FC = () => {
             </div>
 
             <motion.div variants={linkVariants} className="absolute bottom-10 left-8 right-8 border-t border-white/10 pt-6 flex items-center justify-between">
-              <p className="text-slate-500 text-sm font-medium">hello@nexus.studio</p>
+              <p className="text-slate-500 text-sm font-medium">hello@agens.studio</p>
             </motion.div>
           </motion.div>
         )}

@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { analyzeProductIdea } from '../services/geminiService';
+import { analyzeProductIdeaWithOpenAI } from '../services/openaiService';
 import { AIAnalysisResult } from '../types';
 
 interface UseAIState {
@@ -23,9 +23,12 @@ export const useProductAnalysis = () => {
         throw new Error("Please enter a more detailed description.");
       }
 
-      const jsonString = await analyzeProductIdea(idea);
-      const parsedData = JSON.parse(jsonString) as AIAnalysisResult;
-      
+      const [jsonString] = await Promise.all([
+        analyzeProductIdeaWithOpenAI(idea),
+        new Promise(resolve => setTimeout(resolve, 10000))
+      ]);
+      const parsedData = JSON.parse(jsonString as string) as AIAnalysisResult;
+
       setState({
         data: parsedData,
         isLoading: false,

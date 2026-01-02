@@ -1,7 +1,7 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
 // Initialize Gemini
-const apiKey = process.env.API_KEY || ''; 
+const apiKey = process.env.API_KEY || '';
 let ai: GoogleGenAI | null = null;
 
 if (apiKey) {
@@ -63,7 +63,7 @@ export const analyzeProductIdea = async (idea: string): Promise<string> => {
           },
           mvpTimeline: "10-14 Hafta",
           monetizationStrategy: "Freemium model ile başlayıp, gelişmiş analitik raporlarını Enterprise paketine koyarak B2B satışa odaklanmalısınız.",
-          nexusInsight: "Yönetim paneline odaklanmadan önce, son kullanıcının 'aha!' anını yaşadığı ana akışı mükemmelleştirin. İlk versiyonda admin paneli manuel olabilir."
+          agensInsight: "Yönetim paneline odaklanmadan önce, son kullanıcının 'aha!' anını yaşadığı ana akışı mükemmelleştirin. İlk versiyonda admin paneli manuel olabilir."
         };
         resolve(JSON.stringify(mockData));
       }, 2500);
@@ -73,7 +73,7 @@ export const analyzeProductIdea = async (idea: string): Promise<string> => {
   try {
     const model = 'gemini-3-flash-preview';
     const prompt = `
-      Sen "Nexus AI", premium bir yazılım stüdyosunun Dijital CTO'susun (Chief Technology Officer).
+      Sen "Agens AI", premium bir yazılım stüdyosunun Dijital CTO'susun (Chief Technology Officer).
       Bu ürün fikrini analiz et: "${idea}".
       
       Çıktıyı tamamen Türkçe olarak ve aşağıdaki JSON formatında ver.
@@ -91,15 +91,15 @@ export const analyzeProductIdea = async (idea: string): Promise<string> => {
             feasibilityScore: { type: Type.NUMBER, description: "0-100 arası teknik uygulanabilirlik puanı." },
             viabilityVerdict: { type: Type.STRING, description: "Teknik durumu özetleyen tek cümlelik net bir tespit." },
             complexity: {
-                type: Type.OBJECT,
-                properties: {
-                    frontend: { type: Type.NUMBER, description: "0-100 arası frontend karmaşıklığı" },
-                    backend: { type: Type.NUMBER, description: "0-100 arası backend karmaşıklığı" },
-                    ai: { type: Type.NUMBER, description: "0-100 arası AI/Veri karmaşıklığı" }
-                }
+              type: Type.OBJECT,
+              properties: {
+                frontend: { type: Type.NUMBER, description: "0-100 arası frontend karmaşıklığı" },
+                backend: { type: Type.NUMBER, description: "0-100 arası backend karmaşıklığı" },
+                ai: { type: Type.NUMBER, description: "0-100 arası AI/Veri karmaşıklığı" }
+              }
             },
-            technicalChallenges: { 
-              type: Type.ARRAY, 
+            technicalChallenges: {
+              type: Type.ARRAY,
               items: { type: Type.STRING },
               description: "3 adet kritik teknik zorluk veya risk."
             },
@@ -113,9 +113,9 @@ export const analyzeProductIdea = async (idea: string): Promise<string> => {
             },
             mvpTimeline: { type: Type.STRING, description: "Tahmini MVP süresi (örn: 8-12 Hafta)" },
             monetizationStrategy: { type: Type.STRING, description: "Bu ürün için en mantıklı gelir modeli önerisi (tek cümle)." },
-            nexusInsight: { type: Type.STRING, description: "Projeyi başarıya götürecek, ezber bozan stratejik bir tavsiye." }
+            agensInsight: { type: Type.STRING, description: "Projeyi başarıya götürecek, ezber bozan stratejik bir tavsiye." }
           },
-          required: ["feasibilityScore", "viabilityVerdict", "complexity", "technicalChallenges", "recommendedStack", "mvpTimeline", "monetizationStrategy", "nexusInsight"]
+          required: ["feasibilityScore", "viabilityVerdict", "complexity", "technicalChallenges", "recommendedStack", "mvpTimeline", "monetizationStrategy", "agensInsight"]
         }
       }
     });
@@ -123,6 +123,6 @@ export const analyzeProductIdea = async (idea: string): Promise<string> => {
     return response.text || "{}";
   } catch (error) {
     console.error("Gemini Error:", error);
-    throw new Error("Nexus AI şu an kalibrasyon modunda. Lütfen tekrar deneyin.");
+    throw new Error("Agens AI şu an kalibrasyon modunda. Lütfen tekrar deneyin.");
   }
 };

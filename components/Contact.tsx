@@ -170,7 +170,7 @@ const Contact: React.FC = () => {
                           </div>
                           <div>
                             <p className="text-slate-500 text-xs uppercase font-bold tracking-wider mb-1">{t('contact.sidebar.newBusiness')}</p>
-                            <a href="mailto:hello@nexus.studio" className="text-white hover:text-indigo-400 transition-colors font-medium">hello@nexus.studio</a>
+                            <a href="mailto:hello@agens.studio" className="text-white hover:text-indigo-400 transition-colors font-medium">hello@agens.studio</a>
                           </div>
                         </div>
                         <div className="flex items-start gap-4 group">

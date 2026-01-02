@@ -45,6 +45,7 @@ export interface AIAnalysisResult {
     infrastructure: string;
   };
   mvpTimeline: string;
+  marketAnalysis: string;
   monetizationStrategy: string;
-  nexusInsight: string;
+  agensInsight: string;
 }

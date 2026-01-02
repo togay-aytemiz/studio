@@ -75,7 +75,7 @@
     "aiValidator": {
         "badge": "AI Idea Analysis",
         "title": "Validate your idea <br /> technically.",
-        "subtitle": "How feasible is your project? Let Nexus AI analyze technical load and infrastructure in seconds.",
+        "subtitle": "How feasible is your project? Let Agens AI analyze technical load and infrastructure in seconds.",
         "placeholder": "Ex: An AI-powered legal assistant app...",
         "analyze": "Analyze",
         "analyzing": "Analyzing...",
@@ -86,7 +86,7 @@
             "technicalLoad": "Technical Load",
             "risk": "Risk Analysis",
             "monetization": "Monetization Strategy",
-            "insight": "Nexus Strategic Insight"
+            "insight": "Agens Strategic Insight"
         },
         "complexity": {
             "frontend": "Frontend & UX",
@@ -224,7 +224,7 @@
     "founder": {
         "badge": "A Note from the Founder",
         "quote": "Software agencies often forget one thing: <br/> <span>Code is just a means to an end.</span>",
-        "p1": "I started Nexus to end the disconnect between engineering and strategy. Great code means nothing if the product fails.",
+        "p1": "I started Agens to end the disconnect between engineering and strategy. Great code means nothing if the product fails.",
         "p2": "We act as your technical co-founder. We challenge assumptions and obsess over user experience until your vision thrives.",
         "name": "Alex Voser",
         "role": "Founder & CEO"

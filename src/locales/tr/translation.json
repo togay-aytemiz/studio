@@ -79,7 +79,7 @@
     "aiValidator": {
         "badge": "AI Fikir Analizi",
         "title": "Fikrinizi teknik olarak<br />doğrulayın.",
-        "subtitle": "Projeniz ne kadar uygulanabilir? Hangi teknolojiler gerekir? Saniyeler içinde analiz edin.",
+        "subtitle": "Projeniz ne kadar uygulanabilir? Hangi teknolojiler gerekir? Agens AI saniyeler içinde analiz etsin.",
         "placeholder": "Örn: Yapay zeka destekli bir hukuk asistanı...",
         "analyze": "Analiz Et",
         "analyzing": "Analiz Ediliyor...",
@@ -90,7 +90,7 @@
             "technicalLoad": "Teknik Yük",
             "risk": "Risk Analizi",
             "monetization": "Gelir Modeli",
-            "insight": "Stratejik Tavsiye"
+            "insight": "Agens Stratejik Tavsiyesi"
         },
         "complexity": {
             "frontend": "Frontend & UX",
@@ -237,7 +237,7 @@
     "founder": {
         "badge": "Kurucudan",
         "quote": "Kod yazmak kolay. <br/> <span>Doğru ürünü yapmak zor.</span>",
-        "p1": "İyi bir ürün yalnızca koddan ibaret değildir. Doğru problemi anlamak, doğru çözümü tasarlamak ve sürdürülebilir şekilde hayata geçirmek gerekir.",
+        "p1": "Agens'i kurarken tek bir amacım vardı: Mühendislik ve strateji arasındaki kopukluğu gidermek. Ürün başarısız olursa harika kodun bir anlamı yoktur.",
         "p2": "Biz, projelere sadece geliştirici olarak değil; ürün ortağı olarak yaklaşıyoruz. Hedefimiz, birlikte değer üreten işler ortaya koymak.",
         "name": "Alex Voser",
         "role": "Kurucu & Ürün Lideri"

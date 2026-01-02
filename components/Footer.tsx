@@ -49,7 +49,7 @@ const Footer: React.FC = () => {
               >
                 <span className="text-white font-bold text-lg">N</span>
               </div>
-              <span className="text-2xl font-bold tracking-tight text-white">Nexus</span>
+              <span className="text-2xl font-bold tracking-tight text-white">Agens</span>
             </div>
             <p className="text-slate-400 text-lg leading-relaxed max-w-sm">
               {t('footer.description')}
@@ -107,7 +107,7 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center gap-3 text-slate-400 text-sm">
                 <Mail size={16} className="text-indigo-500 flex-shrink-0" />
-                <a href="mailto:hello@nexus.studio" className="hover:text-white transition-colors">hello@nexus.studio</a>
+                <a href="mailto:hello@agens.studio" className="hover:text-white transition-colors">hello@agens.studio</a>
               </li>
               <li className="flex items-center gap-3 text-slate-400 text-sm">
                 <Phone size={16} className="text-indigo-500 flex-shrink-0" />
@@ -121,7 +121,7 @@ const Footer: React.FC = () => {
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-slate-500 text-sm">
-            &copy; {currentYear} Nexus Product Studio. {t('footer.rights')}
+            &copy; {currentYear} Agens. {t('footer.rights')}
           </p>
           <div className="flex items-center gap-6 text-sm">
             <a href="#" className="text-slate-500 hover:text-white transition-colors">{t('footer.privacy')}</a>
