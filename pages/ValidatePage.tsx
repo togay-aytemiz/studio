@@ -170,27 +170,43 @@ const ValidatePage: React.FC = () => {
                         {!analysis ? (
                             <motion.div
                                 key="input"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
                                 exit={{ opacity: 0, y: -20 }}
                                 className="text-center"
                             >
                                 {/* Title */}
-                                <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight font-serif">
-                                    Fikrinizi <span className="relative inline-block" style={{ textShadow: '0 0 10px rgba(129, 140, 248, 0.8), 0 0 20px rgba(129, 140, 248, 0.6), 0 0 40px rgba(139, 92, 246, 0.5), 0 0 80px rgba(139, 92, 246, 0.4), 0 0 120px rgba(139, 92, 246, 0.3)' }}>saniyeler içinde</span><br />analiz edin.
-                                </h1>
+                                <motion.h1
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.8, delay: 0.2 }}
+                                    className="text-5xl md:text-8xl font-normal text-white mb-8 leading-[1.15] font-serif"
+                                >
+                                    Fikrinizi <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">saniyeler içinde</span><br />analiz edin.
+                                </motion.h1>
 
-                                <p className="text-lg text-white/70 mb-12 max-w-xl mx-auto">
+                                <motion.p
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.8, delay: 0.4 }}
+                                    className="text-base md:text-lg text-white/70 mb-12 leading-relaxed max-w-xl mx-auto"
+                                >
                                     Yapay zeka ile projenizin teknik fizibilitesini, tahmini süresini ve maliyetini öğrenin — ücretsiz.
-                                </p>
+                                </motion.p>
 
                                 {/* Input Form */}
-                                <form onSubmit={handleAnalyze} className="relative">
-                                    <div className="bg-white dark:bg-slate-900/80 backdrop-blur-md border border-slate-200 dark:border-white/10 rounded-2xl p-2 md:p-3 flex flex-col md:flex-row gap-2 shadow-xl dark:shadow-2xl">
+                                <motion.form
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.5, delay: 0.6 }}
+                                    onSubmit={handleAnalyze}
+                                    className="relative"
+                                >
+                                    <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-2 md:p-3 flex flex-col md:flex-row gap-2 shadow-2xl">
                                         <input
                                             type="text"
                                             placeholder={displayedPlaceholder + "|"}
-                                            className="flex-1 bg-transparent text-slate-900 dark:text-white px-4 py-3 md:px-6 md:py-4 outline-none placeholder:text-slate-400 dark:placeholder:text-slate-500 text-base md:text-lg"
+                                            className="flex-1 bg-transparent text-white px-4 py-3 md:px-6 md:py-4 outline-none placeholder:text-white/70 text-base md:text-lg"
                                             value={ideaInput}
                                             onChange={(e) => setIdeaInput(e.target.value)}
                                             disabled={isAnalyzing}
@@ -214,16 +230,25 @@ const ValidatePage: React.FC = () => {
                                             <AlertCircle size={16} /> {error}
                                         </motion.div>
                                     )}
-                                </form>
+                                </motion.form>
 
-                                {/* Feature Pills */}
-                                <div className="flex flex-wrap justify-center gap-3 mt-10">
-                                    {['Teknik Fizibilite', 'Pazar Analizi', 'Maliyet Tahmini', 'Süre Öngörüsü'].map((feature) => (
-                                        <span key={feature} className="px-4 py-2 rounded-full bg-slate-100 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400 text-sm font-medium border border-slate-200 dark:border-slate-700">
-                                            {feature}
-                                        </span>
-                                    ))}
-                                </div>
+                                {/* Highlights - Output Categories */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.5, delay: 0.8 }}
+                                    className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-8 mt-10 text-center"
+                                >
+                                    <span className="text-white/80 font-mono uppercase text-[0.75rem] md:text-[0.875rem] tracking-[0.063rem] md:tracking-[0.094rem] leading-tight">
+                                        Teknik Fizibilite
+                                    </span>
+                                    <span className="text-white/80 font-mono uppercase text-[0.75rem] md:text-[0.875rem] tracking-[0.063rem] md:tracking-[0.094rem] leading-tight">
+                                        Maliyet Tahmini
+                                    </span>
+                                    <span className="text-white/80 font-mono uppercase text-[0.75rem] md:text-[0.875rem] tracking-[0.063rem] md:tracking-[0.094rem] leading-tight">
+                                        Süre Öngörüsü
+                                    </span>
+                                </motion.div>
                             </motion.div>
                         ) : (
                             <motion.div
@@ -305,12 +330,12 @@ const ValidatePage: React.FC = () => {
                         )}
                     </AnimatePresence>
                 </div>
-            </main>
+            </main >
             {/* Footer */}
-            <div className="relative z-10">
+            < div className="relative z-10" >
                 <Footer />
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 
