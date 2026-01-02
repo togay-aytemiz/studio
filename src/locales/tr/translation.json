@@ -210,8 +210,8 @@
     },
     "work": {
         "badge": "Projelerimiz",
-        "title": "Neler Yaptık?",
-        "subtitle": "Bu projeleri geliştirdik. İşte bazı başarı hikayeleri.",
+        "title": "Neler Yaptık? <br /> <span>Gerçek Sonuçlar.</span>",
+        "subtitle": "İş ortaklarımızla birlikte hayata geçirdiğimiz projeler.",
         "impact": "Sonuç",
         "projects": {
             "fintech-app": {
