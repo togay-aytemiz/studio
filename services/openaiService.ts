@@ -57,6 +57,23 @@ export const analyzeProductIdeaWithOpenAI = async (idea: string): Promise<string
                         "KVKK/GDPR uyumluluğu için veri şifreleme katmanı kritik.",
                         "Mikroservis mimarisi kurulmazsa ileride teknik borç oluşabilir."
                     ],
+                    implementationSteps: [
+                        "Kullanıcı Girişi / Auth (Supabase)",
+                        "Admin Yönetim Paneli",
+                        "Landing Page (Tanıtım Sayfası)",
+                        "Ödeme Sistemi Entegrasyonu (Stripe/Iyzico)",
+                        "Veritabanı Şeması Tasarımı (PostgreSQL)",
+                        "API Geliştirme (Node.js/NestJS)",
+                        "Frontend Component Kütüphanesi",
+                        "Bildirim Sistemi (Email/Push)",
+                        "Kullanıcı Profil Yönetimi",
+                        "İçerik Yönetim Sistemi (CMS)",
+                        "Raporlama ve Analitik Paneli",
+                        "Loglama ve İzleme Altyapısı",
+                        "KVKK ve Gizlilik Sözleşmeleri",
+                        "Yedekleme ve Kurtarma Senaryoları",
+                        "Mobil Uyumluluk Testleri"
+                    ],
                     recommendedStack: {
                         frontend: "Next.js + Tailwind (Web) / React Native (Mobil)",
                         backend: "Node.js (NestJS) veya Go",
@@ -81,10 +98,26 @@ KRİTİK TALİMATLAR:
 3. DETAY SEVİYESİ:
    - **Pazar Analizi** ve **Gelir Modeli** alanları için: "Pazar Analizi" veya "Gelir Modeli" diye ana başlık ATMA. Direkt alt başlıklarla (Örn: ### Pazar Büyüklüğü, ### Rekabet) konuya gir.
    - **Agens Insight:** "Agens Insight" diye başlık atma. Direkt stratejik tavsiyenle başla. Gerçek bir Ürün Danışmanlığı seansı gibi kurgula. En az 2 paragraf ve 3 madde işareti içeren stratejik bir yol haritası sun.
+   - **FEASIBILITY SCORE (SKORLAMA):** 
+     - **İyimser ve Teşvik Edici Ol:** Fikir saçma olmadığı sürece yüksek puanlar (85-98 arası) ver.
+     - Amacımız kullanıcıyı projeye başlatmak, korkutmak değil.
+     - Puanı düşürme, teknik zorlukları "aşılabilir meydan okumalar" olarak sun.
+     - Skor, fikrin potansiyelini yansıtsın.
 4. ALTYAPI MANTIĞI: 
    - MVP/Startup -> **Supabase** ekosistemini öner.
    - Enterprise/Scale -> **AWS** veya **Google Cloud** çözümlerini öner.
-5. MVP Süresi: Asla "Weeks" deme, Türkçe "Hafta" de. Projenin kapsamına ve karmaşıklığına göre 4 ile 24 hafta arasında GERÇEKÇİ ve DİNAMİK bir tahmin yap. Her proje için aynısını VERME.
+5. MVP Süresi (ÇOK KRİTİK):
+   - Asla varsayılan veya ortalama bir değer (Örn: 10-14) VERME.
+   - Basit projeler için: "4-6 Hafta" veya "6-8 Hafta"
+   - Orta projeler için: "8-12 Hafta" veya "10-12 Hafta"
+   - Karmaşık projeler için: "16-24 Hafta"
+   - Projenin özelliklerine göre NET ve GERÇEKÇİ bir tahmin yap.
+6. YAPILACAKLAR LİSTESİ (Implementation Steps):
+   - Projenin hayata geçmesi için gereken TÜM MODÜLLERİ en ince detayına kadar listele.
+   - Minimum 14, Maksimum 20 madde olsun.
+   - Sadece başlık olarak ver, açıklama yazma.
+   - Gerekliyse şunları mutlaka ekle: "Admin Paneli", "Landing Page", "CMS", "E-fatura Entegrasyonu", "Bildirim Sistemi", "Loglama", "Yedekleme".
+   - Örn: ["Kullanıcı Girişi", "Admin Paneli", "Ödeme Sistemi", "Landing Page", ...]
 
 Yanıtını HER ZAMAN aşağıdaki JSON formatında ver:
 {
@@ -96,12 +129,13 @@ Yanıtını HER ZAMAN aşağıdaki JSON formatında ver:
     "ai": <0-100 arası sayı (Örn: 60)>
   },
   "technicalChallenges": ["<zorluk 1>", "<zorluk 2>", "<zorluk 3>"],
+  "implementationSteps": ["<Modül 1>", "<Modül 2>", "<Modül 3>", "<Modül 4>", "<Modül 5>"],
   "recommendedStack": {
     "frontend": "<teknoloji>",
     "backend": "<teknoloji>",
     "infrastructure": "<Supabase veya AWS>"
   },
-  "mvpTimeline": "<Örn: 8-12 Hafta>",
+  "mvpTimeline": "<Hesaplanan Süre (Örn: 6-8 Hafta)>",
   "marketAnalysis": "<Markdown formatında ZENGİN ve YAPILANDIRILMIŞ analiz (Başlıklar, Maddeler)>",
   "monetizationStrategy": "<Markdown formatında ZENGİN ve YAPILANDIRILMIŞ strateji (Başlıklar, Maddeler)>",
   "agensInsight": "<Markdown formatında, maddeli ve paragraflı STRATEJİK ÜRÜN DANIŞMANLIĞI>"

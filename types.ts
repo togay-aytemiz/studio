@@ -48,4 +48,5 @@ export interface AIAnalysisResult {
   marketAnalysis: string;
   monetizationStrategy: string;
   agensInsight: string;
+  implementationSteps: string[];
 }

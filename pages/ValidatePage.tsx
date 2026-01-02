@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, BrainCircuit, ArrowRight, Cpu, RefreshCw, AlertCircle, AlertTriangle, Code2, Layers, Clock, BarChart3, Wallet, Info, Activity, Loader2, Phone, Mail } from 'lucide-react';
+import { Sparkles, BrainCircuit, ArrowRight, Cpu, RefreshCw, AlertCircle, AlertTriangle, Code2, Layers, Clock, BarChart3, Wallet, Info, Activity, Loader2, Phone, Mail, ListChecks } from 'lucide-react';
 import { useProductAnalysis } from '../hooks/useAI';
 import Button from '../components/Button';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -108,17 +108,37 @@ const MarkdownRenderer = ({ content }: { content: string }) => {
     return (
         <div className="space-y-3">
             {content.split('\n\n').map((paragraph, pIndex) => {
-                const lines = paragraph.split('\n');
-                if (lines.some(line => line.trim().startsWith('- '))) {
+                // Check for headers (###)
+                // Check for headers (###)
+                if (paragraph.trim().startsWith('###')) {
+                    const lines = paragraph.split('\n');
+                    const header = lines[0].replace(/^###\s*/, '');
+                    const rest = lines.slice(1).join('\n');
+
+                    return (
+                        <div key={pIndex}>
+                            <h4 className="text-sm font-bold text-slate-900 dark:text-white mt-4 mb-2">
+                                {header}
+                            </h4>
+                            {rest && (
+                                <MarkdownRenderer content={rest} />
+                            )}
+                        </div>
+                    );
+                }
+
+                // Check for lists
+                if (paragraph.trim().startsWith('- ') || paragraph.trim().startsWith('* ')) {
+                    const lines = paragraph.split('\n');
                     return (
                         <div key={pIndex} className="space-y-1">
                             {lines.map((line, lIndex) => {
-                                if (line.trim().startsWith('- ')) {
+                                if (line.trim().startsWith('- ') || line.trim().startsWith('* ')) {
                                     return (
                                         <div key={lIndex} className="flex gap-2 pl-2 md:pl-4">
                                             <span className="text-indigo-500 font-bold">•</span>
                                             <span className="text-xs md:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                                                {processText(line.trim().replace(/^- /, ''))}
+                                                {processText(line.trim().replace(/^[-*] /, ''))}
                                             </span>
                                         </div>
                                     );
@@ -422,6 +442,31 @@ const ValidatePage: React.FC = () => {
                                             <ComplexityBar label="AI & Veri" value={analysis.complexity.ai} color="bg-indigo-500" />
                                         </div>
                                     </motion.div>
+
+                                    {/* 2.5 Implementation Steps */}
+                                    {/* @ts-ignore */}
+                                    {analysis.implementationSteps && analysis.implementationSteps.length > 0 && (
+                                        <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.15 }} className="bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-white/5 rounded-2xl p-6 mt-4 md:mt-0">
+                                            <div className="mb-4">
+                                                <div className="flex items-center gap-2 mb-1">
+                                                    <ListChecks size={20} className="text-indigo-500" />
+                                                    <h3 className="font-bold text-slate-900 dark:text-white">Yapılacaklar Listesi</h3>
+                                                </div>
+                                                <p className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 pl-7">
+                                                    * Aşağıdaki liste tahmini modüllerdir. Proje kapsamına göre değişiklik gösterebilir.
+                                                </p>
+                                            </div>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
+                                                {/* @ts-ignore */}
+                                                {analysis.implementationSteps.map((step, idx) => (
+                                                    <div key={idx} className="flex gap-2 items-center">
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 flex-shrink-0" />
+                                                        <div className="text-xs font-medium text-slate-800 dark:text-slate-200">{step}</div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </motion.div>
+                                    )}
 
                                     {/* 3. Tech Stack */}
                                     <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.2 }} className="bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-white/5 rounded-2xl p-6">
