@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Sparkles, BrainCircuit, ArrowRight, Cpu, RefreshCw, AlertCircle, AlertTriangle, Code2, Layers, Clock, BarChart3, Wallet, Info, Activity, Loader2, Phone, Mail, ListChecks } from 'lucide-react';
 import { useProductAnalysis } from '../hooks/useAI';
+import { sendEmail } from '../services/emailService';
 import Button from '../components/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation, Trans } from 'react-i18next';
@@ -171,6 +172,45 @@ const ValidatePage: React.FC = () => {
     const { analysis, isAnalyzing, error, analyze, reset } = useProductAnalysis();
     const { t } = useTranslation();
 
+    // Email sending states
+    const [emailStatus, setEmailStatus] = useState<null | 'sending' | 'success' | 'error'>(null);
+    const [contactForm, setContactForm] = useState({
+        name: '',
+        email: '',
+        phone: ''
+    });
+
+    const handleContactSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setEmailStatus('sending');
+
+        const emailSent = await sendEmail({
+            to: contactForm.email,
+            subject: `Agens AI Analiz Raporunuz: ${ideaInput.substring(0, 30)}...`,
+            html: `
+                <h3>Merhaba ${contactForm.name},</h3>
+                <p>Agens AI ile analiz ettiğiniz projeniz için teşekkürler! Uzman ekibimiz, oluşturulan raporu ve iletişim bilgilerinizi aldı.</p>
+                <p>Sizinle en kısa sürede (${contactForm.phone} veya bu e-posta üzerinden) iletişime geçeceğiz.</p>
+                <br>
+                <p><strong>Analiz Edilen Fikir:</strong></p>
+                <blockquote style="border-left: 4px solid #6366f1; padding-left: 10px; color: #555;">
+                  ${ideaInput}
+                </blockquote>
+                <br>
+                <p>Sevgiler,<br><strong>Agens Studio Ekibi</strong></p>
+            `,
+            replyTo: contactForm.email
+        });
+
+        if (emailSent) {
+            setEmailStatus('success');
+            setTimeout(() => setEmailStatus(null), 5000);
+        } else {
+            setEmailStatus('error');
+            setTimeout(() => setEmailStatus(null), 5000);
+        }
+    };
+
     // Animated placeholder effect
     useEffect(() => {
         const currentIdea = PLACEHOLDER_IDEAS[placeholderIndex];
@@ -254,8 +294,8 @@ const ValidatePage: React.FC = () => {
                 className="absolute inset-0 hidden md:block bg-cover bg-center bg-no-repeat"
                 style={{ backgroundImage: 'url(/validatebg-desktop.webp)' }}
             />
-            {/* Dark Overlay */}
-            <div className="absolute inset-0 bg-black/40 dark:bg-black/50" />
+            {/* Dark Overlay - Reduced opacity for better visibility of space background on mobile */}
+            <div className="absolute inset-0 bg-black/20 md:bg-black/50 dark:bg-black/20 md:dark:bg-black/50" />
 
             {/* Navbar */}
             <Navbar />
@@ -277,7 +317,7 @@ const ValidatePage: React.FC = () => {
                                     initial={{ opacity: 0, y: 30 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.8, delay: 0.2 }}
-                                    className="text-5xl md:text-8xl font-normal text-white mb-8 leading-[1.15] font-serif"
+                                    className="text-5xl md:text-6xl font-normal text-white mb-8 leading-[1.1] font-serif max-w-4xl mx-auto"
                                 >
                                     Fikrinizi <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">saniyeler içinde</span><br />analiz edin.
                                 </motion.h1>
@@ -627,10 +667,13 @@ const ValidatePage: React.FC = () => {
                     </AnimatePresence>
                 </div >
             </main >
+            {/* Gradient Transition to Footer */}
+            <div className="h-48 bg-gradient-to-b from-transparent to-[#020617] relative z-10 -mb-1 w-full pointer-events-none"></div>
+
             {/* Footer */}
-            < div className="relative z-10" >
+            <div className="relative z-10">
                 <Footer />
-            </div >
+            </div>
         </div >
     );
 };

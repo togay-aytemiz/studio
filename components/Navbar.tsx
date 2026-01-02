@@ -121,11 +121,12 @@ const Navbar: React.FC = () => {
     >
       <div className="container mx-auto px-6 h-20 flex items-center justify-between relative z-50">
         {/* Logo */}
-        <a href="/" onClick={handleLogoClick} className="flex items-center gap-2 group">
-          <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center group-hover:shadow-lg group-hover:shadow-indigo-500/25 transition-all">
-            <span className="text-white font-bold text-lg">N</span>
+        {/* Logo */}
+        <a href="/" onClick={handleLogoClick} className="flex items-center gap-3 group">
+          <div className="w-8 h-8 flex items-center justify-center transition-transform group-hover:scale-105">
+            <img src="/A.svg" alt="Agens Logo" className="w-full h-full" />
           </div>
-          <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Agens</span>
+          <span className="text-xl font-semibold tracking-[0.4em] text-white font-brand">AGENS</span>
         </a>
 
         {/* Desktop Links */}

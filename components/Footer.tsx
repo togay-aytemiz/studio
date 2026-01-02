@@ -42,14 +42,11 @@ const Footer: React.FC = () => {
 
           {/* Brand Column */}
           <div className="lg:col-span-5 flex flex-col gap-6">
-            <div className="flex items-center gap-2 mb-2">
-              <div
-                className="w-8 h-8 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/20"
-                style={{ background: 'linear-gradient(to bottom right, #6366f1, #a855f7)' }}
-              >
-                <span className="text-white font-bold text-lg">N</span>
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-8 h-8 flex items-center justify-center">
+                <img src="/A.svg" alt="Agens Logo" className="w-full h-full" />
               </div>
-              <span className="text-2xl font-bold tracking-tight text-white">Agens</span>
+              <span className="text-2xl font-semibold tracking-[0.4em] text-white font-brand">AGENS</span>
             </div>
             <p className="text-slate-400 text-lg leading-relaxed max-w-sm">
               {t('footer.description')}

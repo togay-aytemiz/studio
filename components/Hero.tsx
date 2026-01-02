@@ -222,7 +222,7 @@ const Hero: React.FC = () => {
         {/* Additional subtle top fade - Reduced opacity for better visibility */}
         <div className="absolute inset-0 bg-gradient-to-b from-white/30 dark:from-[#030712]/20 via-transparent to-transparent"></div>
         {/* Overall subtle overly to ensure text readability without being too dark */}
-        <div className="absolute inset-0 bg-black/5 dark:bg-black/10"></div>
+        <div className="absolute inset-0 bg-black/5 dark:bg-black/10 md:dark:bg-black/5"></div>
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
