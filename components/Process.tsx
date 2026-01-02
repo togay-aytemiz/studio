@@ -20,12 +20,28 @@ const Process: React.FC = () => {
   };
 
   return (
-    <section id="process" className="py-12 md:pt-10 md:pb-24 bg-white dark:bg-[#040814] relative overflow-hidden">
+    <section id="process" className="py-12 md:pt-10 md:pb-24 bg-white dark:bg-[#030712] relative overflow-hidden">
       {/* CSS Overrides to defeat aggressive global styles */}
 
+      {/* Background Image - Mobile */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat md:hidden"
+        style={{ backgroundImage: 'url(/proceesbg-mobile.webp)' }}
+      />
+      {/* Background Image - Desktop */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden md:block"
+        style={{ backgroundImage: 'url(/proceesbg-desktop.webp)' }}
+      />
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/30" />
+      {/* Top gradient fade for smooth transition */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#030712] via-transparent to-transparent" />
+      {/* Bottom gradient fade for smooth transition */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-transparent to-transparent" />
 
-      {/* Abstract Background Elements */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-900/5 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
+      {/* Abstract Background Elements - Light mode only */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-900/5 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/2 dark:hidden"></div>
 
       <div className="container mx-auto px-6 relative z-10">
         <ScrollReveal width="100%" className="max-w-3xl mb-12 md:mb-24">
@@ -63,7 +79,7 @@ const Process: React.FC = () => {
                 className="group relative"
               >
                 {/* Card Container */}
-                <div className="h-full bg-white dark:bg-slate-900/60 backdrop-blur-sm border border-slate-200 dark:border-white/5 rounded-2xl p-3.5 md:p-8 md:hover:bg-slate-50 md:dark:hover:bg-slate-900/90 md:hover:border-indigo-400 md:dark:hover:border-indigo-500/30 transition-all duration-500 md:hover:-translate-y-2 md:hover:shadow-xl md:dark:hover:shadow-2xl md:hover:shadow-indigo-500/10 md:dark:hover:shadow-indigo-500/10 flex flex-col items-start overflow-hidden shadow-sm dark:shadow-none group/card">
+                <div className="h-full bg-white dark:bg-white/5 dark:backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-2xl p-3.5 md:p-8 md:hover:bg-slate-50 md:dark:hover:bg-white/10 md:hover:border-indigo-400 md:dark:hover:border-indigo-500/30 transition-all duration-500 md:hover:-translate-y-2 md:hover:shadow-xl md:dark:hover:shadow-2xl md:hover:shadow-indigo-500/10 md:dark:hover:shadow-indigo-500/10 flex flex-col items-start overflow-hidden shadow-sm dark:shadow-none group/card">
 
                   {/* Large Background Number */}
                   <div className="absolute right-1 -top-2 md:-right-4 md:-top-6 text-[40px] md:text-[100px] font-bold text-slate-200 dark:text-white/[0.08] select-none md:group-hover:text-slate-300 md:dark:group-hover:text-white/[0.12] transition-colors duration-500 font-serif z-0">

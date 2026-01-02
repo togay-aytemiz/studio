@@ -33,33 +33,28 @@ const Contact: React.FC = () => {
   };
 
   // Helper for consistent input styling
-  const inputClasses = "w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-slate-600 focus:outline-none focus:border-indigo-500/50 focus:bg-white/[0.05] focus:ring-1 focus:ring-indigo-500/20 transition-all duration-300";
-  const labelClasses = "block text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-2 ml-1";
+  const inputClasses = "w-full bg-white/10 border border-white/30 rounded-lg px-4 py-3 text-white placeholder:text-white/50 focus:outline-none focus:border-indigo-500/70 focus:bg-white/15 focus:ring-1 focus:ring-indigo-500/30 transition-all duration-300";
+  const labelClasses = "block text-[11px] font-bold uppercase tracking-widest text-white/70 mb-2 ml-1";
 
   return (
     <section id="contact" className="py-12 md:py-32 bg-[#020617] relative overflow-hidden min-h-screen flex items-center justify-center">
 
-      {/* Abstract Map Background */}
-      <div className="absolute inset-0 opacity-20 pointer-events-none select-none">
-        <svg className="w-full h-full" width="100%" height="100%">
-          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <circle cx="2" cy="2" r="1" fill="#4f46e5" />
-          </pattern>
-          <rect width="100%" height="100%" fill="url(#grid)" />
-
-          {/* Connecting Lines */}
-          <path d="M 100 100 L 300 300" stroke="#4f46e5" strokeWidth="0.5" strokeDasharray="5 5" opacity="0.5" />
-          <path d="M 800 200 L 600 500" stroke="#4f46e5" strokeWidth="0.5" strokeDasharray="5 5" opacity="0.5" />
-          <circle cx="800" cy="200" r="100" fill="url(#radial-glow)" opacity="0.1" />
-
-          <defs>
-            <radialGradient id="radial-glow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#6366f1" />
-              <stop offset="100%" stopColor="transparent" />
-            </radialGradient>
-          </defs>
-        </svg>
-      </div>
+      {/* Background Image - Mobile */}
+      <div
+        className="absolute inset-0 md:hidden bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: 'url(/contactbg-mobile.webp)' }}
+      />
+      {/* Background Image - Desktop */}
+      <div
+        className="absolute inset-0 hidden md:block bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: 'url(/contactbg-desktop.webp)' }}
+      />
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/50" />
+      {/* Top gradient fade for smooth transition */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#030712] via-transparent to-transparent" />
+      {/* Bottom gradient fade for smooth transition */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent" />
 
       <div className="container mx-auto px-6 relative z-10">
         <ScrollReveal width="100%">
@@ -78,9 +73,9 @@ const Contact: React.FC = () => {
             {/* The "Holographic" Form Card */}
             <div className="relative">
               {/* Glow Effect behind card */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-3xl blur opacity-20 transition duration-1000 group-hover:opacity-100"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-slate-500 to-slate-600 rounded-3xl blur opacity-10 transition duration-1000 group-hover:opacity-20"></div>
 
-              <div className="relative bg-slate-900/80 backdrop-blur-2xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
+              <div className="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
 
                 <div className="grid grid-cols-1 md:grid-cols-12">
 
@@ -88,17 +83,17 @@ const Contact: React.FC = () => {
                   <div className="col-span-1 md:col-span-8 p-8 md:p-12 border-r border-white/5">
 
                     {/* AI Nudge */}
-                    <div className="mb-8 p-4 rounded-xl bg-indigo-500/5 border border-indigo-500/10 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 md:gap-0">
+                    <div className="mb-8 p-4 rounded-xl bg-white/5 border border-indigo-500/30 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 md:gap-0">
                       <div className="flex items-center gap-3">
-                        <div className="p-2 bg-indigo-500/20 rounded-lg text-indigo-400 shrink-0">
+                        <div className="p-2.5 bg-indigo-500/30 rounded-lg text-indigo-300 shrink-0 border border-indigo-500/20">
                           <BrainCircuit size={18} />
                         </div>
                         <div>
                           <p className="text-white text-sm font-medium">{t('contact.ai.title')}</p>
-                          <p className="text-slate-400 text-xs">{t('contact.ai.subtitle')}</p>
+                          <p className="text-white/60 text-xs">{t('contact.ai.subtitle')}</p>
                         </div>
                       </div>
-                      <button onClick={handleValidateClick} className="text-xs font-bold text-white bg-indigo-600 md:bg-transparent md:text-indigo-400 md:hover:text-indigo-300 py-3 md:py-0 rounded-lg md:rounded-none flex items-center justify-center gap-2 transition-all hover:bg-indigo-700 md:hover:bg-transparent">
+                      <button onClick={handleValidateClick} className="px-4 py-2 bg-white text-slate-900 text-xs font-medium rounded-full hover:bg-white/90 transition-all shadow-lg flex items-center justify-center gap-2">
                         {t('contact.ai.button')} <ArrowUpRight size={14} />
                       </button>
                     </div>
@@ -133,7 +128,7 @@ const Contact: React.FC = () => {
 
                       <div className="group">
                         <div className="flex justify-between items-center mb-2">
-                          <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 ml-1">
+                          <label className="block text-[11px] font-bold uppercase tracking-widest text-white/70 ml-1">
                             {t('contact.form.project')}
                           </label>
                         </div>
@@ -151,7 +146,12 @@ const Contact: React.FC = () => {
 
 
                       <div className="pt-2 flex justify-end md:justify-start">
-                        <Button type="submit" size="md" className="group !px-5 !py-2.5 !text-sm md:!px-6 md:!py-3 md:!text-base">
+                        <Button
+                          type="submit"
+                          size="md"
+                          className="group !px-5 !py-2.5 !text-sm md:!px-6 md:!py-3 md:!text-base"
+                          disabled={!formData.name.trim() || !formData.email.trim() || !formData.message.trim()}
+                        >
                           {t('contact.form.submit')}
                           <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
                         </Button>
@@ -204,7 +204,7 @@ const Contact: React.FC = () => {
 
         </ScrollReveal>
       </div>
-    </section>
+    </section >
   );
 };
 
