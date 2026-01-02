@@ -146,12 +146,25 @@ const ValidatePage: React.FC = () => {
     );
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/20 dark:from-[#030712] dark:via-[#030712] dark:to-[#030712] flex flex-col">
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/20 dark:from-[#030712] dark:via-[#030712] dark:to-[#030712] flex flex-col relative">
+            {/* Background Image - Mobile */}
+            <div
+                className="absolute inset-0 md:hidden bg-cover bg-center bg-no-repeat"
+                style={{ backgroundImage: 'url(/validatebg-mobile.webp)' }}
+            />
+            {/* Background Image - Desktop */}
+            <div
+                className="absolute inset-0 hidden md:block bg-cover bg-center bg-no-repeat"
+                style={{ backgroundImage: 'url(/validatebg-desktop.webp)' }}
+            />
+            {/* Dark Overlay */}
+            <div className="absolute inset-0 bg-black/40 dark:bg-black/50" />
+
             {/* Navbar */}
             <Navbar />
 
             {/* Main Content - Full viewport height */}
-            <main className="min-h-screen flex items-center justify-center px-6 pt-20">
+            <main className="min-h-screen flex items-center justify-center px-6 pt-20 relative z-10">
                 <div className="w-full max-w-3xl">
                     <AnimatePresence mode="wait">
                         {!analysis ? (
@@ -162,23 +175,12 @@ const ValidatePage: React.FC = () => {
                                 exit={{ opacity: 0, y: -20 }}
                                 className="text-center"
                             >
-                                {/* Badge */}
-                                <motion.div
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    className="flex items-center justify-center gap-3 mb-6"
-                                >
-                                    <div className="w-2.5 h-2.5 bg-indigo-500 rounded-sm"></div>
-                                    <span className="text-xs font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">AI Fikir Analizi</span>
-                                </motion.div>
-                                <div className="w-full h-px bg-slate-200 dark:bg-white/10 mb-8"></div>
-
                                 {/* Title */}
-                                <h1 className="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white mb-6 leading-tight font-serif">
-                                    Fikrinizi <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500">saniyeler içinde</span><br />analiz edin.
+                                <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight font-serif">
+                                    Fikrinizi <span className="relative inline-block" style={{ textShadow: '0 0 10px rgba(129, 140, 248, 0.8), 0 0 20px rgba(129, 140, 248, 0.6), 0 0 40px rgba(139, 92, 246, 0.5), 0 0 80px rgba(139, 92, 246, 0.4), 0 0 120px rgba(139, 92, 246, 0.3)' }}>saniyeler içinde</span><br />analiz edin.
                                 </h1>
 
-                                <p className="text-lg text-slate-600 dark:text-slate-400 mb-12 max-w-xl mx-auto">
+                                <p className="text-lg text-white/70 mb-12 max-w-xl mx-auto">
                                     Yapay zeka ile projenizin teknik fizibilitesini, tahmini süresini ve maliyetini öğrenin — ücretsiz.
                                 </p>
 
@@ -305,7 +307,9 @@ const ValidatePage: React.FC = () => {
                 </div>
             </main>
             {/* Footer */}
-            <Footer />
+            <div className="relative z-10">
+                <Footer />
+            </div>
         </div>
     );
 };
