@@ -246,6 +246,9 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-[#030712] via-transparent to-transparent opacity-90 dark:opacity-70"></div>
         {/* Overall subtle overlay to ensure text readability */}
         <div className="absolute inset-0 bg-black/5 dark:bg-black/5"></div>
+
+        {/* Strong Bottom Gradient for Section Transition */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 md:h-48 bg-gradient-to-t from-slate-50 dark:from-[#020617] to-transparent z-10 pointer-events-none"></div>
       </motion.div>
 
       <div className="container mx-auto px-6 relative z-10">

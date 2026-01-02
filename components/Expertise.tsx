@@ -91,7 +91,7 @@ const Expertise: React.FC = () => {
             </div>
 
             {/* Sticky Tabs Navigation - Intercom Style */}
-            <div className="sticky top-14 md:top-20 z-30 bg-slate-50/95 dark:bg-slate-950/95 backdrop-blur-md border-y border-slate-200 dark:border-white/10 mb-12 shadow-sm">
+            <div className="sticky top-14 md:static z-30 bg-slate-50/95 dark:bg-slate-950/95 backdrop-blur-md border-y border-slate-200 dark:border-white/10 mb-12 shadow-sm">
                 <div className="container mx-auto px-6">
                     <div className="flex gap-8 overflow-x-auto no-scrollbar">
                         <button

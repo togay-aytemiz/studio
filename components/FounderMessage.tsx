@@ -10,14 +10,20 @@ const FounderMessage: React.FC = () => {
   return (
     <section className="py-12 md:py-40 bg-[#020617] relative overflow-hidden">
 
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 mix-blend-soft-light pointer-events-none"></div>
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none translate-x-1/3 -translate-y-1/3"></div>
-
-      {/* Subtle Grid Pattern */}
-      <div className="absolute inset-0 opacity-[0.03]"
-        style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '40px 40px' }}>
+      {/* Background Images */}
+      <div className="absolute inset-0 z-0">
+        <picture>
+          <source media="(min-width: 768px)" srcSet="/founder-desktop.webp" />
+          <img src="/founder-mobile.webp" alt="" className="w-full h-full object-cover opacity-60" />
+        </picture>
+        <div className="absolute inset-0 bg-gradient-to-r from-[#020617] via-[#020617]/80 to-[#020617]/80 md:via-[#020617]/40 md:to-transparent"></div>
       </div>
+
+      {/* Top Gradient for Smooth Transition */}
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#020617] to-transparent z-10 pointer-events-none"></div>
+
+      {/* Bottom Gradient for Smooth Transition */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#020617] to-transparent z-10 pointer-events-none"></div>
 
       <div className="container mx-auto px-6 relative z-10">
         <ScrollReveal width="100%">
@@ -36,10 +42,18 @@ const FounderMessage: React.FC = () => {
                 <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl shadow-indigo-500/10 border border-white/10 group">
                   <div className="absolute inset-0 bg-indigo-500/20 mix-blend-overlay z-10 group-hover:bg-transparent transition-all duration-700"></div>
                   <img
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                    alt="Alex Voser"
+                    src="/profile.webp"
+                    alt={t('founder.name')}
                     className="w-full aspect-[4/5] object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105"
                   />
+
+                  {/* Mobile Badge Overlay - Only visible on mobile */}
+                  <div className="absolute top-4 left-4 z-20 md:hidden animate-fade-in">
+                    <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-lg py-1.5 px-3 flex items-center gap-2">
+                      <Quote size={14} className="text-white fill-current" />
+                      <span className="text-white text-xs font-semibold tracking-wider uppercase">{t('founder.badge')}</span>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Decorative Elements around image */}
@@ -50,8 +64,8 @@ const FounderMessage: React.FC = () => {
               {/* Text Section (Right) */}
               <div className="col-span-1 md:col-span-7 relative">
 
-                {/* Large Background Quote Mark */}
-                <div className="absolute -top-16 -left-8 text-indigo-500/10 -z-10 select-none">
+                {/* Large Background Quote Mark - Desktop Only */}
+                <div className="absolute -top-16 -left-8 text-indigo-500/10 -z-10 select-none hidden md:block">
                   <Quote size={180} fill="currentColor" />
                 </div>
 
@@ -61,12 +75,12 @@ const FounderMessage: React.FC = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, delay: 0.2 }}
                 >
-                  <div className="flex items-center gap-4 mb-6">
+                  <div className="hidden md:flex items-center gap-4 mb-6">
                     <div className="h-px w-12 bg-indigo-500"></div>
                     <span className="text-indigo-400 font-medium uppercase tracking-widest text-xs">{t('founder.badge')}</span>
                   </div>
 
-                  <h3 className="text-2xl md:text-5xl font-serif text-white mb-8 leading-[1.15] md:leading-normal">
+                  <h3 className="text-2xl md:text-5xl font-serif text-white mb-6 md:mb-8 leading-[1.15] md:leading-normal mt-2 md:mt-0">
                     "<Trans i18nKey="founder.quote" components={{ br: <br />, span: <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-purple-300 to-indigo-300" /> }} />"
                   </h3>
 
