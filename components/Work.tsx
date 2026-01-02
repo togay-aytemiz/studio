@@ -9,7 +9,7 @@ const Work: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <section id="work" className="py-8 md:py-40 bg-slate-950">
+    <section id="work" className="py-8 md:py-40 bg-slate-950 scroll-mt-24">
       <div className="container mx-auto px-6">
         <ScrollReveal width="100%">
           <div className="mb-20 max-w-3xl">
@@ -51,7 +51,7 @@ const Work: React.FC = () => {
                   className={`object-cover w-full h-full group-hover:scale-105 transition-all duration-700 ${project.inProgress ? 'opacity-40' : 'opacity-90 group-hover:opacity-100'}`}
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#080c16] via-transparent to-transparent opacity-90"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#080c16] via-[#080c16]/60 via-30% to-transparent"></div>
 
                 {/* In Progress Badge */}
                 {project.inProgress && (

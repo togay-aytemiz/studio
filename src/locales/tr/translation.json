@@ -59,7 +59,11 @@
     },
     "footer": {
         "explore": "Keşfet",
-        "expertise": "Hizmetler",
+        "expertise": "Uzmanlık",
+        "contact": {
+            "title": "İletişim",
+            "address": "Ankara, Türkiye"
+        },
         "studio": "Hakkımızda",
         "description": "Web, mobil ve yapay zeka destekli yazılım geliştirme.",
         "rights": "Tüm hakları saklıdır.",
@@ -240,7 +244,7 @@
                 ]
             },
             "serviceops-platform": {
-                "category": "AI Destekli Randevu ve Tahsilat Platformu",
+                "category": "AI Destekli Randevu Platformu",
                 "title": "ServiceOps Platform",
                 "solution": "Hizmet veren profesyoneller için randevu, ödeme ve faturalama süreçlerini tek platformda yöneten, yapay zeka destekli operasyon sistemi. Tahsilatı garanti altına alır, no show oranını düşürür ve gelir akışını otomatikleştirir.",
                 "bullets": [

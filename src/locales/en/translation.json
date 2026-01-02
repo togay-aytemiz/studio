@@ -56,6 +56,10 @@
     "footer": {
         "explore": "Explore",
         "expertise": "Expertise",
+        "contact": {
+            "title": "Contact",
+            "address": "Ankara, Turkey"
+        },
         "studio": "Studio",
         "description": "Engineering scalable digital products for ambitious startups.",
         "rights": "All rights reserved.",

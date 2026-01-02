@@ -86,7 +86,7 @@ export const PROJECTS: ProjectItem[] = [
   {
     id: 'serviceops-platform',
     title: 'ServiceOps Platform',
-    category: 'AI Destekli Randevu ve Tahsilat Platformu',
+    category: 'AI Destekli Randevu Platformu',
     outcome: '',
     imageUrl: '/ServiceOps.webp',
     inProgress: true,

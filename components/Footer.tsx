@@ -38,28 +38,28 @@ const Footer: React.FC = () => {
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-indigo-900/5 rounded-full blur-[100px] pointer-events-none"></div>
 
       <div className="container mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 md:gap-12 lg:gap-8 mb-10 md:mb-16">
 
           {/* Brand Column */}
-          <div className="lg:col-span-5 flex flex-col gap-6">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="w-8 h-8 flex items-center justify-center">
+          <div className="lg:col-span-5 flex flex-col gap-4 md:gap-6">
+            <div className="flex items-center gap-2 md:gap-3 mb-1 md:mb-2">
+              <div className="w-6 h-6 md:w-8 md:h-8 flex items-center justify-center">
                 <img src="/A.svg" alt="Agens Logo" className="w-full h-full" />
               </div>
-              <span className="text-2xl font-semibold tracking-[0.4em] text-white font-brand">AGENS</span>
+              <span className="text-xl md:text-2xl font-semibold tracking-[0.4em] text-white font-brand">AGENS</span>
             </div>
-            <p className="text-slate-400 text-lg leading-relaxed max-w-sm">
+            <p className="text-slate-400 text-sm md:text-lg leading-relaxed max-w-sm">
               Web ve mobil uygulamalardan, ölçeklenebilir altyapılara kadar ürün geliştirme sürecinin tamamını tek çatı altında yönetiyoruz.
             </p>
-            <div className="flex items-center gap-4 mt-2">
+            <div className="flex items-center gap-3 md:gap-4 mt-1 md:mt-2">
               {footerLinks.social.map((item, idx) => (
                 <a
                   key={idx}
                   href={item.href}
-                  className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-indigo-500/10 hover:border-indigo-500/30 transition-all duration-300"
+                  className="w-8 h-8 md:w-10 md:h-10 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-indigo-500/10 hover:border-indigo-500/30 transition-all duration-300"
                   style={{ backgroundColor: '#0f172a' }} /* Inline style to bypass override */
                 >
-                  <item.icon size={18} />
+                  <item.icon size={16} className="md:w-[18px] md:h-[18px]" />
                 </a>
               ))}
             </div>
@@ -67,11 +67,11 @@ const Footer: React.FC = () => {
 
           {/* Links Column 1 */}
           <div className="lg:col-span-2 lg:col-start-7">
-            <h4 className="text-white font-bold mb-6">{t('footer.explore')}</h4>
-            <ul className="space-y-4">
+            <h4 className="text-white font-bold mb-4 md:mb-6 text-sm md:text-base">{t('footer.explore')}</h4>
+            <ul className="space-y-3 md:space-y-4">
               {footerLinks.company.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-slate-400 hover:text-white transition-colors text-sm font-medium flex items-center gap-1 group">
+                  <a href={link.href} className="text-slate-400 hover:text-white transition-colors text-xs md:text-sm font-medium flex items-center gap-1 group">
                     {link.label}
                     {link.href.startsWith('#') ? null : <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />}
                   </a>
@@ -82,11 +82,11 @@ const Footer: React.FC = () => {
 
           {/* Links Column 2 */}
           <div className="lg:col-span-2">
-            <h4 className="text-white font-bold mb-6">{t('footer.expertise')}</h4>
-            <ul className="space-y-4">
+            <h4 className="text-white font-bold mb-4 md:mb-6 text-sm md:text-base">{t('footer.expertise')}</h4>
+            <ul className="space-y-3 md:space-y-4">
               {footerLinks.services.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-slate-400 hover:text-white transition-colors text-sm font-medium">
+                  <a href={link.href} className="text-slate-400 hover:text-white transition-colors text-xs md:text-sm font-medium">
                     {link.label}
                   </a>
                 </li>
@@ -96,14 +96,14 @@ const Footer: React.FC = () => {
 
           {/* Contact Info Column */}
           <div className="lg:col-span-2">
-            <h4 className="text-white font-bold mb-6">İletişim</h4>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-slate-400 text-sm">
-                <MapPin size={16} className="mt-1 text-indigo-500 flex-shrink-0" />
-                <span>Ankara, Türkiye</span>
+            <h4 className="text-white font-bold mb-4 md:mb-6 text-sm md:text-base">{t('footer.contact.title')}</h4>
+            <ul className="space-y-3 md:space-y-4">
+              <li className="flex items-start gap-3 text-slate-400 text-xs md:text-sm">
+                <MapPin size={16} className="mt-0.5 md:mt-1 text-indigo-500 flex-shrink-0 w-4 h-4 md:w-4 md:h-4" />
+                <span>{t('footer.contact.address')}</span>
               </li>
-              <li className="flex items-center gap-3 text-slate-400 text-sm">
-                <Phone size={16} className="text-indigo-500 flex-shrink-0" />
+              <li className="flex items-center gap-3 text-slate-400 text-xs md:text-sm">
+                <Phone size={16} className="text-indigo-500 flex-shrink-0 w-4 h-4 md:w-4 md:h-4" />
                 <a href="tel:+905074699692" className="hover:text-white transition-colors">+90 (507) 469 9692</a>
               </li>
             </ul>

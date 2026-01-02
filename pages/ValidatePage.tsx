@@ -283,7 +283,7 @@ const ValidatePage: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/20 dark:from-[#030712] dark:via-[#030712] dark:to-[#030712] flex flex-col relative">
+        <div className="min-h-screen bg-[#030712] flex flex-col relative">
             {/* Background Image - Mobile */}
             <div
                 className="absolute inset-0 md:hidden bg-cover bg-center bg-no-repeat"
@@ -296,6 +296,9 @@ const ValidatePage: React.FC = () => {
             />
             {/* Dark Overlay - Reduced opacity for better visibility of space background on mobile */}
             <div className="absolute inset-0 bg-black/20 md:bg-black/50 dark:bg-black/20 md:dark:bg-black/50" />
+
+            {/* Top Gradient to mask header area */}
+            <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#030712] via-[#030712]/50 to-transparent z-[5]" />
 
             {/* Navbar */}
             <Navbar />
