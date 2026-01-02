@@ -497,6 +497,13 @@ const ValidatePage: React.FC = () => {
                                             </div>
                                         </div>
                                     </motion.div>
+
+                                    {/* AI Disclaimer */}
+                                    <div className="text-center px-4">
+                                        <p className="text-[10px] sm:text-xs text-slate-400 dark:text-slate-500 max-w-2xl mx-auto leading-relaxed">
+                                            <span className="font-semibold text-slate-500 dark:text-slate-400">Yasal Uyarı:</span> Agens AI tarafından üretilen bu analiz ve stratejiler, yapay zeka modelleri kullanılarak oluşturulmuştur ve yalnızca bilgilendirme amaçlıdır. Nihai yatırım ve geliştirme kararlarınızı almadan önce lütfen profesyonel bir uzmana danışın.
+                                        </p>
+                                    </div>
                                 </div>
 
                                 {/* Contact Form Section */}
@@ -573,7 +580,7 @@ const ValidatePage: React.FC = () => {
                             </motion.div>
                         )}
                     </AnimatePresence>
-                </div>
+                </div >
             </main >
             {/* Footer */}
             < div className="relative z-10" >
