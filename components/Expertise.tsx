@@ -7,7 +7,7 @@ import { useTranslation, Trans } from 'react-i18next';
 
 const Expertise: React.FC = () => {
     const { t } = useTranslation();
-    const [activeTab, setActiveTab] = useState<'services' | 'capabilities'>('services');
+    const [activeTab, setActiveTab] = useState<'services' | 'capabilities'>('capabilities');
 
     // Reusing Capability Groups Logic
     const CAPABILITY_GROUPS = useMemo(() => [
@@ -95,11 +95,11 @@ const Expertise: React.FC = () => {
                 <div className="container mx-auto px-6">
                     <div className="flex gap-8 overflow-x-auto no-scrollbar">
                         <button
-                            onClick={() => setActiveTab('services')}
-                            className={`relative py-4 text-xs md:text-sm font-bold tracking-widest uppercase transition-colors whitespace-nowrap ${activeTab === 'services' ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
+                            onClick={() => setActiveTab('capabilities')}
+                            className={`relative py-4 text-xs md:text-sm font-bold tracking-widest uppercase transition-colors whitespace-nowrap ${activeTab === 'capabilities' ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
                         >
-                            {t('expertise.tabs.services', 'Hizmetler')}
-                            {activeTab === 'services' && (
+                            {t('expertise.tabs.capabilities', 'Sektörel Deneyim')}
+                            {activeTab === 'capabilities' && (
                                 <motion.div
                                     layoutId="activeTabUnderline"
                                     className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-900 dark:bg-white"
@@ -108,11 +108,11 @@ const Expertise: React.FC = () => {
                         </button>
 
                         <button
-                            onClick={() => setActiveTab('capabilities')}
-                            className={`relative py-4 text-xs md:text-sm font-bold tracking-widest uppercase transition-colors whitespace-nowrap ${activeTab === 'capabilities' ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
+                            onClick={() => setActiveTab('services')}
+                            className={`relative py-4 text-xs md:text-sm font-bold tracking-widest uppercase transition-colors whitespace-nowrap ${activeTab === 'services' ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
                         >
-                            {t('expertise.tabs.capabilities', 'Sektörel Deneyim')}
-                            {activeTab === 'capabilities' && (
+                            {t('expertise.tabs.services', 'Hizmetler')}
+                            {activeTab === 'services' && (
                                 <motion.div
                                     layoutId="activeTabUnderline"
                                     className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-900 dark:bg-white"
