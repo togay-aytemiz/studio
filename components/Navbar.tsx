@@ -119,14 +119,14 @@ const Navbar: React.FC = () => {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled && !mobileMenuOpen ? 'bg-slate-950/80 backdrop-blur-md border-b border-white/5' : 'bg-transparent'
         }`}
     >
-      <div className="container mx-auto px-6 h-20 flex items-center justify-between relative z-50">
+      <div className="container mx-auto px-4 md:px-6 h-14 md:h-20 flex items-center justify-between relative z-50">
         {/* Logo */}
         {/* Logo */}
-        <a href="/" onClick={handleLogoClick} className="flex items-center gap-3 group">
-          <div className="w-8 h-8 flex items-center justify-center transition-transform group-hover:scale-105">
+        <a href="/" onClick={handleLogoClick} className="flex items-center gap-2 md:gap-3 group">
+          <div className="w-6 h-6 md:w-8 md:h-8 flex items-center justify-center transition-transform group-hover:scale-105">
             <img src="/A.svg" alt="Agens Logo" className="w-full h-full" />
           </div>
-          <span className="text-xl font-semibold tracking-[0.4em] text-white font-brand">AGENS</span>
+          <span className="text-lg md:text-xl font-semibold tracking-[0.4em] text-white font-brand">AGENS</span>
         </a>
 
         {/* Desktop Links */}
@@ -159,10 +159,10 @@ const Navbar: React.FC = () => {
 
         {/* Mobile Menu Toggle Button */}
         <button
-          className="md:hidden text-white p-2 z-50 relative focus:outline-none"
+          className="md:hidden text-white p-1.5 z-50 relative focus:outline-none"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
-          {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 

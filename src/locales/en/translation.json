@@ -200,33 +200,53 @@
         "title": "Real Impact.",
         "subtitle": "Success stories from our studio. Products that move the needle.",
         "impact": "Impact",
+        "explore": "Explore {{title}}",
         "projects": {
-            "fintech-app": {
-                "category": "Fintech Mobile App",
-                "title": "Nova Finance",
-                "solution": "Rebuilt mobile architecture with React Native. Implemented serverless backend and biometric security.",
-                "outcome": "$2M+ processed in 3 months."
+            "lumiso-crm": {
+                "category": "B2B SaaS Platform",
+                "title": "Lumiso CRM",
+                "solution": "A SaaS platform for photographers and studios that manages the entire customer journey from lead to gallery delivery in a single panel. Combines session scheduling, project tracking, payment/deposit management, and client communication end-to-end.",
+                "bullets": [
+                    "Multi-language interface (TR/EN) and mobile-responsive design",
+                    "Email marketing and automated notifications (workflows)",
+                    "Lead, project, and session management",
+                    "Advanced filtering, search, and reporting screens",
+                    "Gallery sharing, client selection, and delivery workflows"
+                ]
             },
-            "saas-dashboard": {
-                "category": "SaaS Platform",
-                "title": "Orbital Analytics",
-                "solution": "High-performance WebGL frontend. Python/Redis optimized backend for complex aggregations.",
-                "outcome": "85% faster reporting."
+            "naapim": {
+                "category": "AI Personal Decision Support",
+                "title": "Naapim?",
+                "solution": "An anonymous decision support experience that understands the user's context at the moment of decision and generates personalized insights. Structures the decision process with LLM-based analysis, semantic matching, and return flows.",
+                "bullets": [
+                    "Question classification and analysis generation with LLM integration",
+                    "Semantic matching via vector distance (pgvector) and similar story/outcome suggestions",
+                    "Email functions: code delivery, scheduled reminders, and follow-up flows",
+                    "Return flow experience and personalized result screen",
+                    "Anonymous usage and lightweight onboarding flow"
+                ]
             },
-            "health-portal": {
-                "category": "Healthcare Web App",
-                "title": "Vital Sync",
-                "solution": "Federated GraphQL API unifying data sources. End-to-end encrypted Next.js frontend.",
-                "outcome": "Serving 50k+ patients securely."
+            "serviceops-platform": {
+                "category": "AI-Powered Scheduling & Payment Platform",
+                "title": "ServiceOps Platform",
+                "solution": "An AI-powered operations system for service professionals that manages appointments, payments, and invoicing in one platform. Guarantees collection, reduces no-show rates, and automates revenue flow.",
+                "bullets": [
+                    "AI model predicting appointment cancellation and delay risk",
+                    "Dynamic reminder scheduling based on user behavior",
+                    "Smart reporting for workload and revenue forecasting",
+                    "Automatic capacity recommendations for service providers"
+                ]
             }
-        }
+        },
+        "inProgressLabel": "Active development",
+        "inProgressButton": "In Progress"
     },
     "founder": {
         "badge": "A Note from the Founder",
         "quote": "Software agencies often forget one thing: <br/> <span>Code is just a means to an end.</span>",
         "p1": "I started Agens to end the disconnect between engineering and strategy. Great code means nothing if the product fails.",
         "p2": "We act as your technical co-founder. We challenge assumptions and obsess over user experience until your vision thrives.",
-        "name": "Alex Voser",
+        "name": "Togay Aytemiz",
         "role": "Founder & CEO"
     },
     "team": {

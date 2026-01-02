@@ -60,36 +60,39 @@ export const PROCESS_STEPS: ProcessStep[] = [
 
 export const PROJECTS: ProjectItem[] = [
   {
-    id: 'fintech-app',
-    title: 'Nova Finance',
-    category: 'Fintech Mobile App',
-    outcome: 'Processed $2M+ in transactions within first 3 months.',
-    imageUrl: 'https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?auto=format&fit=crop&q=80&w=800',
-    stack: ['React Native', 'Node.js', 'AWS Lambda'],
-    challenge: 'Nova needed to launch a secure, millisecond-latency trading platform on both iOS and Android within 12 weeks. The existing legacy API was slow and prone to timeouts during high traffic.',
-    solution: 'We rebuilt the mobile architecture using React Native for cross-platform efficiency and implemented an Event-Driven serverless backend on AWS. We integrated biometric security and WebSocket feeds for real-time market data.',
-    keyMetrics: ['40% reduction in API latency', '99.99% server uptime', '4.8/5 App Store rating']
+    id: 'lumiso-crm',
+    title: 'Lumiso CRM',
+    category: 'B2B SaaS Platformu',
+    outcome: '',
+    imageUrl: '/Lumiso.webp',
+    projectUrl: 'https://lumiso.app',
+    stack: ['React', 'TypeScript', 'Vite', 'Tailwind', 'Radix UI', 'Supabase', 'Deno'],
+    challenge: '',
+    solution: '',
+    keyMetrics: []
   },
   {
-    id: 'saas-dashboard',
-    title: 'Orbital Analytics',
-    category: 'SaaS Platform',
-    outcome: 'Reduced data reporting time by 85% for enterprise clients.',
-    imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800',
-    stack: ['React', 'TypeScript', 'Python', 'WebGL'],
-    challenge: 'Enterprise clients were struggling to visualize terabytes of satellite imagery data. Their previous dashboard took 20+ seconds to load effectively rendering it unusable for real-time decision making.',
-    solution: 'We engineered a high-performance frontend using WebGL for GPU-accelerated rendering. The backend was optimized with Python and Redis caching layers to pre-process complex aggregations.',
-    keyMetrics: ['Sub-200ms load times', 'Processed 1TB+ daily data', 'Adoption increased by 300%']
+    id: 'naapim',
+    title: 'Naapim?',
+    category: 'AI Kişisel Karar Destek Asistanı',
+    outcome: '',
+    imageUrl: '/Naapim.webp',
+    projectUrl: 'https://naapim.com',
+    stack: ['React', 'TypeScript', 'Vite', 'Tailwind', 'Supabase', 'pgvector', 'Deno', 'OpenAI'],
+    challenge: '',
+    solution: '',
+    keyMetrics: []
   },
   {
-    id: 'health-portal',
-    title: 'Vital Sync',
-    category: 'Healthcare Web App',
-    outcome: 'Securely serving 50k+ patients with real-time updates.',
-    imageUrl: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=800',
-    stack: ['Next.js', 'PostgreSQL', 'Docker', 'HIPAA'],
-    challenge: 'Connecting 50+ fragmented clinic databases into a single patient portal while maintaining strict HIPAA compliance and data sovereignty was the primary bottleneck.',
-    solution: 'We designed a federated GraphQL API to unify data sources without migrating legacy databases. The frontend was built with Next.js for SEO and speed, wrapped in an end-to-end encrypted security layer.',
-    keyMetrics: ['Zero data breaches', '50k+ active patients', '15 mins saved per appointment']
+    id: 'serviceops-platform',
+    title: 'ServiceOps Platform',
+    category: 'AI Destekli Randevu ve Tahsilat Platformu',
+    outcome: '',
+    imageUrl: '/ServiceOps.webp',
+    inProgress: true,
+    stack: ['React Native', 'TypeScript', 'Node.js', 'Serverless', 'AWS', 'Payment Gateway', 'E-Fatura', 'AI Scheduling'],
+    challenge: '',
+    solution: '',
+    keyMetrics: []
   },
 ];

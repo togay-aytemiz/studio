@@ -19,6 +19,8 @@ export interface ProjectItem {
   category: string;
   outcome: string;
   imageUrl: string;
+  projectUrl?: string;
+  inProgress?: boolean;
   stack: string[];
   challenge: string;
   solution: string;

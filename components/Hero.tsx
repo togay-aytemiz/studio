@@ -115,6 +115,9 @@ const Hero: React.FC = () => {
   const { t } = useTranslation();
   const { scrollY } = useScroll();
 
+  // State for background image loading animation
+  const [bgLoaded, setBgLoaded] = useState(false);
+
   // Independent state for each card to allow random-ordered updates
   const [topLeftIndex, setTopLeftIndex] = useState(0);
   const [topRightIndex, setTopRightIndex] = useState(0);
@@ -123,6 +126,16 @@ const Hero: React.FC = () => {
 
   const yBackground = useTransform(scrollY, [0, 1000], [0, 400]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+
+  // Fallback for mobile - trigger animation after short delay if onLoad doesn't fire
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!bgLoaded) {
+        setBgLoaded(true);
+      }
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [bgLoaded]);
 
   // Memoize pools to react to language changes
   const POOL_TOP_LEFT = useMemo(() => [
@@ -207,14 +220,26 @@ const Hero: React.FC = () => {
   return (
     <section className="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden min-h-screen flex flex-col justify-center">
 
-      {/* Background Image with Gradient Fade - Intercom Style */}
-      <div className="absolute inset-0 z-0">
+      {/* Background Image with Gradient Fade - Animated Reveal */}
+      <motion.div
+        className="absolute inset-0 z-0"
+        initial={{ opacity: 0, scale: 1.15, filter: "blur(10px)" }}
+        animate={bgLoaded ? { opacity: 1, scale: 1, filter: "blur(0px)" } : {}}
+        transition={{
+          duration: 1.8,
+          ease: [0.22, 1, 0.36, 1], // Custom ease for cinematic feel
+          opacity: { duration: 1.2 },
+          scale: { duration: 2.2 },
+          filter: { duration: 1.5 }
+        }}
+      >
         <picture>
           <source media="(max-width: 768px)" srcSet="/herobg-mobile.webp" />
           <img
             src="/herobg.webp"
             alt="Hero Background"
             className="w-full h-full object-cover object-center"
+            onLoad={() => setBgLoaded(true)}
           />
         </picture>
         {/* Bottom gradient fade for smooth transition - Lighter/More balanced */}
@@ -223,7 +248,7 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-white/30 dark:from-[#030712]/20 via-transparent to-transparent"></div>
         {/* Overall subtle overly to ensure text readability without being too dark */}
         <div className="absolute inset-0 bg-black/5 dark:bg-black/10 md:dark:bg-black/5"></div>
-      </div>
+      </motion.div>
 
       <div className="container mx-auto px-6 relative z-10">
         {/* Centered Content - Intercom Style */}

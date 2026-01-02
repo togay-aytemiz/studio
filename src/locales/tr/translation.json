@@ -213,33 +213,53 @@
         "title": "Neler Yaptık? <br /> <span>Gerçek Sonuçlar.</span>",
         "subtitle": "İş ortaklarımızla birlikte hayata geçirdiğimiz projeler.",
         "impact": "Sonuç",
+        "explore": "{{title}}'i İncele",
         "projects": {
-            "fintech-app": {
-                "category": "Fintech Uygulaması",
-                "title": "Nova Finance",
-                "solution": "React Native ile mobil uygulama, AWS üzerinde serverless altyapı. Biyometrik güvenlik ve anlık veri.",
-                "outcome": "3 ayda 2M$+ işlem hacmi."
+            "lumiso-crm": {
+                "category": "B2B SaaS Platformu",
+                "title": "Lumiso CRM",
+                "solution": "Fotoğrafçılar ve stüdyolar için lead'den galeri teslimine kadar tüm müşteri yolculuğunu tek panelde yöneten SaaS. Seans planlama, proje takibi, ödeme/kapora yönetimi ve müşteri iletişimini uçtan uca birleştirir.",
+                "bullets": [
+                    "Çok dilli arayüz (TR/EN) ve mobil uyumlu tasarım",
+                    "Email marketing ve otomatik bildirimler (workflow/iş akışları)",
+                    "Lead, proje ve seans yönetimi",
+                    "Gelişmiş filtreleme, arama ve raporlama ekranları",
+                    "Galeri paylaşımı, müşteri seçimi ve teslim iş akışları"
+                ]
             },
-            "saas-dashboard": {
-                "category": "SaaS Platformu",
-                "title": "Orbital Analytics",
-                "solution": "WebGL ile yüksek performanslı dashboard. Redis ile hızlı veri işleme.",
-                "outcome": "%85 daha hızlı raporlama."
+            "naapim": {
+                "category": "AI Kişisel Karar Destek Asistanı",
+                "title": "Naapim?",
+                "solution": "Kullanıcının karar anındaki bağlamını anlayıp kişiselleştirilmiş içgörü üreten, anonim bir karar destek deneyimi. LLM tabanlı analiz, semantik eşleştirme ve geri dönüş akışlarıyla karar sürecini yapısal hale getirir.",
+                "bullets": [
+                    "LLM entegrasyonu ile soru sınıflandırma ve analiz üretimi",
+                    "Vektör uzaklık (pgvector) üzerinden semantik eşleştirme ve benzer hikâye/sonuç önerisi",
+                    "E-posta fonksiyonları: kod gönderimi, zamanlanmış hatırlatma ve takip akışları",
+                    "Geri dönüş (return flow) deneyimi ve kişisel sonuç ekranı",
+                    "Anonim kullanım ve hafif onboarding akışı"
+                ]
             },
-            "health-portal": {
-                "category": "Sağlık Yazılımı",
-                "title": "Vital Sync",
-                "solution": "GraphQL API ile veri entegrasyonu. Şifreli iletişim ve hızlı Next.js arayüzü.",
-                "outcome": "50k+ hasta güvenle hizmet alıyor."
+            "serviceops-platform": {
+                "category": "AI Destekli Randevu ve Tahsilat Platformu",
+                "title": "ServiceOps Platform",
+                "solution": "Hizmet veren profesyoneller için randevu, ödeme ve faturalama süreçlerini tek platformda yöneten, yapay zeka destekli operasyon sistemi. Tahsilatı garanti altına alır, no show oranını düşürür ve gelir akışını otomatikleştirir.",
+                "bullets": [
+                    "Randevu iptal ve gecikme riskini öngören AI modeli",
+                    "Kullanıcı davranışına göre dinamik hatırlatma zamanlaması",
+                    "Yoğunluk ve gelir tahmini için akıllı raporlama",
+                    "Hizmet sağlayıcılar için otomatik kapasite önerileri"
+                ]
             }
-        }
+        },
+        "inProgressLabel": "Aktif geliştirme aşamasında",
+        "inProgressButton": "Devam Ediyor"
     },
     "founder": {
         "badge": "Kurucudan",
         "quote": "Kod yazmak kolay. <br/> <span>Doğru ürünü yapmak zor.</span>",
         "p1": "Agens'i kurarken tek bir amacım vardı: Mühendislik ve strateji arasındaki kopukluğu gidermek. Ürün başarısız olursa harika kodun bir anlamı yoktur.",
         "p2": "Biz, projelere sadece geliştirici olarak değil; ürün ortağı olarak yaklaşıyoruz. Hedefimiz, birlikte değer üreten işler ortaya koymak.",
-        "name": "Alex Voser",
+        "name": "Togay Aytemiz",
         "role": "Kurucu & Ürün Lideri"
     },
     "team": {
