@@ -17,6 +17,7 @@ const Contact: React.FC = () => {
     message: ''
   });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [submittedContact, setSubmittedContact] = useState({ email: '', phone: '' });
   const { t } = useTranslation();
   const isAIEnabled = isOpenAIConfigured();
 
@@ -45,9 +46,9 @@ const Contact: React.FC = () => {
         })
       );
 
+      setSubmittedContact({ email: formData.email, phone: formData.phone });
       setStatus('success');
       setFormData({ name: '', email: '', phone: '', message: '' });
-      setTimeout(() => setStatus('idle'), 3000);
     } catch (error) {
       console.error('Email error:', error);
       setStatus('error');
@@ -127,7 +128,60 @@ const Contact: React.FC = () => {
                       </div>
                     )}
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    <AnimatePresence mode="wait">
+                      {status === 'success' ? (
+                        <motion.div
+                          key="contact-success"
+                          initial={{ opacity: 0, y: 12 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -8 }}
+                          transition={{ duration: 0.35, ease: 'easeOut' }}
+                          className="rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8 text-slate-200 shadow-xl"
+                        >
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="h-10 w-10 rounded-full bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-300">
+                            <CheckCircle2 size={20} />
+                          </div>
+                          <p className="text-xl md:text-2xl font-semibold text-white">Mesajınızı aldık</p>
+                        </div>
+                        <p className="text-sm md:text-base text-slate-300 leading-relaxed">
+                          {submittedContact.email && submittedContact.phone
+                            ? (
+                              <>
+                                Talebiniz ekibimize iletildi. Yaklaşık 24 saat içinde sizinle paylaştığınız{" "}
+                                <span className="font-semibold text-white">{submittedContact.email}</span>{" "}
+                                ya da{" "}
+                                <span className="font-semibold text-white">{submittedContact.phone}</span>{" "}
+                                üzerinden iletişime geçeceğiz.
+                              </>
+                            )
+                            : submittedContact.phone
+                            ? (
+                              <>
+                                Talebiniz ekibimize iletildi. Yaklaşık 24 saat içinde sizinle paylaştığınız{" "}
+                                <span className="font-semibold text-white">{submittedContact.phone}</span>{" "}
+                                üzerinden iletişime geçeceğiz.
+                              </>
+                            )
+                            : (
+                              <>
+                                Talebiniz ekibimize iletildi. Yaklaşık 24 saat içinde sizinle paylaştığınız{" "}
+                                <span className="font-semibold text-white">{submittedContact.email || 'e-posta'}</span>{" "}
+                                üzerinden iletişime geçeceğiz.
+                              </>
+                            )}
+                        </p>
+                      </motion.div>
+                      ) : (
+                        <motion.form
+                          key="contact-form"
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -8 }}
+                          transition={{ duration: 0.3, ease: 'easeOut' }}
+                          onSubmit={handleSubmit}
+                          className="space-y-6"
+                        >
                       <div className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div className="group">
@@ -194,11 +248,15 @@ const Contact: React.FC = () => {
                           className="group !px-5 !py-2.5 !text-sm md:!px-6 md:!py-3 md:!text-base"
                           disabled={!formData.name.trim() || (!formData.email.trim() && !formData.phone.trim()) || !formData.message.trim() || status === 'sending'}
                         >
-                          {t('contact.form.submit')}
-                          <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
+                          {status === 'sending' ? 'Gönderiliyor...' : t('contact.form.submit')}
+                          {status !== 'sending' && (
+                            <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
+                          )}
                         </Button>
                       </div>
-                    </form>
+                        </motion.form>
+                      )}
+                    </AnimatePresence>
                   </div>
 
                   {/* Info Sidebar (Right) */}

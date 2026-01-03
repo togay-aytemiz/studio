@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Sparkles, BrainCircuit, ArrowRight, Cpu, RefreshCw, AlertCircle, AlertTriangle, Code2, Layers, Clock, BarChart3, Wallet, Info, Activity, Loader2, ListChecks } from 'lucide-react';
+import { Sparkles, BrainCircuit, ArrowRight, Cpu, RefreshCw, AlertCircle, AlertTriangle, Code2, Layers, Clock, BarChart3, Wallet, Info, Activity, Loader2, ListChecks, CheckCircle2 } from 'lucide-react';
 import { useProductAnalysis } from '../hooks/useAI';
 import { sendEmail } from '../services/emailService';
 import Button from '../components/Button';
@@ -203,6 +203,7 @@ const ValidatePage: React.FC = () => {
 
     // Email sending states
     const [emailStatus, setEmailStatus] = useState<null | 'sending' | 'success' | 'error'>(null);
+    const [submittedContact, setSubmittedContact] = useState({ email: '', phone: '' });
     const [contactForm, setContactForm] = useState({
         name: '',
         email: '',
@@ -231,7 +232,7 @@ const ValidatePage: React.FC = () => {
 
     const handleContactSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!contactForm.name || !contactForm.email) {
+        if (!contactForm.name || (!contactForm.email && !contactForm.phone)) {
             return;
         }
         setEmailStatus('sending');
@@ -277,8 +278,11 @@ const ValidatePage: React.FC = () => {
         });
 
         if (emailSent) {
+            setSubmittedContact({ email: contactForm.email, phone: contactForm.phone });
             setEmailStatus('success');
-            setTimeout(() => setEmailStatus(null), 5000);
+            requestAnimationFrame(() => {
+                contactFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
         } else {
             setEmailStatus('error');
             setTimeout(() => setEmailStatus(null), 5000);
@@ -803,12 +807,65 @@ const ValidatePage: React.FC = () => {
 
                                 {/* Contact Form Section */}
                                 <div ref={contactFormRef} id="contact-form" className="mt-8 md:mt-12 pt-8 md:pt-12 border-t border-slate-200 dark:border-white/5">
-                                    <div className="text-center mb-6 md:mb-8">
-                                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">Hadi Konuşalım</h2>
-                                        <p className="text-slate-600 dark:text-slate-400">Projenizi hayata geçirmek için ilk adımı atın.</p>
-                                    </div>
 
-                                    <form onSubmit={handleContactSubmit} className="bg-slate-50 dark:bg-[#0f0a0a] border border-slate-100 dark:border-white/5 rounded-2xl p-4 md:p-8">
+                                    <AnimatePresence mode="wait">
+                                        {emailStatus === 'success' ? (
+                                            <motion.div
+                                                key="validate-success"
+                                                initial={{ opacity: 0, y: 12 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: -8 }}
+                                                transition={{ duration: 0.35, ease: 'easeOut' }}
+                                                className="bg-white/70 dark:bg-white/5 backdrop-blur-xl border border-slate-200/60 dark:border-white/10 rounded-2xl p-6 md:p-10 shadow-xl text-left"
+                                            >
+                                            <div className="flex items-center gap-3 mb-4">
+                                                <div className="h-10 w-10 rounded-full bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-500 dark:text-emerald-300">
+                                                    <CheckCircle2 size={20} />
+                                                </div>
+                                                <p className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Mesajınızı aldık</p>
+                                            </div>
+                                            <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                                                Fikrinizi aldık. Paylaştığınız bilgiler doğrultusunda AI destekli ön analiz tamamlandı.
+                                                Bir sonraki adımda, fikri birlikte ele alıp ürünleştirme ve teknik yol haritasını netleştirmek için kısa bir görüşme öneriyoruz.
+                                            </p>
+                                            <p className="mt-4 text-slate-600 dark:text-slate-300">
+                                                {submittedContact.email && submittedContact.phone
+                                                    ? (
+                                                        <>
+                                                            Talebiniz ekibimize iletildi. Yaklaşık 24 saat içinde sizinle paylaştığınız{" "}
+                                                            <span className="font-semibold text-slate-900 dark:text-white">{submittedContact.email}</span>{" "}
+                                                            ya da{" "}
+                                                            <span className="font-semibold text-slate-900 dark:text-white">{submittedContact.phone}</span>{" "}
+                                                            üzerinden iletişime geçeceğiz.
+                                                        </>
+                                                    )
+                                                    : submittedContact.phone
+                                                    ? (
+                                                        <>
+                                                            Talebiniz ekibimize iletildi. Yaklaşık 24 saat içinde sizinle paylaştığınız{" "}
+                                                            <span className="font-semibold text-slate-900 dark:text-white">{submittedContact.phone}</span>{" "}
+                                                            üzerinden iletişime geçeceğiz.
+                                                        </>
+                                                    )
+                                                    : (
+                                                        <>
+                                                            Talebiniz ekibimize iletildi. Yaklaşık 24 saat içinde sizinle paylaştığınız{" "}
+                                                            <span className="font-semibold text-slate-900 dark:text-white">{submittedContact.email || 'e-posta'}</span>{" "}
+                                                            üzerinden iletişime geçeceğiz.
+                                                        </>
+                                                    )}
+                                            </p>
+                                            </motion.div>
+                                        ) : (
+                                            <motion.form
+                                                key="validate-form"
+                                                initial={{ opacity: 0, y: 8 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                exit={{ opacity: 0, y: -8 }}
+                                                transition={{ duration: 0.3, ease: 'easeOut' }}
+                                                onSubmit={handleContactSubmit}
+                                                className="bg-slate-50 dark:bg-[#0f0a0a] border border-slate-100 dark:border-white/5 rounded-2xl p-4 md:p-8"
+                                            >
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
                                             <div className="group">
                                                 <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 ml-1">Ad Soyad</label>
@@ -843,7 +900,6 @@ const ValidatePage: React.FC = () => {
                                             <div className="relative">
                                                 <input
                                                     type="email"
-                                                    required
                                                     value={contactForm.email}
                                                     onChange={(e) => setContactForm(prev => ({ ...prev, email: e.target.value }))}
                                                     className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
@@ -867,14 +923,18 @@ const ValidatePage: React.FC = () => {
                                             <Button
                                                 type="submit"
                                                 size="md"
-                                                disabled={emailStatus === 'sending' || !contactForm.name || !contactForm.email}
+                                                disabled={emailStatus === 'sending' || !contactForm.name || (!contactForm.email && !contactForm.phone)}
                                                 className="group !px-5 !py-2.5 !text-sm md:!px-6 md:!py-3 md:!text-base w-full md:w-auto"
                                             >
-                                                Gönder
-                                                <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                                                {emailStatus === 'sending' ? 'Gönderiliyor...' : 'Gönder'}
+                                                {emailStatus !== 'sending' && (
+                                                    <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                                                )}
                                             </Button>
                                         </div>
-                                    </form>
+                                            </motion.form>
+                                        )}
+                                    </AnimatePresence>
                                 </div>
                             </motion.div>
                         )}

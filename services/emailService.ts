@@ -85,7 +85,8 @@ export const sendEmail = async (payload: ContactFormData | EmailDispatchPayload)
                           <p style="margin:0 0 10px;line-height:1.6;color:${textSecondary};">Fikrinizi aldık.</p>
                           <p style="margin:0 0 16px;line-height:1.6;color:${textSecondary};">Paylaştığınız bilgiler doğrultusunda AI destekli ön analiz tamamlandı.</p>
                           <p style="margin:0 0 16px;line-height:1.6;color:${textSecondary};">Bir sonraki adımda, fikri birlikte ele alıp ürünleştirme ve teknik yol haritasını netleştirmek için kısa bir görüşme öneriyoruz.</p>
-                          <p style="margin:0 0 16px;line-height:1.6;color:${textSecondary};">Genellikle 24 saat içinde sizinle iletişime geçiyoruz. Dilerseniz bu süreyi beklemeden bize doğrudan ulaşabilirsiniz:</p>
+                          <p style="margin:0 0 16px;line-height:1.6;color:${textSecondary};">Genellikle 24 saat içinde sizinle iletişime geçiyoruz.</p>
+                          <p style="margin:0 0 16px;line-height:1.6;color:${textSecondary};">Dilerseniz bu süreyi beklemeden bize doğrudan ulaşabilirsiniz:</p>
                           <p style="margin:0 0 16px;line-height:1.6;color:${textSecondary};">
                             Telefon: <a href="tel:+905074699692" style="color:${textPrimary};text-decoration:none;font-weight:600;">0507 469 9692</a>
                           </p>
@@ -257,8 +258,7 @@ export const sendEmail = async (payload: ContactFormData | EmailDispatchPayload)
                     '',
                     'Mesajınızı aldık. Talebiniz ekibimize iletildi.',
                     '',
-                    'Genellikle 24 saat içinde sizinle iletişime geçiyoruz.',
-                    'Dilerseniz bu süreyi beklemeden bizimle doğrudan telefon üzerinden de görüşebilirsiniz.',
+                    'Genellikle 24 saat içinde sizinle iletişime geçiyoruz. Dilerseniz bu süreyi beklemeden bizimle doğrudan telefon üzerinden de görüşebilirsiniz.',
                     '',
                     '0507 469 9692',
                     '',
