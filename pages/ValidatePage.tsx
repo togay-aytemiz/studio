@@ -326,7 +326,7 @@ const ValidatePage: React.FC = () => {
                                     transition={{ duration: 0.8, delay: 0.2 }}
                                     className="text-5xl md:text-6xl font-normal text-white mb-8 leading-[1.1] font-serif max-w-4xl mx-auto"
                                 >
-                                    Fikrinizi <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">saniyeler içinde</span><br />analiz edin.
+                                    Fikrinizi <span className="text-white drop-shadow-[0_0_25px_rgba(255,255,255,0.8)]">saniyeler içinde</span><br />analiz edin.
                                 </motion.h1>
 
                                 <motion.p

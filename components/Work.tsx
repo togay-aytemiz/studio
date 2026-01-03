@@ -39,7 +39,7 @@ const Work: React.FC = () => {
               key={project.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group flex flex-col bg-[#080c16] border border-white/5 rounded-3xl overflow-hidden hover:border-indigo-500/30 transition-all duration-500 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-2 h-full"
             >

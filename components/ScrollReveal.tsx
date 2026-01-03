@@ -8,14 +8,14 @@ interface ScrollRevealProps {
   className?: string;
 }
 
-export const ScrollReveal: React.FC<ScrollRevealProps> = ({ 
-  children, 
-  width = "fit-content", 
+export const ScrollReveal: React.FC<ScrollRevealProps> = ({
+  children,
+  width = "fit-content",
   delay = 0,
-  className = "" 
+  className = ""
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-75px" });
+  const isInView = useInView(ref, { once: true, margin: "-20px" });
 
   return (
     <div ref={ref} style={{ width }} className={className}>
