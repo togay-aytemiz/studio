@@ -32,10 +32,12 @@ export const handler = async (event: any) => {
             customerEmail,
             customerSubject,
             customerHtml,
+            customerText,
             customerReplyTo,
             adminTo,
             adminSubject,
             adminHtml,
+            adminText,
             replyTo
         } = JSON.parse(event.body);
 
@@ -54,7 +56,8 @@ export const handler = async (event: any) => {
                 to: [customerEmail],
                 subject: customerSubject,
                 html: customerHtml,
-                reply_to: customerReplyTo || 'agens.studio@gmail.com'
+                text: customerText,
+                replyTo: 'agens.studio@gmail.com'
             });
         }
 
@@ -62,9 +65,10 @@ export const handler = async (event: any) => {
         await resend.emails.send({
             from: 'Agens Studio <hello@mail.agens.studio>',
             to: [adminTo || 'agens.studio@gmail.com'],
-            reply_to: replyTo || customerEmail,
+            replyTo: 'agens.studio@gmail.com',
             subject: adminSubject,
-            html: adminHtml
+            html: adminHtml,
+            text: adminText
         });
 
         return {
