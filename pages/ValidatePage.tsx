@@ -89,8 +89,24 @@ const getComplexityLabel = (value: number) => {
     return 'Çok düşük';
 };
 
-const ComplexityBar = ({ label, value, color }: { label: string, value: number, color: string }) => {
+const getComplexityColorClass = (value: number) => {
+    if (value >= 80) return 'bg-red-500';
+    if (value >= 60) return 'bg-orange-500';
+    if (value >= 40) return 'bg-yellow-400';
+    if (value >= 20) return 'bg-emerald-400';
+    return 'bg-emerald-700';
+};
+
+const getSignalColorClass = (value: number, isPositive: boolean) => {
     const safeValue = Math.max(0, Math.min(100, value));
+    const scale = ['bg-emerald-700', 'bg-emerald-400', 'bg-yellow-400', 'bg-orange-500', 'bg-red-500'];
+    const index = safeValue >= 80 ? 4 : safeValue >= 60 ? 3 : safeValue >= 40 ? 2 : safeValue >= 20 ? 1 : 0;
+    return isPositive ? scale[4 - index] : scale[index];
+};
+
+const ComplexityBar = ({ label, value }: { label: string, value: number }) => {
+    const safeValue = Math.max(0, Math.min(100, value));
+    const colorClass = getComplexityColorClass(safeValue);
     return (
         <div className="mb-4 last:mb-0">
             <div className="flex justify-between text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
@@ -102,7 +118,7 @@ const ComplexityBar = ({ label, value, color }: { label: string, value: number, 
                     initial={{ width: 0 }}
                     animate={{ width: `${safeValue}%` }}
                     transition={{ duration: 1, delay: 0.5 }}
-                    className={`h-full rounded-full ${color}`}
+                    className={`h-full rounded-full ${colorClass}`}
                 />
             </div>
         </div>
@@ -113,14 +129,17 @@ const MarketSignalBar = ({
     label,
     valueLabel,
     value,
-    color
+    isPositive
 }: {
     label: string;
     valueLabel: string;
     value: number;
-    color: string;
-}) => (
-    <div className="mb-4 last:mb-0">
+    isPositive: boolean;
+}) => {
+    const safeValue = Math.max(0, Math.min(100, value));
+    const colorClass = getSignalColorClass(safeValue, isPositive);
+    return (
+        <div className="mb-4 last:mb-0">
         <div className="flex justify-between text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
             <span>{label}</span>
             <span className="text-slate-700 dark:text-slate-300">{valueLabel}</span>
@@ -128,13 +147,14 @@ const MarketSignalBar = ({
         <div className="h-2 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
             <motion.div
                 initial={{ width: 0 }}
-                animate={{ width: `${value}%` }}
+                animate={{ width: `${safeValue}%` }}
                 transition={{ duration: 1, delay: 0.5 }}
-                className={`h-full rounded-full ${color}`}
+                className={`h-full rounded-full ${colorClass}`}
             />
         </div>
-    </div>
-);
+        </div>
+    );
+};
 
 const ValidatePage: React.FC = () => {
     const [ideaInput, setIdeaInput] = useState('');
@@ -502,9 +522,9 @@ const ValidatePage: React.FC = () => {
                                             <h3 className="font-bold text-slate-900 dark:text-white">Teknik Karmaşıklık</h3>
                                         </div>
                                         <div className="grid md:grid-cols-3 gap-6">
-                                            <ComplexityBar label="Frontend & UX" value={analysis.complexity.frontend} color="bg-blue-500" />
-                                            <ComplexityBar label="Backend & Mantık" value={analysis.complexity.backend} color="bg-purple-500" />
-                                            <ComplexityBar label="AI & Veri" value={analysis.complexity.ai} color="bg-indigo-500" />
+                                            <ComplexityBar label="Frontend & UX" value={analysis.complexity.frontend} />
+                                            <ComplexityBar label="Backend & Mantık" value={analysis.complexity.backend} />
+                                            <ComplexityBar label="AI & Veri" value={analysis.complexity.ai} />
                                         </div>
                                     </motion.div>
 
@@ -617,7 +637,7 @@ const ValidatePage: React.FC = () => {
                                                         label="Rekabet Yoğunluğu"
                                                         valueLabel={competitionDensity.label}
                                                         value={competitionDensity.score}
-                                                        color="bg-amber-500"
+                                                        isPositive={false}
                                                     />
                                                 )}
                                                 {userDemand && (
@@ -625,7 +645,7 @@ const ValidatePage: React.FC = () => {
                                                         label="Kullanıcı Talebi"
                                                         valueLabel={userDemand.label}
                                                         value={userDemand.score}
-                                                        color="bg-emerald-500"
+                                                        isPositive={true}
                                                     />
                                                 )}
                                             </div>

@@ -101,8 +101,17 @@ const AIValidator: React.FC = () => {
     return 'Çok düşük';
   };
 
-  const ComplexityBar = ({ label, value, color }: { label: string, value: number, color: string }) => {
+  const getComplexityColorClass = (value: number) => {
+    if (value >= 80) return 'bg-red-500';
+    if (value >= 60) return 'bg-orange-500';
+    if (value >= 40) return 'bg-yellow-400';
+    if (value >= 20) return 'bg-emerald-400';
+    return 'bg-emerald-700';
+  };
+
+  const ComplexityBar = ({ label, value }: { label: string, value: number }) => {
     const safeValue = Math.max(0, Math.min(100, value));
+    const colorClass = getComplexityColorClass(safeValue);
     return (
       <div className="mb-4 last:mb-0">
         <div className="flex justify-between text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">
@@ -114,7 +123,7 @@ const AIValidator: React.FC = () => {
             initial={{ width: 0 }}
             animate={{ width: `${safeValue}%` }}
             transition={{ duration: 1, delay: 0.5 }}
-            className={`h-full rounded-full ${color}`}
+            className={`h-full rounded-full ${colorClass}`}
           />
         </div>
       </div>
@@ -287,13 +296,13 @@ const AIValidator: React.FC = () => {
 
                   <div className="grid md:grid-cols-3 gap-6">
                     <div>
-                      <ComplexityBar label={t('aiValidator.complexity.frontend')} value={analysis.complexity.frontend} color="bg-blue-500" />
+                      <ComplexityBar label={t('aiValidator.complexity.frontend')} value={analysis.complexity.frontend} />
                     </div>
                     <div>
-                      <ComplexityBar label={t('aiValidator.complexity.backend')} value={analysis.complexity.backend} color="bg-purple-500" />
+                      <ComplexityBar label={t('aiValidator.complexity.backend')} value={analysis.complexity.backend} />
                     </div>
                     <div>
-                      <ComplexityBar label={t('aiValidator.complexity.ai')} value={analysis.complexity.ai} color="bg-indigo-500" />
+                      <ComplexityBar label={t('aiValidator.complexity.ai')} value={analysis.complexity.ai} />
                     </div>
                   </div>
                 </motion.div>
