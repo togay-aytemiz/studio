@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Sparkles, BrainCircuit, ArrowRight, Cpu, RefreshCw, AlertCircle, AlertTriangle, Code2, Layers, Clock, BarChart3, Wallet, Info, Activity, Loader2, Phone, Mail, ListChecks } from 'lucide-react';
+import { Sparkles, BrainCircuit, ArrowRight, Cpu, RefreshCw, AlertCircle, AlertTriangle, Code2, Layers, Clock, BarChart3, Wallet, Info, Activity, Loader2, ListChecks } from 'lucide-react';
 import { useProductAnalysis } from '../hooks/useAI';
 import { sendEmail } from '../services/emailService';
 import Button from '../components/Button';
@@ -482,9 +482,9 @@ const ValidatePage: React.FC = () => {
                                             <Button
                                                 type="button"
                                                 onClick={handleScrollToContact}
-                                                className="group bg-indigo-600 text-white hover:bg-indigo-500 focus:ring-indigo-500/60 shadow-[0_0_24px_rgba(99,102,241,0.35)]"
+                                                className="group bg-indigo-600 text-white hover:bg-indigo-500 focus:ring-indigo-500/60 shadow-[0_0_24px_rgba(99,102,241,0.35)] text-sm md:text-base whitespace-nowrap"
                                             >
-                                                Ücretsiz Ön Görüşme Al
+                                                Ücretsiz Ön Görüşme Ayarla
                                                 <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
                                             </Button>
                                             <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
@@ -751,14 +751,11 @@ const ValidatePage: React.FC = () => {
                                             <div className="group">
                                                 <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 ml-1">Telefon</label>
                                                 <div className="relative">
-                                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                                                        <Phone size={16} />
-                                                    </div>
                                                     <input
                                                         type="tel"
                                                         value={contactForm.phone}
                                                         onChange={(e) => setContactForm(prev => ({ ...prev, phone: e.target.value }))}
-                                                        className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 pl-10 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                                                        className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                                                         placeholder="0555 555 55 55"
                                                     />
                                                 </div>
@@ -768,13 +765,10 @@ const ValidatePage: React.FC = () => {
                                         <div className="mb-8">
                                             <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 ml-1">E-posta Adresi</label>
                                             <div className="relative">
-                                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                                                    <Mail size={16} />
-                                                </div>
                                                 <input
                                                     type="email"
                                                     required
-                                                    className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 pl-10 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                                                    className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                                                     placeholder="ornek@sirket.com"
                                                 />
                                             </div>
