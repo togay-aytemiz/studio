@@ -269,6 +269,10 @@ const ValidatePage: React.FC = () => {
     const handleAnalyze = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!ideaInput.trim()) return;
+
+        // Scroll to top for better mobile experience
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
         await analyze(ideaInput);
     };
 
