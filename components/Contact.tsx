@@ -31,6 +31,7 @@ const Contact: React.FC = () => {
     if ((!formData.email && !formData.phone) || !formData.name || !formData.message) return;
 
     setStatus('sending');
+    const emailTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
 
     try {
       await import('../services/emailService').then(mod =>
@@ -39,7 +40,8 @@ const Contact: React.FC = () => {
           name: formData.name,
           email: formData.email || 'Telefon ile iletişim',
           phone: formData.phone,
-          message: formData.message
+          message: formData.message,
+          emailTheme
         })
       );
 

@@ -206,7 +206,8 @@ const ValidatePage: React.FC = () => {
     const [contactForm, setContactForm] = useState({
         name: '',
         email: '',
-        phone: ''
+        phone: '',
+        message: ''
     });
     const contactFormRef = useRef<HTMLDivElement | null>(null);
     const contactNameRef = useRef<HTMLInputElement | null>(null);
@@ -230,14 +231,32 @@ const ValidatePage: React.FC = () => {
 
     const handleContactSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!contactForm.name || !contactForm.email) {
+            return;
+        }
         setEmailStatus('sending');
+        const emailTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
 
+        const safeIdea = ideaInput.trim();
+        const technicalChallenges = analysis?.technicalChallenges?.length
+            ? analysis.technicalChallenges
+            : [];
+        const feasibilityScore = typeof analysis?.feasibilityScore === 'number'
+            ? analysis.feasibilityScore
+            : null;
+        const mvpTimeline = analysis?.mvpTimeline?.trim() || 'Paylaşılmadı';
         const emailSent = await sendEmail({
             type: 'analysis_contact',
             name: contactForm.name,
             email: contactForm.email,
             phone: contactForm.phone,
-            message: `Analiz edilen fikir:\n${ideaInput}`
+            message: contactForm.message,
+            analysisIdea: safeIdea || 'Paylaşılmadı',
+            executiveSummary: analysis?.executiveSummary || 'Paylaşılmadı',
+            technicalChallenges,
+            feasibilityScore: feasibilityScore ?? undefined,
+            mvpTimeline,
+            emailTheme
         });
 
         if (emailSent) {
@@ -772,7 +791,7 @@ const ValidatePage: React.FC = () => {
                                         <p className="text-slate-600 dark:text-slate-400">Projenizi hayata geçirmek için ilk adımı atın.</p>
                                     </div>
 
-                                    <form onSubmit={(e) => { e.preventDefault(); alert('Talebiniz alındı! En kısa sürede dönüş yapacağız.'); }} className="bg-slate-50 dark:bg-[#0f0a0a] border border-slate-100 dark:border-white/5 rounded-2xl p-4 md:p-8">
+                                    <form onSubmit={handleContactSubmit} className="bg-slate-50 dark:bg-[#0f0a0a] border border-slate-100 dark:border-white/5 rounded-2xl p-4 md:p-8">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
                                             <div className="group">
                                                 <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 ml-1">Ad Soyad</label>
@@ -808,6 +827,8 @@ const ValidatePage: React.FC = () => {
                                                 <input
                                                     type="email"
                                                     required
+                                                    value={contactForm.email}
+                                                    onChange={(e) => setContactForm(prev => ({ ...prev, email: e.target.value }))}
                                                     className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
                                                     placeholder="ornek@sirket.com"
                                                 />
@@ -818,16 +839,18 @@ const ValidatePage: React.FC = () => {
                                             <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 ml-1">Proje Detayları / Notunuz</label>
                                             <textarea
                                                 rows={6}
+                                                value={contactForm.message}
+                                                onChange={(e) => setContactForm(prev => ({ ...prev, message: e.target.value }))}
                                                 className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-xs md:placeholder:text-sm placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all resize-none leading-relaxed"
-                                                placeholder={`AI analiz raporu için: "${ideaInput.substring(0, 50)}${ideaInput.length > 50 ? '...' : ''}"\n\nEklemek istediğiniz detaylar veya sorularınız varsa buraya yazabilirsiniz.`}
+                                                placeholder={`AI analiz raporu ekibe iletilecek. Ek talepleriniz varsa buraya yazabilirsiniz, yoksa boş bırakabilirsiniz.`}
                                             />
                                         </div>
 
                                         <div className="flex justify-center md:justify-end">
                                             <Button
+                                                type="submit"
                                                 size="md"
-                                                onClick={handleContactSubmit}
-                                                disabled={emailStatus === 'sending' || !contactForm.name || (!contactForm.email && !contactForm.phone)}
+                                                disabled={emailStatus === 'sending' || !contactForm.name || !contactForm.email}
                                                 className="group !px-5 !py-2.5 !text-sm md:!px-6 md:!py-3 md:!text-base w-full md:w-auto"
                                             >
                                                 Gönder
