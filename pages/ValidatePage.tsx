@@ -538,23 +538,23 @@ const ValidatePage: React.FC = () => {
                                     </motion.div>
 
                                     {/* Market Analysis (New) */}
-                                    <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.35 }} className="bg-sky-50 dark:bg-sky-900/10 border border-sky-100 dark:border-sky-500/10 rounded-2xl p-6 flex items-start gap-4">
-                                        <div className="p-3 bg-sky-100 dark:bg-sky-500/10 text-sky-600 dark:text-sky-400 rounded-xl flex-shrink-0">
-                                            <BarChart3 size={24} />
+                                    <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.35 }} className="bg-sky-50 dark:bg-sky-900/10 border border-sky-100 dark:border-sky-500/10 rounded-2xl p-6">
+                                        <div className="flex items-center gap-2 mb-4 text-sky-600 dark:text-sky-400">
+                                            <BarChart3 size={20} />
+                                            <h3 className="font-bold text-slate-900 dark:text-white">Pazar & Rekabet Analizi</h3>
                                         </div>
                                         <div>
-                                            <h3 className="font-bold text-slate-900 dark:text-white mb-2">Pazar & Rekabet Analizi</h3>
                                             <MarkdownRenderer content={analysis.marketAnalysis} />
                                         </div>
                                     </motion.div>
 
                                     {/* 4. Monetization (Moved Up) */}
-                                    <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.4 }} className="bg-emerald-50 dark:bg-slate-900 border border-emerald-100 dark:border-emerald-500/20 rounded-2xl p-6 flex items-start gap-4">
-                                        <div className="p-3 bg-emerald-100 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-xl flex-shrink-0">
-                                            <Wallet size={24} />
+                                    <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.4 }} className="bg-emerald-50 dark:bg-slate-900 border border-emerald-100 dark:border-emerald-500/20 rounded-2xl p-6">
+                                        <div className="flex items-center gap-2 mb-4 text-emerald-600 dark:text-emerald-400">
+                                            <Wallet size={20} />
+                                            <h3 className="font-bold text-slate-900 dark:text-white">Gelir Modeli Önerisi</h3>
                                         </div>
                                         <div>
-                                            <h3 className="font-bold text-slate-900 dark:text-white mb-2">Gelir Modeli Önerisi</h3>
                                             <MarkdownRenderer content={analysis.monetizationStrategy} />
                                         </div>
                                     </motion.div>

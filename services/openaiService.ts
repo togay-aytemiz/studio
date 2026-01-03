@@ -1,5 +1,6 @@
 // OpenAI Service for AI Analysis
 const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY || '';
+console.log("OpenAI Key Loaded:", !!OPENAI_API_KEY);
 
 interface OpenAIMessage {
     role: 'system' | 'user' | 'assistant';
