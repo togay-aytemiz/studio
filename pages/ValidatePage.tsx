@@ -8,6 +8,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import MarkdownRenderer from '../components/MarkdownRenderer';
 
 const PLACEHOLDER_IDEAS = [
     "Sağlık takibi için yapay zeka asistanı",
@@ -96,78 +97,6 @@ const ComplexityBar = ({ label, value, color }: { label: string, value: number, 
     </div>
 );
 
-const MarkdownRenderer = ({ content }: { content: string }) => {
-    const processText = (text: string) => {
-        const parts = text.split(/(\*\*.*?\*\*)/g);
-        return parts.map((part, index) => {
-            if (part.startsWith('**') && part.endsWith('**')) {
-                return (
-                    <strong key={index} className="font-bold text-slate-900 dark:text-white">
-                        {part.slice(2, -2)}
-                    </strong>
-                );
-            }
-            return part;
-        });
-    };
-
-    return (
-        <div className="space-y-3">
-            {content.split('\n\n').map((paragraph, pIndex) => {
-                // Check for headers (###)
-                // Check for headers (###)
-                if (paragraph.trim().startsWith('###')) {
-                    const lines = paragraph.split('\n');
-                    const header = lines[0].replace(/^###\s*/, '');
-                    const rest = lines.slice(1).join('\n');
-
-                    return (
-                        <div key={pIndex}>
-                            <h4 className="text-sm font-bold text-slate-900 dark:text-white mt-4 mb-2">
-                                {header}
-                            </h4>
-                            {rest && (
-                                <MarkdownRenderer content={rest} />
-                            )}
-                        </div>
-                    );
-                }
-
-                // Check for lists
-                if (paragraph.trim().startsWith('- ') || paragraph.trim().startsWith('* ')) {
-                    const lines = paragraph.split('\n');
-                    return (
-                        <div key={pIndex} className="space-y-1">
-                            {lines.map((line, lIndex) => {
-                                if (line.trim().startsWith('- ') || line.trim().startsWith('* ')) {
-                                    return (
-                                        <div key={lIndex} className="flex gap-2 pl-2 md:pl-4">
-                                            <span className="text-indigo-500 font-bold">•</span>
-                                            <span className="text-xs md:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                                                {processText(line.trim().replace(/^[-*] /, ''))}
-                                            </span>
-                                        </div>
-                                    );
-                                }
-                                return (
-                                    <p key={lIndex} className="text-xs md:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                                        {processText(line)}
-                                    </p>
-                                );
-                            })}
-                        </div>
-                    );
-                }
-                return (
-                    <p key={pIndex} className="text-xs md:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-                        {processText(paragraph)}
-                    </p>
-                );
-            })}
-        </div>
-    );
-};
-
 const ValidatePage: React.FC = () => {
     const [ideaInput, setIdeaInput] = useState('');
     const [placeholderIndex, setPlaceholderIndex] = useState(0);
@@ -176,6 +105,12 @@ const ValidatePage: React.FC = () => {
     const [loadingMsgIndex, setLoadingMsgIndex] = useState(0);
     const { analysis, isAnalyzing, error, analyze, reset } = useProductAnalysis();
     const { t } = useTranslation();
+    const mvpModules = analysis?.mvpModules?.length ? analysis.mvpModules : (analysis?.implementationSteps || []);
+    const phase2Modules = analysis?.phase2Modules || [];
+    const integrations = analysis?.integrations || [];
+    const compliance = analysis?.compliance || [];
+    const validationPlan = analysis?.validationPlan || [];
+    const openQuestions = analysis?.openQuestions || [];
 
     // Email sending states
     const [emailStatus, setEmailStatus] = useState<null | 'sending' | 'success' | 'error'>(null);
@@ -495,24 +430,45 @@ const ValidatePage: React.FC = () => {
                                         </div>
                                     </motion.div>
 
-                                    {/* 2.5 Implementation Steps */}
-                                    {/* @ts-ignore */}
-                                    {analysis.implementationSteps && analysis.implementationSteps.length > 0 && (
+                                    {/* 2.5 MVP Modules */}
+                                    {mvpModules.length > 0 && (
                                         <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.15 }} className="bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-white/5 rounded-2xl p-4 md:p-6 mt-4 md:mt-0">
                                             <div className="mb-4">
                                                 <div className="flex items-center gap-2 mb-1">
                                                     <ListChecks size={20} className="text-indigo-500" />
-                                                    <h3 className="font-bold text-slate-900 dark:text-white">Yapılacaklar Listesi</h3>
+                                                    <h3 className="font-bold text-slate-900 dark:text-white">MVP Modülleri</h3>
                                                 </div>
                                                 <p className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 pl-7">
-                                                    * Aşağıdaki liste tahmini modüllerdir. Proje kapsamına göre değişiklik gösterebilir.
+                                                    * İlk sürümde değer üretmek için zorunlu minimum kapsam.
                                                 </p>
                                             </div>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
-                                                {/* @ts-ignore */}
-                                                {analysis.implementationSteps.map((step, idx) => (
+                                                {mvpModules.map((step, idx) => (
                                                     <div key={idx} className="flex gap-2 items-center">
                                                         <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 flex-shrink-0" />
+                                                        <div className="text-xs font-medium text-slate-800 dark:text-slate-200">{step}</div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </motion.div>
+                                    )}
+
+                                    {/* 2.6 Phase 2 Modules */}
+                                    {phase2Modules.length > 0 && (
+                                        <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.2 }} className="bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-white/5 rounded-2xl p-4 md:p-6 mt-4 md:mt-0">
+                                            <div className="mb-4">
+                                                <div className="flex items-center gap-2 mb-1">
+                                                    <Layers size={20} className="text-indigo-500" />
+                                                    <h3 className="font-bold text-slate-900 dark:text-white">Faz 2 / Ölçek Modülleri</h3>
+                                                </div>
+                                                <p className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 pl-7">
+                                                    * Ürün doğrulandıktan sonra büyümeyi ve operasyonu güçlendiren adımlar.
+                                                </p>
+                                            </div>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
+                                                {phase2Modules.map((step, idx) => (
+                                                    <div key={idx} className="flex gap-2 items-center">
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0" />
                                                         <div className="text-xs font-medium text-slate-800 dark:text-slate-200">{step}</div>
                                                     </div>
                                                 ))}
@@ -570,6 +526,52 @@ const ValidatePage: React.FC = () => {
                                         </div>
                                     </motion.div>
 
+                                    {/* Integrations & Compliance */}
+                                    {(integrations.length > 0 || compliance.length > 0) && (
+                                        <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.3 }} className="bg-amber-50 dark:bg-slate-900/50 border border-amber-100 dark:border-amber-500/20 rounded-2xl p-4 md:p-6">
+                                            <div className="flex items-center gap-2 mb-4 text-amber-600 dark:text-amber-400">
+                                                <Info size={20} />
+                                                <h3 className="font-bold text-slate-900 dark:text-white">Entegrasyonlar ve Uyumluluk</h3>
+                                            </div>
+                                            {integrations.length > 0 && (
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                    {integrations.map((integration, idx) => (
+                                                        <div key={`${integration.category}-${idx}`} className="bg-white dark:bg-slate-950/50 border border-amber-100 dark:border-white/5 p-4 rounded-xl">
+                                                            <div className="flex items-center justify-between mb-2">
+                                                                <div className="text-sm font-bold text-slate-900 dark:text-white">{integration.category}</div>
+                                                                <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full border ${integration.required ? 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20' : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20'}`}>
+                                                                    {integration.required ? 'Gerekli' : 'Opsiyonel'}
+                                                                </span>
+                                                            </div>
+                                                            <div className="flex flex-wrap gap-2">
+                                                                {integration.options.map((option, optionIndex) => (
+                                                                    <span key={`${integration.category}-${optionIndex}`} className="px-2.5 py-1 bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 text-xs font-semibold rounded-lg">
+                                                                        {option}
+                                                                    </span>
+                                                                ))}
+                                                            </div>
+                                                            {integration.notes && (
+                                                                <p className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 mt-2">{integration.notes}</p>
+                                                            )}
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                            {compliance.length > 0 && (
+                                                <div className="mt-4">
+                                                    <div className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">Uyumluluk</div>
+                                                    <div className="flex flex-wrap gap-2">
+                                                        {compliance.map((item, idx) => (
+                                                            <span key={`${item}-${idx}`} className="px-2.5 py-1 bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 text-xs font-semibold rounded-lg">
+                                                                {item}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </motion.div>
+                                    )}
+
                                     {/* Market Analysis (New) */}
                                     <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.35 }} className="bg-sky-50 dark:bg-sky-900/10 border border-sky-100 dark:border-sky-500/10 rounded-2xl p-4 md:p-6">
                                         <div className="flex items-center gap-2 mb-4 text-sky-600 dark:text-sky-400">
@@ -592,11 +594,53 @@ const ValidatePage: React.FC = () => {
                                         </div>
                                     </motion.div>
 
+                                    {/* Validation Plan & Open Questions */}
+                                    {(validationPlan.length > 0 || openQuestions.length > 0) && (
+                                        <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.45 }} className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                                            {validationPlan.length > 0 && (
+                                                <div className="bg-indigo-50 dark:bg-indigo-900/10 border border-indigo-100 dark:border-indigo-500/10 rounded-2xl p-4 md:p-6">
+                                                    <div className="flex items-center gap-2 mb-4 text-indigo-600 dark:text-indigo-400">
+                                                        <ListChecks size={20} />
+                                                        <h3 className="font-bold text-slate-900 dark:text-white">Hızlı Doğrulama Planı</h3>
+                                                    </div>
+                                                    <div className="space-y-3">
+                                                        {validationPlan.map((item, idx) => (
+                                                            <div key={`${item}-${idx}`} className="flex gap-3 text-xs md:text-sm text-slate-600 dark:text-slate-300">
+                                                                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-indigo-100 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xs font-bold">
+                                                                    {idx + 1}
+                                                                </span>
+                                                                {item}
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+                                            {openQuestions.length > 0 && (
+                                                <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-white/5 rounded-2xl p-4 md:p-6">
+                                                    <div className="flex items-center gap-2 mb-4 text-slate-600 dark:text-slate-300">
+                                                        <Info size={20} />
+                                                        <h3 className="font-bold text-slate-900 dark:text-white">Netleştirilmesi Gereken Sorular</h3>
+                                                    </div>
+                                                    <div className="space-y-3">
+                                                        {openQuestions.map((item, idx) => (
+                                                            <div key={`${item}-${idx}`} className="flex gap-3 text-xs md:text-sm text-slate-600 dark:text-slate-300">
+                                                                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-300 flex items-center justify-center text-xs font-bold">
+                                                                    {idx + 1}
+                                                                </span>
+                                                                {item}
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </motion.div>
+                                    )}
+
                                     {/* 5. Challenges (Moved Down) */}
-                                    <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.3 }} className="bg-red-50 dark:bg-[#0f0a0a] border border-red-100 dark:border-red-900/30 rounded-2xl p-4 md:p-6">
+                                    <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.5 }} className="bg-red-50 dark:bg-[#0f0a0a] border border-red-100 dark:border-red-900/30 rounded-2xl p-4 md:p-6">
                                         <div className="flex items-center gap-2 mb-4 text-red-600 dark:text-red-500">
                                             <AlertTriangle size={20} />
-                                            <h3 className="font-bold">Risk Analizi</h3>
+                                            <h3 className="font-bold">Riskler ve İlk Önlemler</h3>
                                         </div>
                                         <div className="space-y-3">
                                             {analysis.technicalChallenges.map((challenge, i) => (
@@ -618,7 +662,7 @@ const ValidatePage: React.FC = () => {
                                         <div className="flex-1">
                                             <h3 className="font-bold text-slate-900 dark:text-white mb-2">Agens AI Stratejik Tavsiyesi</h3>
                                             <div className="text-slate-600 dark:text-slate-200 font-medium">
-                                                <MarkdownRenderer content={`"${analysis.agensInsight}"`} />
+                                                <MarkdownRenderer content={analysis.agensInsight} />
                                             </div>
                                         </div>
                                     </motion.div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Button from './Button';
-import { ArrowRight, Zap, BrainCircuit, Layers, TrendingUp, CheckCircle2, ShieldCheck, Cloud, Code2, Smartphone, Palette, Globe, Rocket, Search, Server, Database, Bot, Sparkles, MessageSquare, ChevronDown } from 'lucide-react';
+import { ArrowRight, Zap, BrainCircuit, Layers, TrendingUp, CheckCircle2, ShieldCheck, Cloud, Code2, Smartphone, Palette, Globe, Rocket, Search, Server, Database, Bot, Sparkles, MessageSquare, ChevronDown, Workflow, Plug, MessageSquareText, CreditCard, FileText } from 'lucide-react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 
 // --- BACKGROUND ANIMATION COMPONENT: ORBITAL SYSTEM ---
@@ -164,17 +164,19 @@ const Hero: React.FC = () => {
   ], [t]);
 
   const MARQUEE_ITEMS = useMemo(() => [
-    { icon: Zap, label: t('hero.marquee.highPerformance') },
-    { icon: BrainCircuit, label: t('hero.marquee.genAi') },
-    { icon: Database, label: t('hero.marquee.aiMemory') },
-    { icon: Smartphone, label: t('hero.marquee.mobileFirst') },
-    { icon: ShieldCheck, label: t('hero.marquee.secure') },
-    { icon: Globe, label: t('hero.marquee.globalCdn') },
-    { icon: Bot, label: t('hero.marquee.autoAgents') },
-    { icon: Code2, label: t('hero.marquee.cleanCode') },
-    { icon: Sparkles, label: t('hero.marquee.naturalLang') },
-    { icon: Search, label: t('hero.marquee.neuralSearch') }
-  ], [t]);
+    { icon: Smartphone, label: "Mobil Uygulamalar" },
+    { icon: Globe, label: "Web Platformları" },
+    { icon: Workflow, label: "Workflow Otomasyonu" },
+    { icon: Plug, label: "API-First Mimari" },
+    { icon: Sparkles, label: "AI Destekli Akışlar" },
+    { icon: MessageSquareText, label: "Doğal Dil İşleme" },
+    { icon: Search, label: "Semantik Arama" },
+    { icon: Zap, label: "Akıllı Otomasyon" },
+    { icon: Layers, label: "Ölçeklenebilir Altyapı" },
+    { icon: CreditCard, label: "Ödeme & Tahsilat" },
+    { icon: FileText, label: "E-Fatura Entegrasyonu" },
+    { icon: ShieldCheck, label: "Güvenli Sistemler" }
+  ], []);
 
   // Set up staggered intervals for "organic" feel
   useEffect(() => {
@@ -306,7 +308,7 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.8 }}
-            className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-8 mt-12 text-center"
+            className="hidden md:flex flex-col md:flex-row items-center justify-center gap-2 md:gap-8 mt-12 text-center"
           >
             <span className="text-white/80 font-mono uppercase text-[0.75rem] md:text-[0.875rem] tracking-[0.063rem] md:tracking-[0.094rem] leading-tight">
               {t('hero.highlights.aiPowered')}
@@ -319,8 +321,12 @@ const Hero: React.FC = () => {
       </div>
 
       {/* MOBILE ONLY: Architect-style 2-Row Marquee */}
+      <div className="mt-16 lg:hidden flex justify-center z-10">
+        <span className="text-[10px] font-bold tracking-[0.2em] text-white/40 uppercase">TEKNİK YETKİNLİKLERİMİZ</span>
+      </div>
+
       <div
-        className="mt-8 lg:hidden relative w-full overflow-hidden z-10 flex flex-col gap-2"
+        className="mt-2 lg:hidden relative w-full overflow-hidden z-10 flex flex-col gap-1"
         style={{
           maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)',
           WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)'
@@ -331,12 +337,12 @@ const Hero: React.FC = () => {
           <motion.div
             className="flex shrink-0 gap-2"
             animate={{ x: "-50%" }}
-            transition={{ duration: 40, ease: "linear", repeat: Infinity }}
+            transition={{ duration: 50, ease: "linear", repeat: Infinity }}
           >
             {[...marqueeRow1, ...marqueeRow1, ...marqueeRow1, ...marqueeRow1].map((item, idx) => (
               <div
                 key={`row1-${idx}`}
-                className="flex items-center gap-2 rounded-full py-2 px-4 border border-white/20 bg-transparent whitespace-nowrap"
+                className="flex items-center gap-2 rounded-full py-2 px-4 border border-white/20 bg-white/5 backdrop-blur-sm whitespace-nowrap"
               >
                 <item.icon size={14} className="text-white/60" />
                 <span className="text-xs text-white/70">{item.label}</span>
@@ -351,12 +357,12 @@ const Hero: React.FC = () => {
             className="flex shrink-0 gap-2"
             initial={{ x: "-50%" }}
             animate={{ x: "0%" }}
-            transition={{ duration: 45, ease: "linear", repeat: Infinity }}
+            transition={{ duration: 55, ease: "linear", repeat: Infinity }}
           >
             {[...marqueeRow2, ...marqueeRow2, ...marqueeRow2, ...marqueeRow2].map((item, idx) => (
               <div
                 key={`row2-${idx}`}
-                className="flex items-center gap-2 rounded-full py-2 px-4 border border-white/20 bg-transparent whitespace-nowrap"
+                className="flex items-center gap-2 rounded-full py-2 px-4 border border-white/20 bg-white/5 backdrop-blur-sm whitespace-nowrap"
               >
                 <item.icon size={14} className="text-white/60" />
                 <span className="text-xs text-white/70">{item.label}</span>
@@ -368,7 +374,7 @@ const Hero: React.FC = () => {
 
       {/* Animated Scroll Down Arrow - Fixed to bottom of hero section */}
       <motion.div
-        className="absolute bottom-4 md:bottom-8 inset-x-0 flex justify-center cursor-pointer z-20"
+        className="hidden md:flex absolute bottom-8 inset-x-0 justify-center cursor-pointer z-20"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 0.5 }}

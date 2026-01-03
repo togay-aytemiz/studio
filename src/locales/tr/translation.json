@@ -59,12 +59,12 @@
     },
     "footer": {
         "explore": "Keşfet",
-        "expertise": "Uzmanlık",
+        "expertise": "UZMANLIK",
         "contact": {
             "title": "İletişim",
             "address": "Ankara, Türkiye"
         },
-        "studio": "Hakkımızda",
+        "studio": "HAKKIMIZDA",
         "description": "Web, mobil ve yapay zeka destekli yazılım geliştirme.",
         "rights": "Tüm hakları saklıdır.",
         "privacy": "Gizlilik",
@@ -81,7 +81,7 @@
         }
     },
     "aiValidator": {
-        "badge": "AI Fikir Analizi",
+        "badge": "AI FİKİR ANALİZİ",
         "title": "Fikrinizi teknik olarak<br />doğrulayın.",
         "subtitle": "Projeniz ne kadar uygulanabilir? Hangi teknolojiler gerekir? Agens AI saniyeler içinde analiz etsin.",
         "placeholder": "Örn: Yapay zeka destekli bir hukuk asistanı...",
@@ -111,7 +111,7 @@
         "consult": "Ücretsiz Görüşme"
     },
     "expertise": {
-        "badge": "Yeteneklerimiz",
+        "badge": "YETENEKLERİMİZ",
         "title": "Uçtan Uca <br /> <span>Dijital Çözümler.</span>",
         "subtitle": "Hem teknik uygulama hem de sektörel deneyim. İhtiyacınız olan tüm yetkinlikler tek bir noktada.",
         "tabs": {
@@ -120,7 +120,7 @@
         }
     },
     "services": {
-        "badge": "Hizmetlerimiz",
+        "badge": "HİZMETLERİMİZ",
         "title": "Neler Yapıyoruz?",
         "subtitle": "Fikirden yayına kadar tüm süreci uçtan uca yönetiyoruz. Ürünü sadece geliştiriyor değil, birlikte şekillendiriyoruz.",
         "items": {
@@ -143,7 +143,7 @@
         }
     },
     "capabilities": {
-        "badge": "Uzmanlık Alanlarımız",
+        "badge": "UZMANLIK ALANLARIMIZ",
         "title": "Deneyimli Olduğumuz Alanlar",
         "subtitle": "Farklı sektörlerde edindiğimiz deneyimle, karmaşık problemleri yalın çözümlere dönüştürüyoruz.",
         "groups": {
@@ -190,7 +190,7 @@
         }
     },
     "process": {
-        "badge": "Çalışma Sürecimiz",
+        "badge": "ÇALIŞMA SÜRECİMİZ",
         "title": "Fikirden Gerçeğe <br /> <span>Adım Adım.</span>",
         "subtitle": "Karmaşıklığı yönetilebilir adımlara bölüyor, fikirden ürüne giden yolu sizin için netleştiriyoruz.",
         "steps": {
@@ -213,7 +213,7 @@
         }
     },
     "work": {
-        "badge": "Projelerimiz",
+        "badge": "PROJELERİMİZ",
         "title": "Neler Yaptık? <br /> <span>Gerçek Sonuçlar.</span>",
         "subtitle": "İş ortaklarımızla birlikte hayata geçirdiğimiz projeler.",
         "impact": "Sonuç",
@@ -259,7 +259,7 @@
         "inProgressButton": "Devam Ediyor"
     },
     "founder": {
-        "badge": "Kurucudan",
+        "badge": "KURUCUDAN",
         "quote": "Kod yazmak kolay. <br/> <span>Doğru ürünü yapmak zor.</span>",
         "p1": "Agens'i kurarken tek bir amacım vardı: Mühendislik ve strateji arasındaki kopukluğu gidermek. Ürün başarısız olursa harika kodun bir anlamı yoktur.",
         "p2": "Biz, projelere sadece geliştirici olarak değil; ürün ortağı olarak yaklaşıyoruz. Hedefimiz, birlikte değer üreten işler ortaya koymak.",
@@ -268,7 +268,7 @@
     },
     "team": {
         "studio": {
-            "badge": "Hakkımızda",
+            "badge": "HAKKIMIZDA",
             "title": "Küçük ekip. <br/> <span className=\"text-indigo-400\">Büyük işler.</span>",
             "p1": "İnsan uzmanlığını yapay zeka ile birleştirerek kaliteli ve verimli sonuçlar üretiyoruz.",
             "p2": "Ürün odaklı ve çevik ekibimizle fikirleri, ajans karmaşasından uzak, ölçeklenebilir dijital ürünlere dönüştürüyoruz.",
@@ -279,7 +279,7 @@
             }
         },
         "squad": {
-            "badge": "Ekip",
+            "badge": "EKİP",
             "footer": "Yazılım, tasarım ve yapay zeka."
         },
         "disciplines": {
@@ -301,7 +301,7 @@
         }
     },
     "techStack": {
-        "title": "Kullandığımız Teknolojiler"
+        "title": "KULLANDIĞIMIZ TEKNOLOJİLER"
     },
     "contact": {
         "title": "Projenizi Konuşalım",

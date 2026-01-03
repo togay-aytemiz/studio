@@ -4,6 +4,7 @@ import { useProductAnalysis } from '../hooks/useAI';
 import Button from './Button';
 import { motion, AnimatePresence } from 'framer-motion';
 import ScrollReveal from './ScrollReveal';
+import MarkdownRenderer from './MarkdownRenderer';
 import { useTranslation, Trans } from 'react-i18next';
 
 const LOADING_MESSAGES = [
@@ -293,21 +294,21 @@ const AIValidator: React.FC = () => {
                       <div className="p-2 bg-slate-800 rounded-lg text-indigo-400"><Code2 size={20} /></div>
                       <div>
                         <div className="text-xs text-slate-500 uppercase">{t('aiValidator.stack.frontend')}</div>
-                        <div className="text-slate-200 font-medium text-sm">{analysis.recommendedStack.frontend}</div>
+                        <div className="text-slate-200 font-medium text-sm">{analysis.recommendedStack.frontend.join(', ')}</div>
                       </div>
                     </div>
                     <div className="bg-slate-950/50 border border-white/5 p-4 rounded-xl flex items-center gap-4">
                       <div className="p-2 bg-slate-800 rounded-lg text-purple-400"><Cpu size={20} /></div>
                       <div>
                         <div className="text-xs text-slate-500 uppercase">{t('aiValidator.stack.backend')}</div>
-                        <div className="text-slate-200 font-medium text-sm">{analysis.recommendedStack.backend}</div>
+                        <div className="text-slate-200 font-medium text-sm">{analysis.recommendedStack.backend.join(', ')}</div>
                       </div>
                     </div>
                     <div className="bg-slate-950/50 border border-white/5 p-4 rounded-xl flex items-center gap-4">
                       <div className="p-2 bg-slate-800 rounded-lg text-sky-400"><BarChart3 size={20} /></div>
                       <div>
                         <div className="text-xs text-slate-500 uppercase">{t('aiValidator.stack.infrastructure')}</div>
-                        <div className="text-slate-200 font-medium text-sm">{analysis.recommendedStack.infrastructure}</div>
+                        <div className="text-slate-200 font-medium text-sm">{analysis.recommendedStack.infrastructure.join(', ')}</div>
                       </div>
                     </div>
                   </div>
@@ -340,9 +341,9 @@ const AIValidator: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="text-lg font-bold text-white mb-2">{t('aiValidator.report.monetization')}</h3>
-                    <p className="text-slate-300 text-sm leading-relaxed">
-                      {analysis.monetizationStrategy}
-                    </p>
+                    <div className="text-slate-300 text-sm leading-relaxed">
+                      <MarkdownRenderer content={analysis.monetizationStrategy} />
+                    </div>
                   </div>
                 </motion.div>
 
@@ -353,9 +354,9 @@ const AIValidator: React.FC = () => {
                   </div>
                   <div className="flex-1">
                     <h3 className="text-lg font-bold text-white mb-2">{t('aiValidator.report.insight')}</h3>
-                    <p className="text-slate-200 italic leading-relaxed text-lg font-medium">
-                      "{analysis.agensInsight}"
-                    </p>
+                    <div className="text-slate-200 leading-relaxed text-lg font-medium">
+                      <MarkdownRenderer content={analysis.agensInsight} />
+                    </div>
                   </div>
                 </motion.div>
 

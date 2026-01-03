@@ -41,14 +41,25 @@ export interface AIAnalysisResult {
     ai: number;
   };
   technicalChallenges: string[];
+  mvpModules: string[];
+  phase2Modules: string[];
   recommendedStack: {
     frontend: string[];
     backend: string[];
     infrastructure: string[];
   };
+  integrations: {
+    category: string;
+    required: boolean;
+    options: string[];
+    notes?: string;
+  }[];
+  compliance: string[];
   mvpTimeline: string;
   marketAnalysis: string;
   monetizationStrategy: string;
+  validationPlan: string[];
+  openQuestions: string[];
   agensInsight: string;
-  implementationSteps: string[];
+  implementationSteps?: string[];
 }

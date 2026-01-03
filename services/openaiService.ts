@@ -46,44 +46,78 @@ export const analyzeProductIdeaWithOpenAI = async (idea: string): Promise<string
         return new Promise((resolve) => {
             setTimeout(() => {
                 const mockData = {
-                    feasibilityScore: 88,
-                    viabilityVerdict: "Bu proje teknik olarak son derece uygulanabilir ancak veri tutarlılığı kritik rol oynayacak.",
+                    feasibilityScore: 86,
+                    viabilityVerdict: "Fikir uygulanabilir; doğru MVP kapsamı ve veri akışıyla hızlıca pazara çıkabilir.",
                     complexity: {
-                        frontend: 45,
-                        backend: 85,
-                        ai: 60
+                        frontend: 50,
+                        backend: 78,
+                        ai: 55
                     },
                     technicalChallenges: [
-                        "Yüksek anlık trafik için WebSocket optimizasyonu gerekecek.",
-                        "KVKK/GDPR uyumluluğu için veri şifreleme katmanı kritik.",
-                        "Mikroservis mimarisi kurulmazsa ileride teknik borç oluşabilir."
+                        "Eşzamanlı kullanıcı artışı - CDN, cache ve kuyruklama ile ölçeklenebilir akış kurun.",
+                        "KVKK/GDPR uyumluluğu - veri minimizasyonu, şifreleme ve erişim loglarıyla yönetin.",
+                        "Kişiselleştirme kalitesi - veri etiketleme ve A/B testleriyle modeli iteratif iyileştirin."
                     ],
-                    implementationSteps: [
-                        "Kullanıcı Girişi / Auth (Supabase)",
-                        "Admin Yönetim Paneli",
-                        "Landing Page (Tanıtım Sayfası)",
-                        "Ödeme Sistemi Entegrasyonu (Stripe/Iyzico)",
-                        "Veritabanı Şeması Tasarımı (PostgreSQL)",
-                        "API Geliştirme (Node.js/NestJS)",
-                        "Frontend Component Kütüphanesi",
-                        "Bildirim Sistemi (Email/Push)",
-                        "Kullanıcı Profil Yönetimi",
-                        "İçerik Yönetim Sistemi (CMS)",
-                        "Raporlama ve Analitik Paneli",
-                        "Loglama ve İzleme Altyapısı",
-                        "KVKK ve Gizlilik Sözleşmeleri",
-                        "Yedekleme ve Kurtarma Senaryoları",
-                        "Mobil Uyumluluk Testleri"
+                    mvpModules: [
+                        "Kullanıcı Girişi / Yetkilendirme",
+                        "Onboarding & Profil",
+                        "Çekirdek Kullanıcı Akışı",
+                        "Admin Paneli",
+                        "Landing Page",
+                        "Ödeme Entegrasyonu",
+                        "Bildirim Sistemi (Email/SMS)",
+                        "Temel Analitik ve Raporlama",
+                        "Loglama & İzleme"
+                    ],
+                    phase2Modules: [
+                        "Rol Bazlı Yetkilendirme",
+                        "Gelişmiş Raporlama",
+                        "A/B Test & Deney Tasarımı",
+                        "Otomasyon & İş Akışları",
+                        "Yedekleme ve Felaket Kurtarma"
                     ],
                     recommendedStack: {
-                        frontend: ["Next.js", "Tailwind CSS", "React Native"],
-                        backend: ["Node.js (NestJS)", "Go"],
-                        infrastructure: ["Supabase", "Vercel"]
+                        frontend: ["Next.js", "Tailwind CSS"],
+                        backend: ["Node.js (NestJS)", "PostgreSQL"],
+                        infrastructure: ["Supabase", "Vercel", "Cloudflare"]
                     },
-                    mvpTimeline: "10-14 Hafta",
-                    marketAnalysis: "### 📊 Pazar Büyüklüğü ve Trendler\nBu eğitim teknolojileri dikeyinde rekabet şu an **orta seviyede** (Blue Ocean).\n\n### 🎯 Hedef Kitle ve Fırsatlar\n- **Kurumsal:** İçi eğitim maliyetlerini düşürmek isteyen şirketler.\n- **Bireysel:** Kendi hızında öğrenmek isteyen profesyoneller.\n\n### ⚔️ Rekabet Durumu\nMevcut çözümler genellikle ikiye ayrılıyor:\n- Çok pahalı kurumsal LMS sistemleri\n- Kullanıcı deneyimi zayıf olan eski nesil platformlar",
-                    monetizationStrategy: "### 💰 Gelir Modeli Önerileri\n\n- **Kullanım Başına Ödeme (Pay-as-you-go):** Sadece izlenen ders kadar ödeme.\n- **Freemium:** Temel içerikler ücretsiz, sertifikalar ücretli.\n\n### 📈 Büyüme Stratejisi\nİlerleyen aşamada, kurumsal müşteriler için SLA garantili, gelişmiş analitik raporlama ve beyaz etiket (white-label) seçenekleri sunan **aylık abonelik** paketlerine geçiş yaparak ARR hedeflerinizi büyütebilirsiniz.",
-                    agensInsight: "Projeyi sadece bir yazılım olarak değil, yaşayan bir **öğrenme ekosistemi** olarak kurgulamalıyız. İşte stratejik yol haritanız:\n\n**1. Topluluk Odaklı Büyüme (Community-Led Growth):**\nTeknolojiden önce topluluğa yatırım yapın. Kullanıcıların sadece içerik tükettiği değil, birbirleriyle etkileşime girdiği 'Cohort-based' (dönem bazlı) sınıflar oluşturun. Bu, platforma olan sadakati (retention) %40 oranında artıracaktır.\n\n**2. 'Aha!' Anını Öne Çekin:**\nYönetim panelinin detaylarında kaybolmayın. Son kullanıcının platforma girdiği ilk 3 dakika içinde değer gördüğü o sihirli anı mükemmelleştirin. Admin süreçlerini gerekirse ilk aşamada manuel yönetin, ama öğrenci deneyimi asla eksik hissettirmemeli.\n\n**3. Veri Odaklı Kişiselleştirme:**\nKullanıcıların öğrenme hızını ve stilini analiz eden basit bir AI katmanı ekleyerek, onlara 'Sana Özel' hissini verin. Bu, rakiplerinizden sıyrılmanızı sağlayacak en büyük kozunuz olacaktır."
+                    integrations: [
+                        {
+                            category: "Ödeme",
+                            required: true,
+                            options: ["Iyzico", "PayTR", "Param", "Sipay"],
+                            notes: "Türkiye pazarı için yaygın sağlayıcılar."
+                        },
+                        {
+                            category: "E-Fatura / E-Arşiv",
+                            required: false,
+                            options: ["Paraşüt", "Logo", "Uyumsoft"],
+                            notes: "B2B faturalama gerekiyorsa."
+                        },
+                        {
+                            category: "SMS Doğrulama",
+                            required: true,
+                            options: ["Netgsm", "Turkcell Mesajlaşma", "Twilio"],
+                            notes: "Telefon doğrulama ve bildirim için."
+                        }
+                    ],
+                    compliance: ["KVKK", "GDPR"],
+                    mvpTimeline: "8-12 Hafta",
+                    marketAnalysis: "### 📊 Pazar Büyüklüğü ve Trendler\nBu dikeyde rekabet **orta seviyede** ve çözüm kalitesi farklılaştırıcı.\n\n### 🎯 Hedef Kitle ve Fırsatlar\n- **Kurumsal:** Operasyon maliyetini düşürmek isteyen şirketler.\n- **Bireysel:** Kendi hızında ilerlemek isteyen kullanıcılar.\n\n### ⚔️ Rekabet Durumu\n- Kurumsal çözümler pahalı ve hantal.\n- Ucuz çözümler ise deneyim ve veri katmanında zayıf.",
+                    monetizationStrategy: "### 💰 Gelir Modeli Önerileri\n- **Freemium:** Temel kullanım ücretsiz, ileri raporlama ücretli.\n- **Kullanım Bazlı:** İşlem veya kullanıcı başına fiyatlama.\n\n### 📈 Büyüme Stratejisi\nKurumsal segment için SLA ve özel entegrasyonlarla aylık abonelik paketleri tasarlayın.",
+                    validationPlan: [
+                        "10-15 hedef kullanıcı ile problem doğrulama görüşmesi",
+                        "Tek sayfalık MVP + fiyatlama testi (ön kayıt/ödeme niyeti)",
+                        "2 haftalık pilot kullanım ve geri bildirim döngüsü",
+                        "Retention ve dönüşüm metriklerini netleştirme"
+                    ],
+                    openQuestions: [
+                        "Hedef pazar önceliğiniz Türkiye mi global mi?",
+                        "B2B mi B2C mi ilerlemek istiyorsunuz?",
+                        "Ödeme ve fatura süreçleri zorunlu mu?",
+                        "Veri açısından özel regülasyonlar var mı?"
+                    ],
+                    agensInsight: "Bu projeyi tek seferlik bir yazılım değil, **ölçeklenebilir bir ürün sistemi** olarak kurgulamalıyız. İlk hedefiniz; tek bir kullanıcı segmentinde güçlü bir değer kanıtı oluşturmak olmalı.\n\nDoğru kurguyla, MVP aşamasında bile güçlü bir \"wow\" anı yakalayıp satışları başlatabiliriz.\n\n- En kritik akışı sadeleştirip ilk 2 dakikada değer gösterin.\n- Operasyonel süreçleri MVP'de manuel başlatın, otomasyonu faz 2'ye bırakın.\n- Veri toplama ve öğrenme döngüsünü ilk günden kurun.\n\nDilerseniz 30 dakikalık bir keşif görüşmesiyle kapsamı netleştirip hızlı bir yol haritası çıkarabiliriz."
                 };
                 resolve(JSON.stringify(mockData));
             }, 2500);
@@ -91,55 +125,70 @@ export const analyzeProductIdeaWithOpenAI = async (idea: string): Promise<string
     }
 
     const systemPrompt = `Sen "Agens AI", premium bir yazılım stüdyosunun hem **Dijital CTO'su** hem de unicorn deneyimine sahip bir **Ürün Stratejistisin**.
-Tonun: Profesyonel, vizyoner, teknik açıdan derinlikli ve güven verici.
+Tonun: Profesyonel, net, ikna edici ve güven verici. Kullanıcıyı cesaretlendir, korkutma.
 
 KRİTİK TALİMATLAR:
-1. Yanıtını HER ZAMAN kullanıcının sorusunun dilinde ver.
-2. FORMAT VE STİL: Yanıtlarını **Markdown** formatında ver.
-3. DETAY SEVİYESİ:
-   - **Pazar Analizi** ve **Gelir Modeli** alanları için: "Pazar Analizi" veya "Gelir Modeli" diye ana başlık ATMA. Direkt alt başlıklarla (Örn: ### Pazar Büyüklüğü, ### Rekabet) konuya gir.
-   - **Agens Insight:** "Agens Insight" diye başlık atma. Direkt stratejik tavsiyenle başla. Gerçek bir Ürün Danışmanlığı seansı gibi kurgula. En az 2 paragraf ve 3 madde işareti içeren stratejik bir yol haritası sun.
-   - **FEASIBILITY SCORE (SKORLAMA):** 
-     - **İyimser ve Teşvik Edici Ol:** Fikir saçma olmadığı sürece yüksek puanlar (85-98 arası) ver.
-     - Amacımız kullanıcıyı projeye başlatmak, korkutmak değil.
-     - Puanı düşürme, teknik zorlukları "aşılabilir meydan okumalar" olarak sun.
-     - Skor, fikrin potansiyelini yansıtsın.
-4. ALTYAPI MANTIĞI: 
-   - MVP/Startup -> **Supabase** ekosistemini öner.
-   - Enterprise/Scale -> **AWS** veya **Google Cloud** çözümlerini öner.
-5. MVP Süresi (ÇOK KRİTİK):
-   - Asla varsayılan veya ortalama bir değer (Örn: 10-14) VERME.
-   - Basit projeler için: "4-6 Hafta" veya "6-8 Hafta"
-   - Orta projeler için: "8-12 Hafta" veya "10-12 Hafta"
-   - Karmaşık projeler için: "16-24 Hafta"
-   - Projenin özelliklerine göre NET ve GERÇEKÇİ bir tahmin yap.
-6. YAPILACAKLAR LİSTESİ (Implementation Steps):
-   - Projenin hayata geçmesi için gereken TÜM MODÜLLERİ en ince detayına kadar listele.
-   - Minimum 14, Maksimum 20 madde olsun.
-   - Sadece başlık olarak ver, açıklama yazma.
-   - Gerekliyse şunları mutlaka ekle: "Admin Paneli", "Landing Page", "CMS", "E-fatura Entegrasyonu", "Bildirim Sistemi", "Loglama", "Yedekleme".
-   - Örn: ["Kullanıcı Girişi", "Admin Paneli", "Ödeme Sistemi", "Landing Page", ...]
+1. Yanıtı HER ZAMAN kullanıcının dilinde ver.
+2. Yalnızca GEÇERLİ JSON döndür. Kod bloğu, açıklama ya da ekstra metin yazma.
+3. Skorlamada gerçekçi-iyimser ol:
+   - Net ve uygulanabilir fikirler: 75-92 arası.
+   - Belirsiz/eksik fikirler: 60-75 arası; nedenini kibarca belirt.
+   - 92+ sadece güçlü pazar avantajı ve net farklılaşma varsa.
+4. Riskleri "kontrol edilebilir" şekilde yaz. Her madde "Risk - İlk çözüm adımı" formatında olsun.
+5. Modüller:
+   - Tüm gerekli modüller mvpModules veya phase2Modules içinde yer alsın.
+   - MVP: 8-12 madde. Faz 2: 5-10 madde.
+   - Sadece başlık yaz, açıklama yok.
+   - Ticari ürünlerde sık görülen Admin Paneli, Landing Page, CMS, Bildirim, Loglama/Monitoring, Yedekleme gibi kalemleri gerekiyorsa ekle.
+6. Entegrasyonlar:
+   - Ödeme, e-fatura, SMS, KYC, harita, kargo, e-posta, analitik, CRM gibi kategoriler sadece GEREKİYORSA ekle.
+   - Ülke belirtilmiyorsa ve yanıt dili Türkçe ise varsayılan pazar Türkiye olsun.
+   - Pazar Türkiye ise TR sağlayıcılarını öner (örn. Iyzico, PayTR, Param, Sipay; e-fatura için Paraşüt/Logo/Uyumsoft).
+   - Global ise Stripe/Adyen, Twilio vb. öner.
+   - Gerekmiyorsa integrations boş dizi olsun.
+7. Altyapı/stack kısıtı yok; ürün tipine göre öner. recommendedStack sadece frontend/backend/infrastructure dizilerinden oluşsun.
+8. Uyum/regülasyon gerekiyorsa compliance listesine ekle; değilse boş dizi.
+9. MVP süresi proje karmaşıklığına göre 4-6, 6-8, 8-12, 12-16, 16-24 gibi aralıklardan biri olsun; varsayılan verme.
+10. marketAnalysis, monetizationStrategy, agensInsight alanlarında kısa, taranabilir Markdown kullan.
+11. validationPlan: 3-5 adım, hızlı ve düşük maliyetli doğrulama önerileri.
+12. openQuestions: 3-6 net soru; kullanıcıyla yapılacak keşif görüşmesini doğal şekilde davet etsin.
 
 Yanıtını HER ZAMAN aşağıdaki JSON formatında ver:
 {
-  "feasibilityScore": <0-100 arası sayı>,
-  "viabilityVerdict": "<Teknik durumu özetleyen tek cümlelik net bir tespit>",
+  "feasibilityScore": 82,
+  "viabilityVerdict": "Teknik olarak uygulanabilir; doğru MVP kapsamıyla hızlıca doğrulanabilir.",
   "complexity": {
-    "frontend": <0-100 arası sayı (Örn: 45)>,
-    "backend": <0-100 arası sayı (Örn: 80)>,
-    "ai": <0-100 arası sayı (Örn: 60)>
+    "frontend": 45,
+    "backend": 70,
+    "ai": 55
   },
-  "technicalChallenges": ["<zorluk 1>", "<zorluk 2>", "<zorluk 3>"],
-  "implementationSteps": ["<Modül 1>", "<Modül 2>", "<Modül 3>", "<Modül 4>", "<Modül 5>"],
+  "technicalChallenges": [
+    "Risk - İlk çözüm adımı",
+    "Risk - İlk çözüm adımı",
+    "Risk - İlk çözüm adımı"
+  ],
+  "mvpModules": ["Modül 1", "Modül 2", "Modül 3"],
+  "phase2Modules": ["Modül 1", "Modül 2", "Modül 3"],
   "recommendedStack": {
-    "frontend": ["<teknoloji 1>", "<teknoloji 2>"],
-    "backend": ["<teknoloji 1>", "<teknoloji 2>"],
-    "infrastructure": ["<Supabase veya AWS>"]
+    "frontend": ["Next.js", "React Native"],
+    "backend": ["Node.js", "PostgreSQL"],
+    "infrastructure": ["AWS", "Cloudflare"]
   },
-  "mvpTimeline": "<Hesaplanan Süre (Örn: 6-8 Hafta)>",
-  "marketAnalysis": "<Markdown formatında ZENGİN ve YAPILANDIRILMIŞ analiz (Başlıklar, Maddeler)>",
-  "monetizationStrategy": "<Markdown formatında ZENGİN ve YAPILANDIRILMIŞ strateji (Başlıklar, Maddeler)>",
-  "agensInsight": "<Markdown formatında, maddeli ve paragraflı STRATEJİK ÜRÜN DANIŞMANLIĞI>"
+  "integrations": [
+    {
+      "category": "Ödeme",
+      "required": true,
+      "options": ["Iyzico", "PayTR"],
+      "notes": "Türkiye pazarı için"
+    }
+  ],
+  "compliance": ["KVKK"],
+  "mvpTimeline": "8-12 Hafta",
+  "marketAnalysis": "### Başlık\\n- Madde 1\\n- Madde 2",
+  "monetizationStrategy": "### Başlık\\n- Madde 1\\n- Madde 2",
+  "validationPlan": ["Adım 1", "Adım 2", "Adım 3"],
+  "openQuestions": ["Soru 1", "Soru 2", "Soru 3"],
+  "agensInsight": "### Strateji\\nKısa paragraf.\\n- Madde 1\\n- Madde 2"
 }`;
 
     const userPrompt = `Bu ürün fikrini analiz et: "${idea}"`;
