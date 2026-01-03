@@ -20,8 +20,24 @@ interface ContactFormData {
     analysisIdea?: string;
     executiveSummary?: string;
     technicalChallenges?: string[];
+    feasibilityScore?: number;
+    mvpTimeline?: string;
     agensInsight?: string;
     emailTheme?: 'dark' | 'light';
+    adminAnalysis?: {
+        viabilityVerdict?: string;
+        complexity?: { frontend: number; backend: number; ai: number };
+        mvpModules?: string[];
+        phase2Modules?: string[];
+        recommendedStack?: { frontend: string[]; backend: string[]; infrastructure: string[] };
+        competitionDensity?: { label: string; score: number };
+        userDemand?: { label: string; score: number };
+        marketAnalysis?: string;
+        monetizationStrategy?: string;
+        validationPlan?: string[];
+        openQuestions?: string[];
+        agensInsight?: string;
+    };
 }
 
 const hasValidEmail = (email?: string) => !!email && email.includes('@');
@@ -46,6 +62,15 @@ export const sendEmail = async (payload: ContactFormData | EmailDispatchPayload)
             const ideaText = payload.analysisIdea?.trim() || 'Paylaşılmadı';
             const executiveSummaryText = payload.executiveSummary?.trim() || 'Paylaşılmadı';
             const technicalChallenges = payload.technicalChallenges?.length ? payload.technicalChallenges : [];
+            const feasibilityScore = typeof payload.feasibilityScore === 'number'
+                ? `${payload.feasibilityScore}/100`
+                : 'Paylaşılmadı';
+            const mvpTimeline = payload.mvpTimeline?.trim() || 'Paylaşılmadı';
+            const adminAnalysis = payload.adminAnalysis;
+            const formatList = (items?: string[]) =>
+                items && items.length ? `<ul>${items.map(item => `<li>${item}</li>`).join('')}</ul>` : '<p>Paylaşılmadı</p>';
+            const formatTextList = (items?: string[]) =>
+                items && items.length ? `- ${items.join('\n- ')}` : 'Paylaşılmadı';
             finalPayload = {
                 customerEmail: hasValidEmail(payload.email) ? payload.email : undefined,
                 customerSubject: 'Fikriniz için ilk AI analizi hazır',
@@ -53,10 +78,7 @@ export const sendEmail = async (payload: ContactFormData | EmailDispatchPayload)
                     <div style="background:${pageBg};padding:32px 16px;font-family:Arial,Helvetica,sans-serif;color:${textSecondary};">
                       <div style="max-width:560px;margin:0 auto;background:${cardBg};border:1px solid ${borderColor};border-radius:16px;overflow:hidden;box-shadow:0 24px 60px rgba(15,23,42,0.18);">
                         <div style="padding:24px 24px 20px;border-bottom:1px solid ${borderColor};">
-                          <div style="display:flex;align-items:center;gap:12px;background:#000000;border-radius:12px;padding:10px 12px;width:fit-content;">
-                            <img src="https://agens.studio/email-logo.png" alt="Agens Studio" width="24" height="24" style="display:block;border-radius:6px;background:transparent;padding:0;" />
-                            <div style="letter-spacing:-0.4em;font-weight:700;font-size:14px;color:#ffffff;line-height:1;">AGENS</div>
-                          </div>
+                          <img src="https://agens.studio/email-logo.png" alt="Agens Studio" width="222" height="64" style="display:block;" />
                         </div>
                         <div style="padding:28px;">
                           <p style="margin:0 0 12px;font-size:18px;font-weight:700;color:${textPrimary};">Merhaba ${customerName},</p>
@@ -72,6 +94,8 @@ export const sendEmail = async (payload: ContactFormData | EmailDispatchPayload)
                             <div style="font-weight:700;color:${textPrimary};margin-bottom:6px;">Agens AI analiz detayınız</div>
                             <div style="margin-bottom:8px;"><strong>Fikir:</strong> ${ideaText}</div>
                             <div style="margin-bottom:8px;"><strong>Değerlendirme:</strong> ${executiveSummaryText}</div>
+                            <div style="margin-bottom:8px;"><strong>Teknik fizibilite:</strong> ${feasibilityScore}</div>
+                            <div style="margin-bottom:8px;"><strong>MVP süresi:</strong> ${mvpTimeline}</div>
                             ${
                                 technicalChallenges.length
                                     ? `<div style="margin-bottom:8px;"><strong>Teknik zorluklar:</strong><ul style="margin:6px 0 0 18px;padding:0;">${technicalChallenges
@@ -108,6 +132,8 @@ export const sendEmail = async (payload: ContactFormData | EmailDispatchPayload)
                     'Agens AI analiz detayınız',
                     `Fikir: ${ideaText}`,
                     `Değerlendirme: ${executiveSummaryText}`,
+                    `Teknik fizibilite: ${feasibilityScore}`,
+                    `MVP süresi: ${mvpTimeline}`,
                     technicalChallenges.length ? `Teknik zorluklar:\n- ${technicalChallenges.join('\n- ')}` : '',
                     `Notunuz: ${messageText}`,
                     '',
@@ -129,6 +155,8 @@ export const sendEmail = async (payload: ContactFormData | EmailDispatchPayload)
                     <h3>Analiz Özeti</h3>
                     <p><strong>Fikir:</strong> ${ideaText}</p>
                     <p><strong>Değerlendirme:</strong> ${executiveSummaryText}</p>
+                    <p><strong>Teknik fizibilite:</strong> ${feasibilityScore}</p>
+                    <p><strong>MVP süresi:</strong> ${mvpTimeline}</p>
                     ${
                         technicalChallenges.length
                             ? `<p><strong>Teknik zorluklar:</strong></p><ul>${technicalChallenges
@@ -136,6 +164,22 @@ export const sendEmail = async (payload: ContactFormData | EmailDispatchPayload)
                                 .join('')}</ul>`
                             : ''
                     }
+                    <h3>Detaylar</h3>
+                    <p><strong>Uygunluk yorumu:</strong> ${adminAnalysis?.viabilityVerdict || 'Paylaşılmadı'}</p>
+                    <p><strong>Karmaşıklık:</strong> Frontend ${adminAnalysis?.complexity?.frontend ?? 'N/A'}, Backend ${adminAnalysis?.complexity?.backend ?? 'N/A'}, AI ${adminAnalysis?.complexity?.ai ?? 'N/A'}</p>
+                    <p><strong>MVP modülleri:</strong></p>${formatList(adminAnalysis?.mvpModules)}
+                    <p><strong>Faz 2 modülleri:</strong></p>${formatList(adminAnalysis?.phase2Modules)}
+                    <p><strong>Önerilen stack:</strong></p>
+                    <p>Frontend: ${(adminAnalysis?.recommendedStack?.frontend || []).join(', ') || 'Paylaşılmadı'}</p>
+                    <p>Backend: ${(adminAnalysis?.recommendedStack?.backend || []).join(', ') || 'Paylaşılmadı'}</p>
+                    <p>Altyapı: ${(adminAnalysis?.recommendedStack?.infrastructure || []).join(', ') || 'Paylaşılmadı'}</p>
+                    <p><strong>Rekabet yoğunluğu:</strong> ${adminAnalysis?.competitionDensity ? `${adminAnalysis.competitionDensity.label} (${adminAnalysis.competitionDensity.score})` : 'Paylaşılmadı'}</p>
+                    <p><strong>Kullanıcı talebi:</strong> ${adminAnalysis?.userDemand ? `${adminAnalysis.userDemand.label} (${adminAnalysis.userDemand.score})` : 'Paylaşılmadı'}</p>
+                    <p><strong>Pazar analizi:</strong></p><div>${adminAnalysis?.marketAnalysis || 'Paylaşılmadı'}</div>
+                    <p><strong>Gelir modeli:</strong></p><div>${adminAnalysis?.monetizationStrategy || 'Paylaşılmadı'}</div>
+                    <p><strong>Doğrulama planı:</strong></p>${formatList(adminAnalysis?.validationPlan)}
+                    <p><strong>Netleştirilmesi gereken sorular:</strong></p>${formatList(adminAnalysis?.openQuestions)}
+                    <p><strong>Agens AI stratejisi:</strong></p><div>${adminAnalysis?.agensInsight || 'Paylaşılmadı'}</div>
                 `,
                 adminText: [
                     'Yeni Analiz Talebi',
@@ -149,7 +193,25 @@ export const sendEmail = async (payload: ContactFormData | EmailDispatchPayload)
                     'Analiz Özeti',
                     `Fikir: ${ideaText}`,
                     `Değerlendirme: ${executiveSummaryText}`,
-                    technicalChallenges.length ? `Teknik zorluklar:\n- ${technicalChallenges.join('\n- ')}` : ''
+                    `Teknik fizibilite: ${feasibilityScore}`,
+                    `MVP süresi: ${mvpTimeline}`,
+                    technicalChallenges.length ? `Teknik zorluklar:\n- ${technicalChallenges.join('\n- ')}` : '',
+                    '',
+                    'Detaylar',
+                    `Uygunluk yorumu: ${adminAnalysis?.viabilityVerdict || 'Paylaşılmadı'}`,
+                    `Karmaşıklık: Frontend ${adminAnalysis?.complexity?.frontend ?? 'N/A'}, Backend ${adminAnalysis?.complexity?.backend ?? 'N/A'}, AI ${adminAnalysis?.complexity?.ai ?? 'N/A'}`,
+                    `MVP modülleri:\n${formatTextList(adminAnalysis?.mvpModules)}`,
+                    `Faz 2 modülleri:\n${formatTextList(adminAnalysis?.phase2Modules)}`,
+                    `Önerilen stack (Frontend): ${(adminAnalysis?.recommendedStack?.frontend || []).join(', ') || 'Paylaşılmadı'}`,
+                    `Önerilen stack (Backend): ${(adminAnalysis?.recommendedStack?.backend || []).join(', ') || 'Paylaşılmadı'}`,
+                    `Önerilen stack (Altyapı): ${(adminAnalysis?.recommendedStack?.infrastructure || []).join(', ') || 'Paylaşılmadı'}`,
+                    `Rekabet yoğunluğu: ${adminAnalysis?.competitionDensity ? `${adminAnalysis.competitionDensity.label} (${adminAnalysis.competitionDensity.score})` : 'Paylaşılmadı'}`,
+                    `Kullanıcı talebi: ${adminAnalysis?.userDemand ? `${adminAnalysis.userDemand.label} (${adminAnalysis.userDemand.score})` : 'Paylaşılmadı'}`,
+                    `Pazar analizi:\n${adminAnalysis?.marketAnalysis || 'Paylaşılmadı'}`,
+                    `Gelir modeli:\n${adminAnalysis?.monetizationStrategy || 'Paylaşılmadı'}`,
+                    `Doğrulama planı:\n${formatTextList(adminAnalysis?.validationPlan)}`,
+                    `Netleştirilmesi gereken sorular:\n${formatTextList(adminAnalysis?.openQuestions)}`,
+                    `Agens AI stratejisi:\n${adminAnalysis?.agensInsight || 'Paylaşılmadı'}`
                 ].filter(Boolean).join('\n'),
                 replyTo: hasValidEmail(payload.email) ? payload.email : undefined
             };
@@ -170,10 +232,7 @@ export const sendEmail = async (payload: ContactFormData | EmailDispatchPayload)
                     <div style="background:${pageBg};padding:32px 16px;font-family:Arial,Helvetica,sans-serif;color:${textSecondary};">
                       <div style="max-width:560px;margin:0 auto;background:${cardBg};border:1px solid ${borderColor};border-radius:16px;overflow:hidden;box-shadow:0 24px 60px rgba(15,23,42,0.18);">
                         <div style="padding:24px 24px 20px;border-bottom:1px solid ${borderColor};">
-                          <div style="display:flex;align-items:center;gap:12px;background:#000000;border-radius:12px;padding:10px 12px;width:fit-content;">
-                            <img src="https://agens.studio/email-logo.png" alt="Agens Studio" width="24" height="24" style="display:block;border-radius:6px;background:transparent;padding:0;" />
-                            <div style="letter-spacing:-0.4em;font-weight:700;font-size:14px;color:#ffffff;line-height:1;">AGENS</div>
-                          </div>
+                          <img src="https://agens.studio/email-logo.png" alt="Agens Studio" width="222" height="64" style="display:block;" />
                         </div>
                         <div style="padding:28px;">
                           <p style="margin:0 0 12px;font-size:18px;font-weight:700;color:${textPrimary};">Merhaba ${customerName},</p>

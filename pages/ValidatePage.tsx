@@ -245,6 +245,22 @@ const ValidatePage: React.FC = () => {
             ? analysis.feasibilityScore
             : null;
         const mvpTimeline = analysis?.mvpTimeline?.trim() || 'Paylaşılmadı';
+        const adminAnalysis = analysis
+            ? {
+                viabilityVerdict: analysis.viabilityVerdict,
+                complexity: analysis.complexity,
+                mvpModules: analysis.mvpModules,
+                phase2Modules: analysis.phase2Modules,
+                recommendedStack: analysis.recommendedStack,
+                competitionDensity: analysis.competitionDensity,
+                userDemand: analysis.userDemand,
+                marketAnalysis: analysis.marketAnalysis,
+                monetizationStrategy: analysis.monetizationStrategy,
+                validationPlan: analysis.validationPlan,
+                openQuestions: analysis.openQuestions,
+                agensInsight: analysis.agensInsight
+            }
+            : null;
         const emailSent = await sendEmail({
             type: 'analysis_contact',
             name: contactForm.name,
@@ -256,6 +272,7 @@ const ValidatePage: React.FC = () => {
             technicalChallenges,
             feasibilityScore: feasibilityScore ?? undefined,
             mvpTimeline,
+            adminAnalysis: adminAnalysis ?? undefined,
             emailTheme
         });
 
