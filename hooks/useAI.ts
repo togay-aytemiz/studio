@@ -23,14 +23,13 @@ export const useProductAnalysis = () => {
         throw new Error("Please enter a more detailed description.");
       }
 
-      const [jsonString] = await Promise.all([
+      const [analysisResult] = await Promise.all([
         analyzeProductIdeaWithOpenAI(idea),
         new Promise(resolve => setTimeout(resolve, 10000))
       ]);
-      const parsedData = JSON.parse(jsonString as string) as AIAnalysisResult;
 
       setState({
-        data: parsedData,
+        data: analysisResult as AIAnalysisResult,
         isLoading: false,
         error: null
       });

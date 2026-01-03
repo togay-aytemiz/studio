@@ -6,6 +6,7 @@ import { Menu, X, ArrowRight, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { isOpenAIConfigured } from '../services/openaiService';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -13,6 +14,7 @@ const Navbar: React.FC = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
+  const isAIEnabled = isOpenAIConfigured();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -145,13 +147,15 @@ const Navbar: React.FC = () => {
 
         {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-4">
-          <Link
-            to="/validate"
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-transparent border border-white/30 text-sm font-medium text-white hover:bg-white/10 hover:border-white/50 transition-all"
-          >
-            <Sparkles size={14} />
-            <span>AI Fikir Analizi</span>
-          </Link>
+          {isAIEnabled && (
+            <Link
+              to="/validate"
+              className="flex items-center gap-2 px-4 py-2 rounded-full bg-transparent border border-white/30 text-sm font-medium text-white hover:bg-white/10 hover:border-white/50 transition-all"
+            >
+              <Sparkles size={14} />
+              <span>AI Fikir Analizi</span>
+            </Link>
+          )}
           <Button variant="primary" size="sm" onClick={(e) => handleNavClick(e, '#contact')}>
             {t('nav.startProject')}
           </Button>
@@ -194,17 +198,19 @@ const Navbar: React.FC = () => {
               ))}
 
               <motion.div variants={linkVariants} className="pt-8 flex flex-col gap-4">
-                <Link
-                  to="/validate"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="w-full flex items-center justify-between gap-4 px-6 py-4 rounded-full bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 text-indigo-400 font-bold hover:bg-indigo-500/20 transition-all group"
-                >
-                  <div className="flex items-center gap-4">
-                    <Sparkles size={18} />
-                    <span>AI Fikir Analizi</span>
-                  </div>
-                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                </Link>
+                {isAIEnabled && (
+                  <Link
+                    to="/validate"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full flex items-center justify-between gap-4 px-6 py-4 rounded-full bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 text-indigo-400 font-bold hover:bg-indigo-500/20 transition-all group"
+                  >
+                    <div className="flex items-center gap-4">
+                      <Sparkles size={18} />
+                      <span>AI Fikir Analizi</span>
+                    </div>
+                    <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                )}
 
                 <Button
                   variant="primary"

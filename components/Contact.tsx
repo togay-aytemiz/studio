@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation, Trans } from 'react-i18next';
 
 import { useNavigate } from 'react-router-dom';
+import { isOpenAIConfigured } from '../services/openaiService';
 
 const Contact: React.FC = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const Contact: React.FC = () => {
   });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const { t } = useTranslation();
+  const isAIEnabled = isOpenAIConfigured();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -106,20 +108,22 @@ const Contact: React.FC = () => {
                   <div className="col-span-1 md:col-span-8 p-8 md:p-12 border-r border-white/5">
 
                     {/* AI Nudge */}
-                    <div className="mb-8 p-4 rounded-xl bg-white/5 border border-indigo-500/30 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 md:gap-0">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2.5 bg-indigo-500/30 rounded-lg text-indigo-300 shrink-0 border border-indigo-500/20">
-                          <BrainCircuit size={18} />
+                    {isAIEnabled && (
+                      <div className="mb-8 p-4 rounded-xl bg-white/5 border border-indigo-500/30 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 md:gap-0">
+                        <div className="flex items-center gap-3">
+                          <div className="p-2.5 bg-indigo-500/30 rounded-lg text-indigo-300 shrink-0 border border-indigo-500/20">
+                            <BrainCircuit size={18} />
+                          </div>
+                          <div>
+                            <p className="text-white text-sm font-medium">{t('contact.ai.title')}</p>
+                            <p className="text-white/60 text-xs">{t('contact.ai.subtitle')}</p>
+                          </div>
                         </div>
-                        <div>
-                          <p className="text-white text-sm font-medium">{t('contact.ai.title')}</p>
-                          <p className="text-white/60 text-xs">{t('contact.ai.subtitle')}</p>
-                        </div>
+                        <button onClick={handleValidateClick} className="px-4 py-2 bg-white text-slate-900 text-xs font-medium rounded-full hover:bg-white/90 transition-all shadow-lg flex items-center justify-center gap-2">
+                          {t('contact.ai.button')} <ArrowUpRight size={14} />
+                        </button>
                       </div>
-                      <button onClick={handleValidateClick} className="px-4 py-2 bg-white text-slate-900 text-xs font-medium rounded-full hover:bg-white/90 transition-all shadow-lg flex items-center justify-center gap-2">
-                        {t('contact.ai.button')} <ArrowUpRight size={14} />
-                      </button>
-                    </div>
+                    )}
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                       <div className="space-y-6">

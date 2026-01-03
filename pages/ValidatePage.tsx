@@ -10,6 +10,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import MarkdownRenderer from '../components/MarkdownRenderer';
 import { stripRedundantMonetizationHeading } from '../utils/markdown';
+import { isOpenAIConfigured } from '../services/openaiService';
 
 const PLACEHOLDER_IDEAS = [
     "Sağlık takibi için yapay zeka asistanı",
@@ -164,6 +165,7 @@ const ValidatePage: React.FC = () => {
     const [loadingMsgIndex, setLoadingMsgIndex] = useState(0);
     const { analysis, isAnalyzing, error, analyze, reset } = useProductAnalysis();
     const { t } = useTranslation();
+    const isAIEnabled = isOpenAIConfigured();
     const mvpModules = analysis?.mvpModules?.length ? analysis.mvpModules : (analysis?.implementationSteps || []);
     const phase2Modules = analysis?.phase2Modules || [];
     const validationPlan = analysis?.validationPlan || [];
@@ -172,6 +174,32 @@ const ValidatePage: React.FC = () => {
     const competitionDensity = analysis?.competitionDensity;
     const userDemand = analysis?.userDemand;
     const monetizationStrategy = stripRedundantMonetizationHeading(analysis?.monetizationStrategy || '');
+
+    if (!isAIEnabled) {
+        return (
+            <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50">
+                <Navbar />
+                <main className="pt-24 md:pt-32 pb-16">
+                    <div className="container mx-auto px-6">
+                        <div className="max-w-2xl mx-auto text-center bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 rounded-2xl p-10 shadow-xl">
+                            <h1 className="text-2xl md:text-3xl font-bold mb-4">AI Fikir Analizi su an kapali</h1>
+                            <p className="text-slate-600 dark:text-slate-300 mb-6">
+                                Bu ozellik istenildiginde tekrar aktif edilecek. Proje fikirlerinizi bizimle paylasmak icin iletisim formunu kullanabilirsiniz.
+                            </p>
+                            <Link
+                                to="/#contact"
+                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900 text-white dark:bg-white dark:text-slate-900 text-sm font-medium hover:opacity-90 transition-opacity"
+                            >
+                                Iletisime gec
+                                <ArrowRight size={16} />
+                            </Link>
+                        </div>
+                    </div>
+                </main>
+                <Footer />
+            </div>
+        );
+    }
 
     // Email sending states
     const [emailStatus, setEmailStatus] = useState<null | 'sending' | 'success' | 'error'>(null);

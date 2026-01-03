@@ -1,4 +1,5 @@
 // OpenAI Service for AI Analysis
+import { AIAnalysisResult } from '../types';
 const FUNCTION_BASE = '/.netlify/functions';
 
 const mockAnalysis = {
@@ -58,14 +59,31 @@ const mockAnalysis = {
     agensInsight: "Bu projeyi tek seferlik bir yazılım değil, **ölçeklenebilir bir ürün sistemi** olarak kurgulamalıyız. İlk hedefiniz; tek bir kullanıcı segmentinde güçlü bir değer kanıtı oluşturmak ve erken satış sinyali almak olmalı.\n\nMVP aşamasında bile doğru akışları kurarsak, hem kullanıcı memnuniyeti hem de gelir potansiyeli hızla artar. Sonraki fazda otomasyon ve raporlama ile marjlar yükselir.\n\n- En kritik akışı sadeleştirip ilk 2 dakikada değer gösterin.\n- Operasyonel süreçleri MVP'de manuel başlatın, otomasyonu faz 2'ye bırakın.\n- Veri toplama ve öğrenme döngüsünü ilk günden kurun.\n- Satış hunisi için tek bir segmentte net bir use-case seçin.\n\nDilerseniz 30 dakikalık bir keşif görüşmesiyle kapsamı netleştirip hızlı bir yol haritası çıkarabiliriz."
 };
 
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+    typeof value === 'object' && value !== null;
+
 const parseErrorMessage = async (response: Response) => {
     const text = await response.text();
     if (!text) {
         return 'OpenAI API hatası';
     }
     try {
-        const data = JSON.parse(text);
-        return data.error || data.message || text;
+        const data: unknown = JSON.parse(text);
+        if (typeof data === 'string') {
+            return data;
+        }
+        if (isRecord(data)) {
+            if (typeof data.message === 'string') {
+                return data.message;
+            }
+            if (typeof data.error === 'string') {
+                return data.error;
+            }
+            if (isRecord(data.error) && typeof data.error.message === 'string') {
+                return data.error.message;
+            }
+        }
+        return text;
     } catch {
         return text;
     }
@@ -88,13 +106,83 @@ const callFunction = async (endpoint: string, payload: Record<string, unknown>):
     return response.text();
 };
 
-export const analyzeProductIdeaWithOpenAI = async (idea: string): Promise<string> => {
+const isStringArray = (value: unknown): value is string[] =>
+    Array.isArray(value) && value.every(item => typeof item === 'string');
+
+const isAIAnalysisResult = (value: unknown): value is AIAnalysisResult => {
+    if (!isRecord(value)) {
+        return false;
+    }
+
+    const complexity = value.complexity;
+    const recommendedStack = value.recommendedStack;
+    const competitionDensity = value.competitionDensity;
+    const userDemand = value.userDemand;
+
+    if (
+        typeof value.feasibilityScore !== 'number' ||
+        typeof value.viabilityVerdict !== 'string' ||
+        typeof value.executiveSummary !== 'string' ||
+        !isRecord(complexity) ||
+        typeof complexity.frontend !== 'number' ||
+        typeof complexity.backend !== 'number' ||
+        typeof complexity.ai !== 'number' ||
+        !isStringArray(value.technicalChallenges) ||
+        !isStringArray(value.mvpModules) ||
+        !isStringArray(value.phase2Modules) ||
+        !isRecord(recommendedStack) ||
+        !isStringArray(recommendedStack.frontend) ||
+        !isStringArray(recommendedStack.backend) ||
+        !isStringArray(recommendedStack.infrastructure) ||
+        typeof value.mvpTimeline !== 'string' ||
+        !isRecord(competitionDensity) ||
+        typeof competitionDensity.label !== 'string' ||
+        typeof competitionDensity.score !== 'number' ||
+        !isRecord(userDemand) ||
+        typeof userDemand.label !== 'string' ||
+        typeof userDemand.score !== 'number' ||
+        typeof value.marketAnalysis !== 'string' ||
+        typeof value.monetizationStrategy !== 'string' ||
+        !isStringArray(value.validationPlan) ||
+        !isStringArray(value.openQuestions) ||
+        typeof value.agensInsight !== 'string'
+    ) {
+        return false;
+    }
+
+    if (
+        typeof value.implementationSteps !== 'undefined' &&
+        !isStringArray(value.implementationSteps)
+    ) {
+        return false;
+    }
+
+    return true;
+};
+
+const parseAnalysisResult = (raw: string): AIAnalysisResult => {
+    let parsed: unknown;
     try {
-        return await callFunction('openai-analyze', { idea });
+        parsed = JSON.parse(raw);
+    } catch {
+        throw new Error('AI yaniti gecersiz JSON formatinda.');
+    }
+
+    if (!isAIAnalysisResult(parsed)) {
+        throw new Error('AI yaniti beklenen formata uymuyor.');
+    }
+
+    return parsed;
+};
+
+export const analyzeProductIdeaWithOpenAI = async (idea: string): Promise<AIAnalysisResult> => {
+    try {
+        const responseText = await callFunction('openai-analyze', { idea });
+        return parseAnalysisResult(responseText);
     } catch (error) {
         console.error("OpenAI Error:", error);
         if (import.meta.env.DEV) {
-            return JSON.stringify(mockAnalysis);
+            return mockAnalysis;
         }
         throw new Error("Agens AI şu an kalibrasyon modunda. Lütfen tekrar deneyin.");
     }
@@ -111,5 +199,9 @@ export const generateProjectBriefWithOpenAI = async (userIdea: string): Promise<
 };
 
 export const isOpenAIConfigured = (): boolean => {
+    const flag = import.meta.env.VITE_AI_ENABLED;
+    if (typeof flag === 'string') {
+        return flag.toLowerCase() === 'true';
+    }
     return true;
 };
