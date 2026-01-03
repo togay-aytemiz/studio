@@ -1,11 +1,51 @@
 import React from 'react';
 import { Linkedin, Twitter, Github, Instagram, ArrowUpRight, Mail, MapPin, Phone } from 'lucide-react';
 import { useTranslation, Trans } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
 import LanguageSwitcher from './LanguageSwitcher';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
   const { t } = useTranslation();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const buildFooterHref = (href: string) => {
+    if (!href.startsWith('#')) {
+      return href;
+    }
+
+    return location.pathname === '/' ? href : `/${href}`;
+  };
+
+  const handleFooterNav = (event: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (!href.startsWith('#')) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (location.pathname !== '/') {
+      navigate(`/${href}`);
+      return;
+    }
+
+    const targetId = href.replace('#', '');
+    const element = document.getElementById(targetId);
+
+    if (!element) {
+      return;
+    }
+
+    const headerOffset = 80;
+    const elementPosition = element.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
+    });
+  };
 
   const footerLinks = {
     company: [
@@ -71,7 +111,11 @@ const Footer: React.FC = () => {
             <ul className="space-y-3 md:space-y-4">
               {footerLinks.company.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-slate-400 hover:text-white transition-colors text-xs md:text-sm font-medium flex items-center gap-1 group">
+                  <a
+                    href={buildFooterHref(link.href)}
+                    onClick={(event) => handleFooterNav(event, link.href)}
+                    className="text-slate-400 hover:text-white transition-colors text-xs md:text-sm font-medium flex items-center gap-1 group"
+                  >
                     {link.label}
                     {link.href.startsWith('#') ? null : <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />}
                   </a>
@@ -86,7 +130,11 @@ const Footer: React.FC = () => {
             <ul className="space-y-3 md:space-y-4">
               {footerLinks.services.map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="text-slate-400 hover:text-white transition-colors text-xs md:text-sm font-medium">
+                  <a
+                    href={buildFooterHref(link.href)}
+                    onClick={(event) => handleFooterNav(event, link.href)}
+                    className="text-slate-400 hover:text-white transition-colors text-xs md:text-sm font-medium"
+                  >
                     {link.label}
                   </a>
                 </li>
