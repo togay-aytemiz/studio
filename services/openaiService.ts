@@ -79,32 +79,14 @@ export const analyzeProductIdeaWithOpenAI = async (idea: string): Promise<string
                     recommendedStack: {
                         frontend: ["Next.js", "Tailwind CSS"],
                         backend: ["Node.js (NestJS)", "PostgreSQL"],
-                        infrastructure: ["Supabase", "Vercel", "Cloudflare"]
+                        infrastructure: ["Supabase", "Vercel", "Cloudflare", "Ödeme: Iyzico"]
                     },
-                    integrations: [
-                        {
-                            category: "Ödeme",
-                            required: true,
-                            options: ["Iyzico", "PayTR", "Param", "Sipay"],
-                            notes: "Türkiye pazarı için yaygın sağlayıcılar."
-                        },
-                        {
-                            category: "E-Fatura / E-Arşiv",
-                            required: false,
-                            options: ["Paraşüt", "Logo", "Uyumsoft"],
-                            notes: "B2B faturalama gerekiyorsa."
-                        },
-                        {
-                            category: "SMS Doğrulama",
-                            required: true,
-                            options: ["Netgsm", "Turkcell Mesajlaşma", "Twilio"],
-                            notes: "Telefon doğrulama ve bildirim için."
-                        }
-                    ],
-                    compliance: ["KVKK", "GDPR"],
                     mvpTimeline: "8-12 Hafta",
+                    executiveSummary: "Önce çekirdek akışı netleştirip MVP'yi hızla pazara çıkarmak, ilk gelir ve geri bildirimi 4-6 hafta içinde toplamayı sağlar. Doğru veri akışı ve basit otomasyonlarla bu fikir hızla ölçeklenebilir.",
+                    competitionDensity: { label: "Orta", score: 55 },
+                    userDemand: { label: "Yüksek", score: 78 },
                     marketAnalysis: "### 📊 Pazar Büyüklüğü ve Trendler\nBu dikeyde rekabet **orta seviyede** ve çözüm kalitesi farklılaştırıcı.\n\n### 🎯 Hedef Kitle ve Fırsatlar\n- **Kurumsal:** Operasyon maliyetini düşürmek isteyen şirketler.\n- **Bireysel:** Kendi hızında ilerlemek isteyen kullanıcılar.\n\n### ⚔️ Rekabet Durumu\n- Kurumsal çözümler pahalı ve hantal.\n- Ucuz çözümler ise deneyim ve veri katmanında zayıf.",
-                    monetizationStrategy: "### 💰 Gelir Modeli Önerileri\n- **Freemium:** Temel kullanım ücretsiz, ileri raporlama ücretli.\n- **Kullanım Bazlı:** İşlem veya kullanıcı başına fiyatlama.\n\n### 📈 Büyüme Stratejisi\nKurumsal segment için SLA ve özel entegrasyonlarla aylık abonelik paketleri tasarlayın.",
+                    monetizationStrategy: "### 💰 Gelir Modeli Önerileri\n- **Freemium:** Temel kullanım ücretsiz, ileri raporlama ve entegrasyonlar ücretli.\n- **Kullanım Bazlı:** İşlem, aktif kullanıcı veya hacme göre kademeli fiyatlama.\n- **Kurumsal Paket:** SLA, özelleştirme ve premium destek içeren aylık abonelik.\n\n### 📈 Büyüme Stratejisi\nErken aşamada pilot müşteri ile referans yaratıp, sektör bazlı 2-3 örnek proje ile kurumsal satış hunisi oluşturun. Sonraki adımda partner kanallarına açılın.",
                     validationPlan: [
                         "10-15 hedef kullanıcı ile problem doğrulama görüşmesi",
                         "Tek sayfalık MVP + fiyatlama testi (ön kayıt/ödeme niyeti)",
@@ -117,7 +99,7 @@ export const analyzeProductIdeaWithOpenAI = async (idea: string): Promise<string
                         "Ödeme ve fatura süreçleri zorunlu mu?",
                         "Veri açısından özel regülasyonlar var mı?"
                     ],
-                    agensInsight: "Bu projeyi tek seferlik bir yazılım değil, **ölçeklenebilir bir ürün sistemi** olarak kurgulamalıyız. İlk hedefiniz; tek bir kullanıcı segmentinde güçlü bir değer kanıtı oluşturmak olmalı.\n\nDoğru kurguyla, MVP aşamasında bile güçlü bir \"wow\" anı yakalayıp satışları başlatabiliriz.\n\n- En kritik akışı sadeleştirip ilk 2 dakikada değer gösterin.\n- Operasyonel süreçleri MVP'de manuel başlatın, otomasyonu faz 2'ye bırakın.\n- Veri toplama ve öğrenme döngüsünü ilk günden kurun.\n\nDilerseniz 30 dakikalık bir keşif görüşmesiyle kapsamı netleştirip hızlı bir yol haritası çıkarabiliriz."
+                    agensInsight: "Bu projeyi tek seferlik bir yazılım değil, **ölçeklenebilir bir ürün sistemi** olarak kurgulamalıyız. İlk hedefiniz; tek bir kullanıcı segmentinde güçlü bir değer kanıtı oluşturmak ve erken satış sinyali almak olmalı.\n\nMVP aşamasında bile doğru akışları kurarsak, hem kullanıcı memnuniyeti hem de gelir potansiyeli hızla artar. Sonraki fazda otomasyon ve raporlama ile marjlar yükselir.\n\n- En kritik akışı sadeleştirip ilk 2 dakikada değer gösterin.\n- Operasyonel süreçleri MVP'de manuel başlatın, otomasyonu faz 2'ye bırakın.\n- Veri toplama ve öğrenme döngüsünü ilk günden kurun.\n- Satış hunisi için tek bir segmentte net bir use-case seçin.\n\nDilerseniz 30 dakikalık bir keşif görüşmesiyle kapsamı netleştirip hızlı bir yol haritası çıkarabiliriz."
                 };
                 resolve(JSON.stringify(mockData));
             }, 2500);
@@ -140,16 +122,19 @@ KRİTİK TALİMATLAR:
    - MVP: 8-12 madde. Faz 2: 5-10 madde.
    - Sadece başlık yaz, açıklama yok.
    - Ticari ürünlerde sık görülen Admin Paneli, Landing Page, CMS, Bildirim, Loglama/Monitoring, Yedekleme gibi kalemleri gerekiyorsa ekle.
-6. Entegrasyonlar:
-   - Ödeme, e-fatura, SMS, KYC, harita, kargo, e-posta, analitik, CRM gibi kategoriler sadece GEREKİYORSA ekle.
+6. Altyapı/stack kısıtı yok; ürün tipine göre öner. recommendedStack sadece frontend/backend/infrastructure dizilerinden oluşsun.
+   - Ödeme, e-fatura, SMS, KYC, harita, kargo, e-posta, analitik, CRM gibi entegrasyonlar gerekiyorsa bunları recommendedStack.infrastructure listesine kısa etiketlerle ekle (örn. "Ödeme: Iyzico", "Harita: Google Maps").
    - Ülke belirtilmiyorsa ve yanıt dili Türkçe ise varsayılan pazar Türkiye olsun.
-   - Pazar Türkiye ise TR sağlayıcılarını öner (örn. Iyzico, PayTR, Param, Sipay; e-fatura için Paraşüt/Logo/Uyumsoft).
-   - Global ise Stripe/Adyen, Twilio vb. öner.
-   - Gerekmiyorsa integrations boş dizi olsun.
-7. Altyapı/stack kısıtı yok; ürün tipine göre öner. recommendedStack sadece frontend/backend/infrastructure dizilerinden oluşsun.
-8. Uyum/regülasyon gerekiyorsa compliance listesine ekle; değilse boş dizi.
-9. MVP süresi proje karmaşıklığına göre 4-6, 6-8, 8-12, 12-16, 16-24 gibi aralıklardan biri olsun; varsayılan verme.
-10. marketAnalysis, monetizationStrategy, agensInsight alanlarında kısa, taranabilir Markdown kullan.
+   - Türkiye pazarı için: Iyzico, PayTR, Param, Sipay; e-fatura için Paraşüt/Logo/Uyumsoft; SMS için Netgsm gibi sağlayıcıları öner.
+   - Global pazarda: Stripe/Adyen, Twilio vb. öner.
+7. MVP süresi proje karmaşıklığına göre 4-6, 6-8, 8-12, 12-16, 16-24 gibi aralıklardan biri olsun; varsayılan verme.
+8. executiveSummary: 1-2 cümlelik yönetici özeti ver. viabilityVerdict ile aynı cümleyi tekrar etme.
+9. competitionDensity ve userDemand alanları için:
+   - label: "Çok düşük / Düşük / Orta / Yüksek / Çok yüksek" skalasından biri olsun.
+   - score: 0-100 arası değer ver.
+10. marketAnalysis, monetizationStrategy, agensInsight alanlarında kompakt ama açıklayıcı, taranabilir Markdown kullan.
+    - monetizationStrategy: en az 2 alt başlık ve 4-6 madde içersin.
+    - agensInsight: en az 2 kısa paragraf ve 4-6 madde içersin.
 11. validationPlan: 3-5 adım, hızlı ve düşük maliyetli doğrulama önerileri.
 12. openQuestions: 3-6 net soru; kullanıcıyla yapılacak keşif görüşmesini doğal şekilde davet etsin.
 
@@ -172,18 +157,12 @@ Yanıtını HER ZAMAN aşağıdaki JSON formatında ver:
   "recommendedStack": {
     "frontend": ["Next.js", "React Native"],
     "backend": ["Node.js", "PostgreSQL"],
-    "infrastructure": ["AWS", "Cloudflare"]
+    "infrastructure": ["AWS", "Cloudflare", "Ödeme: Iyzico"]
   },
-  "integrations": [
-    {
-      "category": "Ödeme",
-      "required": true,
-      "options": ["Iyzico", "PayTR"],
-      "notes": "Türkiye pazarı için"
-    }
-  ],
-  "compliance": ["KVKK"],
   "mvpTimeline": "8-12 Hafta",
+  "executiveSummary": "1-2 cümlelik kısa özet.",
+  "competitionDensity": { "label": "Orta", "score": 55 },
+  "userDemand": { "label": "Yüksek", "score": 78 },
   "marketAnalysis": "### Başlık\\n- Madde 1\\n- Madde 2",
   "monetizationStrategy": "### Başlık\\n- Madde 1\\n- Madde 2",
   "validationPlan": ["Adım 1", "Adım 2", "Adım 3"],

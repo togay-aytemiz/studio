@@ -35,6 +35,7 @@ export interface NavLink {
 export interface AIAnalysisResult {
   feasibilityScore: number;
   viabilityVerdict: string;
+  executiveSummary: string;
   complexity: {
     frontend: number;
     backend: number;
@@ -48,14 +49,15 @@ export interface AIAnalysisResult {
     backend: string[];
     infrastructure: string[];
   };
-  integrations: {
-    category: string;
-    required: boolean;
-    options: string[];
-    notes?: string;
-  }[];
-  compliance: string[];
   mvpTimeline: string;
+  competitionDensity: {
+    label: string;
+    score: number;
+  };
+  userDemand: {
+    label: string;
+    score: number;
+  };
   marketAnalysis: string;
   monetizationStrategy: string;
   validationPlan: string[];

@@ -97,6 +97,33 @@ const ComplexityBar = ({ label, value, color }: { label: string, value: number, 
     </div>
 );
 
+const MarketSignalBar = ({
+    label,
+    valueLabel,
+    value,
+    color
+}: {
+    label: string;
+    valueLabel: string;
+    value: number;
+    color: string;
+}) => (
+    <div className="mb-4 last:mb-0">
+        <div className="flex justify-between text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+            <span>{label}</span>
+            <span className="text-slate-700 dark:text-slate-300">{valueLabel}</span>
+        </div>
+        <div className="h-2 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+            <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: `${value}%` }}
+                transition={{ duration: 1, delay: 0.5 }}
+                className={`h-full rounded-full ${color}`}
+            />
+        </div>
+    </div>
+);
+
 const ValidatePage: React.FC = () => {
     const [ideaInput, setIdeaInput] = useState('');
     const [placeholderIndex, setPlaceholderIndex] = useState(0);
@@ -107,10 +134,11 @@ const ValidatePage: React.FC = () => {
     const { t } = useTranslation();
     const mvpModules = analysis?.mvpModules?.length ? analysis.mvpModules : (analysis?.implementationSteps || []);
     const phase2Modules = analysis?.phase2Modules || [];
-    const integrations = analysis?.integrations || [];
-    const compliance = analysis?.compliance || [];
     const validationPlan = analysis?.validationPlan || [];
     const openQuestions = analysis?.openQuestions || [];
+    const executiveSummary = analysis?.executiveSummary || '';
+    const competitionDensity = analysis?.competitionDensity;
+    const userDemand = analysis?.userDemand;
 
     // Email sending states
     const [emailStatus, setEmailStatus] = useState<null | 'sending' | 'success' | 'error'>(null);
@@ -408,9 +436,11 @@ const ValidatePage: React.FC = () => {
                                         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50"></div>
                                         <CircularProgress score={analysis.feasibilityScore} />
                                         <h3 className="text-sm md:text-xl font-bold text-slate-900 dark:text-white mb-3">Teknik Fizibilite Raporu</h3>
-                                        <p className="text-slate-600 dark:text-slate-300 text-sm md:text-lg leading-relaxed mb-4 max-w-2xl mx-auto">
-                                            "{analysis.viabilityVerdict}"
-                                        </p>
+                                        {executiveSummary && (
+                                            <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base leading-relaxed mb-4 max-w-2xl mx-auto">
+                                                {executiveSummary}
+                                            </p>
+                                        )}
                                         <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-200 dark:bg-slate-800 rounded-lg border border-slate-300 dark:border-slate-700 mt-2">
                                             <Clock size={14} className="text-indigo-600 dark:text-indigo-400" />
                                             <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">MVP Süresi: <span className="text-slate-900 dark:text-white font-bold">{analysis.mvpTimeline}</span></span>
@@ -526,58 +556,32 @@ const ValidatePage: React.FC = () => {
                                         </div>
                                     </motion.div>
 
-                                    {/* Integrations & Compliance */}
-                                    {(integrations.length > 0 || compliance.length > 0) && (
-                                        <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.3 }} className="bg-amber-50 dark:bg-slate-900/50 border border-amber-100 dark:border-amber-500/20 rounded-2xl p-4 md:p-6">
-                                            <div className="flex items-center gap-2 mb-4 text-amber-600 dark:text-amber-400">
-                                                <Info size={20} />
-                                                <h3 className="font-bold text-slate-900 dark:text-white">Entegrasyonlar ve Uyumluluk</h3>
-                                            </div>
-                                            {integrations.length > 0 && (
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                    {integrations.map((integration, idx) => (
-                                                        <div key={`${integration.category}-${idx}`} className="bg-white dark:bg-slate-950/50 border border-amber-100 dark:border-white/5 p-4 rounded-xl">
-                                                            <div className="flex items-center justify-between mb-2">
-                                                                <div className="text-sm font-bold text-slate-900 dark:text-white">{integration.category}</div>
-                                                                <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full border ${integration.required ? 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20' : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20'}`}>
-                                                                    {integration.required ? 'Gerekli' : 'Opsiyonel'}
-                                                                </span>
-                                                            </div>
-                                                            <div className="flex flex-wrap gap-2">
-                                                                {integration.options.map((option, optionIndex) => (
-                                                                    <span key={`${integration.category}-${optionIndex}`} className="px-2.5 py-1 bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 text-xs font-semibold rounded-lg">
-                                                                        {option}
-                                                                    </span>
-                                                                ))}
-                                                            </div>
-                                                            {integration.notes && (
-                                                                <p className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 mt-2">{integration.notes}</p>
-                                                            )}
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            )}
-                                            {compliance.length > 0 && (
-                                                <div className="mt-4">
-                                                    <div className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2">Uyumluluk</div>
-                                                    <div className="flex flex-wrap gap-2">
-                                                        {compliance.map((item, idx) => (
-                                                            <span key={`${item}-${idx}`} className="px-2.5 py-1 bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-300 text-xs font-semibold rounded-lg">
-                                                                {item}
-                                                            </span>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </motion.div>
-                                    )}
-
                                     {/* Market Analysis (New) */}
                                     <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.35 }} className="bg-sky-50 dark:bg-sky-900/10 border border-sky-100 dark:border-sky-500/10 rounded-2xl p-4 md:p-6">
                                         <div className="flex items-center gap-2 mb-4 text-sky-600 dark:text-sky-400">
                                             <BarChart3 size={20} />
                                             <h3 className="font-bold text-slate-900 dark:text-white">Pazar & Rekabet Analizi</h3>
                                         </div>
+                                        {(competitionDensity || userDemand) && (
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                                {competitionDensity && (
+                                                    <MarketSignalBar
+                                                        label="Rekabet Yoğunluğu"
+                                                        valueLabel={competitionDensity.label}
+                                                        value={competitionDensity.score}
+                                                        color="bg-amber-500"
+                                                    />
+                                                )}
+                                                {userDemand && (
+                                                    <MarketSignalBar
+                                                        label="Kullanıcı Talebi"
+                                                        valueLabel={userDemand.label}
+                                                        value={userDemand.score}
+                                                        color="bg-emerald-500"
+                                                    />
+                                                )}
+                                            </div>
+                                        )}
                                         <div>
                                             <MarkdownRenderer content={analysis.marketAnalysis} />
                                         </div>
@@ -669,7 +673,7 @@ const ValidatePage: React.FC = () => {
 
                                     {/* AI Disclaimer */}
                                     <div className="text-center px-4">
-                                        <p className="text-[10px] sm:text-xs text-slate-400 dark:text-slate-500 max-w-2xl mx-auto leading-relaxed">
+                                        <p className="text-[10px] sm:text-xs text-slate-400 dark:text-slate-500 max-w-2xl md:max-w-4xl lg:max-w-5xl mx-auto leading-relaxed">
                                             <span className="font-semibold text-slate-500 dark:text-slate-400">Yasal Uyarı:</span> Agens AI tarafından üretilen bu analiz ve stratejiler, yapay zeka modelleri kullanılarak oluşturulmuştur ve yalnızca bilgilendirme amaçlıdır. Nihai yatırım ve geliştirme kararlarınızı almadan önce lütfen profesyonel bir uzmana danışın.
                                         </p>
                                     </div>

@@ -247,9 +247,11 @@ const AIValidator: React.FC = () => {
                     <CircularProgress score={analysis.feasibilityScore} />
 
                     <h3 className="text-2xl font-bold text-white mb-3">{t('aiValidator.report.title')}</h3>
-                    <p className="text-slate-300 text-lg leading-relaxed mb-6 max-w-2xl">
-                      "{analysis.viabilityVerdict}"
-                    </p>
+                    {analysis.executiveSummary && (
+                      <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-6 max-w-2xl">
+                        {analysis.executiveSummary}
+                      </p>
+                    )}
 
                     <div className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800/80 rounded-full border border-slate-700">
                       <Clock size={16} className="text-indigo-400" />
