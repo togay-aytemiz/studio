@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ScrollReveal from './ScrollReveal';
 import MarkdownRenderer from './MarkdownRenderer';
 import { useTranslation, Trans } from 'react-i18next';
+import { stripRedundantMonetizationHeading } from '../utils/markdown';
 
 const LOADING_MESSAGES = [
   "Analiz başlatılıyor...",
@@ -20,6 +21,7 @@ const AIValidator: React.FC = () => {
   const [loadingMsgIndex, setLoadingMsgIndex] = useState(0);
   const { analysis, isAnalyzing, error, analyze, reset } = useProductAnalysis();
   const { t } = useTranslation();
+  const monetizationStrategy = stripRedundantMonetizationHeading(analysis?.monetizationStrategy || '');
 
   // Loading message rotation
   useEffect(() => {
@@ -355,7 +357,7 @@ const AIValidator: React.FC = () => {
                   <div>
                     <h3 className="text-lg font-bold text-white mb-2">{t('aiValidator.report.monetization')}</h3>
                     <div className="text-slate-300 text-sm leading-relaxed">
-                      <MarkdownRenderer content={analysis.monetizationStrategy} />
+                      <MarkdownRenderer content={monetizationStrategy} />
                     </div>
                   </div>
                 </motion.div>

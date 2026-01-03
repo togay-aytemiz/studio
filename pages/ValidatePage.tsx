@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import MarkdownRenderer from '../components/MarkdownRenderer';
+import { stripRedundantMonetizationHeading } from '../utils/markdown';
 
 const PLACEHOLDER_IDEAS = [
     "Sağlık takibi için yapay zeka asistanı",
@@ -150,6 +151,7 @@ const ValidatePage: React.FC = () => {
     const executiveSummary = analysis?.executiveSummary || '';
     const competitionDensity = analysis?.competitionDensity;
     const userDemand = analysis?.userDemand;
+    const monetizationStrategy = stripRedundantMonetizationHeading(analysis?.monetizationStrategy || '');
 
     // Email sending states
     const [emailStatus, setEmailStatus] = useState<null | 'sending' | 'success' | 'error'>(null);
@@ -482,7 +484,7 @@ const ValidatePage: React.FC = () => {
                                             <Button
                                                 type="button"
                                                 onClick={handleScrollToContact}
-                                                className="group bg-indigo-600 text-white hover:bg-indigo-500 focus:ring-indigo-500/60 shadow-[0_0_24px_rgba(99,102,241,0.35)] text-sm md:text-base whitespace-nowrap"
+                                                className="group !bg-indigo-600 !text-white !hover:bg-indigo-500 !focus:ring-indigo-500/60 shadow-[0_0_24px_rgba(99,102,241,0.35)] text-sm md:text-base whitespace-nowrap"
                                             >
                                                 Ücretsiz Ön Görüşme Ayarla
                                                 <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
@@ -640,7 +642,7 @@ const ValidatePage: React.FC = () => {
                                             <h3 className="font-bold text-slate-900 dark:text-white">Gelir Modeli Önerisi</h3>
                                         </div>
                                         <div>
-                                            <MarkdownRenderer content={analysis.monetizationStrategy} />
+                                            <MarkdownRenderer content={monetizationStrategy} />
                                         </div>
                                     </motion.div>
 
