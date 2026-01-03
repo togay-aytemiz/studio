@@ -91,22 +91,33 @@ const AIValidator: React.FC = () => {
     );
   };
 
-  const ComplexityBar = ({ label, value, color }: { label: string, value: number, color: string }) => (
-    <div className="mb-4 last:mb-0">
-      <div className="flex justify-between text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">
-        <span>{label}</span>
-        <span>{value}%</span>
+  const getComplexityLabel = (value: number) => {
+    if (value >= 80) return 'Çok karmaşık';
+    if (value >= 60) return 'Karmaşık';
+    if (value >= 40) return 'Orta';
+    if (value >= 20) return 'Düşük';
+    return 'Çok düşük';
+  };
+
+  const ComplexityBar = ({ label, value, color }: { label: string, value: number, color: string }) => {
+    const safeValue = Math.max(0, Math.min(100, value));
+    return (
+      <div className="mb-4 last:mb-0">
+        <div className="flex justify-between text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">
+          <span>{label}</span>
+          <span className="text-slate-200">{getComplexityLabel(safeValue)}</span>
+        </div>
+        <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: `${safeValue}%` }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className={`h-full rounded-full ${color}`}
+          />
+        </div>
       </div>
-      <div className="h-2 w-full bg-slate-800 rounded-full overflow-hidden">
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: `${value}%` }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className={`h-full rounded-full ${color}`}
-        />
-      </div>
-    </div>
-  );
+    );
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },

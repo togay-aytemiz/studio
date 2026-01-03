@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Sparkles, BrainCircuit, ArrowRight, Cpu, RefreshCw, AlertCircle, AlertTriangle, Code2, Layers, Clock, BarChart3, Wallet, Info, Activity, Loader2, Phone, Mail, ListChecks } from 'lucide-react';
 import { useProductAnalysis } from '../hooks/useAI';
 import { sendEmail } from '../services/emailService';
@@ -80,22 +80,33 @@ const CircularProgress = ({ score }: { score: number }) => {
     );
 };
 
-const ComplexityBar = ({ label, value, color }: { label: string, value: number, color: string }) => (
-    <div className="mb-4 last:mb-0">
-        <div className="flex justify-between text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
-            <span>{label}</span>
-            <span>{value}%</span>
+const getComplexityLabel = (value: number) => {
+    if (value >= 80) return 'Çok karmaşık';
+    if (value >= 60) return 'Karmaşık';
+    if (value >= 40) return 'Orta';
+    if (value >= 20) return 'Düşük';
+    return 'Çok düşük';
+};
+
+const ComplexityBar = ({ label, value, color }: { label: string, value: number, color: string }) => {
+    const safeValue = Math.max(0, Math.min(100, value));
+    return (
+        <div className="mb-4 last:mb-0">
+            <div className="flex justify-between text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+                <span>{label}</span>
+                <span className="text-slate-700 dark:text-slate-300">{getComplexityLabel(safeValue)}</span>
+            </div>
+            <div className="h-2 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${safeValue}%` }}
+                    transition={{ duration: 1, delay: 0.5 }}
+                    className={`h-full rounded-full ${color}`}
+                />
+            </div>
         </div>
-        <div className="h-2 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
-            <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: `${value}%` }}
-                transition={{ duration: 1, delay: 0.5 }}
-                className={`h-full rounded-full ${color}`}
-            />
-        </div>
-    </div>
-);
+    );
+};
 
 const MarketSignalBar = ({
     label,
@@ -147,6 +158,25 @@ const ValidatePage: React.FC = () => {
         email: '',
         phone: ''
     });
+    const contactFormRef = useRef<HTMLDivElement | null>(null);
+    const contactNameRef = useRef<HTMLInputElement | null>(null);
+
+    const handleScrollToContact = () => {
+        if (!contactFormRef.current) {
+            return;
+        }
+
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        contactFormRef.current.scrollIntoView({
+            behavior: prefersReducedMotion ? 'auto' : 'smooth',
+            block: 'start'
+        });
+
+        const focusDelay = prefersReducedMotion ? 0 : 500;
+        window.setTimeout(() => {
+            contactNameRef.current?.focus({ preventScroll: true });
+        }, focusDelay);
+    };
 
     const handleContactSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -445,6 +475,22 @@ const ValidatePage: React.FC = () => {
                                             <Clock size={14} className="text-indigo-600 dark:text-indigo-400" />
                                             <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">MVP Süresi: <span className="text-slate-900 dark:text-white font-bold">{analysis.mvpTimeline}</span></span>
                                         </div>
+                                        <div className="mt-6 pt-5 border-t border-slate-200/70 dark:border-white/10 flex flex-col items-center gap-3">
+                                            <p className="text-xs md:text-sm text-slate-600 dark:text-slate-300 max-w-2xl">
+                                                Raporu birlikte yorumlayalım, projeniz için net bir yol haritası çıkaralım.
+                                            </p>
+                                            <Button
+                                                type="button"
+                                                onClick={handleScrollToContact}
+                                                className="group bg-indigo-600 text-white hover:bg-indigo-500 focus:ring-indigo-500/60 shadow-[0_0_24px_rgba(99,102,241,0.35)]"
+                                            >
+                                                Ücretsiz Ön Görüşme Al
+                                                <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                                            </Button>
+                                            <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+                                                30 dk • Zorunluluk yok
+                                            </span>
+                                        </div>
                                     </motion.div>
 
                                     {/* 2. Complexity Breakdown */}
@@ -680,7 +726,7 @@ const ValidatePage: React.FC = () => {
                                 </div>
 
                                 {/* Contact Form Section */}
-                                <div className="mt-8 md:mt-12 pt-8 md:pt-12 border-t border-slate-200 dark:border-white/5">
+                                <div ref={contactFormRef} id="contact-form" className="mt-8 md:mt-12 pt-8 md:pt-12 border-t border-slate-200 dark:border-white/5">
                                     <div className="text-center mb-6 md:mb-8">
                                         <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">Hadi Konuşalım</h2>
                                         <p className="text-slate-600 dark:text-slate-400">Projenizi hayata geçirmek için ilk adımı atın.</p>
@@ -694,6 +740,7 @@ const ValidatePage: React.FC = () => {
                                                     <input
                                                         type="text"
                                                         required
+                                                        ref={contactNameRef}
                                                         value={contactForm.name}
                                                         onChange={(e) => setContactForm(prev => ({ ...prev, name: e.target.value }))}
                                                         className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 pl-4 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"

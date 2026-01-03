@@ -85,8 +85,8 @@ export const analyzeProductIdeaWithOpenAI = async (idea: string): Promise<string
                     executiveSummary: "Önce çekirdek akışı netleştirip MVP'yi hızla pazara çıkarmak, ilk gelir ve geri bildirimi 4-6 hafta içinde toplamayı sağlar. Doğru veri akışı ve basit otomasyonlarla bu fikir hızla ölçeklenebilir.",
                     competitionDensity: { label: "Orta", score: 55 },
                     userDemand: { label: "Yüksek", score: 78 },
-                    marketAnalysis: "### 📊 Pazar Büyüklüğü ve Trendler\nBu dikeyde rekabet **orta seviyede** ve çözüm kalitesi farklılaştırıcı.\n\n### 🎯 Hedef Kitle ve Fırsatlar\n- **Kurumsal:** Operasyon maliyetini düşürmek isteyen şirketler.\n- **Bireysel:** Kendi hızında ilerlemek isteyen kullanıcılar.\n\n### ⚔️ Rekabet Durumu\n- Kurumsal çözümler pahalı ve hantal.\n- Ucuz çözümler ise deneyim ve veri katmanında zayıf.",
-                    monetizationStrategy: "### 💰 Gelir Modeli Önerileri\n- **Freemium:** Temel kullanım ücretsiz, ileri raporlama ve entegrasyonlar ücretli.\n- **Kullanım Bazlı:** İşlem, aktif kullanıcı veya hacme göre kademeli fiyatlama.\n- **Kurumsal Paket:** SLA, özelleştirme ve premium destek içeren aylık abonelik.\n\n### 📈 Büyüme Stratejisi\nErken aşamada pilot müşteri ile referans yaratıp, sektör bazlı 2-3 örnek proje ile kurumsal satış hunisi oluşturun. Sonraki adımda partner kanallarına açılın.",
+                    marketAnalysis: "### 📊 Pazar Büyüklüğü ve Trendler\nBu dikeyde rekabet **orta seviyede** ve çözüm kalitesi farklılaştırıcı.\n\n### 🎯 Hedef Kitle ve Fırsatlar\n\n- **Kurumsal:** Operasyon maliyetini düşürmek isteyen şirketler.\n- **Bireysel:** Kendi hızında ilerlemek isteyen kullanıcılar.\n\n### ⚔️ Rekabet Durumu\n\n- Kurumsal çözümler pahalı ve hantal.\n- Ucuz çözümler ise deneyim ve veri katmanında zayıf.",
+                    monetizationStrategy: "### 💰 Gelir Modeli Önerileri\n\n- **Freemium:** Temel kullanım ücretsiz, ileri raporlama ve entegrasyonlar ücretli.\n- **Kullanım Bazlı:** İşlem, aktif kullanıcı veya hacme göre kademeli fiyatlama.\n- **Kurumsal Paket:** SLA, özelleştirme ve premium destek içeren aylık abonelik.\n\n### 📈 Büyüme Stratejisi\n\nErken aşamada pilot müşteri ile referans yaratıp, sektör bazlı 2-3 örnek proje ile kurumsal satış hunisi oluşturun. Sonraki adımda partner kanallarına açılın.",
                     validationPlan: [
                         "10-15 hedef kullanıcı ile problem doğrulama görüşmesi",
                         "Tek sayfalık MVP + fiyatlama testi (ön kayıt/ödeme niyeti)",
@@ -133,6 +133,7 @@ KRİTİK TALİMATLAR:
    - label: "Çok düşük / Düşük / Orta / Yüksek / Çok yüksek" skalasından biri olsun.
    - score: 0-100 arası değer ver.
 10. marketAnalysis, monetizationStrategy, agensInsight alanlarında kompakt ama açıklayıcı, taranabilir Markdown kullan.
+    - Listelerde her madde yeni satırda "-" ile başlasın; listeden önce mutlaka boş satır olsun.
     - monetizationStrategy: en az 2 alt başlık ve 4-6 madde içersin.
     - agensInsight: en az 2 kısa paragraf ve 4-6 madde içersin.
 11. validationPlan: 3-5 adım, hızlı ve düşük maliyetli doğrulama önerileri.
@@ -163,11 +164,11 @@ Yanıtını HER ZAMAN aşağıdaki JSON formatında ver:
   "executiveSummary": "1-2 cümlelik kısa özet.",
   "competitionDensity": { "label": "Orta", "score": 55 },
   "userDemand": { "label": "Yüksek", "score": 78 },
-  "marketAnalysis": "### Başlık\\n- Madde 1\\n- Madde 2",
-  "monetizationStrategy": "### Başlık\\n- Madde 1\\n- Madde 2",
+  "marketAnalysis": "### Başlık\\n\\n- Madde 1\\n- Madde 2",
+  "monetizationStrategy": "### Başlık\\n\\n- Madde 1\\n- Madde 2",
   "validationPlan": ["Adım 1", "Adım 2", "Adım 3"],
   "openQuestions": ["Soru 1", "Soru 2", "Soru 3"],
-  "agensInsight": "### Strateji\\nKısa paragraf.\\n- Madde 1\\n- Madde 2"
+  "agensInsight": "### Strateji\\nKısa paragraf.\\n\\n- Madde 1\\n- Madde 2"
 }`;
 
     const userPrompt = `Bu ürün fikrini analiz et: "${idea}"`;
