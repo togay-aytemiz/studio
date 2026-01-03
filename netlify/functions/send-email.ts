@@ -28,9 +28,18 @@ export const handler = async (event: any) => {
     }
 
     try {
-        const { to, subject, html, replyTo } = JSON.parse(event.body);
+        const {
+            customerEmail,
+            customerSubject,
+            customerHtml,
+            customerReplyTo,
+            adminTo,
+            adminSubject,
+            adminHtml,
+            replyTo
+        } = JSON.parse(event.body);
 
-        if (!to || !subject || !html) {
+        if (!adminSubject || !adminHtml) {
             return {
                 statusCode: 400,
                 headers,
@@ -38,28 +47,24 @@ export const handler = async (event: any) => {
             };
         }
 
-        // 1. Send email to Customer
-        await resend.emails.send({
-            from: 'Agens Studio <hello@agens.studio>',
-            to: [to],
-            subject: subject,
-            html: html,
-            reply_to: 'agens.studio@gmail.com'
-        });
+        // 1. Send email to Customer (optional)
+        if (customerEmail && customerSubject && customerHtml) {
+            await resend.emails.send({
+                from: 'Agens Studio <hello@mail.agens.studio>',
+                to: [customerEmail],
+                subject: customerSubject,
+                html: customerHtml,
+                reply_to: customerReplyTo || 'agens.studio@gmail.com'
+            });
+        }
 
         // 2. Send notification to You (Admin)
         await resend.emails.send({
-            from: 'Agens Studio <hello@agens.studio>',
-            to: ['agens.studio@gmail.com'], // Notification to admin
-            reply_to: to, // Reply to the customer directly
-            subject: `[YENİ FORM] ${subject}`,
-            html: `
-                <h3>Yeni Form Gönderisi 🚀</h3>
-                <p><strong>Gönderen:</strong> ${replyTo || to}</p>
-                <p><strong>Konu:</strong> ${subject}</p>
-                <hr />
-                <div>${html}</div>
-            `
+            from: 'Agens Studio <hello@mail.agens.studio>',
+            to: [adminTo || 'agens.studio@gmail.com'],
+            reply_to: replyTo || customerEmail,
+            subject: adminSubject,
+            html: adminHtml
         });
 
         return {

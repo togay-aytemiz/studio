@@ -233,21 +233,11 @@ const ValidatePage: React.FC = () => {
         setEmailStatus('sending');
 
         const emailSent = await sendEmail({
-            to: contactForm.email,
-            subject: `Agens AI Analiz Raporunuz: ${ideaInput.substring(0, 30)}...`,
-            html: `
-                <h3>Merhaba ${contactForm.name},</h3>
-                <p>Agens AI ile analiz ettiğiniz projeniz için teşekkürler! Uzman ekibimiz, oluşturulan raporu ve iletişim bilgilerinizi aldı.</p>
-                <p>Sizinle en kısa sürede (${contactForm.phone} veya bu e-posta üzerinden) iletişime geçeceğiz.</p>
-                <br>
-                <p><strong>Analiz Edilen Fikir:</strong></p>
-                <blockquote style="border-left: 4px solid #6366f1; padding-left: 10px; color: #555;">
-                  ${ideaInput}
-                </blockquote>
-                <br>
-                <p>Sevgiler,<br><strong>Agens Studio Ekibi</strong></p>
-            `,
-            replyTo: contactForm.email
+            type: 'analysis_contact',
+            name: contactForm.name,
+            email: contactForm.email,
+            phone: contactForm.phone,
+            message: `Analiz edilen fikir:\n${ideaInput}`
         });
 
         if (emailSent) {
