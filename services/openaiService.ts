@@ -76,9 +76,9 @@ export const analyzeProductIdeaWithOpenAI = async (idea: string): Promise<string
                         "Mobil Uyumluluk Testleri"
                     ],
                     recommendedStack: {
-                        frontend: "Next.js + Tailwind (Web) / React Native (Mobil)",
-                        backend: "Node.js (NestJS) veya Go",
-                        infrastructure: "Supabase (Auth/DB) + Vercel (Hosting)"
+                        frontend: ["Next.js", "Tailwind CSS", "React Native"],
+                        backend: ["Node.js (NestJS)", "Go"],
+                        infrastructure: ["Supabase", "Vercel"]
                     },
                     mvpTimeline: "10-14 Hafta",
                     marketAnalysis: "### 📊 Pazar Büyüklüğü ve Trendler\nBu eğitim teknolojileri dikeyinde rekabet şu an **orta seviyede** (Blue Ocean).\n\n### 🎯 Hedef Kitle ve Fırsatlar\n- **Kurumsal:** İçi eğitim maliyetlerini düşürmek isteyen şirketler.\n- **Bireysel:** Kendi hızında öğrenmek isteyen profesyoneller.\n\n### ⚔️ Rekabet Durumu\nMevcut çözümler genellikle ikiye ayrılıyor:\n- Çok pahalı kurumsal LMS sistemleri\n- Kullanıcı deneyimi zayıf olan eski nesil platformlar",
@@ -132,9 +132,9 @@ Yanıtını HER ZAMAN aşağıdaki JSON formatında ver:
   "technicalChallenges": ["<zorluk 1>", "<zorluk 2>", "<zorluk 3>"],
   "implementationSteps": ["<Modül 1>", "<Modül 2>", "<Modül 3>", "<Modül 4>", "<Modül 5>"],
   "recommendedStack": {
-    "frontend": "<teknoloji>",
-    "backend": "<teknoloji>",
-    "infrastructure": "<Supabase veya AWS>"
+    "frontend": ["<teknoloji 1>", "<teknoloji 2>"],
+    "backend": ["<teknoloji 1>", "<teknoloji 2>"],
+    "infrastructure": ["<Supabase veya AWS>"]
   },
   "mvpTimeline": "<Hesaplanan Süre (Örn: 6-8 Hafta)>",
   "marketAnalysis": "<Markdown formatında ZENGİN ve YAPILANDIRILMIŞ analiz (Başlıklar, Maddeler)>",

@@ -42,9 +42,9 @@ export interface AIAnalysisResult {
   };
   technicalChallenges: string[];
   recommendedStack: {
-    frontend: string;
-    backend: string;
-    infrastructure: string;
+    frontend: string[];
+    backend: string[];
+    infrastructure: string[];
   };
   mvpTimeline: string;
   marketAnalysis: string;

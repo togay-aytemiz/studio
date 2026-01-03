@@ -24,7 +24,12 @@ const LOADING_MESSAGES = [
     "Analiz başlatılıyor...",
     "Teknik gereksinimler taranıyor...",
     "Pazar verileri karşılaştırılıyor...",
+    "Rakip analizi derinleştiriliyor...",
+    "Maliyet tahminleri hesaplanıyor...",
     "Mimari kurgulanıyor...",
+    "Teknoloji yığını optimize ediliyor...",
+    "Ölçeklenebilirlik senaryoları test ediliyor...",
+    "Risk analizi yapılıyor...",
     "Rapor hazırlanıyor..."
 ];
 
@@ -433,7 +438,7 @@ const ValidatePage: React.FC = () => {
                                 key="results"
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                className="bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-3xl p-5 md:p-8 shadow-2xl mb-20 mt-8 md:mt-12"
+                                className="bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 rounded-3xl p-4 md:p-8 shadow-2xl mb-20 mt-8 md:mt-12"
                             >
                                 {/* Results Header */}
                                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 md:mb-8 gap-4 md:gap-0">
@@ -464,7 +469,7 @@ const ValidatePage: React.FC = () => {
 
                                 <div className="space-y-4 md:space-y-8">
                                     {/* 1. Verdict & Score Section (Stacked) */}
-                                    <motion.div variants={sectionVariants} initial="hidden" animate="visible" className="bg-slate-50 dark:bg-[#0B1121] border border-slate-200 dark:border-indigo-500/20 rounded-2xl p-5 md:p-8 text-center relative overflow-hidden">
+                                    <motion.div variants={sectionVariants} initial="hidden" animate="visible" className="bg-slate-50 dark:bg-[#0B1121] border border-slate-200 dark:border-indigo-500/20 rounded-2xl p-4 md:p-8 text-center relative overflow-hidden">
                                         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50"></div>
                                         <CircularProgress score={analysis.feasibilityScore} />
                                         <h3 className="text-sm md:text-xl font-bold text-slate-900 dark:text-white mb-3">Teknik Fizibilite Raporu</h3>
@@ -478,7 +483,7 @@ const ValidatePage: React.FC = () => {
                                     </motion.div>
 
                                     {/* 2. Complexity Breakdown */}
-                                    <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.1 }} className="bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-white/5 rounded-2xl p-6">
+                                    <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.1 }} className="bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-white/5 rounded-2xl p-4 md:p-6">
                                         <div className="flex items-center gap-2 mb-6">
                                             <Activity size={20} className="text-indigo-500" />
                                             <h3 className="font-bold text-slate-900 dark:text-white">Teknik Karmaşıklık</h3>
@@ -493,7 +498,7 @@ const ValidatePage: React.FC = () => {
                                     {/* 2.5 Implementation Steps */}
                                     {/* @ts-ignore */}
                                     {analysis.implementationSteps && analysis.implementationSteps.length > 0 && (
-                                        <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.15 }} className="bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-white/5 rounded-2xl p-6 mt-4 md:mt-0">
+                                        <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.15 }} className="bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-white/5 rounded-2xl p-4 md:p-6 mt-4 md:mt-0">
                                             <div className="mb-4">
                                                 <div className="flex items-center gap-2 mb-1">
                                                     <ListChecks size={20} className="text-indigo-500" />
@@ -515,177 +520,202 @@ const ValidatePage: React.FC = () => {
                                         </motion.div>
                                     )}
 
-                                    {/* 3. Tech Stack */}
-                                    <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.2 }} className="bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-white/5 rounded-2xl p-6">
+                                    <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.2 }} className="bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-white/5 rounded-2xl p-4 md:p-6">
                                         <div className="flex items-center gap-2 mb-6">
                                             <Layers size={20} className="text-indigo-500" />
                                             <h3 className="font-bold text-slate-900 dark:text-white">Önerilen Teknolojiler</h3>
                                         </div>
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                            {/* Frontend Chips */}
                                             <div className="bg-white dark:bg-slate-950/50 border border-slate-200 dark:border-white/5 p-4 rounded-xl">
-                                                <div className="text-xs text-slate-500 uppercase mb-1">Frontend</div>
-                                                <div className="font-medium text-slate-900 dark:text-slate-200">{analysis.recommendedStack.frontend}</div>
+                                                <div className="text-xs text-slate-500 uppercase font-bold tracking-wider">Frontend</div>
                                             </div>
-                                            <div className="bg-white dark:bg-slate-950/50 border border-slate-200 dark:border-white/5 p-4 rounded-xl">
-                                                <div className="text-xs text-slate-500 uppercase mb-1">Backend</div>
-                                                <div className="font-medium text-slate-900 dark:text-slate-200">{analysis.recommendedStack.backend}</div>
-                                            </div>
-                                            <div className="bg-white dark:bg-slate-950/50 border border-slate-200 dark:border-white/5 p-4 rounded-xl">
-                                                <div className="text-xs text-slate-500 uppercase mb-1">Altyapı</div>
-                                                <div className="font-medium text-slate-900 dark:text-slate-200">{analysis.recommendedStack.infrastructure}</div>
-                                            </div>
-                                        </div>
-                                    </motion.div>
-
-                                    {/* Market Analysis (New) */}
-                                    <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.35 }} className="bg-sky-50 dark:bg-sky-900/10 border border-sky-100 dark:border-sky-500/10 rounded-2xl p-6">
-                                        <div className="flex items-center gap-2 mb-4 text-sky-600 dark:text-sky-400">
-                                            <BarChart3 size={20} />
-                                            <h3 className="font-bold text-slate-900 dark:text-white">Pazar & Rekabet Analizi</h3>
-                                        </div>
-                                        <div>
-                                            <MarkdownRenderer content={analysis.marketAnalysis} />
-                                        </div>
-                                    </motion.div>
-
-                                    {/* 4. Monetization (Moved Up) */}
-                                    <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.4 }} className="bg-emerald-50 dark:bg-slate-900 border border-emerald-100 dark:border-emerald-500/20 rounded-2xl p-6">
-                                        <div className="flex items-center gap-2 mb-4 text-emerald-600 dark:text-emerald-400">
-                                            <Wallet size={20} />
-                                            <h3 className="font-bold text-slate-900 dark:text-white">Gelir Modeli Önerisi</h3>
-                                        </div>
-                                        <div>
-                                            <MarkdownRenderer content={analysis.monetizationStrategy} />
-                                        </div>
-                                    </motion.div>
-
-                                    {/* 5. Challenges (Moved Down) */}
-                                    <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.3 }} className="bg-red-50 dark:bg-[#0f0a0a] border border-red-100 dark:border-red-900/30 rounded-2xl p-6">
-                                        <div className="flex items-center gap-2 mb-4 text-red-600 dark:text-red-500">
-                                            <AlertTriangle size={20} />
-                                            <h3 className="font-bold">Risk Analizi</h3>
-                                        </div>
-                                        <div className="space-y-3">
-                                            {analysis.technicalChallenges.map((challenge, i) => (
-                                                <div key={i} className="flex gap-3 text-xs md:text-sm text-slate-600 dark:text-slate-300">
-                                                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-red-100 dark:bg-red-500/10 text-red-600 dark:text-red-500 flex items-center justify-center text-xs font-bold">
-                                                        {i + 1}
+                                            <div className="flex flex-wrap gap-2">
+                                                {analysis.recommendedStack.frontend.map((tech, i) => (
+                                                    <span key={i} className="px-2.5 py-1 bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-semibold rounded-lg">
+                                                        {tech}
                                                     </span>
-                                                    {challenge}
-                                                </div>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {/* Backend Chips */}
+                                        <div className="bg-white dark:bg-slate-950/50 border border-slate-200 dark:border-white/5 p-4 rounded-xl">
+                                            <div className="text-xs text-slate-500 uppercase font-bold tracking-wider">Backend</div>
+                                        </div>
+                                        <div className="flex flex-wrap gap-2">
+                                            {analysis.recommendedStack.backend.map((tech, i) => (
+                                                <span key={i} className="px-2.5 py-1 bg-purple-500/10 border border-purple-500/20 text-purple-600 dark:text-purple-400 text-xs font-semibold rounded-lg">
+                                                    {tech}
+                                                </span>
                                             ))}
                                         </div>
-                                    </motion.div>
-
-                                    {/* 6. Agens Insight */}
-                                    <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.5 }} className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-slate-900 border border-indigo-100 dark:border-indigo-500/20 rounded-2xl p-6 flex flex-col md:flex-row items-start gap-6 text-left">
-                                        <div className="p-4 bg-indigo-500 text-white rounded-full shadow-lg shadow-indigo-500/20 flex-shrink-0">
-                                            <Sparkles size={24} />
-                                        </div>
-                                        <div className="flex-1">
-                                            <h3 className="font-bold text-slate-900 dark:text-white mb-2">Agens AI Stratejik Tavsiyesi</h3>
-                                            <div className="text-slate-600 dark:text-slate-200 font-medium">
-                                                <MarkdownRenderer content={`"${analysis.agensInsight}"`} />
-                                            </div>
-                                        </div>
-                                    </motion.div>
-
-                                    {/* AI Disclaimer */}
-                                    <div className="text-center px-4">
-                                        <p className="text-[10px] sm:text-xs text-slate-400 dark:text-slate-500 max-w-2xl mx-auto leading-relaxed">
-                                            <span className="font-semibold text-slate-500 dark:text-slate-400">Yasal Uyarı:</span> Agens AI tarafından üretilen bu analiz ve stratejiler, yapay zeka modelleri kullanılarak oluşturulmuştur ve yalnızca bilgilendirme amaçlıdır. Nihai yatırım ve geliştirme kararlarınızı almadan önce lütfen profesyonel bir uzmana danışın.
-                                        </p>
-                                    </div>
                                 </div>
 
-                                {/* Contact Form Section */}
-                                <div className="mt-8 md:mt-12 pt-8 md:pt-12 border-t border-slate-200 dark:border-white/5">
-                                    <div className="text-center mb-6 md:mb-8">
-                                        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">Hadi Konuşalım</h2>
-                                        <p className="text-slate-600 dark:text-slate-400">Projenizi hayata geçirmek için ilk adımı atın.</p>
-                                    </div>
-
-                                    <form onSubmit={(e) => { e.preventDefault(); alert('Talebiniz alındı! En kısa sürede dönüş yapacağız.'); }} className="bg-slate-50 dark:bg-[#0f0a0a] border border-slate-100 dark:border-white/5 rounded-2xl p-5 md:p-8">
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
-                                            <div className="group">
-                                                <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 ml-1">Ad Soyad</label>
-                                                <div className="relative">
-                                                    <input
-                                                        type="text"
-                                                        required
-                                                        value={contactForm.name}
-                                                        onChange={(e) => setContactForm(prev => ({ ...prev, name: e.target.value }))}
-                                                        className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 pl-4 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
-                                                        placeholder="Adınız Soyadınız"
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="group">
-                                                <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 ml-1">Telefon</label>
-                                                <div className="relative">
-                                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                                                        <Phone size={16} />
-                                                    </div>
-                                                    <input
-                                                        type="tel"
-                                                        value={contactForm.phone}
-                                                        onChange={(e) => setContactForm(prev => ({ ...prev, phone: e.target.value }))}
-                                                        className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 pl-10 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
-                                                        placeholder="0555 555 55 55"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="mb-8">
-                                            <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 ml-1">E-posta Adresi</label>
-                                            <div className="relative">
-                                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                                                    <Mail size={16} />
-                                                </div>
-                                                <input
-                                                    type="email"
-                                                    required
-                                                    className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 pl-10 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
-                                                    placeholder="ornek@sirket.com"
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div className="mb-6">
-                                            <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 ml-1">Proje Detayları / Notunuz</label>
-                                            <textarea
-                                                rows={6}
-                                                className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-xs md:placeholder:text-sm placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all resize-none leading-relaxed"
-                                                placeholder={`AI analiz raporu için: "${ideaInput.substring(0, 50)}${ideaInput.length > 50 ? '...' : ''}"\n\nEklemek istediğiniz detaylar veya sorularınız varsa buraya yazabilirsiniz.`}
-                                            />
-                                        </div>
-
-                                        <div className="flex justify-center md:justify-end">
-                                            <Button
-                                                size="md"
-                                                onClick={handleContactSubmit}
-                                                disabled={emailStatus === 'sending' || !contactForm.name || (!contactForm.email && !contactForm.phone)}
-                                                className="group !px-5 !py-2.5 !text-sm md:!px-6 md:!py-3 md:!text-base w-full md:w-auto"
-                                            >
-                                                Gönder
-                                                <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
-                                            </Button>
-                                        </div>
-                                    </form>
+                                {/* Infrastructure Chips */}
+                                <div className="bg-white dark:bg-slate-950/50 border border-slate-200 dark:border-white/5 p-4 rounded-xl">
+                                    <div className="text-xs text-slate-500 uppercase font-bold tracking-wider">Altyapı</div>
                                 </div>
-                            </motion.div>
+                                <div className="flex flex-wrap gap-2">
+                                    {analysis.recommendedStack.infrastructure.map((tech, i) => (
+                                        <span key={i} className="px-2.5 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-xs font-semibold rounded-lg">
+                                            {tech}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                                        </div>
+            </motion.div>
+
+            {/* Market Analysis (New) */}
+            <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.35 }} className="bg-sky-50 dark:bg-sky-900/10 border border-sky-100 dark:border-sky-500/10 rounded-2xl p-4 md:p-6">
+                <div className="flex items-center gap-2 mb-4 text-sky-600 dark:text-sky-400">
+                    <BarChart3 size={20} />
+                    <h3 className="font-bold text-slate-900 dark:text-white">Pazar & Rekabet Analizi</h3>
+                </div>
+                <div>
+                    <MarkdownRenderer content={analysis.marketAnalysis} />
+                </div>
+            </motion.div>
+
+            {/* 4. Monetization (Moved Up) */}
+            <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.4 }} className="bg-emerald-50 dark:bg-slate-900 border border-emerald-100 dark:border-emerald-500/20 rounded-2xl p-4 md:p-6">
+                <div className="flex items-center gap-2 mb-4 text-emerald-600 dark:text-emerald-400">
+                    <Wallet size={20} />
+                    <h3 className="font-bold text-slate-900 dark:text-white">Gelir Modeli Önerisi</h3>
+                </div>
+                <div>
+                    <MarkdownRenderer content={analysis.monetizationStrategy} />
+                </div>
+            </motion.div>
+
+            {/* 5. Challenges (Moved Down) */}
+            <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.3 }} className="bg-red-50 dark:bg-[#0f0a0a] border border-red-100 dark:border-red-900/30 rounded-2xl p-4 md:p-6">
+                <div className="flex items-center gap-2 mb-4 text-red-600 dark:text-red-500">
+                    <AlertTriangle size={20} />
+                    <h3 className="font-bold">Risk Analizi</h3>
+                </div>
+                <div className="space-y-3">
+                    {analysis.technicalChallenges.map((challenge, i) => (
+                        <div key={i} className="flex gap-3 text-xs md:text-sm text-slate-600 dark:text-slate-300">
+                            <span className="flex-shrink-0 w-5 h-5 rounded-full bg-red-100 dark:bg-red-500/10 text-red-600 dark:text-red-500 flex items-center justify-center text-xs font-bold">
+                                {i + 1}
+                            </span>
+                            {challenge}
+                        </div>
+                    ))}
+                </div>
+            </motion.div>
+
+            {/* 6. Agens Insight */}
+            <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.5 }} className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-slate-900 border border-indigo-100 dark:border-indigo-500/20 rounded-2xl p-4 md:p-6 flex flex-col md:flex-row items-start gap-6 text-left">
+                <div className="p-4 bg-indigo-500 text-white rounded-full shadow-lg shadow-indigo-500/20 flex-shrink-0">
+                    <Sparkles size={24} />
+                </div>
+                <div className="flex-1">
+                    <h3 className="font-bold text-slate-900 dark:text-white mb-2">Agens AI Stratejik Tavsiyesi</h3>
+                    <div className="text-slate-600 dark:text-slate-200 font-medium">
+                        <MarkdownRenderer content={`"${analysis.agensInsight}"`} />
+                    </div>
+                </div>
+            </motion.div>
+
+            {/* AI Disclaimer */}
+            <div className="text-center px-4">
+                <p className="text-[10px] sm:text-xs text-slate-400 dark:text-slate-500 max-w-2xl mx-auto leading-relaxed">
+                    <span className="font-semibold text-slate-500 dark:text-slate-400">Yasal Uyarı:</span> Agens AI tarafından üretilen bu analiz ve stratejiler, yapay zeka modelleri kullanılarak oluşturulmuştur ve yalnızca bilgilendirme amaçlıdır. Nihai yatırım ve geliştirme kararlarınızı almadan önce lütfen profesyonel bir uzmana danışın.
+                </p>
+            </div>
+        </div>
+
+                                {/* Contact Form Section */ }
+    <div className="mt-8 md:mt-12 pt-8 md:pt-12 border-t border-slate-200 dark:border-white/5">
+        <div className="text-center mb-6 md:mb-8">
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">Hadi Konuşalım</h2>
+            <p className="text-slate-600 dark:text-slate-400">Projenizi hayata geçirmek için ilk adımı atın.</p>
+        </div>
+
+        <form onSubmit={(e) => { e.preventDefault(); alert('Talebiniz alındı! En kısa sürede dönüş yapacağız.'); }} className="bg-slate-50 dark:bg-[#0f0a0a] border border-slate-100 dark:border-white/5 rounded-2xl p-4 md:p-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
+                <div className="group">
+                    <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 ml-1">Ad Soyad</label>
+                    <div className="relative">
+                        <input
+                            type="text"
+                            required
+                            value={contactForm.name}
+                            onChange={(e) => setContactForm(prev => ({ ...prev, name: e.target.value }))}
+                            className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 pl-4 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                            placeholder="Adınız Soyadınız"
+                        />
+                    </div>
+                </div>
+                <div className="group">
+                    <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 ml-1">Telefon</label>
+                    <div className="relative">
+                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                            <Phone size={16} />
+                        </div>
+                        <input
+                            type="tel"
+                            value={contactForm.phone}
+                            onChange={(e) => setContactForm(prev => ({ ...prev, phone: e.target.value }))}
+                            className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 pl-10 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                            placeholder="0555 555 55 55"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div className="mb-8">
+                <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 ml-1">E-posta Adresi</label>
+                <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                        <Mail size={16} />
+                    </div>
+                    <input
+                        type="email"
+                        required
+                        className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 pl-10 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                        placeholder="ornek@sirket.com"
+                    />
+                </div>
+            </div>
+
+            <div className="mb-6">
+                <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 ml-1">Proje Detayları / Notunuz</label>
+                <textarea
+                    rows={6}
+                    className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-xs md:placeholder:text-sm placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all resize-none leading-relaxed"
+                    placeholder={`AI analiz raporu için: "${ideaInput.substring(0, 50)}${ideaInput.length > 50 ? '...' : ''}"\n\nEklemek istediğiniz detaylar veya sorularınız varsa buraya yazabilirsiniz.`}
+                />
+            </div>
+
+            <div className="flex justify-center md:justify-end">
+                <Button
+                    size="md"
+                    onClick={handleContactSubmit}
+                    disabled={emailStatus === 'sending' || !contactForm.name || (!contactForm.email && !contactForm.phone)}
+                    className="group !px-5 !py-2.5 !text-sm md:!px-6 md:!py-3 md:!text-base w-full md:w-auto"
+                >
+                    Gönder
+                    <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                </Button>
+            </div>
+        </form>
+    </div>
+                            </motion.div >
                         )}
-                    </AnimatePresence>
+                    </AnimatePresence >
                 </div >
             </main >
-            {/* Gradient Transition to Footer */}
-            <div className="h-48 bg-gradient-to-b from-transparent to-[#020617] relative z-10 -mb-1 w-full pointer-events-none"></div>
+    {/* Gradient Transition to Footer */ }
+    < div className = "h-48 bg-gradient-to-b from-transparent to-[#020617] relative z-10 -mb-1 w-full pointer-events-none" ></div >
 
-            {/* Footer */}
-            <div className="relative z-10">
-                <Footer />
-            </div>
+        {/* Footer */ }
+        < div className = "relative z-10" >
+            <Footer />
+            </div >
         </div >
     );
 };
