@@ -11,22 +11,47 @@ type MetaConfig = {
   ogImage: string;
 };
 
-const META_BY_LANG: Record<'tr' | 'en', MetaConfig> = {
+type RouteMetaConfig = {
+  home: MetaConfig;
+  validate: MetaConfig;
+};
+
+const META_BY_LANG: Record<'tr' | 'en', RouteMetaConfig> = {
   tr: {
-    title: 'Agens | Ürün odaklı web, mobil ve AI tabanlı yazılımlar',
-    description: 'Agens, girişimciler, startup ekipleri ve yazılım ekibi olmayan KOBİ’ler için web, mobil ve AI tabanlı yazılımlar geliştirir.',
-    ogTitle: 'Agens – Yazılım geliştirme partneriniz',
-    ogDescription: 'Web, mobil ve AI tabanlı yazılımlar geliştiriyoruz. Fikri olan girişimciler ve ekipler için sağlam ürünler.',
-    ogLocale: 'tr_TR',
-    ogImage: 'https://agens.studio/OG.webp'
+    home: {
+      title: 'Agens | Ürün odaklı web, mobil ve AI tabanlı yazılımlar',
+      description: 'Agens, girişimciler, startup ekipleri ve yazılım ekibi olmayan KOBİ’ler için web, mobil ve AI tabanlı yazılımlar geliştirir.',
+      ogTitle: 'Agens – Yazılım geliştirme partneriniz',
+      ogDescription: 'Web, mobil ve AI tabanlı yazılımlar geliştiriyoruz. Fikri olan girişimciler ve ekipler için sağlam ürünler.',
+      ogLocale: 'tr_TR',
+      ogImage: 'https://agens.studio/OG.webp'
+    },
+    validate: {
+      title: 'Fikir Doğrulama | AI destekli teknik fizibilite – Agens',
+      description: 'Fikrini yaz, AI destekli fikir asistanı teknik fizibiliteyi, MVP kapsamını ve geliştirme yol haritasını analiz etsin.',
+      ogTitle: 'AI Fikir Asistanı – Fikrini doğrula',
+      ogDescription: 'Fikrini yaz, AI destekli sistem teknik fizibiliteyi, MVP süresini ve geliştirme aşamalarını analiz etsin.',
+      ogLocale: 'tr_TR',
+      ogImage: 'https://agens.studio/og-validate-tr.webp'
+    }
   },
   en: {
-    title: 'Agens | Product focused web, mobile and AI powered software',
-    description: 'Agens is a boutique technology partner building web, mobile, and AI powered software for entrepreneurs and startups.',
-    ogTitle: 'Agens – Your software development partner',
-    ogDescription: 'We build web, mobile, and AI powered software for entrepreneurs, startups, and teams without in house developers.',
-    ogLocale: 'en_US',
-    ogImage: 'https://agens.studio/OG-en.webp'
+    home: {
+      title: 'Agens | Product focused web, mobile and AI powered software',
+      description: 'Agens is a boutique technology partner building web, mobile, and AI powered software for entrepreneurs and startups.',
+      ogTitle: 'Agens – Your software development partner',
+      ogDescription: 'We build web, mobile, and AI powered software for entrepreneurs, startups, and teams without in house developers.',
+      ogLocale: 'en_US',
+      ogImage: 'https://agens.studio/OG-en.webp'
+    },
+    validate: {
+      title: 'Idea Validation | AI powered technical feasibility – Agens',
+      description: 'Describe your idea and get an AI powered technical feasibility, MVP scope, and development roadmap.',
+      ogTitle: 'AI Idea Validator – Validate your product idea',
+      ogDescription: 'Describe your idea and get an AI powered analysis including technical feasibility, MVP scope, and next steps.',
+      ogLocale: 'en_US',
+      ogImage: 'https://agens.studio/og-validate-en.webp'
+    }
   }
 };
 
@@ -54,8 +79,9 @@ const RouteMeta = () => {
   const location = useLocation();
   const { i18n } = useTranslation();
   const isEnglishRoute = location.pathname.startsWith('/en');
+  const isValidateRoute = location.pathname.endsWith('/validate');
   const lang = isEnglishRoute ? 'en' : 'tr';
-  const meta = META_BY_LANG[lang];
+  const meta = isValidateRoute ? META_BY_LANG[lang].validate : META_BY_LANG[lang].home;
   const canonical = `https://agens.studio${location.pathname === '/' ? '' : location.pathname}`;
 
   useEffect(() => {

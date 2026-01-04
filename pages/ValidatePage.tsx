@@ -139,7 +139,7 @@ const ValidatePage: React.FC = () => {
     const [isTyping, setIsTyping] = useState(true);
     const [loadingMsgIndex, setLoadingMsgIndex] = useState(0);
     const { analysis, isAnalyzing, error, analyze, reset } = useProductAnalysis();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const location = useLocation();
     const isEnglishRoute = location.pathname.startsWith('/en');
     const basePath = isEnglishRoute ? '/en' : '';

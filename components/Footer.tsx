@@ -1,5 +1,5 @@
 import React from 'react';
-import { Linkedin, Twitter, Github, Instagram, ArrowUpRight, Mail, MapPin, Phone } from 'lucide-react';
+import { Linkedin, ArrowUpRight, Mail, MapPin, Phone } from 'lucide-react';
 import { useTranslation, Trans } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import LanguageSwitcher from './LanguageSwitcher';
@@ -58,10 +58,7 @@ const Footer: React.FC = () => {
       { label: t('footer.services.mobileApps'), href: '#services' },
     ],
     social: [
-      { icon: Linkedin, href: '#', label: 'LinkedIn' },
-      { icon: Twitter, href: '#', label: 'Twitter' },
-      { icon: Github, href: '#', label: 'GitHub' },
-      { icon: Instagram, href: '#', label: 'Instagram' },
+      { icon: Linkedin, href: 'https://www.linkedin.com/company/agens-studio', label: 'LinkedIn' },
     ]
   };
 
