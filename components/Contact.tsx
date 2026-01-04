@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Button from './Button';
 import { Send, Mail, Phone, CheckCircle2, ArrowRight, ArrowUpRight, BrainCircuit, Loader2 } from 'lucide-react';
 import ScrollReveal from './ScrollReveal';
@@ -18,6 +18,7 @@ const Contact: React.FC = () => {
   });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [submittedContact, setSubmittedContact] = useState({ email: '', phone: '' });
+  const successRef = useRef<HTMLDivElement | null>(null);
   const { t } = useTranslation();
   const isAIEnabled = isOpenAIConfigured();
 
@@ -59,6 +60,58 @@ const Contact: React.FC = () => {
   const handleValidateClick = () => {
     navigate('/validate');
   };
+
+  useEffect(() => {
+    if (status !== 'success') {
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const behavior: ScrollBehavior = prefersReducedMotion ? 'auto' : 'smooth';
+
+    const getScrollParent = (node: HTMLElement | null): HTMLElement | null => {
+      let parent = node?.parentElement || null;
+      while (parent) {
+        const style = window.getComputedStyle(parent);
+        if (/(auto|scroll)/.test(style.overflowY)) {
+          return parent;
+        }
+        parent = parent.parentElement;
+      }
+      return (document.scrollingElement as HTMLElement) || document.documentElement;
+    };
+
+    const scrollToSuccess = () => {
+      const target = successRef.current;
+      if (!target) {
+        return;
+      }
+      const headerOffset = 80;
+      const scrollParent = getScrollParent(target);
+      const targetRect = target.getBoundingClientRect();
+
+      if (scrollParent && scrollParent !== document.documentElement) {
+        const parentRect = scrollParent.getBoundingClientRect();
+        const offsetTop = targetRect.top - parentRect.top + scrollParent.scrollTop - headerOffset;
+        scrollParent.scrollTo({ top: offsetTop, behavior });
+      } else {
+        const offsetTop = targetRect.top + window.pageYOffset - headerOffset;
+        window.scrollTo({ top: offsetTop, behavior });
+        document.documentElement.scrollTop = offsetTop;
+        document.body.scrollTop = offsetTop;
+      }
+      target.focus({ preventScroll: true });
+    };
+
+    const delay = prefersReducedMotion ? 0 : 150;
+    const timer = window.setTimeout(() => {
+      scrollToSuccess();
+      window.setTimeout(scrollToSuccess, 250);
+      window.setTimeout(scrollToSuccess, 600);
+    }, delay);
+
+    return () => window.clearTimeout(timer);
+  }, [status]);
 
   // Helper for consistent input styling
   const inputClasses = "w-full bg-white/10 border border-white/30 rounded-lg px-4 py-3 text-white placeholder:text-white/50 focus:outline-none focus:border-indigo-500/70 focus:bg-white/15 focus:ring-1 focus:ring-indigo-500/30 transition-all duration-300";
@@ -132,6 +185,8 @@ const Contact: React.FC = () => {
                       {status === 'success' ? (
                         <motion.div
                           key="contact-success"
+                          ref={successRef}
+                          tabIndex={-1}
                           initial={{ opacity: 0, y: 12 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -8 }}
