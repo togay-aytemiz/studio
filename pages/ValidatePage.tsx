@@ -10,7 +10,6 @@ import Footer from '../components/Footer';
 import MarkdownRenderer from '../components/MarkdownRenderer';
 import { stripRedundantMonetizationHeading } from '../utils/markdown';
 import { isOpenAIConfigured } from '../services/openaiService';
-import { useLazyBackground } from '../hooks/useLazyBackground';
 
 const PLACEHOLDER_IDEAS = [
     "Sağlık takibi için yapay zeka asistanı",
@@ -166,7 +165,7 @@ const ValidatePage: React.FC = () => {
     const { analysis, isAnalyzing, error, analyze, reset } = useProductAnalysis();
     const { t } = useTranslation();
     const isAIEnabled = isOpenAIConfigured();
-    const { ref: validatePageRef, isVisible: isValidateBgVisible } = useLazyBackground<HTMLDivElement>();
+    const [bgLoaded, setBgLoaded] = useState(false);
     const mvpModules = analysis?.mvpModules?.length ? analysis.mvpModules : (analysis?.implementationSteps || []);
     const phase2Modules = analysis?.phase2Modules || [];
     const validationPlan = analysis?.validationPlan || [];
@@ -341,6 +340,16 @@ const ValidatePage: React.FC = () => {
         return () => clearInterval(interval);
     }, [isAnalyzing]);
 
+    // Fallback for background image load
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (!bgLoaded) {
+                setBgLoaded(true);
+            }
+        }, 300);
+        return () => clearTimeout(timer);
+    }, [bgLoaded]);
+
     // Scroll to top on mount
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -367,19 +376,34 @@ const ValidatePage: React.FC = () => {
     };
 
     return (
-        <div ref={validatePageRef} className="min-h-screen bg-[#030712] flex flex-col relative">
-            {/* Background Image - Mobile */}
-            <div
-                className="absolute inset-0 md:hidden bg-cover bg-center bg-no-repeat"
-                style={isValidateBgVisible ? { backgroundImage: 'url(/validatebg-mobile.webp)' } : undefined}
-            />
-            {/* Background Image - Desktop */}
-            <div
-                className="absolute inset-0 hidden md:block bg-cover bg-center bg-no-repeat"
-                style={isValidateBgVisible ? { backgroundImage: 'url(/validatebg-desktop.webp)' } : undefined}
-            />
-            {/* Dark Overlay - Reduced opacity for better visibility of space background on mobile */}
-            <div className="absolute inset-0 bg-black/20 md:bg-black/50 dark:bg-black/20 md:dark:bg-black/50" />
+        <div className="min-h-screen bg-[#030712] flex flex-col relative">
+            {/* Background Image - Hero-style reveal */}
+            <motion.div
+                className="absolute inset-0 z-0"
+                initial={{ opacity: 0, scale: 1.08 }}
+                animate={bgLoaded ? { opacity: 1, scale: 1 } : {}}
+                transition={{
+                    duration: 1.8,
+                    ease: [0.22, 1, 0.36, 1],
+                    opacity: { duration: 1.2 },
+                    scale: { duration: 2.2 }
+                }}
+            >
+                <picture>
+                    <source media="(max-width: 768px)" srcSet="/validatebg-mobile.webp" />
+                    <img
+                        src="/validatebg-desktop.webp"
+                        alt="Validate Background"
+                        loading="eager"
+                        decoding="async"
+                        fetchPriority="high"
+                        className="w-full h-full object-cover object-center"
+                        onLoad={() => setBgLoaded(true)}
+                    />
+                </picture>
+                {/* Dark Overlay - Reduced opacity for better visibility of space background on mobile */}
+                <div className="absolute inset-0 bg-black/20 md:bg-black/50 dark:bg-black/20 md:dark:bg-black/50" />
+            </motion.div>
 
             {/* Top Gradient to mask header area */}
             <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#030712] via-[#030712]/50 to-transparent z-[5]" />

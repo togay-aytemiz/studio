@@ -70,7 +70,7 @@ const Footer: React.FC = () => {
 
   return (
     <footer
-      className="dark pt-20 pb-10 relative overflow-hidden"
+      className="cv-auto dark pt-20 pb-10 relative overflow-hidden"
       style={{ backgroundColor: '#020617' }} /* Inline style to bypass global CSS override */
     >
 

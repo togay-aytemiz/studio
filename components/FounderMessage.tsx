@@ -8,7 +8,7 @@ const FounderMessage: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="py-12 md:py-40 bg-[#020617] relative overflow-hidden">
+    <section className="cv-auto py-12 md:py-40 bg-[#020617] relative overflow-hidden">
 
       {/* Background Images */}
       <div className="absolute inset-0 z-0">

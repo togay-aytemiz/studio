@@ -61,7 +61,7 @@ const Expertise: React.FC = () => {
     };
 
     return (
-        <section id="services" className="bg-slate-50 dark:bg-slate-950 relative pb-20 md:pb-8">
+        <section id="services" className="cv-auto bg-slate-50 dark:bg-slate-950 relative pb-20 md:pb-8">
             {/* Background Decor */}
             <div className="absolute left-0 top-0 w-full h-[500px] bg-indigo-500/5 blur-[120px] pointer-events-none"></div>
 

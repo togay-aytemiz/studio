@@ -25,7 +25,7 @@ const Process: React.FC = () => {
     <section
       id="process"
       ref={processSectionRef}
-      className="py-12 md:pt-10 md:pb-24 bg-white dark:bg-[#030712] relative overflow-hidden"
+      className="cv-auto py-12 md:pt-10 md:pb-24 bg-white dark:bg-[#030712] relative overflow-hidden"
     >
       {/* CSS Overrides to defeat aggressive global styles */}
 

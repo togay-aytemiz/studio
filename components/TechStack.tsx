@@ -27,7 +27,7 @@ const TechStack: React.FC = () => {
     const loopedTechnologies = prefersReducedMotion ? TECHNOLOGIES : [...TECHNOLOGIES, ...TECHNOLOGIES];
 
     return (
-        <section id="tech-stack" className="py-12 bg-slate-50 dark:bg-[#020617]/50 overflow-hidden scroll-mt-20">
+        <section id="tech-stack" className="cv-auto py-12 bg-slate-50 dark:bg-[#020617]/50 overflow-hidden scroll-mt-20">
             <div className="container mx-auto px-6 mb-12 text-center">
                 <p className="text-sm font-semibold tracking-widest text-slate-500 dark:text-slate-400 uppercase">
                     {t('techStack.title', 'Technologies We Master')}

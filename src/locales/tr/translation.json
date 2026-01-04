@@ -15,7 +15,7 @@
         "startProject": "Ücretsiz Danışmanlık",
         "viewWork": "Neler Yaptık",
         "highlights": {
-            "aiPowered": "Yapay zeka destekli süreçler",
+            "aiPowered": "AI destekli süreçler",
             "fastDelivery": "Hızlı ve şeffaf teslimat"
         },
         "stats": {
@@ -35,7 +35,7 @@
             "productFirst": "Önce Ürün",
             "uiUx": "UI / UX",
             "pixelPerfect": "Kusursuz Tasarım",
-            "promptEng": "Prompt Müh.",
+            "promptEng": "Prompt Mühendisliği",
             "fineTuning": "İnce Ayar",
             "scalable": "Ölçeklenebilir",
             "builtToGrow": "Büyümeye Hazır",
@@ -46,7 +46,7 @@
         },
         "marquee": {
             "highPerformance": "Yüksek Performans",
-            "genAi": "Yapay Zeka",
+            "genAi": "AI",
             "aiMemory": "AI Belleği",
             "mobileFirst": "Mobil Uygulama",
             "secure": "Güvenlik",
@@ -65,7 +65,7 @@
             "address": "Ankara, Türkiye"
         },
         "studio": "HAKKIMIZDA",
-        "description": "Web, mobil ve yapay zeka destekli yazılım geliştirme.",
+        "description": "Web, mobil ve AI destekli yazılım geliştirme.",
         "rights": "Tüm hakları saklıdır.",
         "privacy": "Gizlilik",
         "terms": "Şartlar",
@@ -84,7 +84,7 @@
         "badge": "AI FİKİR ANALİZİ",
         "title": "Fikrinizi teknik olarak<br />doğrulayın.",
         "subtitle": "Projeniz ne kadar uygulanabilir? Hangi teknolojiler gerekir? Agens AI saniyeler içinde analiz etsin.",
-        "placeholder": "Örn: Yapay zeka destekli bir hukuk asistanı...",
+        "placeholder": "Örn: AI destekli bir hukuk asistanı...",
         "analyze": "Analiz Et",
         "analyzing": "Analiz Ediliyor...",
         "report": {
@@ -178,7 +178,7 @@
                 ]
             },
             "ai": {
-                "title": "Yapay Zeka",
+                "title": "AI",
                 "items": [
                     "RAG Sistemleri",
                     "Vektör Arama",
@@ -246,7 +246,7 @@
             "serviceops-platform": {
                 "category": "AI Destekli Randevu Platformu",
                 "title": "ServiceOps Platform",
-                "solution": "Hizmet veren profesyoneller için randevu, ödeme ve faturalama süreçlerini tek platformda yöneten, yapay zeka destekli operasyon sistemi. Tahsilatı garanti altına alır, no show oranını düşürür ve gelir akışını otomatikleştirir.",
+                "solution": "Hizmet veren profesyoneller için randevu, ödeme ve faturalama süreçlerini tek platformda yöneten, AI destekli operasyon sistemi. Tahsilatı garanti altına alır, no show oranını düşürür ve gelir akışını otomatikleştirir.",
                 "bullets": [
                     "Randevu iptal ve gecikme riskini öngören AI modeli",
                     "Kullanıcı davranışına göre dinamik hatırlatma zamanlaması",
@@ -270,17 +270,17 @@
         "studio": {
             "badge": "HAKKIMIZDA",
             "title": "Küçük ekip. <br/> <span className=\"text-indigo-400\">Büyük işler.</span>",
-            "p1": "İnsan uzmanlığını yapay zeka ile birleştirerek kaliteli ve verimli sonuçlar üretiyoruz.",
+            "p1": "İnsan uzmanlığını AI ile birleştirerek kaliteli ve verimli sonuçlar üretiyoruz.",
             "p2": "Ürün odaklı ve çevik ekibimizle fikirleri, ajans karmaşasından uzak, ölçeklenebilir dijital ürünlere dönüştürüyoruz.",
             "checklist": {
                 "inHouse": "Kıdemli ve odaklı ekip yapısı",
-                "aiExpertise": "Yapay zeka destekli geliştirme süreçleri",
+                "aiExpertise": "AI destekli geliştirme süreçleri",
                 "partnership": "Sürdürülebilir ürün iş birlikleri"
             }
         },
         "squad": {
             "badge": "EKİP",
-            "footer": "Yazılım, tasarım ve yapay zeka."
+            "footer": "Yazılım, tasarım ve AI."
         },
         "disciplines": {
             "dev": {

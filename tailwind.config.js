@@ -13,6 +13,7 @@ export default {
       fontFamily: {
         sans: ['Plus Jakarta Sans', 'sans-serif'],
         serif: ['Playfair Display', 'serif'],
+        brand: ['Sora', 'sans-serif'],
       },
       colors: {
         background: 'var(--bg-primary)',

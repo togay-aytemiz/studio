@@ -18,43 +18,45 @@
 
 ## P0 (0-3 days) - Highest Impact
 1) LCP hero image priority
-   - `components/Hero.tsx`: set `fetchpriority="high"`, `loading="eager"`, `decoding="async"` on the hero image.
-   - `index.html`: add `rel="preload"` for `/herobg.webp` and `/herobg-mobile.webp` with `imagesrcset`.
-   - `public/herobg.webp` and `public/herobg-mobile.webp`: re-check compression and dimensions; ensure no oversized assets.
+   - [x] `components/Hero.tsx`: set `fetchPriority="high"`, `loading="eager"`, `decoding="async"` on the hero image.
+   - [x] `index.html`: add `rel="preload"` for `/herobg.webp` and `/herobg-mobile.webp` with breakpoint media.
+   - [ ] `public/herobg.webp` and `public/herobg-mobile.webp`: re-check compression and dimensions; ensure no oversized assets.
 
 2) Reduce render-blocking on first paint
-   - Remove or delay blur/filter animations in hero on initial load (`components/Hero.tsx`).
-   - Add `preconnect` / `dns-prefetch` for third-party domains used on first paint (ex: `https://cdn.jsdelivr.net`).
+   - [x] Remove blur/filter animations in hero on initial load (`components/Hero.tsx`).
+   - [x] Add `preconnect` / `dns-prefetch` for third-party domains used on first paint (ex: `https://cdn.jsdelivr.net`) in `index.html`.
 
 3) Image lazy-loading for below-the-fold sections
-   - `components/Contact.tsx`, `components/Process.tsx`, `pages/ValidatePage.tsx`: background images currently load immediately; lazy-load them with IntersectionObserver or switch to `<img loading="lazy">` when possible.
-   - `components/FounderMessage.tsx`: ensure portrait images use `loading="lazy"` and `decoding="async"`.
+   - [x] `components/Contact.tsx`, `components/Process.tsx`, `pages/ValidatePage.tsx`: background images lazy-load via IntersectionObserver hook.
+   - [x] `components/FounderMessage.tsx`: portrait images use `loading="lazy"` + `decoding="async"`.
 
 4) Accessibility quick fixes (affects Lighthouse)
-   - `components/Navbar.tsx`: add `aria-label` and `aria-expanded` to the mobile menu button.
-   - `components/Footer.tsx`: add `aria-label` for icon-only social links.
-   - Verify contrast for `text-slate-400` on dark backgrounds and ensure heading order is sequential.
+   - [x] `components/Navbar.tsx`: add `aria-label`, `aria-expanded`, `aria-controls` to the mobile menu button.
+   - [x] `components/Footer.tsx`: add `aria-label` for icon-only social links.
+   - [ ] Verify contrast for `text-slate-400` on dark backgrounds and ensure heading order is sequential.
 
 5) robots.txt + cache headers
-   - Add `public/robots.txt` (valid syntax, allow crawl).
-   - `netlify.toml`: add caching headers for static assets (long cache with immutable).
+   - [x] Add `public/robots.txt` (valid syntax, allow crawl).
+   - [x] `netlify.toml`: add caching headers for static assets (long cache with immutable).
 
 ## P1 (1-2 weeks) - Bundle + CPU Optimizations
 1) Code splitting and lazy load
-   - Lazy load below-the-fold sections and heavy views with `React.lazy` + `Suspense`.
-   - `pages/ValidatePage.tsx`: load on-demand (route-based split).
+   - [x] `App.tsx`: route-based split for `/validate` with `React.lazy` + `Suspense`.
+   - [x] Lazy load below-the-fold sections on the home page (Expertise/Process/Work/FounderMessage/Team/Contact).
 
 2) Reduce unused JS
-   - Move email logic fully behind the Netlify function (`netlify/functions/send-email.ts`) and keep client payload minimal.
-   - Audit dependencies not needed on the client; ensure `@google/genai` is not bundled into the main app.
+   - [x] `pages/ValidatePage.tsx`: dynamic import for `emailService` (smaller initial bundle).
+   - [ ] Move email HTML/text templating fully behind `netlify/functions/send-email.ts` to shrink client payload.
+   - [x] Remove unused `@google/genai` dependency.
 
 3) Animation and DOM size
-   - Replace non-composited animations (blur/filter) with `opacity` and `transform`.
-   - `components/TechStack.tsx`: reduce marquee duplication from 4x to 2x or use CSS keyframes to shrink DOM.
-   - Add `prefers-reduced-motion` handling for low-end devices.
+   - [x] Hero blur/filter animation removed from initial load (`components/Hero.tsx`).
+   - [x] `components/TechStack.tsx`: marquee duplication reduced 4x -> 2x.
+   - [x] `components/Hero.tsx` + `components/TechStack.tsx`: add `prefers-reduced-motion` handling.
+   - [ ] Review remaining animations and heavy DOM sections for further reductions.
 
 4) Third-party assets
-   - Self-host tech logos or bundle as SVG sprite; add caching headers if kept on CDN.
+   - [ ] Self-host tech logos or bundle as SVG sprite; add caching headers if kept on CDN.
 
 ## P2 (2-4 weeks) - Structural Improvements
 - Add a build-time image pipeline (sharp/imagetools) for consistent resizing and compression.

@@ -9,7 +9,9 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { isOpenAIConfigured } from '../services/openaiService';
 
 const Navbar: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(() => (
+    typeof window !== 'undefined' ? window.scrollY > 50 : false
+  ));
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { t } = useTranslation();
   const location = useLocation();
@@ -20,7 +22,8 @@ const Navbar: React.FC = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -206,24 +209,19 @@ const Navbar: React.FC = () => {
                   <Link
                     to="/validate"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="w-full flex items-center justify-between gap-4 px-6 py-4 rounded-full bg-transparent border border-white/30 text-white font-bold hover:bg-white/10 hover:border-white/50 transition-all group"
+                    className="w-full flex items-center justify-start px-6 py-4 rounded-full bg-transparent border border-white/30 text-white text-lg font-semibold text-left hover:bg-white/10 hover:border-white/50 transition-all"
                   >
-                    <div className="flex items-center gap-4">
-                      <Sparkles size={18} />
-                      <span>AI Fikir Analizi</span>
-                    </div>
-                    <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                    <span>AI Fikir Analizi</span>
                   </Link>
                 )}
 
                 <Button
                   variant="primary"
                   size="lg"
-                  className="w-full justify-between group"
+                  className="w-full justify-start px-6 py-4 text-lg font-semibold text-left"
                   onClick={(e) => handleNavClick(e, '#contact')}
                 >
                   {t('nav.startProject')}
-                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </Button>
               </motion.div>
             </div>

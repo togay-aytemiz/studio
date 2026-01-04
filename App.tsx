@@ -2,17 +2,17 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Expertise from './components/Expertise';
-import Process from './components/Process';
-import Work from './components/Work';
-import FounderMessage from './components/FounderMessage';
-import Team from './components/Team';
-
-import Contact from './components/Contact';
 import Footer from './components/Footer';
-const ValidatePage = lazy(() => import('./pages/ValidatePage'));
-
 import TechStack from './components/TechStack';
+import LazySection from './components/LazySection';
+
+const Expertise = lazy(() => import('./components/Expertise'));
+const Process = lazy(() => import('./components/Process'));
+const Work = lazy(() => import('./components/Work'));
+const FounderMessage = lazy(() => import('./components/FounderMessage'));
+const Team = lazy(() => import('./components/Team'));
+const Contact = lazy(() => import('./components/Contact'));
+const ValidatePage = lazy(() => import('./pages/ValidatePage'));
 
 // Home page component
 const HomePage = () => (
@@ -22,12 +22,24 @@ const HomePage = () => (
       <Hero />
       <TechStack />
 
-      <Expertise />
-      <Process />
-      <Work />
-      <FounderMessage />
-      <Team />
-      <Contact />
+      <LazySection fallback={<section id="services" className="cv-auto min-h-[50vh] bg-slate-50 dark:bg-slate-950" />}>
+        <Expertise />
+      </LazySection>
+      <LazySection fallback={<section id="process" className="cv-auto min-h-[50vh] bg-white dark:bg-[#030712]" />}>
+        <Process />
+      </LazySection>
+      <LazySection fallback={<section id="work" className="cv-auto min-h-[50vh] bg-slate-950" />}>
+        <Work />
+      </LazySection>
+      <LazySection fallback={<section className="cv-auto min-h-[50vh] bg-[#020617]" />}>
+        <FounderMessage />
+      </LazySection>
+      <LazySection fallback={<section id="team" className="cv-auto min-h-[50vh] bg-white dark:bg-[#030712]" />}>
+        <Team />
+      </LazySection>
+      <LazySection fallback={<section id="contact" className="cv-auto min-h-[60vh] bg-[#020617]" />}>
+        <Contact />
+      </LazySection>
     </main>
     <Footer />
   </div>

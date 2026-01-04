@@ -1,3 +1,12 @@
+@import "tailwindcss";
+
+@supports (content-visibility: auto) {
+  .cv-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 800px;
+  }
+}
+
 /* ===== DESIGN TOKENS / CSS VARIABLES ===== */
 
 html.dark {

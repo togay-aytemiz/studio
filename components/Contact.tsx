@@ -123,7 +123,7 @@ const Contact: React.FC = () => {
     <section
       id="contact"
       ref={contactSectionRef}
-      className="scroll-mt-28 py-12 md:py-24 bg-[#020617] relative overflow-hidden flex flex-col items-center justify-start"
+      className="cv-auto scroll-mt-28 py-12 md:py-24 bg-[#020617] relative overflow-hidden flex flex-col items-center justify-start"
     >
 
       {/* Background Image - Mobile */}
