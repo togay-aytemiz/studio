@@ -1,13 +1,22 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Globe } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const LanguageSwitcher = () => {
     const { i18n } = useTranslation();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const isEnglishRoute = location.pathname.startsWith('/en');
 
     const toggleLanguage = () => {
-        const newLang = i18n.language === 'tr' ? 'en' : 'tr';
+        const newLang = isEnglishRoute ? 'tr' : 'en';
+        const nextPath = isEnglishRoute
+            ? location.pathname.replace(/^\/en(\/|$)/, '/')
+            : `/en${location.pathname === '/' ? '' : location.pathname}`;
+
         i18n.changeLanguage(newLang);
+        navigate(`${nextPath}${location.hash}`);
     };
 
     return (
@@ -17,7 +26,7 @@ const LanguageSwitcher = () => {
             aria-label="Toggle language"
         >
             <Globe className="w-4 h-4" />
-            <span>{i18n.language === 'tr' ? 'TR' : 'EN'}</span>
+            <span>{isEnglishRoute ? 'EN' : 'TR'}</span>
         </button>
     );
 };

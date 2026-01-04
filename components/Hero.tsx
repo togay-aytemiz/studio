@@ -112,7 +112,7 @@ import { useTranslation, Trans } from 'react-i18next';
 import { useMemo } from 'react';
 
 const Hero: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { scrollY } = useScroll();
   const prefersReducedMotion = useReducedMotion();
   const [isMobile, setIsMobile] = useState(false);
@@ -159,41 +159,41 @@ const Hero: React.FC = () => {
     { icon: Zap, value: "100", max: "/100", label: t('hero.stats.lighthouse'), color: "text-green-400", barColor: "bg-green-500", bg: "bg-green-500/10" },
     { icon: Search, value: "100", max: "%", label: t('hero.stats.seo'), color: "text-blue-400", barColor: "bg-blue-500", bg: "bg-blue-500/10" },
     { icon: CheckCircle2, value: "A+", max: "", label: t('hero.stats.quality'), color: "text-indigo-400", barColor: "bg-indigo-500", bg: "bg-indigo-500/10" },
-  ], [t]);
+  ], [i18n.language, t]);
 
   const POOL_TOP_RIGHT = useMemo(() => [
     { icon: Sparkles, label: t('hero.features.smartContext'), sub: t('hero.features.dataGrounding'), color: "text-indigo-400", bg: "bg-indigo-500/20" },
     { icon: BrainCircuit, label: t('hero.features.llmIntegration'), sub: "", color: "text-purple-400", bg: "bg-purple-500/20" },
     { icon: Database, label: t('hero.features.aiMemory'), sub: t('hero.features.semanticSearch'), color: "text-emerald-400", bg: "bg-emerald-500/20" },
     { icon: ShieldCheck, label: t('hero.features.enterpriseAi'), sub: t('hero.features.securePrivate'), color: "text-sky-400", bg: "bg-sky-500/20" },
-  ], [t]);
+  ], [i18n.language, t]);
 
   const POOL_BOTTOM_LEFT = useMemo(() => [
     { icon: Layers, label: t('hero.features.strategy'), sub: t('hero.features.productFirst'), color: "text-purple-400", bg: "bg-purple-500/20" },
     { icon: Palette, label: t('hero.features.uiUx'), sub: t('hero.features.pixelPerfect'), color: "text-pink-400", bg: "bg-pink-500/20" },
     { icon: MessageSquare, label: t('hero.features.promptEng'), sub: t('hero.features.fineTuning'), color: "text-amber-400", bg: "bg-amber-500/20" },
-  ], [t]);
+  ], [i18n.language, t]);
 
   const POOL_BOTTOM_RIGHT = useMemo(() => [
     { icon: TrendingUp, label: t('hero.features.scalable'), sub: t('hero.features.builtToGrow'), color: "text-blue-400", bg: "bg-blue-500/10" },
     { icon: Bot, label: t('hero.features.smartAgents'), sub: t('hero.features.automation'), color: "text-indigo-400", bg: "bg-indigo-500/10" },
     { icon: Globe, label: t('hero.features.global'), sub: t('hero.features.edgeCdn'), color: "text-teal-400", bg: "bg-teal-500/10" },
-  ], [t]);
+  ], [i18n.language, t]);
 
   const MARQUEE_ITEMS = useMemo(() => [
-    { icon: Smartphone, label: "Mobil Uygulamalar" },
-    { icon: Globe, label: "Web Platformları" },
-    { icon: Workflow, label: "Workflow Otomasyonu" },
-    { icon: Plug, label: "API-First Mimari" },
-    { icon: Sparkles, label: "AI Destekli Akışlar" },
-    { icon: MessageSquareText, label: "Doğal Dil İşleme" },
-    { icon: Search, label: "Semantik Arama" },
-    { icon: Zap, label: "Akıllı Otomasyon" },
-    { icon: Layers, label: "Ölçeklenebilir Altyapı" },
-    { icon: CreditCard, label: "Ödeme & Tahsilat" },
-    { icon: FileText, label: "E-Fatura Entegrasyonu" },
-    { icon: ShieldCheck, label: "Güvenli Sistemler" }
-  ], []);
+    { icon: Smartphone, label: t('hero.marqueeItems.mobileApps') },
+    { icon: Globe, label: t('hero.marqueeItems.webPlatforms') },
+    { icon: Workflow, label: t('hero.marqueeItems.workflowAutomation') },
+    { icon: Plug, label: t('hero.marqueeItems.apiFirst') },
+    { icon: Sparkles, label: t('hero.marqueeItems.aiFlows') },
+    { icon: MessageSquareText, label: t('hero.marqueeItems.nlp') },
+    { icon: Search, label: t('hero.marqueeItems.semanticSearch') },
+    { icon: Zap, label: t('hero.marqueeItems.smartAutomation') },
+    { icon: Layers, label: t('hero.marqueeItems.scalableInfra') },
+    { icon: CreditCard, label: t('hero.marqueeItems.payments') },
+    { icon: FileText, label: t('hero.marqueeItems.eInvoice') },
+    { icon: ShieldCheck, label: t('hero.marqueeItems.secureSystems') }
+  ], [i18n.language, t]);
 
   // Set up staggered intervals for "organic" feel
   useEffect(() => {
@@ -336,7 +336,7 @@ const Hero: React.FC = () => {
 
       {/* MOBILE ONLY: Architect-style 2-Row Marquee */}
       <div className="mt-16 lg:hidden flex justify-center z-10">
-        <span className="text-[10px] font-bold tracking-[0.2em] text-white/40 uppercase">TEKNİK YETKİNLİKLERİMİZ</span>
+        <span className="text-[10px] font-bold tracking-[0.2em] text-white/40 uppercase">{t('hero.marqueeTitle')}</span>
       </div>
 
       <div
@@ -399,7 +399,7 @@ const Hero: React.FC = () => {
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
           className="flex flex-col items-center gap-2"
         >
-          <span className="text-xs text-slate-600 dark:text-slate-500 uppercase tracking-widest font-medium">Keşfet</span>
+          <span className="text-xs text-slate-600 dark:text-slate-500 uppercase tracking-widest font-medium">{t('hero.discover')}</span>
           <div className="w-10 h-10 rounded-full border border-slate-300 dark:border-white/20 flex items-center justify-center backdrop-blur-sm bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 hover:border-slate-400 dark:hover:border-white/30 transition-all">
             <ChevronDown size={20} className="text-slate-500 dark:text-white/70" />
           </div>

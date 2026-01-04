@@ -38,11 +38,11 @@ const Contact: React.FC = () => {
     const emailTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
 
     try {
-      await import('../services/emailService').then(mod =>
+          await import('../services/emailService').then(mod =>
         mod.sendEmail({
           type: 'contact',
           name: formData.name,
-          email: formData.email || 'Telefon ile iletişim',
+          email: formData.email || t('contact.form.phoneFallback'),
           phone: formData.phone,
           message: formData.message,
           emailTheme
@@ -203,34 +203,35 @@ const Contact: React.FC = () => {
                           <div className="h-10 w-10 rounded-full bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-300">
                             <CheckCircle2 size={20} />
                           </div>
-                          <p className="text-xl md:text-2xl font-semibold text-white">Mesajınızı aldık</p>
+                        <p className="text-xl md:text-2xl font-semibold text-white">{t('contact.alerts.successTitle')}</p>
                         </div>
                         <p className="text-sm md:text-base text-slate-300 leading-relaxed">
-                          {submittedContact.email && submittedContact.phone
-                            ? (
-                              <>
-                                Talebiniz ekibimize iletildi. Yaklaşık 24 saat içinde sizinle paylaştığınız{" "}
-                                <span className="font-semibold text-white">{submittedContact.email}</span>{" "}
-                                ya da{" "}
-                                <span className="font-semibold text-white">{submittedContact.phone}</span>{" "}
-                                üzerinden iletişime geçeceğiz.
-                              </>
-                            )
-                            : submittedContact.phone
-                            ? (
-                              <>
-                                Talebiniz ekibimize iletildi. Yaklaşık 24 saat içinde sizinle paylaştığınız{" "}
-                                <span className="font-semibold text-white">{submittedContact.phone}</span>{" "}
-                                üzerinden iletişime geçeceğiz.
-                              </>
-                            )
-                            : (
-                              <>
-                                Talebiniz ekibimize iletildi. Yaklaşık 24 saat içinde sizinle paylaştığınız{" "}
-                                <span className="font-semibold text-white">{submittedContact.email || 'e-posta'}</span>{" "}
-                                üzerinden iletişime geçeceğiz.
-                              </>
-                            )}
+                          {submittedContact.email && submittedContact.phone ? (
+                            <Trans
+                              i18nKey="contact.alerts.followUpBoth"
+                              values={{ email: submittedContact.email, phone: submittedContact.phone }}
+                              components={{
+                                email: <span className="font-semibold text-white" />,
+                                phone: <span className="font-semibold text-white" />
+                              }}
+                            />
+                          ) : submittedContact.phone ? (
+                            <Trans
+                              i18nKey="contact.alerts.followUpPhone"
+                              values={{ phone: submittedContact.phone }}
+                              components={{
+                                phone: <span className="font-semibold text-white" />
+                              }}
+                            />
+                          ) : (
+                            <Trans
+                              i18nKey="contact.alerts.followUpEmail"
+                              values={{ email: submittedContact.email || t('contact.alerts.emailFallback') }}
+                              components={{
+                                email: <span className="font-semibold text-white" />
+                              }}
+                            />
+                          )}
                         </p>
                       </motion.div>
                       ) : (
@@ -258,14 +259,14 @@ const Contact: React.FC = () => {
                             />
                           </div>
                           <div className="group">
-                            <label className={labelClasses}>Telefon</label>
+                            <label className={labelClasses}>{t('contact.form.phone')}</label>
                             <input
                               type="tel"
                               name="phone"
                               value={formData.phone}
                               onChange={handleChange}
                               className={inputClasses}
-                              placeholder="0555 555 55 55"
+                              placeholder={t('contact.form.phonePlaceholder')}
                             />
                           </div>
                         </div>
@@ -309,7 +310,7 @@ const Contact: React.FC = () => {
                           className="group !px-5 !py-2.5 !text-sm md:!px-6 md:!py-3 md:!text-base"
                           disabled={!formData.name.trim() || (!formData.email.trim() && !formData.phone.trim()) || !formData.message.trim() || status === 'sending'}
                         >
-                          {status === 'sending' ? 'Gönderiliyor...' : t('contact.form.submit')}
+                          {status === 'sending' ? t('contact.form.submitting') : t('contact.form.submit')}
                           {status !== 'sending' && (
                             <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
                           )}

@@ -1,39 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Sparkles, BrainCircuit, ArrowRight, Cpu, RefreshCw, AlertCircle, AlertTriangle, Code2, Layers, Clock, BarChart3, Wallet, Info, Activity, Loader2, ListChecks, CheckCircle2 } from 'lucide-react';
 import { useProductAnalysis } from '../hooks/useAI';
 import Button from '../components/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation, Trans } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import MarkdownRenderer from '../components/MarkdownRenderer';
 import { stripRedundantMonetizationHeading } from '../utils/markdown';
 import { isOpenAIConfigured } from '../services/openaiService';
-
-const PLACEHOLDER_IDEAS = [
-    "Sağlık takibi için yapay zeka asistanı",
-    "E-ticaret için müşteri segmentasyonu",
-    "Restoran rezervasyon yönetim sistemi",
-    "Freelancer proje yönetim platformu",
-    "Akıllı ev enerji optimizasyonu",
-    "Online eğitim içerik platformu",
-    "Sosyal medya analiz aracı",
-    "Kişisel finans yönetim uygulaması"
-];
-
-const LOADING_MESSAGES = [
-    "Analiz başlatılıyor...",
-    "Teknik gereksinimler taranıyor...",
-    "Pazar verileri karşılaştırılıyor...",
-    "Rakip analizi derinleştiriliyor...",
-    "Maliyet tahminleri hesaplanıyor...",
-    "Mimari kurgulanıyor...",
-    "Teknoloji yığını optimize ediliyor...",
-    "Ölçeklenebilirlik senaryoları test ediliyor...",
-    "Risk analizi yapılıyor...",
-    "Rapor hazırlanıyor..."
-];
 
 const CircularProgress = ({ score }: { score: number }) => {
     const radius = 58;
@@ -81,14 +57,6 @@ const CircularProgress = ({ score }: { score: number }) => {
     );
 };
 
-const getComplexityLabel = (value: number) => {
-    if (value >= 80) return 'Çok karmaşık';
-    if (value >= 60) return 'Karmaşık';
-    if (value >= 40) return 'Orta';
-    if (value >= 20) return 'Düşük';
-    return 'Çok düşük';
-};
-
 const getComplexityColorClass = (value: number) => {
     if (value >= 80) return 'bg-red-500';
     if (value >= 60) return 'bg-orange-500';
@@ -105,8 +73,16 @@ const getSignalColorClass = (value: number, isPositive: boolean) => {
 };
 
 const ComplexityBar = ({ label, value }: { label: string, value: number }) => {
+    const { t, i18n } = useTranslation();
     const safeValue = Math.max(0, Math.min(100, value));
     const colorClass = getComplexityColorClass(safeValue);
+    const getComplexityLabel = (score: number) => {
+        if (score >= 80) return t('aiValidator.complexityLevels.veryComplex');
+        if (score >= 60) return t('aiValidator.complexityLevels.complex');
+        if (score >= 40) return t('aiValidator.complexityLevels.medium');
+        if (score >= 20) return t('aiValidator.complexityLevels.low');
+        return t('aiValidator.complexityLevels.veryLow');
+    };
     return (
         <div className="mb-4 last:mb-0">
             <div className="flex justify-between text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
@@ -164,6 +140,18 @@ const ValidatePage: React.FC = () => {
     const [loadingMsgIndex, setLoadingMsgIndex] = useState(0);
     const { analysis, isAnalyzing, error, analyze, reset } = useProductAnalysis();
     const { t } = useTranslation();
+    const location = useLocation();
+    const isEnglishRoute = location.pathname.startsWith('/en');
+    const basePath = isEnglishRoute ? '/en' : '';
+    const contactHref = basePath ? `${basePath}#contact` : '/#contact';
+    const placeholderIdeas = useMemo(() => {
+        const ideas = t('validatePage.placeholders', { returnObjects: true });
+        return Array.isArray(ideas) ? ideas : [];
+    }, [i18n.language, t]);
+    const loadingMessages = useMemo(() => {
+        const messages = t('validatePage.loadingMessages', { returnObjects: true });
+        return Array.isArray(messages) ? messages : [];
+    }, [i18n.language, t]);
     const isAIEnabled = isOpenAIConfigured();
     const [bgLoaded, setBgLoaded] = useState(false);
     const mvpModules = analysis?.mvpModules?.length ? analysis.mvpModules : (analysis?.implementationSteps || []);
@@ -182,15 +170,15 @@ const ValidatePage: React.FC = () => {
                 <main className="pt-24 md:pt-32 pb-16">
                     <div className="container mx-auto px-6">
                         <div className="max-w-2xl mx-auto text-center bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-white/10 rounded-2xl p-10 shadow-xl">
-                            <h1 className="text-2xl md:text-3xl font-bold mb-4">AI Fikir Analizi su an kapali</h1>
+                            <h1 className="text-2xl md:text-3xl font-bold mb-4">{t('validatePage.disabled.title')}</h1>
                             <p className="text-slate-600 dark:text-slate-300 mb-6">
-                                Bu ozellik istenildiginde tekrar aktif edilecek. Proje fikirlerinizi bizimle paylasmak icin iletisim formunu kullanabilirsiniz.
+                                {t('validatePage.disabled.description')}
                             </p>
                             <Link
-                                to="/#contact"
+                                to={contactHref}
                                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900 text-white dark:bg-white dark:text-slate-900 text-sm font-medium hover:opacity-90 transition-opacity"
                             >
-                                Iletisime gec
+                                {t('validatePage.disabled.cta')}
                                 <ArrowRight size={16} />
                             </Link>
                         </div>
@@ -245,7 +233,7 @@ const ValidatePage: React.FC = () => {
         const feasibilityScore = typeof analysis?.feasibilityScore === 'number'
             ? analysis.feasibilityScore
             : null;
-        const mvpTimeline = analysis?.mvpTimeline?.trim() || 'Paylaşılmadı';
+        const mvpTimeline = analysis?.mvpTimeline?.trim() || t('validatePage.fallback.notShared');
         const adminAnalysis = analysis
             ? {
                 viabilityVerdict: analysis.viabilityVerdict,
@@ -269,8 +257,8 @@ const ValidatePage: React.FC = () => {
             email: contactForm.email,
             phone: contactForm.phone,
             message: contactForm.message,
-            analysisIdea: safeIdea || 'Paylaşılmadı',
-            executiveSummary: analysis?.executiveSummary || 'Paylaşılmadı',
+            analysisIdea: safeIdea || t('validatePage.fallback.notShared'),
+            executiveSummary: analysis?.executiveSummary || t('validatePage.fallback.notShared'),
             technicalChallenges,
             feasibilityScore: feasibilityScore ?? undefined,
             mvpTimeline,
@@ -292,7 +280,11 @@ const ValidatePage: React.FC = () => {
 
     // Animated placeholder effect
     useEffect(() => {
-        const currentIdea = PLACEHOLDER_IDEAS[placeholderIndex];
+        if (!placeholderIdeas.length) {
+            return;
+        }
+
+        const currentIdea = placeholderIdeas[placeholderIndex];
         let charIndex = 0;
         let typingInterval: NodeJS.Timeout;
         let pauseTimeout: NodeJS.Timeout;
@@ -316,7 +308,7 @@ const ValidatePage: React.FC = () => {
                     setDisplayedPlaceholder(currentIdea.slice(0, currentIdea.length - charIndex));
                 } else {
                     clearInterval(typingInterval);
-                    setPlaceholderIndex((prev) => (prev + 1) % PLACEHOLDER_IDEAS.length);
+                    setPlaceholderIndex((prev) => (prev + 1) % placeholderIdeas.length);
                     setIsTyping(true);
                 }
             }, 30);
@@ -326,19 +318,27 @@ const ValidatePage: React.FC = () => {
             clearInterval(typingInterval);
             clearTimeout(pauseTimeout);
         };
-    }, [placeholderIndex, isTyping]);
+    }, [placeholderIdeas, placeholderIndex, isTyping]);
+
+    useEffect(() => {
+        if (placeholderIdeas.length) {
+            setPlaceholderIndex(0);
+            setDisplayedPlaceholder('');
+            setIsTyping(true);
+        }
+    }, [placeholderIdeas.length]);
 
     // Loading message rotation
     useEffect(() => {
         let interval: NodeJS.Timeout;
-        if (isAnalyzing) {
+        if (isAnalyzing && loadingMessages.length) {
             setLoadingMsgIndex(0);
             interval = setInterval(() => {
-                setLoadingMsgIndex((prev) => (prev + 1) % LOADING_MESSAGES.length);
+                setLoadingMsgIndex((prev) => (prev + 1) % loadingMessages.length);
             }, 2500);
         }
         return () => clearInterval(interval);
-    }, [isAnalyzing]);
+    }, [isAnalyzing, loadingMessages.length]);
 
     // Fallback for background image load
     useEffect(() => {
@@ -430,7 +430,13 @@ const ValidatePage: React.FC = () => {
                                     transition={{ duration: 0.8, delay: 0.2 }}
                                     className="text-5xl md:text-6xl font-normal text-white mb-8 leading-[1.1] font-serif max-w-4xl mx-auto"
                                 >
-                                    Fikrinizi <span className="text-white drop-shadow-[0_0_25px_rgba(255,255,255,0.8)]">saniyeler içinde</span><br />analiz edin.
+                                    <Trans
+                                        i18nKey="validatePage.hero.title"
+                                        components={{
+                                            span: <span className="text-white drop-shadow-[0_0_25px_rgba(255,255,255,0.8)]" />,
+                                            br: <br />
+                                        }}
+                                    />
                                 </motion.h1>
 
                                 <motion.p
@@ -439,7 +445,7 @@ const ValidatePage: React.FC = () => {
                                     transition={{ duration: 0.8, delay: 0.4 }}
                                     className="text-base md:text-lg text-white/70 mb-12 leading-relaxed max-w-xl mx-auto"
                                 >
-                                    Yapay zeka ile projenizin teknik fizibilitesini, tahmini süresini ve maliyetini öğrenin — ücretsiz.
+                                    {t('validatePage.hero.subtitle')}
                                 </motion.p>
 
                                 {/* Input Form */}
@@ -465,7 +471,7 @@ const ValidatePage: React.FC = () => {
                                             className="w-full md:w-auto md:min-w-[160px] py-3 md:py-4 text-sm md:text-base"
                                             icon={<Sparkles size={16} className="md:w-[18px] md:h-[18px]" />}
                                         >
-                                            Analiz Et
+                                            {t('aiValidator.analyze')}
                                         </Button>
                                     </div>
 
@@ -488,13 +494,13 @@ const ValidatePage: React.FC = () => {
                                     className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-8 mt-10 text-center"
                                 >
                                     <span className="text-white/80 font-mono uppercase text-[0.75rem] md:text-[0.875rem] tracking-[0.063rem] md:tracking-[0.094rem] leading-tight">
-                                        Teknik Fizibilite
+                                        {t('validatePage.highlights.feasibility')}
                                     </span>
                                     <span className="text-white/80 font-mono uppercase text-[0.75rem] md:text-[0.875rem] tracking-[0.063rem] md:tracking-[0.094rem] leading-tight">
-                                        Maliyet Tahmini
+                                        {t('validatePage.highlights.costEstimate')}
                                     </span>
                                     <span className="text-white/80 font-mono uppercase text-[0.75rem] md:text-[0.875rem] tracking-[0.063rem] md:tracking-[0.094rem] leading-tight">
-                                        Süre Öngörüsü
+                                        {t('validatePage.highlights.timeline')}
                                     </span>
                                 </motion.div>
                             </motion.div>
@@ -526,11 +532,11 @@ const ValidatePage: React.FC = () => {
                                             transition={{ duration: 0.3 }}
                                             className="text-xl font-medium text-white absolute left-0 right-0"
                                         >
-                                            {LOADING_MESSAGES[loadingMsgIndex]}
+                                            {loadingMessages[loadingMsgIndex] || ''}
                                         </motion.p>
                                     </AnimatePresence>
                                 </div>
-                                <p className="text-white/50 mt-2 text-sm">Bu işlem yapay zeka tarafından gerçek zamanlı yapılıyor.</p>
+                                <p className="text-white/50 mt-2 text-sm">{t('validatePage.loadingNote')}</p>
                             </motion.div>
                         ) : (
                             <motion.div
@@ -546,12 +552,12 @@ const ValidatePage: React.FC = () => {
                                             <BrainCircuit size={24} className="text-indigo-600 dark:text-indigo-400" />
                                         </div>
                                         <div>
-                                            <h2 className="font-bold text-base md:text-xl text-slate-900 dark:text-white">Agens AI Analiz Sonucu</h2>
-                                            <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400">AI değerlendirmesi tamamlandı</p>
+                                            <h2 className="font-bold text-base md:text-xl text-slate-900 dark:text-white">{t('validatePage.results.title')}</h2>
+                                            <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400">{t('validatePage.results.subtitle')}</p>
                                         </div>
                                     </div>
                                     <Button className="w-full md:w-auto" variant="outline" size="sm" onClick={handleReset} icon={<RefreshCw size={16} />}>
-                                        Yeni Analiz
+                                        {t('aiValidator.reset')}
                                     </Button>
                                 </div>
 
@@ -560,7 +566,7 @@ const ValidatePage: React.FC = () => {
                                     <div className="absolute top-0 right-0 p-4 opacity-10">
                                         <Sparkles size={48} className="text-indigo-500" />
                                     </div>
-                                    <h3 className="text-xs font-bold uppercase tracking-widest text-indigo-500 mb-2">Analiz Edilen Fikir</h3>
+                                    <h3 className="text-xs font-bold uppercase tracking-widest text-indigo-500 mb-2">{t('validatePage.results.analyzedIdea')}</h3>
                                     <p className="text-base md:text-lg font-medium text-slate-900 dark:text-white leading-relaxed">
                                         "{ideaInput}"
                                     </p>
@@ -571,7 +577,7 @@ const ValidatePage: React.FC = () => {
                                     <motion.div variants={sectionVariants} initial="hidden" animate="visible" className="bg-slate-50 dark:bg-[#0B1121] border border-slate-200 dark:border-indigo-500/20 rounded-2xl p-4 md:p-8 text-center relative overflow-hidden">
                                         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50"></div>
                                         <CircularProgress score={analysis.feasibilityScore} />
-                                        <h3 className="text-sm md:text-xl font-bold text-slate-900 dark:text-white mb-3">Teknik Fizibilite Raporu</h3>
+                                        <h3 className="text-sm md:text-xl font-bold text-slate-900 dark:text-white mb-3">{t('aiValidator.report.title')}</h3>
                                         {executiveSummary && (
                                             <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base leading-relaxed mb-4 max-w-2xl mx-auto">
                                                 {executiveSummary}
@@ -579,22 +585,25 @@ const ValidatePage: React.FC = () => {
                                         )}
                                         <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-200 dark:bg-slate-800 rounded-lg border border-slate-300 dark:border-slate-700 mt-2">
                                             <Clock size={14} className="text-indigo-600 dark:text-indigo-400" />
-                                            <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">MVP Süresi: <span className="text-slate-900 dark:text-white font-bold">{analysis.mvpTimeline}</span></span>
+                                            <span className="text-xs text-slate-700 dark:text-slate-300 font-medium">
+                                                {t('validatePage.results.mvpTimelineLabel')}:{' '}
+                                                <span className="text-slate-900 dark:text-white font-bold">{analysis.mvpTimeline}</span>
+                                            </span>
                                         </div>
                                         <div className="mt-6 pt-5 border-t border-slate-200/70 dark:border-white/10 flex flex-col items-center gap-3">
                                             <p className="text-xs md:text-sm text-slate-600 dark:text-slate-300 max-w-2xl">
-                                                Raporu birlikte yorumlayalım, projeniz için net bir yol haritası çıkaralım.
+                                                {t('validatePage.results.ctaNote')}
                                             </p>
                                             <Button
                                                 type="button"
                                                 onClick={handleScrollToContact}
                                                 className="group !bg-indigo-600 !text-white !hover:bg-indigo-500 !focus:ring-indigo-500/60 shadow-[0_0_24px_rgba(99,102,241,0.35)] text-sm md:text-base whitespace-nowrap"
                                             >
-                                                Ücretsiz Ön Görüşme Ayarla
+                                                {t('validatePage.results.ctaButton')}
                                                 <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
                                             </Button>
                                             <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-                                                30 dk • Zorunluluk yok
+                                                {t('validatePage.results.ctaMeta')}
                                             </span>
                                         </div>
                                     </motion.div>
@@ -603,12 +612,12 @@ const ValidatePage: React.FC = () => {
                                     <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.1 }} className="bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-white/5 rounded-2xl p-4 md:p-6">
                                         <div className="flex items-center gap-2 mb-6">
                                             <Activity size={20} className="text-indigo-500" />
-                                            <h3 className="font-bold text-slate-900 dark:text-white">Teknik Karmaşıklık</h3>
+                                            <h3 className="font-bold text-slate-900 dark:text-white">{t('validatePage.sections.complexity')}</h3>
                                         </div>
                                         <div className="grid md:grid-cols-3 gap-6">
-                                            <ComplexityBar label="Frontend & UX" value={analysis.complexity.frontend} />
-                                            <ComplexityBar label="Backend & Mantık" value={analysis.complexity.backend} />
-                                            <ComplexityBar label="AI & Veri" value={analysis.complexity.ai} />
+                                            <ComplexityBar label={t('aiValidator.complexity.frontend')} value={analysis.complexity.frontend} />
+                                            <ComplexityBar label={t('aiValidator.complexity.backend')} value={analysis.complexity.backend} />
+                                            <ComplexityBar label={t('aiValidator.complexity.ai')} value={analysis.complexity.ai} />
                                         </div>
                                     </motion.div>
 
@@ -618,10 +627,10 @@ const ValidatePage: React.FC = () => {
                                             <div className="mb-4">
                                                 <div className="flex items-center gap-2 mb-1">
                                                     <ListChecks size={20} className="text-indigo-500" />
-                                                    <h3 className="font-bold text-slate-900 dark:text-white">MVP Modülleri</h3>
+                                                    <h3 className="font-bold text-slate-900 dark:text-white">{t('validatePage.sections.mvp.title')}</h3>
                                                 </div>
                                                 <p className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 pl-7">
-                                                    * İlk sürümde değer üretmek için zorunlu minimum kapsam.
+                                                    {t('validatePage.sections.mvp.note')}
                                                 </p>
                                             </div>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
@@ -641,10 +650,10 @@ const ValidatePage: React.FC = () => {
                                             <div className="mb-4">
                                                 <div className="flex items-center gap-2 mb-1">
                                                     <Layers size={20} className="text-indigo-500" />
-                                                    <h3 className="font-bold text-slate-900 dark:text-white">Faz 2 / Ölçek Modülleri</h3>
+                                                    <h3 className="font-bold text-slate-900 dark:text-white">{t('validatePage.sections.phase2.title')}</h3>
                                                 </div>
                                                 <p className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 pl-7">
-                                                    * Ürün doğrulandıktan sonra büyümeyi ve operasyonu güçlendiren adımlar.
+                                                    {t('validatePage.sections.phase2.note')}
                                                 </p>
                                             </div>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
@@ -661,13 +670,13 @@ const ValidatePage: React.FC = () => {
                                     <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.2 }} className="bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-white/5 rounded-2xl p-4 md:p-6">
                                         <div className="flex items-center gap-2 mb-6">
                                             <Layers size={20} className="text-indigo-500" />
-                                            <h3 className="font-bold text-slate-900 dark:text-white">Önerilen Teknolojiler</h3>
+                                            <h3 className="font-bold text-slate-900 dark:text-white">{t('aiValidator.stack.title')}</h3>
                                         </div>
                                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                             {/* Frontend Chips */}
                                             <div className="bg-white dark:bg-slate-950/50 border border-slate-200 dark:border-white/5 p-4 rounded-xl">
                                                 <div className="mb-3">
-                                                    <div className="text-xs text-slate-500 uppercase font-bold tracking-wider">Frontend</div>
+                                                    <div className="text-xs text-slate-500 uppercase font-bold tracking-wider">{t('aiValidator.stack.frontend')}</div>
                                                 </div>
                                                 <div className="flex flex-wrap gap-2">
                                                     {analysis.recommendedStack.frontend.map((tech, i) => (
@@ -681,7 +690,7 @@ const ValidatePage: React.FC = () => {
                                             {/* Backend Chips */}
                                             <div className="bg-white dark:bg-slate-950/50 border border-slate-200 dark:border-white/5 p-4 rounded-xl">
                                                 <div className="mb-3">
-                                                    <div className="text-xs text-slate-500 uppercase font-bold tracking-wider">Backend</div>
+                                                    <div className="text-xs text-slate-500 uppercase font-bold tracking-wider">{t('aiValidator.stack.backend')}</div>
                                                 </div>
                                                 <div className="flex flex-wrap gap-2">
                                                     {analysis.recommendedStack.backend.map((tech, i) => (
@@ -695,7 +704,7 @@ const ValidatePage: React.FC = () => {
                                             {/* Infrastructure Chips */}
                                             <div className="bg-white dark:bg-slate-950/50 border border-slate-200 dark:border-white/5 p-4 rounded-xl">
                                                 <div className="mb-3">
-                                                    <div className="text-xs text-slate-500 uppercase font-bold tracking-wider">Altyapı</div>
+                                                    <div className="text-xs text-slate-500 uppercase font-bold tracking-wider">{t('aiValidator.stack.infrastructure')}</div>
                                                 </div>
                                                 <div className="flex flex-wrap gap-2">
                                                     {analysis.recommendedStack.infrastructure.map((tech, i) => (
@@ -712,13 +721,13 @@ const ValidatePage: React.FC = () => {
                                     <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.35 }} className="bg-sky-50 dark:bg-sky-900/10 border border-sky-100 dark:border-sky-500/10 rounded-2xl p-4 md:p-6">
                                         <div className="flex items-center gap-2 mb-4 text-sky-600 dark:text-sky-400">
                                             <BarChart3 size={20} />
-                                            <h3 className="font-bold text-slate-900 dark:text-white">Pazar & Rekabet Analizi</h3>
+                                            <h3 className="font-bold text-slate-900 dark:text-white">{t('validatePage.sections.market.title')}</h3>
                                         </div>
                                         {(competitionDensity || userDemand) && (
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                                 {competitionDensity && (
                                                     <MarketSignalBar
-                                                        label="Rekabet Yoğunluğu"
+                                                        label={t('validatePage.sections.market.competition')}
                                                         valueLabel={competitionDensity.label}
                                                         value={competitionDensity.score}
                                                         isPositive={false}
@@ -726,7 +735,7 @@ const ValidatePage: React.FC = () => {
                                                 )}
                                                 {userDemand && (
                                                     <MarketSignalBar
-                                                        label="Kullanıcı Talebi"
+                                                        label={t('validatePage.sections.market.demand')}
                                                         valueLabel={userDemand.label}
                                                         value={userDemand.score}
                                                         isPositive={true}
@@ -743,7 +752,7 @@ const ValidatePage: React.FC = () => {
                                     <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.4 }} className="bg-emerald-50 dark:bg-slate-900 border border-emerald-100 dark:border-emerald-500/20 rounded-2xl p-4 md:p-6">
                                         <div className="flex items-center gap-2 mb-4 text-emerald-600 dark:text-emerald-400">
                                             <Wallet size={20} />
-                                            <h3 className="font-bold text-slate-900 dark:text-white">Gelir Modeli Önerisi</h3>
+                                            <h3 className="font-bold text-slate-900 dark:text-white">{t('validatePage.sections.monetization')}</h3>
                                         </div>
                                         <div>
                                             <MarkdownRenderer content={monetizationStrategy} />
@@ -757,7 +766,7 @@ const ValidatePage: React.FC = () => {
                                                 <div className="bg-indigo-50 dark:bg-indigo-900/10 border border-indigo-100 dark:border-indigo-500/10 rounded-2xl p-4 md:p-6">
                                                     <div className="flex items-center gap-2 mb-4 text-indigo-600 dark:text-indigo-400">
                                                         <ListChecks size={20} />
-                                                        <h3 className="font-bold text-slate-900 dark:text-white">Hızlı Doğrulama Planı</h3>
+                                                        <h3 className="font-bold text-slate-900 dark:text-white">{t('validatePage.sections.validationPlan')}</h3>
                                                     </div>
                                                     <div className="space-y-3">
                                                         {validationPlan.map((item, idx) => (
@@ -775,7 +784,7 @@ const ValidatePage: React.FC = () => {
                                                 <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-white/5 rounded-2xl p-4 md:p-6">
                                                     <div className="flex items-center gap-2 mb-4 text-slate-600 dark:text-slate-300">
                                                         <Info size={20} />
-                                                        <h3 className="font-bold text-slate-900 dark:text-white">Netleştirilmesi Gereken Sorular</h3>
+                                                        <h3 className="font-bold text-slate-900 dark:text-white">{t('validatePage.sections.openQuestions')}</h3>
                                                     </div>
                                                     <div className="space-y-3">
                                                         {openQuestions.map((item, idx) => (
@@ -796,7 +805,7 @@ const ValidatePage: React.FC = () => {
                                     <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.5 }} className="bg-red-50 dark:bg-[#0f0a0a] border border-red-100 dark:border-red-900/30 rounded-2xl p-4 md:p-6">
                                         <div className="flex items-center gap-2 mb-4 text-red-600 dark:text-red-500">
                                             <AlertTriangle size={20} />
-                                            <h3 className="font-bold">Riskler ve İlk Önlemler</h3>
+                                            <h3 className="font-bold">{t('validatePage.sections.risks')}</h3>
                                         </div>
                                         <div className="space-y-3">
                                             {analysis.technicalChallenges.map((challenge, i) => (
@@ -816,7 +825,7 @@ const ValidatePage: React.FC = () => {
                                             <Sparkles size={24} />
                                         </div>
                                         <div className="flex-1">
-                                            <h3 className="font-bold text-slate-900 dark:text-white mb-2">Agens AI Stratejik Tavsiyesi</h3>
+                                            <h3 className="font-bold text-slate-900 dark:text-white mb-2">{t('validatePage.sections.agensInsight')}</h3>
                                             <div className="text-slate-600 dark:text-slate-200 font-medium">
                                                 <MarkdownRenderer content={analysis.agensInsight} />
                                             </div>
@@ -826,7 +835,8 @@ const ValidatePage: React.FC = () => {
                                     {/* AI Disclaimer */}
                                     <div className="text-center px-4">
                                         <p className="text-[10px] sm:text-xs text-slate-400 dark:text-slate-500 max-w-2xl md:max-w-4xl lg:max-w-5xl mx-auto leading-relaxed">
-                                            <span className="font-semibold text-slate-500 dark:text-slate-400">Yasal Uyarı:</span> Agens AI tarafından üretilen bu analiz ve stratejiler, yapay zeka modelleri kullanılarak oluşturulmuştur ve yalnızca bilgilendirme amaçlıdır. Nihai yatırım ve geliştirme kararlarınızı almadan önce lütfen profesyonel bir uzmana danışın.
+                                            <span className="font-semibold text-slate-500 dark:text-slate-400">{t('validatePage.disclaimer.label')}</span>{' '}
+                                            {t('validatePage.disclaimer.text')}
                                         </p>
                                     </div>
                                 </div>
@@ -848,37 +858,41 @@ const ValidatePage: React.FC = () => {
                                                 <div className="h-10 w-10 rounded-full bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-500 dark:text-emerald-300">
                                                     <CheckCircle2 size={20} />
                                                 </div>
-                                                <p className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">Mesajınızı aldık</p>
+                                                <p className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white">{t('contact.alerts.successTitle')}</p>
                                             </div>
                                             <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-                                                Fikrinizi aldık. Paylaştığınız bilgiler doğrultusunda AI destekli ön analiz tamamlandı.
-                                                Bir sonraki adımda, fikri birlikte ele alıp ürünleştirme ve teknik yol haritasını netleştirmek için kısa bir görüşme öneriyoruz.
+                                                {t('validatePage.contact.successIntro')}
                                             </p>
                                             <p className="mt-4 text-slate-600 dark:text-slate-300">
                                                 {submittedContact.email && submittedContact.phone
                                                     ? (
-                                                        <>
-                                                            Talebiniz ekibimize iletildi. Yaklaşık 24 saat içinde sizinle paylaştığınız{" "}
-                                                            <span className="font-semibold text-slate-900 dark:text-white">{submittedContact.email}</span>{" "}
-                                                            ya da{" "}
-                                                            <span className="font-semibold text-slate-900 dark:text-white">{submittedContact.phone}</span>{" "}
-                                                            üzerinden iletişime geçeceğiz.
-                                                        </>
+                                                        <Trans
+                                                            i18nKey="contact.alerts.followUpBoth"
+                                                            values={{ email: submittedContact.email, phone: submittedContact.phone }}
+                                                            components={{
+                                                                email: <span className="font-semibold text-slate-900 dark:text-white" />,
+                                                                phone: <span className="font-semibold text-slate-900 dark:text-white" />
+                                                            }}
+                                                        />
                                                     )
                                                     : submittedContact.phone
                                                     ? (
-                                                        <>
-                                                            Talebiniz ekibimize iletildi. Yaklaşık 24 saat içinde sizinle paylaştığınız{" "}
-                                                            <span className="font-semibold text-slate-900 dark:text-white">{submittedContact.phone}</span>{" "}
-                                                            üzerinden iletişime geçeceğiz.
-                                                        </>
+                                                        <Trans
+                                                            i18nKey="contact.alerts.followUpPhone"
+                                                            values={{ phone: submittedContact.phone }}
+                                                            components={{
+                                                                phone: <span className="font-semibold text-slate-900 dark:text-white" />
+                                                            }}
+                                                        />
                                                     )
                                                     : (
-                                                        <>
-                                                            Talebiniz ekibimize iletildi. Yaklaşık 24 saat içinde sizinle paylaştığınız{" "}
-                                                            <span className="font-semibold text-slate-900 dark:text-white">{submittedContact.email || 'e-posta'}</span>{" "}
-                                                            üzerinden iletişime geçeceğiz.
-                                                        </>
+                                                        <Trans
+                                                            i18nKey="contact.alerts.followUpEmail"
+                                                            values={{ email: submittedContact.email || t('contact.alerts.emailFallback') }}
+                                                            components={{
+                                                                email: <span className="font-semibold text-slate-900 dark:text-white" />
+                                                            }}
+                                                        />
                                                     )}
                                             </p>
                                             </motion.div>
@@ -894,7 +908,7 @@ const ValidatePage: React.FC = () => {
                                             >
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
                                             <div className="group">
-                                                <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 ml-1">Ad Soyad</label>
+                                                <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 ml-1">{t('contact.form.name')}</label>
                                                 <div className="relative">
                                                     <input
                                                         type="text"
@@ -903,45 +917,45 @@ const ValidatePage: React.FC = () => {
                                                         value={contactForm.name}
                                                         onChange={(e) => setContactForm(prev => ({ ...prev, name: e.target.value }))}
                                                         className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 pl-4 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
-                                                        placeholder="Adınız Soyadınız"
+                                                        placeholder={t('contact.form.namePlaceholder')}
                                                     />
                                                 </div>
                                             </div>
                                             <div className="group">
-                                                <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 ml-1">Telefon</label>
+                                                <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 ml-1">{t('contact.form.phone')}</label>
                                                 <div className="relative">
                                                     <input
                                                         type="tel"
                                                         value={contactForm.phone}
                                                         onChange={(e) => setContactForm(prev => ({ ...prev, phone: e.target.value }))}
                                                         className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
-                                                        placeholder="0555 555 55 55"
+                                                        placeholder={t('contact.form.phonePlaceholder')}
                                                     />
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div className="mb-8">
-                                            <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 ml-1">E-posta Adresi</label>
+                                            <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 ml-1">{t('contact.form.email')}</label>
                                             <div className="relative">
                                                 <input
                                                     type="email"
                                                     value={contactForm.email}
                                                     onChange={(e) => setContactForm(prev => ({ ...prev, email: e.target.value }))}
                                                     className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
-                                                    placeholder="ornek@sirket.com"
+                                                    placeholder={t('contact.form.emailPlaceholder')}
                                                 />
                                             </div>
                                         </div>
 
                                         <div className="mb-6">
-                                            <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 ml-1">Proje Detayları / Notunuz</label>
+                                            <label className="block text-[11px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-2 ml-1">{t('contact.form.project')}</label>
                                             <textarea
                                                 rows={6}
                                                 value={contactForm.message}
                                                 onChange={(e) => setContactForm(prev => ({ ...prev, message: e.target.value }))}
                                                 className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-slate-900 dark:text-white placeholder:text-xs md:placeholder:text-sm placeholder:text-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all resize-none leading-relaxed"
-                                                placeholder={`AI analiz raporu ekibe iletilecek. Ek talepleriniz varsa buraya yazabilirsiniz, yoksa boş bırakabilirsiniz.`}
+                                                placeholder={t('validatePage.contact.form.projectPlaceholder')}
                                             />
                                         </div>
 
@@ -952,7 +966,7 @@ const ValidatePage: React.FC = () => {
                                                 disabled={emailStatus === 'sending' || !contactForm.name || (!contactForm.email && !contactForm.phone)}
                                                 className="group !px-5 !py-2.5 !text-sm md:!px-6 md:!py-3 md:!text-base w-full md:w-auto"
                                             >
-                                                {emailStatus === 'sending' ? 'Gönderiliyor...' : 'Gönder'}
+                                                {emailStatus === 'sending' ? t('contact.form.submitting') : t('contact.form.submit')}
                                                 {emailStatus !== 'sending' && (
                                                     <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
                                                 )}

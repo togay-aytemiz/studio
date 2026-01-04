@@ -5,6 +5,7 @@ import Hero from './components/Hero';
 import Footer from './components/Footer';
 import TechStack from './components/TechStack';
 import LazySection from './components/LazySection';
+import RouteMeta from './components/RouteMeta';
 
 const Expertise = lazy(() => import('./components/Expertise'));
 const Process = lazy(() => import('./components/Process'));
@@ -48,10 +49,20 @@ const HomePage = () => (
 function App() {
   return (
     <BrowserRouter>
+      <RouteMeta />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/en" element={<HomePage />} />
         <Route
           path="/validate"
+          element={
+            <Suspense fallback={<div className="min-h-screen bg-[#030712]" />}>
+              <ValidatePage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/en/validate"
           element={
             <Suspense fallback={<div className="min-h-screen bg-[#030712]" />}>
               <ValidatePage />

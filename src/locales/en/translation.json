@@ -6,7 +6,8 @@
         "process": "Process",
         "work": "Projects",
         "team": "About",
-        "startProject": "Free Consultation"
+        "startProject": "Free Consultation",
+        "aiIdeaAnalysis": "AI Idea Analysis"
     },
     "hero": {
         "tagline": "Software Development Company",
@@ -51,6 +52,22 @@
             "cleanCode": "Clean Code",
             "naturalLang": "Natural Language",
             "neuralSearch": "Neural Search"
+        },
+        "marqueeTitle": "OUR TECHNICAL EXPERTISE",
+        "discover": "Explore",
+        "marqueeItems": {
+            "mobileApps": "Mobile Apps",
+            "webPlatforms": "Web Platforms",
+            "workflowAutomation": "Workflow Automation",
+            "apiFirst": "API-First Architecture",
+            "aiFlows": "AI-Powered Flows",
+            "nlp": "Natural Language Processing",
+            "semanticSearch": "Semantic Search",
+            "smartAutomation": "Smart Automation",
+            "scalableInfra": "Scalable Infrastructure",
+            "payments": "Payments & Collections",
+            "eInvoice": "E-Invoice Integration",
+            "secureSystems": "Secure Systems"
         }
     },
     "footer": {
@@ -61,7 +78,7 @@
             "address": "Ankara, Turkey"
         },
         "studio": "Studio",
-        "description": "Engineering scalable digital products for ambitious startups.",
+        "description": "From web and mobile apps to scalable infrastructure, we manage the entire product development process under one roof.",
         "rights": "All rights reserved.",
         "privacy": "Privacy Policy",
         "terms": "Terms of Service",
@@ -104,7 +121,105 @@
             "infrastructure": "Infrastructure"
         },
         "reset": "Analyze another idea",
-        "consult": "Get Free Consultation"
+        "consult": "Get Free Consultation",
+        "loadingMessages": [
+            "Starting analysis...",
+            "Scanning technical requirements...",
+            "Comparing market data...",
+            "Architecting the system...",
+            "Preparing the report..."
+        ],
+        "loadingNote": "This process runs in real time using AI.",
+        "complexityLevels": {
+            "veryComplex": "Very complex",
+            "complex": "Complex",
+            "medium": "Medium",
+            "low": "Low",
+            "veryLow": "Very low"
+        },
+        "effortDistribution": "Technical effort distribution"
+    },
+    "validatePage": {
+        "disabled": {
+            "title": "AI Idea Analysis is currently unavailable",
+            "description": "This feature will be re-enabled when requested. You can share your project ideas through the contact form.",
+            "cta": "Contact us"
+        },
+        "fallback": {
+            "notShared": "Not shared"
+        },
+        "placeholders": [
+            "AI assistant for health tracking",
+            "Customer segmentation for e-commerce",
+            "Restaurant reservation management system",
+            "Freelancer project management platform",
+            "Smart home energy optimization",
+            "Online learning content platform",
+            "Social media analytics tool",
+            "Personal finance management app"
+        ],
+        "loadingMessages": [
+            "Starting analysis...",
+            "Scanning technical requirements...",
+            "Comparing market data...",
+            "Deepening competitive analysis...",
+            "Calculating cost estimates...",
+            "Architecting the system...",
+            "Optimizing the tech stack...",
+            "Testing scalability scenarios...",
+            "Running risk analysis...",
+            "Preparing the report..."
+        ],
+        "hero": {
+            "title": "Analyze your idea <span>in seconds</span><br /> with AI.",
+            "subtitle": "Use AI to estimate your project's technical feasibility, timeline, and cost - free."
+        },
+        "highlights": {
+            "feasibility": "Technical Feasibility",
+            "costEstimate": "Cost Estimate",
+            "timeline": "Timeline Forecast"
+        },
+        "loadingNote": "This process runs in real time using AI.",
+        "results": {
+            "title": "Agens AI Analysis Result",
+            "subtitle": "AI evaluation completed",
+            "analyzedIdea": "Analyzed Idea",
+            "mvpTimelineLabel": "MVP Timeline",
+            "ctaNote": "Let's review the report together and map a clear roadmap for your project.",
+            "ctaButton": "Book a Free Intro Call",
+            "ctaMeta": "30 min - No obligation"
+        },
+        "sections": {
+            "complexity": "Technical Complexity",
+            "mvp": {
+                "title": "MVP Modules",
+                "note": "* Minimum scope required to deliver value in the first release."
+            },
+            "phase2": {
+                "title": "Phase 2 / Scale Modules",
+                "note": "* Steps that strengthen growth and operations after product validation."
+            },
+            "market": {
+                "title": "Market & Competition Analysis",
+                "competition": "Competitive Density",
+                "demand": "User Demand"
+            },
+            "monetization": "Monetization Recommendation",
+            "validationPlan": "Rapid Validation Plan",
+            "openQuestions": "Open Questions to Clarify",
+            "risks": "Risks & Early Mitigations",
+            "agensInsight": "Agens AI Strategic Insight"
+        },
+        "disclaimer": {
+            "label": "Legal Notice:",
+            "text": "This analysis and strategies generated by Agens AI are produced using AI models and are for informational purposes only. Please consult a professional before making any final investment or development decisions."
+        },
+        "contact": {
+            "successIntro": "We've received your idea. Based on the details you shared, the AI-powered pre-analysis is complete. Next, we suggest a short call to review the idea together and clarify the productization and technical roadmap.",
+            "form": {
+                "projectPlaceholder": "The AI analysis report will be shared with the team. Add any extra requests here, or leave it blank."
+            }
+        }
     },
     "services": {
         "badge": "Expertise",
@@ -298,13 +413,17 @@
             "suggestion": "AI Suggestion"
         },
         "form": {
-            "name": "Name",
-            "email": "Work Email",
-            "project": "Project Details",
+            "name": "Full Name",
+            "email": "Email Address",
+            "project": "Project Details / Notes",
             "namePlaceholder": "Jane Doe",
             "emailPlaceholder": "jane@company.com",
             "projectPlaceholder": "We want to build...",
-            "submit": "Send Application"
+            "submit": "Send Application",
+            "phone": "Phone",
+            "phonePlaceholder": "555 555 5555",
+            "phoneFallback": "Contact by phone",
+            "submitting": "Sending..."
         },
         "sidebar": {
             "directLine": "Direct Line",
@@ -315,7 +434,12 @@
         },
         "alerts": {
             "shortDescription": "Please describe your idea.",
-            "success": "Thanks! We'll be in touch."
+            "success": "Thanks! We'll be in touch.",
+            "successTitle": "We got your message",
+            "followUpBoth": "Your request has been shared with our team. We will reach out within about 24 hours via <email>{{email}}</email> or <phone>{{phone}}</phone>.",
+            "followUpPhone": "Your request has been shared with our team. We will reach out within about 24 hours via <phone>{{phone}}</phone>.",
+            "followUpEmail": "Your request has been shared with our team. We will reach out within about 24 hours via <email>{{email}}</email>.",
+            "emailFallback": "email"
         }
     }
 }

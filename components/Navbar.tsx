@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NAV_LINKS } from '../constants';
 import Button from './Button';
-import LanguageSwitcher from './LanguageSwitcher';
 import { Menu, X, ArrowRight, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
@@ -17,6 +16,9 @@ const Navbar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const isAIEnabled = isOpenAIConfigured();
+  const isEnglishRoute = location.pathname.startsWith('/en');
+  const basePath = isEnglishRoute ? '/en' : '';
+  const homePath = basePath || '/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,7 +40,7 @@ const Navbar: React.FC = () => {
 
   // Handle hash scrolling on route change
   useEffect(() => {
-    if (location.pathname !== '/' || !location.hash) {
+    if (location.pathname !== homePath || !location.hash) {
       return;
     }
 
@@ -58,14 +60,19 @@ const Navbar: React.FC = () => {
     };
 
     setTimeout(tryScroll, 0);
-  }, [location]);
+  }, [homePath, location]);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, href: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
 
-    if (location.pathname !== '/') {
-      navigate('/' + href);
+    if (!href.startsWith('#')) {
+      navigate(`${basePath}${href}`);
+      return;
+    }
+
+    if (location.pathname !== homePath) {
+      navigate(basePath ? `${basePath}${href}` : `/${href}`);
       return;
     }
 
@@ -74,7 +81,7 @@ const Navbar: React.FC = () => {
 
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      window.history.replaceState(null, '', href);
+      window.history.replaceState(null, '', `${basePath}${href}`);
     }
   };
 
@@ -107,8 +114,8 @@ const Navbar: React.FC = () => {
   const handleLogoClick = (e: React.MouseEvent) => {
     e.preventDefault();
     setMobileMenuOpen(false);
-    if (location.pathname !== '/') {
-      navigate('/');
+    if (location.pathname !== homePath) {
+      navigate(homePath);
     }
     window.scrollTo({
       top: 0,
@@ -149,11 +156,11 @@ const Navbar: React.FC = () => {
         <div className="hidden md:flex items-center gap-4">
           {isAIEnabled && (
             <Link
-              to="/validate"
+              to={basePath ? `${basePath}/validate` : '/validate'}
               className="flex items-center gap-2 px-4 py-2 rounded-full bg-transparent border border-white/30 text-sm font-medium text-white hover:bg-white/10 hover:border-white/50 transition-all"
             >
               <Sparkles size={14} />
-              <span>AI Fikir Analizi</span>
+              <span>{t('nav.aiIdeaAnalysis')}</span>
             </Link>
           )}
           <Button variant="primary" size="sm" onClick={(e) => handleNavClick(e, '#contact')}>
@@ -204,11 +211,11 @@ const Navbar: React.FC = () => {
               <motion.div variants={linkVariants} className="pt-8 flex flex-col gap-4">
                 {isAIEnabled && (
                   <Link
-                    to="/validate"
+                    to={basePath ? `${basePath}/validate` : '/validate'}
                     onClick={() => setMobileMenuOpen(false)}
                     className="w-full flex items-center justify-start px-6 py-4 rounded-full bg-transparent border border-white/30 text-white text-lg font-semibold text-left hover:bg-white/10 hover:border-white/50 transition-all"
                   >
-                    <span>AI Fikir Analizi</span>
+                    <span>{t('nav.aiIdeaAnalysis')}</span>
                   </Link>
                 )}
 

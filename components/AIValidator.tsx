@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Sparkles, BrainCircuit, ArrowRight, Cpu, RefreshCw, AlertCircle, AlertTriangle, Code2, Layers, Clock, BarChart3, Wallet, Info, Activity, Loader2 } from 'lucide-react';
 import { useProductAnalysis } from '../hooks/useAI';
 import Button from './Button';
@@ -8,32 +8,28 @@ import MarkdownRenderer from './MarkdownRenderer';
 import { useTranslation, Trans } from 'react-i18next';
 import { stripRedundantMonetizationHeading } from '../utils/markdown';
 
-const LOADING_MESSAGES = [
-  "Analiz başlatılıyor...",
-  "Teknik gereksinimler taranıyor...",
-  "Pazar verileri karşılaştırılıyor...",
-  "Mimari kurgulanıyor...",
-  "Rapor hazırlanıyor..."
-];
-
 const AIValidator: React.FC = () => {
   const [ideaInput, setIdeaInput] = useState('');
   const [loadingMsgIndex, setLoadingMsgIndex] = useState(0);
   const { analysis, isAnalyzing, error, analyze, reset } = useProductAnalysis();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const loadingMessages = useMemo(() => {
+    const messages = t('aiValidator.loadingMessages', { returnObjects: true });
+    return Array.isArray(messages) ? messages : [];
+  }, [i18n.language, t]);
   const monetizationStrategy = stripRedundantMonetizationHeading(analysis?.monetizationStrategy || '');
 
   // Loading message rotation
   useEffect(() => {
     let interval: NodeJS.Timeout;
-    if (isAnalyzing) {
+    if (isAnalyzing && loadingMessages.length) {
       setLoadingMsgIndex(0);
       interval = setInterval(() => {
-        setLoadingMsgIndex((prev) => (prev + 1) % LOADING_MESSAGES.length);
+        setLoadingMsgIndex((prev) => (prev + 1) % loadingMessages.length);
       }, 800);
     }
     return () => clearInterval(interval);
-  }, [isAnalyzing]);
+  }, [isAnalyzing, loadingMessages.length]);
 
   const handleAnalyze = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,11 +90,11 @@ const AIValidator: React.FC = () => {
   };
 
   const getComplexityLabel = (value: number) => {
-    if (value >= 80) return 'Çok karmaşık';
-    if (value >= 60) return 'Karmaşık';
-    if (value >= 40) return 'Orta';
-    if (value >= 20) return 'Düşük';
-    return 'Çok düşük';
+    if (value >= 80) return t('aiValidator.complexityLevels.veryComplex');
+    if (value >= 60) return t('aiValidator.complexityLevels.complex');
+    if (value >= 40) return t('aiValidator.complexityLevels.medium');
+    if (value >= 20) return t('aiValidator.complexityLevels.low');
+    return t('aiValidator.complexityLevels.veryLow');
   };
 
   const getComplexityColorClass = (value: number) => {
@@ -227,13 +223,13 @@ const AIValidator: React.FC = () => {
                       animate={{ y: 0, opacity: 1 }}
                       exit={{ y: -20, opacity: 0 }}
                       transition={{ duration: 0.3 }}
-                      className="text-xl font-medium text-white absolute left-0 right-0"
-                    >
-                      {LOADING_MESSAGES[loadingMsgIndex]}
+                    className="text-xl font-medium text-white absolute left-0 right-0"
+                  >
+                      {loadingMessages[loadingMsgIndex] || ''}
                     </motion.p>
                   </AnimatePresence>
                 </div>
-                <p className="text-slate-500 mt-2 text-sm">Bu işlem yapay zeka tarafından gerçek zamanlı yapılıyor.</p>
+                <p className="text-slate-500 mt-2 text-sm">{t('aiValidator.loadingNote')}</p>
               </motion.div>
             )}
           </AnimatePresence>
@@ -290,7 +286,7 @@ const AIValidator: React.FC = () => {
                     </div>
                     <div>
                       <h3 className="text-lg font-bold text-white">{t('aiValidator.report.complexity')}</h3>
-                      <p className="text-slate-500 text-sm">Teknik efor dağılımı</p>
+                      <p className="text-slate-500 text-sm">{t('aiValidator.effortDistribution')}</p>
                     </div>
                   </div>
 

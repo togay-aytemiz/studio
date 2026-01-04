@@ -6,7 +6,8 @@
         "process": "Süreç",
         "work": "Projeler",
         "team": "Hakkımızda",
-        "startProject": "Ücretsiz Danışmanlık"
+        "startProject": "Ücretsiz Danışmanlık",
+        "aiIdeaAnalysis": "AI Fikir Analizi"
     },
     "hero": {
         "tagline": "Dijital Ürün Stüdyosu",
@@ -55,6 +56,22 @@
             "cleanCode": "Temiz Kod",
             "naturalLang": "Doğal Dil",
             "neuralSearch": "Nöral Arama"
+        },
+        "marqueeTitle": "TEKNİK YETKİNLİKLERİMİZ",
+        "discover": "Keşfet",
+        "marqueeItems": {
+            "mobileApps": "Mobil Uygulamalar",
+            "webPlatforms": "Web Platformları",
+            "workflowAutomation": "Workflow Otomasyonu",
+            "apiFirst": "API-First Mimari",
+            "aiFlows": "AI Destekli Akışlar",
+            "nlp": "Doğal Dil İşleme",
+            "semanticSearch": "Semantik Arama",
+            "smartAutomation": "Akıllı Otomasyon",
+            "scalableInfra": "Ölçeklenebilir Altyapı",
+            "payments": "Ödeme & Tahsilat",
+            "eInvoice": "E-Fatura Entegrasyonu",
+            "secureSystems": "Güvenli Sistemler"
         }
     },
     "footer": {
@@ -65,7 +82,7 @@
             "address": "Ankara, Türkiye"
         },
         "studio": "HAKKIMIZDA",
-        "description": "Web, mobil ve AI destekli yazılım geliştirme.",
+        "description": "Web ve mobil uygulamalardan, ölçeklenebilir altyapılara kadar ürün geliştirme sürecinin tamamını tek çatı altında yönetiyoruz.",
         "rights": "Tüm hakları saklıdır.",
         "privacy": "Gizlilik",
         "terms": "Şartlar",
@@ -108,7 +125,105 @@
             "infrastructure": "Altyapı"
         },
         "reset": "Yeni Analiz",
-        "consult": "Ücretsiz Görüşme"
+        "consult": "Ücretsiz Görüşme",
+        "loadingMessages": [
+            "Analiz başlatılıyor...",
+            "Teknik gereksinimler taranıyor...",
+            "Pazar verileri karşılaştırılıyor...",
+            "Mimari kurgulanıyor...",
+            "Rapor hazırlanıyor..."
+        ],
+        "loadingNote": "Bu işlem yapay zeka tarafından gerçek zamanlı yapılıyor.",
+        "complexityLevels": {
+            "veryComplex": "Çok karmaşık",
+            "complex": "Karmaşık",
+            "medium": "Orta",
+            "low": "Düşük",
+            "veryLow": "Çok düşük"
+        },
+        "effortDistribution": "Teknik efor dağılımı"
+    },
+    "validatePage": {
+        "disabled": {
+            "title": "AI Fikir Analizi şu an kapalı",
+            "description": "Bu özellik istenildiğinde tekrar aktif edilecek. Proje fikirlerinizi bizimle paylaşmak için iletişim formunu kullanabilirsiniz.",
+            "cta": "İletişime geç"
+        },
+        "fallback": {
+            "notShared": "Paylaşılmadı"
+        },
+        "placeholders": [
+            "Sağlık takibi için yapay zeka asistanı",
+            "E-ticaret için müşteri segmentasyonu",
+            "Restoran rezervasyon yönetim sistemi",
+            "Freelancer proje yönetim platformu",
+            "Akıllı ev enerji optimizasyonu",
+            "Online eğitim içerik platformu",
+            "Sosyal medya analiz aracı",
+            "Kişisel finans yönetim uygulaması"
+        ],
+        "loadingMessages": [
+            "Analiz başlatılıyor...",
+            "Teknik gereksinimler taranıyor...",
+            "Pazar verileri karşılaştırılıyor...",
+            "Rakip analizi derinleştiriliyor...",
+            "Maliyet tahminleri hesaplanıyor...",
+            "Mimari kurgulanıyor...",
+            "Teknoloji yığını optimize ediliyor...",
+            "Ölçeklenebilirlik senaryoları test ediliyor...",
+            "Risk analizi yapılıyor...",
+            "Rapor hazırlanıyor..."
+        ],
+        "hero": {
+            "title": "Fikrinizi <span>saniyeler içinde</span><br /> analiz edin.",
+            "subtitle": "Yapay zeka ile projenizin teknik fizibilitesini, tahmini süresini ve maliyetini öğrenin — ücretsiz."
+        },
+        "highlights": {
+            "feasibility": "Teknik Fizibilite",
+            "costEstimate": "Maliyet Tahmini",
+            "timeline": "Süre Öngörüsü"
+        },
+        "loadingNote": "Bu işlem yapay zeka tarafından gerçek zamanlı yapılıyor.",
+        "results": {
+            "title": "Agens AI Analiz Sonucu",
+            "subtitle": "AI değerlendirmesi tamamlandı",
+            "analyzedIdea": "Analiz Edilen Fikir",
+            "mvpTimelineLabel": "MVP Süresi",
+            "ctaNote": "Raporu birlikte yorumlayalım, projeniz için net bir yol haritası çıkaralım.",
+            "ctaButton": "Ücretsiz Ön Görüşme Ayarla",
+            "ctaMeta": "30 dk • Zorunluluk yok"
+        },
+        "sections": {
+            "complexity": "Teknik Karmaşıklık",
+            "mvp": {
+                "title": "MVP Modülleri",
+                "note": "* İlk sürümde değer üretmek için zorunlu minimum kapsam."
+            },
+            "phase2": {
+                "title": "Faz 2 / Ölçek Modülleri",
+                "note": "* Ürün doğrulandıktan sonra büyümeyi ve operasyonu güçlendiren adımlar."
+            },
+            "market": {
+                "title": "Pazar & Rekabet Analizi",
+                "competition": "Rekabet Yoğunluğu",
+                "demand": "Kullanıcı Talebi"
+            },
+            "monetization": "Gelir Modeli Önerisi",
+            "validationPlan": "Hızlı Doğrulama Planı",
+            "openQuestions": "Netleştirilmesi Gereken Sorular",
+            "risks": "Riskler ve İlk Önlemler",
+            "agensInsight": "Agens AI Stratejik Tavsiyesi"
+        },
+        "disclaimer": {
+            "label": "Yasal Uyarı:",
+            "text": "Agens AI tarafından üretilen bu analiz ve stratejiler, yapay zeka modelleri kullanılarak oluşturulmuştur ve yalnızca bilgilendirme amaçlıdır. Nihai yatırım ve geliştirme kararlarınızı almadan önce lütfen profesyonel bir uzmana danışın."
+        },
+        "contact": {
+            "successIntro": "Fikrinizi aldık. Paylaştığınız bilgiler doğrultusunda AI destekli ön analiz tamamlandı. Bir sonraki adımda, fikri birlikte ele alıp ürünleştirme ve teknik yol haritasını netleştirmek için kısa bir görüşme öneriyoruz.",
+            "form": {
+                "projectPlaceholder": "AI analiz raporu ekibe iletilecek. Ek talepleriniz varsa buraya yazabilirsiniz, yoksa boş bırakabilirsiniz."
+            }
+        }
     },
     "expertise": {
         "badge": "YETENEKLERİMİZ",
@@ -314,13 +429,17 @@
             "suggestion": "AI Önerisi"
         },
         "form": {
-            "name": "İsim",
-            "email": "E-posta",
-            "project": "Proje Detayları",
+            "name": "Ad Soyad",
+            "email": "E-posta Adresi",
+            "project": "Proje Detayları / Notunuz",
             "namePlaceholder": "Ad Soyad",
             "emailPlaceholder": "isim@sirket.com",
             "projectPlaceholder": "Nasıl bir uygulama düşünüyorsunuz?",
-            "submit": "Gönder"
+            "submit": "Gönder",
+            "phone": "Telefon",
+            "phonePlaceholder": "0555 555 55 55",
+            "phoneFallback": "Telefon ile iletişim",
+            "submitting": "Gönderiliyor..."
         },
         "sidebar": {
             "directLine": "Doğrudan İletişim",
@@ -331,7 +450,12 @@
         },
         "alerts": {
             "shortDescription": "Lütfen projenizi kısaca anlatın.",
-            "success": "Teşekkürler! En kısa sürede döneceğiz."
+            "success": "Teşekkürler! En kısa sürede döneceğiz.",
+            "successTitle": "Mesajınızı aldık",
+            "followUpBoth": "Talebiniz ekibimize iletildi. Yaklaşık 24 saat içinde sizinle paylaştığınız <email>{{email}}</email> ya da <phone>{{phone}}</phone> üzerinden iletişime geçeceğiz.",
+            "followUpPhone": "Talebiniz ekibimize iletildi. Yaklaşık 24 saat içinde sizinle paylaştığınız <phone>{{phone}}</phone> üzerinden iletişime geçeceğiz.",
+            "followUpEmail": "Talebiniz ekibimize iletildi. Yaklaşık 24 saat içinde sizinle paylaştığınız <email>{{email}}</email> üzerinden iletişime geçeceğiz.",
+            "emailFallback": "e-posta"
         }
     }
 }

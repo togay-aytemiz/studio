@@ -9,13 +9,16 @@ const Footer: React.FC = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
+  const isEnglishRoute = location.pathname.startsWith('/en');
+  const basePath = isEnglishRoute ? '/en' : '';
+  const homePath = basePath || '/';
 
   const buildFooterHref = (href: string) => {
     if (!href.startsWith('#')) {
       return href;
     }
 
-    return location.pathname === '/' ? href : `/${href}`;
+    return basePath ? `${basePath}${href}` : `/${href}`;
   };
 
   const handleFooterNav = (event: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -25,8 +28,8 @@ const Footer: React.FC = () => {
 
     event.preventDefault();
 
-    if (location.pathname !== '/') {
-      navigate(`/${href}`);
+    if (location.pathname !== homePath) {
+      navigate(basePath ? `${basePath}${href}` : `/${href}`);
       return;
     }
 
@@ -83,7 +86,7 @@ const Footer: React.FC = () => {
               <span className="text-xl md:text-2xl font-semibold tracking-[0.4em] text-white font-brand">AGENS</span>
             </div>
             <p className="text-slate-400 text-sm md:text-lg leading-relaxed max-w-sm">
-              Web ve mobil uygulamalardan, ölçeklenebilir altyapılara kadar ürün geliştirme sürecinin tamamını tek çatı altında yönetiyoruz.
+              {t('footer.description')}
             </p>
             <div className="flex items-center gap-3 md:gap-4 mt-1 md:mt-2">
               {footerLinks.social.map((item, idx) => (
