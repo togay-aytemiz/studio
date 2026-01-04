@@ -389,7 +389,7 @@ const AIValidator: React.FC = () => {
                     <RefreshCw size={16} /> {t('aiValidator.reset')}
                   </button>
 
-                  <Button size="lg" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
+                  <Button size="lg" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>
                     {t('aiValidator.consult')} <ArrowRight size={18} className="ml-2" />
                   </Button>
                 </motion.div>

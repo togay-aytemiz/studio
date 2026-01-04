@@ -24,7 +24,7 @@ const META_BY_LANG: Record<'tr' | 'en', RouteMetaConfig> = {
       ogTitle: 'Agens – Yazılım geliştirme partneriniz',
       ogDescription: 'Web, mobil ve AI tabanlı yazılımlar geliştiriyoruz. Fikri olan girişimciler ve ekipler için sağlam ürünler.',
       ogLocale: 'tr_TR',
-      ogImage: 'https://agens.studio/OG.webp'
+      ogImage: 'https://www.agens.studio/OG.webp'
     },
     validate: {
       title: 'Fikir Doğrulama | AI destekli teknik fizibilite – Agens',
@@ -32,7 +32,7 @@ const META_BY_LANG: Record<'tr' | 'en', RouteMetaConfig> = {
       ogTitle: 'AI Fikir Asistanı – Fikrini doğrula',
       ogDescription: 'Fikrini yaz, AI destekli sistem teknik fizibiliteyi, MVP süresini ve geliştirme aşamalarını analiz etsin.',
       ogLocale: 'tr_TR',
-      ogImage: 'https://agens.studio/og-validate-tr.webp'
+      ogImage: 'https://www.agens.studio/og-validate-tr.webp'
     }
   },
   en: {
@@ -42,7 +42,7 @@ const META_BY_LANG: Record<'tr' | 'en', RouteMetaConfig> = {
       ogTitle: 'Agens – Your software development partner',
       ogDescription: 'We build web, mobile, and AI powered software for entrepreneurs, startups, and teams without in house developers.',
       ogLocale: 'en_US',
-      ogImage: 'https://agens.studio/OG-en.webp'
+      ogImage: 'https://www.agens.studio/OG-en.webp'
     },
     validate: {
       title: 'Idea Validation | AI powered technical feasibility – Agens',
@@ -50,7 +50,7 @@ const META_BY_LANG: Record<'tr' | 'en', RouteMetaConfig> = {
       ogTitle: 'AI Idea Validator – Validate your product idea',
       ogDescription: 'Describe your idea and get an AI powered analysis including technical feasibility, MVP scope, and next steps.',
       ogLocale: 'en_US',
-      ogImage: 'https://agens.studio/og-validate-en.webp'
+      ogImage: 'https://www.agens.studio/og-validate-en.webp'
     }
   }
 };
@@ -82,7 +82,7 @@ const RouteMeta = () => {
   const isValidateRoute = location.pathname.endsWith('/validate');
   const lang = isEnglishRoute ? 'en' : 'tr';
   const meta = isValidateRoute ? META_BY_LANG[lang].validate : META_BY_LANG[lang].home;
-  const canonical = `https://agens.studio${location.pathname === '/' ? '' : location.pathname}`;
+  const canonical = `https://www.agens.studio${location.pathname === '/' ? '' : location.pathname}`;
 
   useEffect(() => {
     const currentLang = (i18n.resolvedLanguage || i18n.language || 'tr').split('-')[0];

@@ -304,13 +304,13 @@ const Hero: React.FC = () => {
             className="flex flex-row items-center justify-center gap-3"
           >
             <button
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
               className="px-5 py-2.5 md:px-6 md:py-3 bg-white text-slate-900 text-sm md:text-base font-medium rounded-full hover:bg-white/90 transition-all shadow-lg"
             >
               {t('hero.startProject')}
             </button>
             <button
-              onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
               className="px-5 py-2.5 md:px-6 md:py-3 bg-transparent text-white text-sm md:text-base font-medium rounded-full border border-white/30 hover:bg-white/10 hover:border-white/50 transition-all"
             >
               {t('hero.viewWork')}
@@ -392,7 +392,7 @@ const Hero: React.FC = () => {
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 0.5 }}
-        onClick={() => document.getElementById('tech-stack')?.scrollIntoView({ behavior: 'smooth' })}
+        onClick={() => document.getElementById('tech-stack')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
       >
         <motion.div
           animate={{ y: [0, 8, 0] }}

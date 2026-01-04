@@ -76,7 +76,7 @@ const Expertise: React.FC = () => {
                             </span>
                         </div>
                         <div className="w-full h-px bg-slate-200 dark:bg-white/10 mb-8"></div>
-                        <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 font-serif leading-tight">
+                        <h2 className="text-4xl md:text-5xl font-medium text-slate-900 dark:text-white mb-6 font-serif leading-tight">
                             <Trans
                                 i18nKey="expertise.title"
                                 defaults="Uçtan Uca <br /> <span>Dijital Çözümler.</span>"

@@ -120,7 +120,7 @@ const Team: React.FC = () => {
                      </div>
                      <div className="w-full h-px bg-slate-200 dark:bg-white/10 mb-8"></div>
 
-                     <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 leading-normal font-serif">
+                     <h2 className="text-4xl md:text-5xl font-medium text-slate-900 dark:text-white mb-6 leading-[1.1] font-serif">
                         <Trans i18nKey="team.studio.title" components={{ br: <br />, span: <span className="text-indigo-600 dark:text-indigo-400" /> }} />
                      </h2>
 

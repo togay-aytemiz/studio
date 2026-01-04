@@ -10,13 +10,6 @@
   }
 }
 
-@supports (content-visibility: auto) {
-  .cv-auto {
-    content-visibility: auto;
-    contain-intrinsic-size: 1px 800px;
-  }
-}
-
 section[id] {
   scroll-margin-top: var(--anchor-offset);
 }

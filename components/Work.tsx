@@ -18,7 +18,7 @@ const Work: React.FC = () => {
               <span className="text-xs font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">{t('work.badge')}</span>
             </div>
             <div className="w-full h-px bg-slate-200 dark:bg-white/10 mb-8"></div>
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight leading-[1.1] font-serif">
+            <h2 className="text-4xl md:text-5xl font-medium text-slate-900 dark:text-white mb-6 tracking-tight leading-[1.1] font-serif">
               <Trans
                 i18nKey="work.title"
                 components={{

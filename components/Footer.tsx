@@ -35,13 +35,11 @@ const Footer: React.FC = () => {
 
     const targetId = href.replace('#', '');
     const element = document.getElementById(targetId);
-
     if (!element) {
       return;
     }
-
     element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    window.history.replaceState(null, '', href);
+    window.history.replaceState(null, '', `${basePath}${href}`);
   };
 
   const footerLinks = {

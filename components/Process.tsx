@@ -4,11 +4,9 @@ import { motion } from 'framer-motion';
 import ScrollReveal from './ScrollReveal';
 import { Search, PenTool, Code2, Rocket, ArrowRight, GitBranch } from 'lucide-react';
 import { useTranslation, Trans } from 'react-i18next';
-import { useLazyBackground } from '../hooks/useLazyBackground';
 
 const Process: React.FC = () => {
   const { t } = useTranslation();
-  const { ref: processSectionRef, isVisible: isProcessBgVisible } = useLazyBackground<HTMLElement>();
 
   // Map specific icons to step IDs for better visualization
   const getIcon = (id: number) => {
@@ -24,7 +22,6 @@ const Process: React.FC = () => {
   return (
     <section
       id="process"
-      ref={processSectionRef}
       className="cv-auto py-12 md:pt-10 md:pb-24 bg-white dark:bg-[#030712] relative overflow-hidden"
     >
       {/* CSS Overrides to defeat aggressive global styles */}
@@ -32,12 +29,12 @@ const Process: React.FC = () => {
       {/* Background Image - Mobile */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat md:hidden"
-        style={isProcessBgVisible ? { backgroundImage: 'url(/proceesbg-mobile.webp)' } : undefined}
+        style={{ backgroundImage: 'url(/proceesbg-mobile.webp)' }}
       />
       {/* Background Image - Desktop */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden md:block"
-        style={isProcessBgVisible ? { backgroundImage: 'url(/proceesbg-desktop.webp)' } : undefined}
+        style={{ backgroundImage: 'url(/proceesbg-desktop.webp)' }}
       />
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/30" />
@@ -56,7 +53,7 @@ const Process: React.FC = () => {
             <span className="text-xs font-bold tracking-widest text-slate-500 dark:text-slate-400 uppercase">{t('process.badge')}</span>
           </div>
           <div className="w-full h-px bg-slate-200 dark:bg-white/10 mb-8"></div>
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight leading-[1.1] font-serif">
+          <h2 className="text-4xl md:text-5xl font-medium text-slate-900 dark:text-white mb-6 tracking-tight leading-[1.1] font-serif">
             <Trans
               i18nKey="process.title"
               components={{

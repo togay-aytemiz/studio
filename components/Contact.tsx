@@ -7,7 +7,6 @@ import { useTranslation, Trans } from 'react-i18next';
 
 import { useNavigate } from 'react-router-dom';
 import { isOpenAIConfigured } from '../services/openaiService';
-import { useLazyBackground } from '../hooks/useLazyBackground';
 
 const Contact: React.FC = () => {
   const navigate = useNavigate();
@@ -22,7 +21,6 @@ const Contact: React.FC = () => {
   const successRef = useRef<HTMLDivElement | null>(null);
   const { t } = useTranslation();
   const isAIEnabled = isOpenAIConfigured();
-  const { ref: contactSectionRef, isVisible: isContactBgVisible } = useLazyBackground<HTMLElement>();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -122,19 +120,18 @@ const Contact: React.FC = () => {
   return (
     <section
       id="contact"
-      ref={contactSectionRef}
       className="cv-auto scroll-mt-28 py-12 md:py-24 bg-[#020617] relative overflow-hidden flex flex-col items-center justify-start"
     >
 
       {/* Background Image - Mobile */}
       <div
         className="absolute inset-0 md:hidden bg-cover bg-center bg-no-repeat"
-        style={isContactBgVisible ? { backgroundImage: 'url(/contactbg-mobile.webp)' } : undefined}
+        style={{ backgroundImage: 'url(/contactbg-mobile.webp)' }}
       />
       {/* Background Image - Desktop */}
       <div
         className="absolute inset-0 hidden md:block bg-cover bg-center bg-no-repeat"
-        style={isContactBgVisible ? { backgroundImage: 'url(/contactbg-desktop.webp)' } : undefined}
+        style={{ backgroundImage: 'url(/contactbg-desktop.webp)' }}
       />
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/50" />
@@ -149,7 +146,7 @@ const Contact: React.FC = () => {
           <div className="max-w-4xl mx-auto">
             {/* Header Area */}
             <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight font-serif">
+              <h2 className="text-4xl md:text-6xl font-medium text-white mb-6 tracking-tight font-serif">
                 {t('contact.title')}
               </h2>
               <p className="text-base md:text-xl text-slate-400 max-w-2xl mx-auto">
@@ -332,7 +329,7 @@ const Contact: React.FC = () => {
                           </div>
                           <div>
                             <p className="text-slate-500 text-xs uppercase font-bold tracking-wider mb-1">{t('contact.sidebar.phone')}</p>
-                            <p className="text-white font-medium">+90 (507) 469 9692</p>
+                            <p className="text-white font-medium whitespace-nowrap">+90 (507) 469 9692</p>
                           </div>
                         </div>
                       </div>

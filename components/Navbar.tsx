@@ -43,23 +43,11 @@ const Navbar: React.FC = () => {
     if (location.pathname !== homePath || !location.hash) {
       return;
     }
-
-    const hash = location.hash;
-    let attempts = 0;
-    const tryScroll = () => {
-      const targetId = hash.replace('#', '');
-      const element = document.getElementById(targetId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        return;
-      }
-      if (attempts < 10) {
-        attempts += 1;
-        setTimeout(tryScroll, 120);
-      }
-    };
-
-    setTimeout(tryScroll, 0);
+    const targetId = location.hash.replace('#', '');
+    const element = document.getElementById(targetId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }, [homePath, location]);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, href: string) => {
@@ -78,7 +66,6 @@ const Navbar: React.FC = () => {
 
     const targetId = href.replace('#', '');
     const element = document.getElementById(targetId);
-
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       window.history.replaceState(null, '', `${basePath}${href}`);
