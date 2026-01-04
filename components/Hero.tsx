@@ -115,6 +115,13 @@ const Hero: React.FC = () => {
   const { t } = useTranslation();
   const { scrollY } = useScroll();
   const prefersReducedMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
+  const isMotionLite = prefersReducedMotion || isMobile;
+  const heroEntryDuration = isMotionLite ? 0.5 : 0.8;
+  const heroEntryDelay = isMotionLite ? 0 : 0.2;
+  const bgTransition = isMotionLite
+    ? { duration: 1.2, ease: [0.22, 1, 0.36, 1], opacity: { duration: 0.9 }, scale: { duration: 1.6 } }
+    : { duration: 1.8, ease: [0.22, 1, 0.36, 1], opacity: { duration: 1.2 }, scale: { duration: 2.2 } };
 
   // State for background image loading animation
   const [bgLoaded, setBgLoaded] = useState(false);
@@ -128,15 +135,24 @@ const Hero: React.FC = () => {
   const yBackground = useTransform(scrollY, [0, 1000], [0, 400]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
+  useEffect(() => {
+    const media = window.matchMedia('(max-width: 768px)');
+    const handleChange = () => setIsMobile(media.matches);
+    handleChange();
+    media.addEventListener('change', handleChange);
+    return () => media.removeEventListener('change', handleChange);
+  }, []);
+
   // Fallback for mobile - trigger animation after short delay if onLoad doesn't fire
   useEffect(() => {
+    const delay = isMotionLite ? 150 : 300;
     const timer = setTimeout(() => {
       if (!bgLoaded) {
         setBgLoaded(true);
       }
-    }, 300);
+    }, delay);
     return () => clearTimeout(timer);
-  }, [bgLoaded]);
+  }, [bgLoaded, isMotionLite]);
 
   // Memoize pools to react to language changes
   const POOL_TOP_LEFT = useMemo(() => [
@@ -228,12 +244,7 @@ const Hero: React.FC = () => {
         className="absolute inset-0 z-0"
         initial={{ opacity: 0, scale: 1.08 }}
         animate={bgLoaded ? { opacity: 1, scale: 1 } : {}}
-        transition={{
-          duration: 1.8,
-          ease: [0.22, 1, 0.36, 1], // Custom ease for cinematic feel
-          opacity: { duration: 1.2 },
-          scale: { duration: 2.2 }
-        }}
+        transition={bgTransition}
       >
         <picture>
           <source media="(max-width: 768px)" srcSet="/herobg-mobile.webp" />
@@ -265,7 +276,7 @@ const Hero: React.FC = () => {
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: heroEntryDuration, delay: heroEntryDelay }}
             className="text-5xl md:text-8xl font-normal tracking-tight text-white mb-8 leading-[1.15] font-serif"
           >
             <Trans
@@ -280,7 +291,7 @@ const Hero: React.FC = () => {
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: heroEntryDuration, delay: isMotionLite ? 0.1 : 0.4 }}
             className="text-base md:text-lg text-white/70 mb-12 leading-relaxed max-w-xl"
           >
             {t('hero.subtitle')}
@@ -289,7 +300,7 @@ const Hero: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
+            transition={{ duration: isMotionLite ? 0.35 : 0.5, delay: isMotionLite ? 0.15 : 0.6 }}
             className="flex flex-row items-center justify-center gap-3"
           >
             <button
@@ -310,7 +321,7 @@ const Hero: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.8 }}
+            transition={{ duration: isMotionLite ? 0.35 : 0.5, delay: isMotionLite ? 0.2 : 0.8 }}
             className="hidden md:flex flex-col md:flex-row items-center justify-center gap-2 md:gap-8 mt-12 text-center"
           >
             <span className="text-white/80 font-mono uppercase text-[0.75rem] md:text-[0.875rem] tracking-[0.063rem] md:tracking-[0.094rem] leading-tight">

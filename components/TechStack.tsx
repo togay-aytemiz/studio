@@ -42,7 +42,7 @@ const TechStack: React.FC = () => {
                 {/* Marquee Container - Seamless infinite loop */}
                 <div className="flex overflow-hidden">
                     <motion.div
-                        className="flex shrink-0 gap-6 md:gap-10 items-center"
+                        className="flex shrink-0 gap-4 md:gap-10 items-center"
                         animate={prefersReducedMotion ? { x: 0 } : { x: "-50%" }}
                         transition={prefersReducedMotion ? undefined : {
                             duration: 100,
@@ -54,7 +54,7 @@ const TechStack: React.FC = () => {
                         {loopedTechnologies.map((tech, index) => (
                             <div
                                 key={`${tech.name}-${index}`}
-                                className="flex items-center justify-center min-w-[100px] md:min-w-[140px] grayscale hover:grayscale-0 transition-all duration-300 opacity-80 hover:opacity-100 cursor-default group"
+                                className="flex flex-col md:flex-row items-center justify-center min-w-[80px] sm:min-w-[90px] md:min-w-[140px] grayscale hover:grayscale-0 transition-all duration-300 opacity-80 hover:opacity-100 cursor-default group"
                                 title={tech.name}
                             >
                                 {tech.darkIcon ? (
@@ -84,7 +84,7 @@ const TechStack: React.FC = () => {
                                     />
                                 )}
                                 {/* Always visible text, colored on hover */}
-                                <span className="ml-2 md:ml-3 text-xs md:text-sm font-semibold text-slate-700 dark:text-slate-300 block opacity-100 group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors duration-300">
+                                <span className="mt-1 md:mt-0 md:ml-3 text-[10px] sm:text-xs md:text-sm font-semibold text-slate-700 dark:text-slate-300 text-center md:text-left leading-tight block opacity-100 group-hover:text-indigo-500 dark:group-hover:text-indigo-400 transition-colors duration-300">
                                     {tech.name}
                                 </span>
                             </div>
