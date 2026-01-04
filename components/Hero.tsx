@@ -301,14 +301,19 @@ const Hero: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: isMotionLite ? 0.35 : 0.5, delay: isMotionLite ? 0.15 : 0.6 }}
-            className="flex flex-row items-center justify-center gap-3"
+            className="flex flex-row items-start justify-center gap-3"
           >
-            <button
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
-              className="px-5 py-2.5 md:px-6 md:py-3 bg-white text-slate-900 text-sm md:text-base font-medium rounded-full hover:bg-white/90 transition-all shadow-lg"
-            >
-              {t('hero.startProject')}
-            </button>
+            <div className="flex flex-col items-center gap-2">
+              <button
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                className="px-5 py-2.5 md:px-6 md:py-3 bg-white text-slate-900 text-sm md:text-base font-medium rounded-full hover:bg-white/90 transition-all shadow-lg"
+              >
+                {t('hero.startProject')}
+              </button>
+              <span className="text-[11px] md:text-xs text-white/60 leading-tight">
+                {t('hero.ctaNote')}
+              </span>
+            </div>
             <button
               onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
               className="px-5 py-2.5 md:px-6 md:py-3 bg-transparent text-white text-sm md:text-base font-medium rounded-full border border-white/30 hover:bg-white/10 hover:border-white/50 transition-all"

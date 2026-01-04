@@ -7,6 +7,7 @@
         "work": "Projects",
         "team": "About",
         "startProject": "Free Consultation",
+        "startProjectNote": "Free initial assessment",
         "aiIdeaAnalysis": "AI Idea Analysis"
     },
     "hero": {
@@ -15,6 +16,7 @@
         "subtitle": "Web, mobile, and AI-powered applications. From idea to product, your technical partner.",
         "startProject": "Free Consultation",
         "viewWork": "Our Work",
+        "ctaNote": "Free initial assessment",
         "stats": {
             "lighthouse": "Lighthouse Score",
             "seo": "SEO Optimized",

@@ -7,6 +7,7 @@
         "work": "Projeler",
         "team": "Hakkımızda",
         "startProject": "Görüşme Planla",
+        "startProjectNote": "Ücretsiz ilk değerlendirme",
         "aiIdeaAnalysis": "AI Fikir Analizi"
     },
     "hero": {
@@ -15,6 +16,7 @@
         "subtitle": "Web ve mobil uygulamalardan, ölçeklenebilir altyapılara kadar ürün geliştirme sürecinin tamamını tek çatı altında yönetiyoruz.",
         "startProject": "Görüşme Planla",
         "viewWork": "Neler Yaptık",
+        "ctaNote": "Ücretsiz ilk değerlendirme",
         "highlights": {
             "aiPowered": "AI destekli süreçler",
             "fastDelivery": "Hızlı ve şeffaf teslimat"

@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Footer from './components/Footer';
@@ -12,6 +12,46 @@ import FounderMessage from './components/FounderMessage';
 import Team from './components/Team';
 import Contact from './components/Contact';
 import ValidatePage from './pages/ValidatePage';
+
+const HashScroller = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!location.hash) {
+      return;
+    }
+
+    const targetId = location.hash.slice(1);
+    if (!targetId) {
+      return;
+    }
+
+    let attempts = 0;
+    const maxAttempts = 10;
+    const retryDelay = 80;
+
+    const scrollToTarget = () => {
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'auto', block: 'start' });
+        return;
+      }
+      if (attempts < maxAttempts) {
+        attempts += 1;
+        window.setTimeout(scrollToTarget, retryDelay);
+      }
+    };
+
+    window.setTimeout(scrollToTarget, 0);
+    const settleTimer = window.setTimeout(scrollToTarget, 250);
+
+    return () => {
+      window.clearTimeout(settleTimer);
+    };
+  }, [location.hash, location.pathname]);
+
+  return null;
+};
 
 // Home page component
 const HomePage = () => (
@@ -34,6 +74,7 @@ const HomePage = () => (
 function App() {
   return (
     <BrowserRouter>
+      <HashScroller />
       <RouteMeta />
       <Routes>
         <Route path="/" element={<HomePage />} />

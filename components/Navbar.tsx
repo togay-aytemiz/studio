@@ -38,17 +38,7 @@ const Navbar: React.FC = () => {
     }
   }, [mobileMenuOpen]);
 
-  // Handle hash scrolling on route change
-  useEffect(() => {
-    if (location.pathname !== homePath || !location.hash) {
-      return;
-    }
-    const targetId = location.hash.replace('#', '');
-    const element = document.getElementById(targetId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }, [homePath, location]);
+  // Hash scrolling handled globally to avoid race conditions on route changes.
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, href: string) => {
     e.preventDefault();
@@ -209,10 +199,13 @@ const Navbar: React.FC = () => {
                 <Button
                   variant="primary"
                   size="lg"
-                  className="w-full justify-start px-6 py-4 text-lg font-semibold text-left"
+                  className="w-full justify-start px-6 py-4 text-lg font-semibold text-left flex-col items-start gap-1"
                   onClick={(e) => handleNavClick(e, '#contact')}
                 >
-                  {t('nav.startProject')}
+                  <span className="leading-tight">{t('nav.startProject')}</span>
+                  <span className="text-sm font-medium text-slate-500 leading-tight">
+                    {t('nav.startProjectNote')}
+                  </span>
                 </Button>
               </motion.div>
             </div>
