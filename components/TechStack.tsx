@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
 // Logo data
@@ -23,6 +23,8 @@ const TECHNOLOGIES = [
 
 const TechStack: React.FC = () => {
     const { t } = useTranslation();
+    const prefersReducedMotion = useReducedMotion();
+    const loopedTechnologies = prefersReducedMotion ? TECHNOLOGIES : [...TECHNOLOGIES, ...TECHNOLOGIES];
 
     return (
         <section id="tech-stack" className="py-12 bg-slate-50 dark:bg-[#020617]/50 overflow-hidden scroll-mt-20">
@@ -41,15 +43,15 @@ const TechStack: React.FC = () => {
                 <div className="flex overflow-hidden">
                     <motion.div
                         className="flex shrink-0 gap-6 md:gap-10 items-center"
-                        animate={{ x: "-50%" }}
-                        transition={{
+                        animate={prefersReducedMotion ? { x: 0 } : { x: "-50%" }}
+                        transition={prefersReducedMotion ? undefined : {
                             duration: 100,
                             ease: "linear",
                             repeat: Infinity,
                         }}
                     >
                         {/* Double the list for seamless loop */}
-                        {[...TECHNOLOGIES, ...TECHNOLOGIES, ...TECHNOLOGIES, ...TECHNOLOGIES].map((tech, index) => (
+                        {loopedTechnologies.map((tech, index) => (
                             <div
                                 key={`${tech.name}-${index}`}
                                 className="flex items-center justify-center min-w-[100px] md:min-w-[140px] grayscale hover:grayscale-0 transition-all duration-300 opacity-80 hover:opacity-100 cursor-default group"
@@ -60,11 +62,15 @@ const TechStack: React.FC = () => {
                                         <img
                                             src={tech.icon}
                                             alt={tech.name}
+                                            loading="lazy"
+                                            decoding="async"
                                             className="h-6 w-6 md:h-10 md:w-10 object-contain dark:hidden group-hover:scale-110 transition-transform duration-300"
                                         />
                                         <img
                                             src={tech.darkIcon}
                                             alt={tech.name}
+                                            loading="lazy"
+                                            decoding="async"
                                             className="h-6 w-6 md:h-10 md:w-10 object-contain hidden dark:block group-hover:scale-110 transition-transform duration-300"
                                         />
                                     </>
@@ -72,6 +78,8 @@ const TechStack: React.FC = () => {
                                     <img
                                         src={tech.icon}
                                         alt={tech.name}
+                                        loading="lazy"
+                                        decoding="async"
                                         className={`h-6 w-6 md:h-10 md:w-10 object-contain group-hover:scale-110 transition-transform duration-300 ${tech.invertDark ? 'dark:invert dark:brightness-200' : ''}`}
                                     />
                                 )}

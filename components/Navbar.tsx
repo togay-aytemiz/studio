@@ -165,6 +165,9 @@ const Navbar: React.FC = () => {
         <button
           className="md:hidden text-white p-1.5 z-50 relative focus:outline-none"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-menu"
         >
           {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -178,6 +181,7 @@ const Navbar: React.FC = () => {
             animate="open"
             exit="closed"
             variants={menuVariants}
+            id="mobile-menu"
             className="fixed inset-0 h-[100dvh] bg-slate-950 z-40 flex flex-col justify-center px-8 md:hidden overflow-hidden"
           >
             {/* Background decoration */}
@@ -202,7 +206,7 @@ const Navbar: React.FC = () => {
                   <Link
                     to="/validate"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="w-full flex items-center justify-between gap-4 px-6 py-4 rounded-full bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 text-indigo-400 font-bold hover:bg-indigo-500/20 transition-all group"
+                    className="w-full flex items-center justify-between gap-4 px-6 py-4 rounded-full bg-transparent border border-white/30 text-white font-bold hover:bg-white/10 hover:border-white/50 transition-all group"
                   >
                     <div className="flex items-center gap-4">
                       <Sparkles size={18} />

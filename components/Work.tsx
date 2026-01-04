@@ -48,6 +48,7 @@ const Work: React.FC = () => {
                 <img
                   src={project.imageUrl}
                   alt={project.title}
+                  decoding="async"
                   className={`object-cover w-full h-full group-hover:scale-105 transition-all duration-700 ${project.inProgress ? 'opacity-40' : 'opacity-90 group-hover:opacity-100'}`}
                   loading="lazy"
                 />

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Sparkles, BrainCircuit, ArrowRight, Cpu, RefreshCw, AlertCircle, AlertTriangle, Code2, Layers, Clock, BarChart3, Wallet, Info, Activity, Loader2, ListChecks, CheckCircle2 } from 'lucide-react';
 import { useProductAnalysis } from '../hooks/useAI';
-import { sendEmail } from '../services/emailService';
 import Button from '../components/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation, Trans } from 'react-i18next';
@@ -11,6 +10,7 @@ import Footer from '../components/Footer';
 import MarkdownRenderer from '../components/MarkdownRenderer';
 import { stripRedundantMonetizationHeading } from '../utils/markdown';
 import { isOpenAIConfigured } from '../services/openaiService';
+import { useLazyBackground } from '../hooks/useLazyBackground';
 
 const PLACEHOLDER_IDEAS = [
     "Sağlık takibi için yapay zeka asistanı",
@@ -166,6 +166,7 @@ const ValidatePage: React.FC = () => {
     const { analysis, isAnalyzing, error, analyze, reset } = useProductAnalysis();
     const { t } = useTranslation();
     const isAIEnabled = isOpenAIConfigured();
+    const { ref: validatePageRef, isVisible: isValidateBgVisible } = useLazyBackground<HTMLDivElement>();
     const mvpModules = analysis?.mvpModules?.length ? analysis.mvpModules : (analysis?.implementationSteps || []);
     const phase2Modules = analysis?.phase2Modules || [];
     const validationPlan = analysis?.validationPlan || [];
@@ -262,6 +263,7 @@ const ValidatePage: React.FC = () => {
                 agensInsight: analysis.agensInsight
             }
             : null;
+        const { sendEmail } = await import('../services/emailService');
         const emailSent = await sendEmail({
             type: 'analysis_contact',
             name: contactForm.name,
@@ -365,16 +367,16 @@ const ValidatePage: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#030712] flex flex-col relative">
+        <div ref={validatePageRef} className="min-h-screen bg-[#030712] flex flex-col relative">
             {/* Background Image - Mobile */}
             <div
                 className="absolute inset-0 md:hidden bg-cover bg-center bg-no-repeat"
-                style={{ backgroundImage: 'url(/validatebg-mobile.webp)' }}
+                style={isValidateBgVisible ? { backgroundImage: 'url(/validatebg-mobile.webp)' } : undefined}
             />
             {/* Background Image - Desktop */}
             <div
                 className="absolute inset-0 hidden md:block bg-cover bg-center bg-no-repeat"
-                style={{ backgroundImage: 'url(/validatebg-desktop.webp)' }}
+                style={isValidateBgVisible ? { backgroundImage: 'url(/validatebg-desktop.webp)' } : undefined}
             />
             {/* Dark Overlay - Reduced opacity for better visibility of space background on mobile */}
             <div className="absolute inset-0 bg-black/20 md:bg-black/50 dark:bg-black/20 md:dark:bg-black/50" />

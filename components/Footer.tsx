@@ -61,10 +61,10 @@ const Footer: React.FC = () => {
       { label: t('footer.services.mobileApps'), href: '#services' },
     ],
     social: [
-      { icon: Linkedin, href: '#' },
-      { icon: Twitter, href: '#' },
-      { icon: Github, href: '#' },
-      { icon: Instagram, href: '#' },
+      { icon: Linkedin, href: '#', label: 'LinkedIn' },
+      { icon: Twitter, href: '#', label: 'Twitter' },
+      { icon: Github, href: '#', label: 'GitHub' },
+      { icon: Instagram, href: '#', label: 'Instagram' },
     ]
   };
 
@@ -96,6 +96,8 @@ const Footer: React.FC = () => {
                 <a
                   key={idx}
                   href={item.href}
+                  aria-label={item.label}
+                  title={item.label}
                   className="w-8 h-8 md:w-10 md:h-10 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-indigo-500/10 hover:border-indigo-500/30 transition-all duration-300"
                   style={{ backgroundColor: '#0f172a' }} /* Inline style to bypass override */
                 >

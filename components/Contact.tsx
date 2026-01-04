@@ -7,6 +7,7 @@ import { useTranslation, Trans } from 'react-i18next';
 
 import { useNavigate } from 'react-router-dom';
 import { isOpenAIConfigured } from '../services/openaiService';
+import { useLazyBackground } from '../hooks/useLazyBackground';
 
 const Contact: React.FC = () => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const Contact: React.FC = () => {
   const successRef = useRef<HTMLDivElement | null>(null);
   const { t } = useTranslation();
   const isAIEnabled = isOpenAIConfigured();
+  const { ref: contactSectionRef, isVisible: isContactBgVisible } = useLazyBackground<HTMLElement>();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -118,17 +120,21 @@ const Contact: React.FC = () => {
   const labelClasses = "block text-[11px] font-bold uppercase tracking-widest text-white/70 mb-2 ml-1";
 
   return (
-    <section id="contact" className="scroll-mt-28 py-12 md:py-24 bg-[#020617] relative overflow-hidden flex flex-col items-center justify-start">
+    <section
+      id="contact"
+      ref={contactSectionRef}
+      className="scroll-mt-28 py-12 md:py-24 bg-[#020617] relative overflow-hidden flex flex-col items-center justify-start"
+    >
 
       {/* Background Image - Mobile */}
       <div
         className="absolute inset-0 md:hidden bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url(/contactbg-mobile.webp)' }}
+        style={isContactBgVisible ? { backgroundImage: 'url(/contactbg-mobile.webp)' } : undefined}
       />
       {/* Background Image - Desktop */}
       <div
         className="absolute inset-0 hidden md:block bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url(/contactbg-desktop.webp)' }}
+        style={isContactBgVisible ? { backgroundImage: 'url(/contactbg-desktop.webp)' } : undefined}
       />
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/50" />

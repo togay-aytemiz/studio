@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Button from './Button';
 import { ArrowRight, Zap, BrainCircuit, Layers, TrendingUp, CheckCircle2, ShieldCheck, Cloud, Code2, Smartphone, Palette, Globe, Rocket, Search, Server, Database, Bot, Sparkles, MessageSquare, ChevronDown, Workflow, Plug, MessageSquareText, CreditCard, FileText } from 'lucide-react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 
 // --- BACKGROUND ANIMATION COMPONENT: ORBITAL SYSTEM ---
 const OrbitalSystem = () => {
@@ -114,6 +114,7 @@ import { useMemo } from 'react';
 const Hero: React.FC = () => {
   const { t } = useTranslation();
   const { scrollY } = useScroll();
+  const prefersReducedMotion = useReducedMotion();
 
   // State for background image loading animation
   const [bgLoaded, setBgLoaded] = useState(false);
@@ -225,14 +226,13 @@ const Hero: React.FC = () => {
       {/* Background Image with Gradient Fade - Animated Reveal */}
       <motion.div
         className="absolute inset-0 z-0"
-        initial={{ opacity: 0, scale: 1.15, filter: "blur(10px)" }}
-        animate={bgLoaded ? { opacity: 1, scale: 1, filter: "blur(0px)" } : {}}
+        initial={{ opacity: 0, scale: 1.08 }}
+        animate={bgLoaded ? { opacity: 1, scale: 1 } : {}}
         transition={{
           duration: 1.8,
           ease: [0.22, 1, 0.36, 1], // Custom ease for cinematic feel
           opacity: { duration: 1.2 },
-          scale: { duration: 2.2 },
-          filter: { duration: 1.5 }
+          scale: { duration: 2.2 }
         }}
       >
         <picture>
@@ -240,6 +240,9 @@ const Hero: React.FC = () => {
           <img
             src="/herobg.webp"
             alt="Hero Background"
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
             className="w-full h-full object-cover object-center"
             onLoad={() => setBgLoaded(true)}
           />
@@ -336,10 +339,10 @@ const Hero: React.FC = () => {
         <div className="flex overflow-hidden p-1">
           <motion.div
             className="flex shrink-0 gap-2"
-            animate={{ x: "-50%" }}
-            transition={{ duration: 50, ease: "linear", repeat: Infinity }}
+            animate={prefersReducedMotion ? { x: 0 } : { x: "-50%" }}
+            transition={prefersReducedMotion ? undefined : { duration: 50, ease: "linear", repeat: Infinity }}
           >
-            {[...marqueeRow1, ...marqueeRow1, ...marqueeRow1, ...marqueeRow1].map((item, idx) => (
+            {(prefersReducedMotion ? marqueeRow1 : [...marqueeRow1, ...marqueeRow1]).map((item, idx) => (
               <div
                 key={`row1-${idx}`}
                 className="flex items-center gap-2 rounded-full py-2 px-4 border border-white/20 bg-white/5 backdrop-blur-sm whitespace-nowrap"
@@ -355,11 +358,11 @@ const Hero: React.FC = () => {
         <div className="flex overflow-hidden p-1">
           <motion.div
             className="flex shrink-0 gap-2"
-            initial={{ x: "-50%" }}
-            animate={{ x: "0%" }}
-            transition={{ duration: 55, ease: "linear", repeat: Infinity }}
+            initial={prefersReducedMotion ? { x: 0 } : { x: "-50%" }}
+            animate={prefersReducedMotion ? { x: 0 } : { x: "0%" }}
+            transition={prefersReducedMotion ? undefined : { duration: 55, ease: "linear", repeat: Infinity }}
           >
-            {[...marqueeRow2, ...marqueeRow2, ...marqueeRow2, ...marqueeRow2].map((item, idx) => (
+            {(prefersReducedMotion ? marqueeRow2 : [...marqueeRow2, ...marqueeRow2]).map((item, idx) => (
               <div
                 key={`row2-${idx}`}
                 className="flex items-center gap-2 rounded-full py-2 px-4 border border-white/20 bg-white/5 backdrop-blur-sm whitespace-nowrap"

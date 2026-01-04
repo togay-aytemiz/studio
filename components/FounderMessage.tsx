@@ -14,7 +14,13 @@ const FounderMessage: React.FC = () => {
       <div className="absolute inset-0 z-0">
         <picture>
           <source media="(min-width: 768px)" srcSet="/founder-desktop.webp" />
-          <img src="/founder-mobile.webp" alt="" className="w-full h-full object-cover opacity-95" />
+          <img
+            src="/founder-mobile.webp"
+            alt=""
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover opacity-95"
+          />
         </picture>
         <div className="absolute inset-0 bg-gradient-to-r from-[#020617] via-[#020617]/70 to-[#020617]/70 md:via-[#020617]/40 md:to-transparent"></div>
       </div>
@@ -44,6 +50,8 @@ const FounderMessage: React.FC = () => {
                   <img
                     src="/profile.webp"
                     alt={t('founder.name')}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full aspect-[4/5] object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-105"
                   />
 

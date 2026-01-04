@@ -4,9 +4,11 @@ import { motion } from 'framer-motion';
 import ScrollReveal from './ScrollReveal';
 import { Search, PenTool, Code2, Rocket, ArrowRight, GitBranch } from 'lucide-react';
 import { useTranslation, Trans } from 'react-i18next';
+import { useLazyBackground } from '../hooks/useLazyBackground';
 
 const Process: React.FC = () => {
   const { t } = useTranslation();
+  const { ref: processSectionRef, isVisible: isProcessBgVisible } = useLazyBackground<HTMLElement>();
 
   // Map specific icons to step IDs for better visualization
   const getIcon = (id: number) => {
@@ -20,18 +22,22 @@ const Process: React.FC = () => {
   };
 
   return (
-    <section id="process" className="py-12 md:pt-10 md:pb-24 bg-white dark:bg-[#030712] relative overflow-hidden">
+    <section
+      id="process"
+      ref={processSectionRef}
+      className="py-12 md:pt-10 md:pb-24 bg-white dark:bg-[#030712] relative overflow-hidden"
+    >
       {/* CSS Overrides to defeat aggressive global styles */}
 
       {/* Background Image - Mobile */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat md:hidden"
-        style={{ backgroundImage: 'url(/proceesbg-mobile.webp)' }}
+        style={isProcessBgVisible ? { backgroundImage: 'url(/proceesbg-mobile.webp)' } : undefined}
       />
       {/* Background Image - Desktop */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden md:block"
-        style={{ backgroundImage: 'url(/proceesbg-desktop.webp)' }}
+        style={isProcessBgVisible ? { backgroundImage: 'url(/proceesbg-desktop.webp)' } : undefined}
       />
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/30" />

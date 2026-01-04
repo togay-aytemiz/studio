@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -10,7 +10,7 @@ import Team from './components/Team';
 
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import ValidatePage from './pages/ValidatePage';
+const ValidatePage = lazy(() => import('./pages/ValidatePage'));
 
 import TechStack from './components/TechStack';
 
@@ -38,7 +38,14 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/validate" element={<ValidatePage />} />
+        <Route
+          path="/validate"
+          element={
+            <Suspense fallback={<div className="min-h-screen bg-[#030712]" />}>
+              <ValidatePage />
+            </Suspense>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
