@@ -38,23 +38,26 @@ const Navbar: React.FC = () => {
 
   // Handle hash scrolling on route change
   useEffect(() => {
-    if (location.pathname === '/' && location.hash) {
-      const targetId = location.hash.replace('#', '');
-      const element = document.getElementById(targetId);
-
-      if (element) {
-        setTimeout(() => {
-          const headerOffset = 80;
-          const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth"
-          });
-        }, 100);
-      }
+    if (location.pathname !== '/' || !location.hash) {
+      return;
     }
+
+    const hash = location.hash;
+    let attempts = 0;
+    const tryScroll = () => {
+      const targetId = hash.replace('#', '');
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        return;
+      }
+      if (attempts < 10) {
+        attempts += 1;
+        setTimeout(tryScroll, 120);
+      }
+    };
+
+    setTimeout(tryScroll, 0);
   }, [location]);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, href: string) => {
@@ -70,14 +73,8 @@ const Navbar: React.FC = () => {
     const element = document.getElementById(targetId);
 
     if (element) {
-      const headerOffset = 80; // Height of the navbar
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      window.history.replaceState(null, '', href);
     }
   };
 
