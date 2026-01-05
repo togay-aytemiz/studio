@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
@@ -24,7 +24,33 @@ const TECHNOLOGIES = [
 const TechStack: React.FC = () => {
     const { t } = useTranslation();
     const prefersReducedMotion = useReducedMotion();
-    const loopedTechnologies = prefersReducedMotion ? TECHNOLOGIES : [...TECHNOLOGIES, ...TECHNOLOGIES];
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') {
+            return undefined;
+        }
+        const mediaQuery = window.matchMedia('(max-width: 768px)');
+        const handleMediaChange = () => setIsMobile(mediaQuery.matches);
+        handleMediaChange();
+        mediaQuery.addEventListener('change', handleMediaChange);
+        return () => mediaQuery.removeEventListener('change', handleMediaChange);
+    }, []);
+
+    const allowMarqueeAnimation = !prefersReducedMotion || isMobile;
+    const loopedTechnologies = allowMarqueeAnimation ? [...TECHNOLOGIES, ...TECHNOLOGIES] : TECHNOLOGIES;
+    const marqueeAnimationProps = allowMarqueeAnimation
+        ? {
+            animate: { x: '-50%' },
+            transition: {
+                duration: 100,
+                ease: 'linear',
+                repeat: Infinity
+            }
+        }
+        : {
+            animate: { x: 0 }
+        };
 
     return (
         <section id="tech-stack" className="cv-auto py-12 bg-slate-50 dark:bg-[#020617]/50 overflow-hidden scroll-mt-20">
@@ -43,12 +69,7 @@ const TechStack: React.FC = () => {
                 <div className="flex overflow-hidden">
                     <motion.div
                         className="flex shrink-0 gap-4 md:gap-10 items-center"
-                        animate={prefersReducedMotion ? { x: 0 } : { x: "-50%" }}
-                        transition={prefersReducedMotion ? undefined : {
-                            duration: 100,
-                            ease: "linear",
-                            repeat: Infinity,
-                        }}
+                        {...marqueeAnimationProps}
                     >
                         {/* Double the list for seamless loop */}
                         {loopedTechnologies.map((tech, index) => (
