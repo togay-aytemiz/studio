@@ -6,7 +6,7 @@
         "process": "Process",
         "work": "Projects",
         "team": "About",
-        "startProject": "Free Consultation",
+        "startProject": "Let's Talk",
         "startProjectNote": "Free initial assessment",
         "aiIdeaAnalysis": "AI Idea Analysis"
     },
@@ -14,9 +14,13 @@
         "tagline": "Software Development Company",
         "title": "We Build <br /> <span>Software.</span>",
         "subtitle": "Web, mobile, and AI-powered applications. From idea to product, your technical partner.",
-        "startProject": "Free Consultation",
+        "startProject": "Let's Talk",
         "viewWork": "Our Work",
         "ctaNote": "Free initial assessment",
+        "highlights": {
+            "aiPowered": "AI-powered processes",
+            "fastDelivery": "Fast, transparent delivery"
+        },
         "stats": {
             "lighthouse": "Lighthouse Score",
             "seo": "SEO Optimized",
@@ -223,6 +227,15 @@
             }
         }
     },
+    "expertise": {
+        "badge": "Expertise",
+        "title": "End-to-End <br /> <span>Digital Solutions.</span>",
+        "subtitle": "From technical delivery to industry expertise, all capabilities under one roof.",
+        "tabs": {
+            "services": "Services",
+            "capabilities": "Industry Experience"
+        }
+    },
     "services": {
         "badge": "Expertise",
         "title": "End-to-End <br/> Engineering.",
@@ -403,6 +416,9 @@
                 "desc": "Roadmap, Market Fit"
             }
         }
+    },
+    "techStack": {
+        "title": "Technologies We Master"
     },
     "contact": {
         "title": "Ready to build?",
