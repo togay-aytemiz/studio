@@ -36,8 +36,8 @@ const TechStack: React.FC = () => {
 
             <div className="flex relative overflow-hidden">
                 {/* Gradient Masks */}
-                <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-r from-slate-50 dark:from-[#020617] to-transparent"></div>
-                <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-gradient-to-l from-slate-50 dark:from-[#020617] to-transparent"></div>
+                <div className="absolute left-0 top-0 bottom-0 w-24 z-10 bg-linear-to-r from-slate-50 dark:from-[#020617] to-transparent"></div>
+                <div className="absolute right-0 top-0 bottom-0 w-24 z-10 bg-linear-to-l from-slate-50 dark:from-[#020617] to-transparent"></div>
 
                 {/* Marquee Container - Seamless infinite loop */}
                 <div className="flex overflow-hidden">
@@ -54,7 +54,7 @@ const TechStack: React.FC = () => {
                         {loopedTechnologies.map((tech, index) => (
                             <div
                                 key={`${tech.name}-${index}`}
-                                className="flex flex-col md:flex-row items-center justify-center min-w-[80px] sm:min-w-[90px] md:min-w-[140px] grayscale hover:grayscale-0 transition-all duration-300 opacity-80 hover:opacity-100 cursor-default group"
+                                className="flex flex-col md:flex-row items-center justify-center min-w-20 sm:min-w-22.5 md:min-w-35 grayscale hover:grayscale-0 transition-all duration-300 opacity-80 hover:opacity-100 cursor-default group"
                                 title={tech.name}
                             >
                                 {tech.darkIcon ? (

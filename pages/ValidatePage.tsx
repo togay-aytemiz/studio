@@ -406,7 +406,7 @@ const ValidatePage: React.FC = () => {
             </motion.div>
 
             {/* Top Gradient to mask header area */}
-            <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#030712] via-[#030712]/50 to-transparent z-[5]" />
+            <div className="absolute top-0 left-0 right-0 h-32 bg-linear-to-b from-[#030712] via-[#030712]/50 to-transparent z-5" />
 
             {/* Navbar */}
             <Navbar />
@@ -468,8 +468,8 @@ const ValidatePage: React.FC = () => {
                                         <Button
                                             onClick={handleAnalyze}
                                             disabled={isAnalyzing || !ideaInput.trim()}
-                                            className="w-full md:w-auto md:min-w-[160px] py-3 md:py-4 text-sm md:text-base"
-                                            icon={<Sparkles size={16} className="md:w-[18px] md:h-[18px]" />}
+                                            className="w-full md:w-auto md:min-w-40 py-3 md:py-4 text-sm md:text-base"
+                                            icon={<Sparkles size={16} className="md:w-4.5 md:h-4.5" />}
                                         >
                                             {t('aiValidator.analyze')}
                                         </Button>
@@ -575,7 +575,7 @@ const ValidatePage: React.FC = () => {
                                 <div className="space-y-4 md:space-y-8">
                                     {/* 1. Verdict & Score Section (Stacked) */}
                                     <motion.div variants={sectionVariants} initial="hidden" animate="visible" className="bg-slate-50 dark:bg-[#0B1121] border border-slate-200 dark:border-indigo-500/20 rounded-2xl p-4 md:p-8 text-center relative overflow-hidden">
-                                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50"></div>
+                                        <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-indigo-500 to-transparent opacity-50"></div>
                                         <CircularProgress score={analysis.feasibilityScore} />
                                         <h3 className="text-sm md:text-xl font-bold text-slate-900 dark:text-white mb-3">{t('aiValidator.report.title')}</h3>
                                         {executiveSummary && (
@@ -597,7 +597,7 @@ const ValidatePage: React.FC = () => {
                                             <Button
                                                 type="button"
                                                 onClick={handleScrollToContact}
-                                                className="group !bg-indigo-600 !text-white !hover:bg-indigo-500 !focus:ring-indigo-500/60 shadow-[0_0_24px_rgba(99,102,241,0.35)] text-sm md:text-base whitespace-nowrap"
+                                                className="group bg-indigo-600! text-white! hover:bg-indigo-500! focus:ring-indigo-500/60! shadow-[0_0_24px_rgba(99,102,241,0.35)] text-sm md:text-base whitespace-nowrap"
                                             >
                                                 {t('validatePage.results.ctaButton')}
                                                 <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
@@ -636,7 +636,7 @@ const ValidatePage: React.FC = () => {
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
                                                 {mvpModules.map((step, idx) => (
                                                     <div key={idx} className="flex gap-2 items-center">
-                                                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 flex-shrink-0" />
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />
                                                         <div className="text-xs font-medium text-slate-800 dark:text-slate-200">{step}</div>
                                                     </div>
                                                 ))}
@@ -659,7 +659,7 @@ const ValidatePage: React.FC = () => {
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
                                                 {phase2Modules.map((step, idx) => (
                                                     <div key={idx} className="flex gap-2 items-center">
-                                                        <div className="w-1.5 h-1.5 rounded-full bg-purple-500 flex-shrink-0" />
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0" />
                                                         <div className="text-xs font-medium text-slate-800 dark:text-slate-200">{step}</div>
                                                     </div>
                                                 ))}
@@ -771,7 +771,7 @@ const ValidatePage: React.FC = () => {
                                                     <div className="space-y-3">
                                                         {validationPlan.map((item, idx) => (
                                                             <div key={`${item}-${idx}`} className="flex gap-3 text-xs md:text-sm text-slate-600 dark:text-slate-300">
-                                                                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-indigo-100 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xs font-bold">
+                                                                <span className="shrink-0 w-5 h-5 rounded-full bg-indigo-100 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xs font-bold">
                                                                     {idx + 1}
                                                                 </span>
                                                                 {item}
@@ -789,7 +789,7 @@ const ValidatePage: React.FC = () => {
                                                     <div className="space-y-3">
                                                         {openQuestions.map((item, idx) => (
                                                             <div key={`${item}-${idx}`} className="flex gap-3 text-xs md:text-sm text-slate-600 dark:text-slate-300">
-                                                                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-300 flex items-center justify-center text-xs font-bold">
+                                                                <span className="shrink-0 w-5 h-5 rounded-full bg-slate-200 dark:bg-white/10 text-slate-600 dark:text-slate-300 flex items-center justify-center text-xs font-bold">
                                                                     {idx + 1}
                                                                 </span>
                                                                 {item}
@@ -810,7 +810,7 @@ const ValidatePage: React.FC = () => {
                                         <div className="space-y-3">
                                             {analysis.technicalChallenges.map((challenge, i) => (
                                                 <div key={i} className="flex gap-3 text-xs md:text-sm text-slate-600 dark:text-slate-300">
-                                                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-red-100 dark:bg-red-500/10 text-red-600 dark:text-red-500 flex items-center justify-center text-xs font-bold">
+                                                    <span className="shrink-0 w-5 h-5 rounded-full bg-red-100 dark:bg-red-500/10 text-red-600 dark:text-red-500 flex items-center justify-center text-xs font-bold">
                                                         {i + 1}
                                                     </span>
                                                     {challenge}
@@ -820,8 +820,8 @@ const ValidatePage: React.FC = () => {
                                     </motion.div>
 
                                     {/* 6. Agens Insight */}
-                                    <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.5 }} className="bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-slate-900 border border-indigo-100 dark:border-indigo-500/20 rounded-2xl p-4 md:p-6 flex flex-col md:flex-row items-start gap-6 text-left">
-                                        <div className="p-4 bg-indigo-500 text-white rounded-full shadow-lg shadow-indigo-500/20 flex-shrink-0">
+                                    <motion.div variants={sectionVariants} initial="hidden" animate="visible" transition={{ delay: 0.5 }} className="bg-linear-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-slate-900 border border-indigo-100 dark:border-indigo-500/20 rounded-2xl p-4 md:p-6 flex flex-col md:flex-row items-start gap-6 text-left">
+                                        <div className="p-4 bg-indigo-500 text-white rounded-full shadow-lg shadow-indigo-500/20 shrink-0">
                                             <Sparkles size={24} />
                                         </div>
                                         <div className="flex-1">
@@ -964,7 +964,7 @@ const ValidatePage: React.FC = () => {
                                                 type="submit"
                                                 size="md"
                                                 disabled={emailStatus === 'sending' || !contactForm.name || (!contactForm.email && !contactForm.phone)}
-                                                className="group !px-5 !py-2.5 !text-sm md:!px-6 md:!py-3 md:!text-base w-full md:w-auto"
+                                                className="group px-5! py-2.5! text-sm! md:px-6! md:py-3! md:text-base! w-full md:w-auto"
                                             >
                                                 {emailStatus === 'sending' ? t('contact.form.submitting') : t('contact.form.submit')}
                                                 {emailStatus !== 'sending' && (
@@ -982,7 +982,7 @@ const ValidatePage: React.FC = () => {
                 </div>
             </main>
             {/* Gradient Transition to Footer */}
-            <div className="h-48 bg-gradient-to-b from-transparent to-[#020617] relative z-10 -mb-1 w-full pointer-events-none"></div>
+            <div className="h-48 bg-linear-to-b from-transparent to-[#020617] relative z-10 -mb-1 w-full pointer-events-none"></div>
 
             {/* Footer */}
             <div className="relative z-10">

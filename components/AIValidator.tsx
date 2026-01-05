@@ -148,8 +148,8 @@ const AIValidator: React.FC = () => {
   };
 
   return (
-    <section className="py-12 md:py-40 bg-slate-50 dark:bg-[#030712] relative border-t border-slate-200 dark:border-white/5 min-h-[800px]">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[500px] bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <section className="py-12 md:py-40 bg-slate-50 dark:bg-[#030712] relative border-t border-slate-200 dark:border-white/5 min-h-200">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-125 bg-indigo-900/10 rounded-full blur-[120px] pointer-events-none"></div>
 
       <div className="container mx-auto px-6 relative z-10">
         <ScrollReveal width="100%" className="max-w-3xl mx-auto">
@@ -169,7 +169,7 @@ const AIValidator: React.FC = () => {
                   </div>
                   <div className="w-full h-px bg-slate-200 dark:bg-white/10 mb-8"></div>
                   <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6 font-serif">
-                    <Trans i18nKey="aiValidator.title" components={{ br: <br />, span: <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 dark:from-indigo-400 to-purple-500 dark:to-purple-400" /> }} />
+                    <Trans i18nKey="aiValidator.title" components={{ br: <br />, span: <span className="text-transparent bg-clip-text bg-linear-to-r from-indigo-500 dark:from-indigo-400 to-purple-500 dark:to-purple-400" /> }} />
                   </h2>
                   <p className="text-slate-600 dark:text-slate-400 text-sm md:text-lg">
                     {t('aiValidator.subtitle')}
@@ -188,7 +188,7 @@ const AIValidator: React.FC = () => {
                   <Button
                     onClick={handleAnalyze}
                     disabled={!ideaInput.trim()}
-                    className="md:w-auto w-full shrink-0 min-w-[160px]"
+                    className="md:w-auto w-full shrink-0 min-w-40"
                     icon={<Sparkles size={18} />}
                   >
                     {t('aiValidator.analyze')}
@@ -259,7 +259,7 @@ const AIValidator: React.FC = () => {
               >
                 {/* 1. Verdict & Score Section (Full Width) */}
                 <motion.div variants={sectionVariants} className="bg-[#0B1121] border border-indigo-500/20 rounded-3xl p-8 relative overflow-hidden group hover:border-indigo-500/40 transition-colors">
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50"></div>
+                  <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-indigo-500 to-transparent opacity-50"></div>
 
                   <div className="flex flex-col items-center text-center">
                     <CircularProgress score={analysis.feasibilityScore} />
@@ -345,7 +345,7 @@ const AIValidator: React.FC = () => {
                   <div className="space-y-4">
                     {analysis.technicalChallenges.map((challenge, i) => (
                       <div key={i} className="flex gap-4 p-3 hover:bg-red-500/5 rounded-lg transition-colors">
-                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-red-500/10 text-red-500 flex items-center justify-center text-xs font-bold border border-red-500/20 mt-0.5">
+                        <span className="shrink-0 w-6 h-6 rounded-full bg-red-500/10 text-red-500 flex items-center justify-center text-xs font-bold border border-red-500/20 mt-0.5">
                           {i + 1}
                         </span>
                         <p className="text-slate-300 text-sm leading-relaxed">{challenge}</p>
@@ -356,7 +356,7 @@ const AIValidator: React.FC = () => {
 
                 {/* 5. Monetization (Full Width) */}
                 <motion.div variants={sectionVariants} className="bg-slate-900 border border-emerald-500/20 rounded-2xl p-6 md:p-8 flex items-start gap-4">
-                  <div className="p-3 bg-emerald-500/10 text-emerald-400 rounded-xl flex-shrink-0">
+                  <div className="p-3 bg-emerald-500/10 text-emerald-400 rounded-xl shrink-0">
                     <Wallet size={24} />
                   </div>
                   <div>
@@ -368,8 +368,8 @@ const AIValidator: React.FC = () => {
                 </motion.div>
 
                 {/* 6. Agens Insight (Strategic Closing) (Full Width) */}
-                <motion.div variants={sectionVariants} className="bg-gradient-to-r from-indigo-900/20 to-slate-900 border border-indigo-500/20 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-6 text-center md:text-left shadow-lg shadow-indigo-900/10">
-                  <div className="p-4 bg-indigo-500 text-white rounded-full shadow-lg shadow-indigo-500/20 flex-shrink-0 animate-pulse">
+                <motion.div variants={sectionVariants} className="bg-linear-to-r from-indigo-900/20 to-slate-900 border border-indigo-500/20 rounded-3xl p-8 flex flex-col md:flex-row items-center gap-6 text-center md:text-left shadow-lg shadow-indigo-900/10">
+                  <div className="p-4 bg-indigo-500 text-white rounded-full shadow-lg shadow-indigo-500/20 shrink-0 animate-pulse">
                     <Sparkles size={24} />
                   </div>
                   <div className="flex-1">
