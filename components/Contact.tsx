@@ -33,7 +33,7 @@ const Contact: React.FC = () => {
     if ((!formData.email && !formData.phone) || !formData.name || !formData.message) return;
 
     setStatus('sending');
-    const emailTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+    const emailTheme = 'dark';
 
     try {
           await import('../services/emailService').then(mod =>

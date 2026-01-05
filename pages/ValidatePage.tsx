@@ -224,7 +224,7 @@ const ValidatePage: React.FC = () => {
             return;
         }
         setEmailStatus('sending');
-        const emailTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+        const emailTheme = 'dark';
 
         const safeIdea = ideaInput.trim();
         const technicalChallenges = analysis?.technicalChallenges?.length

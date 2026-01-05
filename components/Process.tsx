@@ -43,9 +43,6 @@ const Process: React.FC = () => {
       {/* Bottom gradient fade for smooth transition */}
       <div className="absolute inset-0 bg-gradient-to-t from-[#030712] via-transparent to-transparent" />
 
-      {/* Abstract Background Elements - Light mode only */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-900/5 rounded-full blur-[120px] pointer-events-none -translate-y-1/2 translate-x-1/2 dark:hidden"></div>
-
       <div className="container mx-auto px-6 relative z-10">
         <ScrollReveal width="100%" className="max-w-3xl mb-12 md:mb-24">
           <div className="flex items-center gap-3 mb-6">
