@@ -2,11 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Product } from './ProductCard';
 import { X, Upload, CheckCircle2, Loader2, Sparkles, AlertCircle, ArrowRight, Info, Shirt, User, CheckCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { TryOnResult } from './TryOnResults';
 
 interface TryOnModalProps {
     product: Product;
     onClose: () => void;
-    onGenerate: (faceImage: string, bodyImage: string, product: Product) => void;
+    onGenerate: (result: TryOnResult) => void;
 }
 
 type PhotoType = 'FACE' | 'BODY';
@@ -131,30 +132,29 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onGene
         if (!facePreview || !bodyPreview) return;
         setIsGenerating(true);
 
-        // Convert to base64 for future LLM integration
-        const toBase64 = (file: File): Promise<string> => {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result as string);
-                reader.onerror = reject;
-            });
-        };
+        // Simulate API call - Short delay to transition to result page
+        setTimeout(() => {
+            // Create a result that mimics the requested output
+            const resultImages = product.images.length >= 3
+                ? product.images.slice(0, 3)
+                : [product.images[0], product.images[0], product.images[0]];
 
-        try {
-            const faceBase64 = faceFile ? await toBase64(faceFile) : '';
-            const bodyBase64 = bodyFile ? await toBase64(bodyFile) : '';
+            const result: TryOnResult = {
+                id: crypto.randomUUID(),
+                productId: product.id,
+                productName: product.name,
+                productImage: product.images[0],
+                productPrice: product.price,
+                productCategory: product.category,
+                userImage: bodyPreview,
+                resultImages: resultImages,
+                timestamp: Date.now(),
+            };
 
-            // Simulate API call (replace with actual LLM call later)
-            setTimeout(() => {
-                onGenerate(faceBase64, bodyBase64, product);
-                setIsGenerating(false);
-                onClose();
-            }, 2500);
-        } catch (error) {
-            console.error('Error converting to base64:', error);
+            onGenerate(result);
             setIsGenerating(false);
-        }
+            onClose();
+        }, 100);
     };
 
     const uploadedCount = (facePreview ? 1 : 0) + (bodyPreview ? 1 : 0);
@@ -531,5 +531,42 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onGene
         </div>
     );
 };
+
+// Assuming handleGenerate is defined elsewhere in the component's scope,
+// for example, as a useCallback or a regular function within the TryOnModal component.
+// The change is applied to the setTimeout call within that function.
+// For demonstration, let's assume it looks something like this:
+/*
+const handleGenerate = useCallback(() => {
+    setIsGenerating(true);
+    // Simulate API call - Short delay to transition to result page
+    setTimeout(() => {
+        // Create a result that mimics the requested output
+        // Ideally, a real API would return 3 distinct generated images.
+        // For this POC, we use the product's own images to simulate the "High Quality Result".
+        // If the product doesn't have 3 images, we fallback to the uploaded one.
+
+        const resultImages = product.images.length >= 3
+            ? product.images.slice(0, 3)
+            : [product.images[0], product.images[0], product.images[0]];
+
+        const result: TryOnResult = {
+            id: crypto.randomUUID(),
+            productId: product.id,
+            productName: product.name,
+            productImage: product.images[0],
+            productPrice: product.price,
+            productCategory: product.category,
+            userImage: bodyPreview,
+            resultImages: resultImages, // Now sending 3 images
+            timestamp: Date.now(),
+        };
+
+        onGenerate(result);
+        setIsGenerating(false);
+        onClose();
+    }, 100); // Changed from 2500 to 100
+}, [product, bodyPreview, onGenerate, onClose]);
+*/
 
 export default TryOnModal;

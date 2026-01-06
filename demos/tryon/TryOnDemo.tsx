@@ -7,6 +7,7 @@ import DemoHeader from '../../components/DemoHeader';
 import { ProductCard, Product } from '../../components/tryon/ProductCard';
 import { ProductQuickView } from '../../components/tryon/ProductQuickView';
 import { TryOnModal } from '../../components/tryon/TryOnModal';
+import { TryOnResults, TryOnResult } from '../../components/tryon/TryOnResults';
 
 // Sample products
 const sampleProducts: Product[] = [
@@ -113,6 +114,9 @@ const TryOnDemo: React.FC = () => {
     const location = useLocation();
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [tryOnProduct, setTryOnProduct] = useState<Product | null>(null);
+    const [tryOnResult, setTryOnResult] = useState<TryOnResult | null>(null);
+    const [showResults, setShowResults] = useState(false);
+    const [isResultLoading, setIsResultLoading] = useState(false);
 
     useEffect(() => {
         // Simple language detection based on path
@@ -133,11 +137,26 @@ const TryOnDemo: React.FC = () => {
         setTryOnProduct(null);
     };
 
-    const handleTryOnGenerate = (faceImage: string, bodyImage: string, product: Product) => {
-        console.log('Generated try-on for:', product.name);
-        console.log('Face image base64 length:', faceImage.length);
-        console.log('Body image base64 length:', bodyImage.length);
-        // Future: Send to LLM API
+    const handleTryOnGenerate = (result: TryOnResult) => {
+        setTryOnResult(result);
+        setShowResults(true);
+        setIsResultLoading(true);
+
+        // Mock loading for 10 seconds as requested
+        setTimeout(() => {
+            setIsResultLoading(false);
+        }, 10000);
+    };
+
+    const handleBackFromResults = () => {
+        setShowResults(false);
+        setTryOnResult(null);
+    };
+
+    const handleTryAnother = () => {
+        setShowResults(false);
+        setTryOnProduct(null);
+        // User goes back to catalog, inputs are preserved in state if needed, but for now we reset result
     };
 
     const handleQuickView = (product: Product) => {
@@ -180,21 +199,22 @@ const TryOnDemo: React.FC = () => {
             </main>
 
             {/* Custom CTA Section - Dark Green Theme */}
-            <section className="px-4 sm:px-6 lg:px-8 pb-12">
-                <div className="max-w-[1440px] mx-auto">
-                    <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900">
+            {/* Custom CTA Section - Dark Green Theme */}
+            <section className="pb-12 border-t border-transparent">
+                <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900 shadow-2xl">
                         {/* Decorative Elements */}
-                        <div className="absolute inset-0 opacity-30">
+                        <div className="absolute inset-0 opacity-30 pointer-events-none">
                             <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-400 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
                             <div className="absolute bottom-0 left-0 w-64 h-64 bg-teal-400 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
                         </div>
 
-                        <div className="relative px-6 py-12 md:px-12 md:py-16 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                        <div className="relative px-6 py-10 md:px-12 md:py-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                             <div className="md:max-w-2xl">
-                                <p className="font-['Sora'] text-xs md:text-sm font-bold uppercase tracking-[0.3em] text-emerald-200 mb-3 leading-[0.4]">
+                                <p className="font-['Sora'] text-xs md:text-sm font-bold uppercase tracking-[0.3em] text-emerald-200 mb-2 leading-[0.4]">
                                     AGENS
                                 </p>
-                                <h2 className="text-2xl md:text-3xl font-bold text-white leading-tight mb-3 md:whitespace-nowrap">
+                                <h2 className="text-2xl md:text-3xl font-bold text-white leading-tight mb-2 md:whitespace-nowrap">
                                     {i18n.language === 'en'
                                         ? 'We can build this for your brand too'
                                         : 'Markanız için de bunun gibi bir şey yapabiliriz'}
@@ -233,6 +253,17 @@ const TryOnDemo: React.FC = () => {
                     product={tryOnProduct}
                     onClose={handleCloseTryOn}
                     onGenerate={handleTryOnGenerate}
+                />
+            )}
+
+            {/* Try On Results */}
+            {showResults && tryOnResult && (
+                <TryOnResults
+                    result={tryOnResult}
+                    recommendations={sampleProducts.filter(p => p.id !== tryOnResult.productId).slice(0, 3)}
+                    onBack={handleBackFromResults}
+                    onTryAnother={handleTryAnother}
+                    isLoading={isResultLoading}
                 />
             )}
         </div>
