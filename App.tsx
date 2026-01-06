@@ -6,6 +6,7 @@ import Footer from './components/Footer';
 import TechStack from './components/TechStack';
 import RouteMeta from './components/RouteMeta';
 import Expertise from './components/Expertise';
+import WhyAgens from './components/WhyAgens';
 import Process from './components/Process';
 import Work from './components/Work';
 import FounderMessage from './components/FounderMessage';
@@ -60,6 +61,7 @@ const HomePage = () => (
     <main>
       <Hero />
       <TechStack />
+      <WhyAgens />
       <Expertise />
       <Process />
       <Work />

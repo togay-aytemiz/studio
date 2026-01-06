@@ -236,6 +236,41 @@
             "capabilities": "Industry Experience"
         }
     },
+    "whyAgens": {
+        "badge": "WHY AGENS",
+        "title": "Why Agens <br /> <span className=\"text-indigo-400\">The right choice?</span>",
+        "subtitle": "Product thinking paired with fast, controlled delivery.",
+        "lead": "Speed today, stability tomorrow. We take shared ownership of the product journey.",
+        "metrics": {
+            "experience": {
+                "value": "15+ years",
+                "label": "in tech"
+            },
+            "recommendation": {
+                "value": "100%",
+                "label": "recommended"
+            }
+        },
+        "ctaLabel": "Let’s make the “Why Agens” fit your product. Or start with the AI Idea Analysis.",
+        "items": {
+            "product": {
+                "title": "We think product-first",
+                "description": "We do not just code requests. We align on scope, priority, and the real need."
+            },
+            "speed": {
+                "title": "Fast, not reckless",
+                "description": "Short sprints and clear deliveries. No surprises or \"it took longer.\""
+            },
+            "team": {
+                "title": "One team, end-to-end",
+                "description": "Design, engineering, infrastructure, and AI sit at the same table. You will not get lost between agencies."
+            },
+            "architecture": {
+                "title": "Architecture that scales",
+                "description": "Systems that work today and do not break tomorrow. Payments, e-invoicing, and integrations can be added later."
+            }
+        }
+    },
     "services": {
         "badge": "Expertise",
         "title": "End-to-End <br/> Engineering.",

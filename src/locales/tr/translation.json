@@ -236,6 +236,41 @@
             "capabilities": "Sektörel Deneyim"
         }
     },
+    "whyAgens": {
+        "badge": "NEDEN AGENS",
+        "title": "Neden Agens <br /> <span className=\"text-indigo-400\">Doğru Seçim?</span>",
+        "subtitle": "Net kararlar, şeffaf süreç, sağlam teslimat ritmi.",
+        "lead": "Kısa vadede hız, uzun vadede istikrar. Ürün yolculuğunu birlikte sahipleniriz.",
+        "metrics": {
+            "experience": {
+                "value": "15+ yıl",
+                "label": "teknoloji deneyimi"
+            },
+            "recommendation": {
+                "value": "%100",
+                "label": "müşteri memnuniyeti"
+            }
+        },
+        "ctaLabel": "Neden Agens sorusunun cevabını birlikte netleştirelim; istersen ilk adımı AI Fikir Analizi ile atalım.",
+        "items": {
+            "product": {
+                "title": "Ürün odaklı düşünürüz",
+                "description": "Sadece isteneni yazmayız. Kapsamı, önceliği ve gerçek ihtiyacı birlikte netleştiririz."
+            },
+            "speed": {
+                "title": "Hızlıyız ama kontrolsüz değil",
+                "description": "Kısa döngüler, net teslimatlar. Sürpriz yok, \"biraz daha uzadı\" yok."
+            },
+            "team": {
+                "title": "Tek ekip, uçtan uca",
+                "description": "Tasarım, yazılım, altyapı ve AI aynı masada. Farklı ajanslar arasında kaybolmazsınız."
+            },
+            "architecture": {
+                "title": "Büyüyebilen mimari",
+                "description": "Bugün çalışan, yarın çökmeyen sistemler kurarız. Ödeme, e-fatura ve entegrasyonlar sonradan eklenebilir."
+            }
+        }
+    },
     "services": {
         "badge": "HİZMETLERİMİZ",
         "title": "Neler Yapıyoruz?",
@@ -386,7 +421,7 @@
     "team": {
         "studio": {
             "badge": "HAKKIMIZDA",
-            "title": "Küçük ekip. <br/> <span className=\"text-indigo-400\">Büyük işler.</span>",
+            "title": "Fabrika değil. <br/> <span className=\"text-indigo-400\">Bir ürün stüdyosu.</span>",
             "p1": "İnsan uzmanlığını AI ile birleştirerek kaliteli ve verimli sonuçlar üretiyoruz.",
             "p2": "Ürün odaklı ve çevik ekibimizle fikirleri, ajans karmaşasından uzak, ölçeklenebilir dijital ürünlere dönüştürüyoruz.",
             "checklist": {
