@@ -9,6 +9,9 @@
 - `/validate` sayfasi demo degildir, asla subdomain'e tasinmaz.
 - DRY (Don't Repeat Yourself): Ortak mantik birden fazla yerde tekrar ediyorsa
   tasarimsiz ortak katmana alin.
+- Her sayfada AGENS footer sabit kalir.
+- Footer'dan hemen once bir CTA olacak ve bu CTA 'footerCta.txt' dosyasında, FooterCTA reusable component olmali ve tum sayfalarda ayni iskeletle
+  kullanilmalidir.
 
 ## Iletisim ve Raporlama
 

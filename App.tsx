@@ -13,6 +13,9 @@ import FounderMessage from './components/FounderMessage';
 import Team from './components/Team';
 import Contact from './components/Contact';
 import ValidatePage from './pages/ValidatePage';
+import DemoRoute from './demos/DemoRoute';
+import DemoRenderer from './demos/DemoRenderer';
+import { getDemoSlugFromHost } from './demos/host';
 
 const HashScroller = () => {
   const location = useLocation();
@@ -74,15 +77,28 @@ const HomePage = () => (
 );
 
 function App() {
+  const demoSlugFromHost =
+    typeof window !== 'undefined'
+      ? getDemoSlugFromHost(window.location.hostname)
+      : null;
+  const isDemoHost = Boolean(demoSlugFromHost);
+
   return (
     <BrowserRouter>
       <HashScroller />
       <RouteMeta />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/en" element={<HomePage />} />
-        <Route path="/validate" element={<ValidatePage />} />
-        <Route path="/en/validate" element={<ValidatePage />} />
+        {isDemoHost && demoSlugFromHost ? (
+          <Route path="*" element={<DemoRenderer slug={demoSlugFromHost} />} />
+        ) : (
+          <>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/en" element={<HomePage />} />
+            <Route path="/validate" element={<ValidatePage />} />
+            <Route path="/en/validate" element={<ValidatePage />} />
+            <Route path="/demos/:slug/*" element={<DemoRoute />} />
+          </>
+        )}
       </Routes>
     </BrowserRouter>
   );
