@@ -494,5 +494,14 @@
             "followUpEmail": "Talebiniz ekibimize iletildi. Yaklaşık 24 saat içinde sizinle paylaştığınız <email>{{email}}</email> üzerinden iletişime geçeceğiz.",
             "emailFallback": "e-posta"
         }
+    },
+    "tryon": {
+        "hero": {
+            "badge": "Yeni Koleksiyon",
+            "headline": "Modayı <br /> Canlı Yaşa",
+            "subtext": "Yeni sezonumuzun zarafetini deneyimleyin. Yapay zeka destekli sanal aynamızla her kıyafeti anında deneyin.",
+            "tryNow": "Hemen Dene",
+            "howItWorks": "Nasıl Çalışır"
+        }
     }
 }

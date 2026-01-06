@@ -494,5 +494,14 @@
             "followUpEmail": "Your request has been shared with our team. We will reach out within about 24 hours via <email>{{email}}</email>.",
             "emailFallback": "email"
         }
+    },
+    "tryon": {
+        "hero": {
+            "badge": "New Collection",
+            "headline": "Experience <br /> Fashion Live",
+            "subtext": "Experience the elegance of our new season. Try any outfit instantly with our AI-powered virtual mirror.",
+            "tryNow": "Try it Now",
+            "howItWorks": "How it works"
+        }
     }
 }

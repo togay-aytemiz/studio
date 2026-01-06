@@ -97,6 +97,7 @@ function App() {
             <Route path="/validate" element={<ValidatePage />} />
             <Route path="/en/validate" element={<ValidatePage />} />
             <Route path="/demos/:slug/*" element={<DemoRoute />} />
+            <Route path="/en/demos/:slug/*" element={<DemoRoute />} />
           </>
         )}
       </Routes>
