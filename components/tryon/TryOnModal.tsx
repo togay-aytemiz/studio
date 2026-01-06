@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Product } from './ProductCard';
-import { X, Upload, CheckCircle2, Loader2, Sparkles, AlertCircle, ArrowRight, Info } from 'lucide-react';
+import { X, Upload, CheckCircle2, Loader2, Sparkles, AlertCircle, ArrowRight, Info, Shirt, User, CheckCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 interface TryOnModalProps {
@@ -42,9 +42,12 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onGene
     // Translations
     const t = {
         title: { en: 'Select Your Photos', tr: 'Fotoğraflarınızı Seçin' },
-        confirmTitle: { en: 'Confirm & Generate', tr: 'Onayla & Oluştur' },
+        titleShort: { en: 'Upload Photos', tr: 'Fotoğraf Yükle' },
+        confirmTitle: { en: 'Review & Create', tr: 'İncele & Oluştur' },
         step1Face: { en: 'Step 1: Face Photo', tr: 'Adım 1: Yüz Fotoğrafı' },
         step2Body: { en: 'Step 2: Body Photo', tr: 'Adım 2: Vücut Fotoğrafı' },
+        desktopSubtitle: { en: 'Upload face and body photos', tr: 'Yüz ve vücut fotoğrafı yükleyin' },
+        reviewSubtitle: { en: 'Review your photos before generating.', tr: 'Oluşturmadan önce fotoğraflarınızı inceleyin.' },
         readyToTryOn: { en: 'Ready to try on', tr: 'Denemeye hazır' },
         uploaded: { en: 'uploaded', tr: 'yüklendi' },
         facePhoto: { en: 'Face Photo', tr: 'Yüz Fotoğrafı' },
@@ -63,16 +66,21 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onGene
         backToShop: { en: 'Back to Shop', tr: 'Mağazaya Dön' },
         back: { en: 'Back', tr: 'Geri' },
         nextBody: { en: 'Next: Body', tr: 'Sonraki: Vücut' },
-        confirm: { en: 'Confirm', tr: 'Onayla' },
+        confirm: { en: 'Review', tr: 'İncele' },
         nextStep: { en: 'Next Step', tr: 'Sonraki Adım' },
         yourInputs: { en: 'Your Inputs', tr: 'Fotoğraflarınız' },
         targetProduct: { en: 'Target Product', tr: 'Hedef Ürün' },
-        generateTryOn: { en: 'Generate Try-On', tr: 'Deneme Oluştur' },
-        generating: { en: 'Generating Result...', tr: 'Sonuç Oluşturuluyor...' },
+        generateTryOn: { en: 'Create My Look', tr: 'Görünümümü Oluştur' },
+        generating: { en: 'Creating...', tr: 'Oluşturuluyor...' },
         faceTooltip: { en: 'Should be a clear front-facing portrait.', tr: 'Net ve önden çekilmiş bir portre olmalı.' },
         bodyTooltip: { en: 'Should be a full-body standing shot.', tr: 'Tam boy dik duran bir fotoğraf olmalı.' },
         face: { en: 'Face', tr: 'Yüz' },
         body: { en: 'Body', tr: 'Vücut' },
+        selectedProduct: { en: 'Selected Product', tr: 'Seçilen Ürün' },
+        yourReferencePhotos: { en: 'Your Reference Photos', tr: 'Referans Fotoğraflarınız' },
+        edit: { en: 'Edit', tr: 'Düzenle' },
+        readyToGenerate: { en: 'Ready to Generate', tr: 'Oluşturmaya Hazır' },
+        aiProcessInfo: { en: 'Our AI will combine your photos with the selected item. This process usually takes about 10-15 seconds.', tr: 'Yapay zekamız fotoğraflarınızı seçtiğiniz ürünle birleştirecek. Bu işlem genellikle 10-15 saniye sürer.' },
     };
 
     // Focus trap and ESC key
@@ -83,15 +91,17 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onGene
         document.addEventListener('keydown', handleKeyDown);
         modalRef.current?.focus();
         return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [onClose]);
+    }, []);
 
-    // Clean up object URLs
+    // Lock body scroll when modal is open
     useEffect(() => {
+        document.body.style.overflow = 'hidden';
         return () => {
-            if (facePreview) URL.revokeObjectURL(facePreview);
-            if (bodyPreview) URL.revokeObjectURL(bodyPreview);
+            document.body.style.overflow = '';
         };
-    }, [facePreview, bodyPreview]);
+    }, []);
+
+    // Note: Object URLs are cleaned up when modal closes and component unmounts
 
     const handleFileSelect = (file: File, type: PhotoType) => {
         if (file && file.type.startsWith('image/')) {
@@ -173,15 +183,18 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onGene
                 onClick={e => e.stopPropagation()}
             >
                 {/* Header */}
-                <div className="flex items-center justify-between p-6 md:p-8 border-b border-gray-100 bg-white z-10">
+                <div className="flex items-center justify-between p-4 md:p-8 border-b border-gray-100 bg-white z-10">
                     <div>
-                        <h2 className="text-2xl font-bold text-gray-900">
-                            {step === 1 ? t.title[lang] : t.confirmTitle[lang]}
-                        </h2>
-                        <p className="text-gray-500 mt-1 text-sm md:text-base">
+                        <h2 className="text-xl md:text-2xl font-bold text-gray-900">
                             {step === 1
-                                ? (mobileUploadStep === 'FACE' ? t.step1Face[lang] : t.step2Body[lang])
-                                : `${t.readyToTryOn[lang]}: ${productName}`}
+                                ? <><span className="md:hidden">{t.titleShort[lang]}</span><span className="hidden md:inline">{t.title[lang]}</span></>
+                                : t.confirmTitle[lang]
+                            }
+                        </h2>
+                        <p className="text-gray-500 mt-1 text-sm">
+                            {step === 1
+                                ? <><span className="md:hidden">{mobileUploadStep === 'FACE' ? t.step1Face[lang] : t.step2Body[lang]}</span><span className="hidden md:inline">{t.desktopSubtitle[lang]}</span></>
+                                : t.reviewSubtitle[lang]}
                         </p>
                     </div>
                     <div className="flex items-center gap-4">
@@ -198,7 +211,7 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onGene
                 </div>
 
                 {/* Body Content */}
-                <div className="flex-1 overflow-y-auto bg-white p-6 md:p-8">
+                <div className="flex-1 overflow-y-auto scrollbar-none bg-white p-6 md:p-8">
 
                     {step === 1 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 h-full">
@@ -338,40 +351,100 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onGene
                             </div>
                         </div>
                     ) : (
-                        // Step 2: Preview & Confirm
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center h-full">
-                            {/* Inputs */}
-                            <div className="lg:col-span-1 space-y-4">
-                                <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider">{t.yourInputs[lang]}</h3>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="rounded-xl overflow-hidden bg-gray-100 aspect-[3/4] relative">
-                                        <img src={facePreview!} alt="Face" className="w-full h-full object-cover" />
-                                        <span className="absolute bottom-2 left-2 text-[10px] font-bold bg-black/50 text-white px-2 py-1 rounded backdrop-blur-md">{t.face[lang]}</span>
+                        // Step 2: Review & Create Try-On
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 h-full items-start">
+
+                            {/* LEFT: Selected Product */}
+                            <div className="flex flex-col gap-4 h-full">
+                                <h3 className="flex items-center gap-2 text-lg font-bold text-emerald-900 shrink-0">
+                                    <Shirt size={20} className="text-emerald-600" />
+                                    {t.selectedProduct[lang]}
+                                </h3>
+
+                                {/* Product Image */}
+                                <div className="flex-1 rounded-3xl overflow-hidden bg-gray-100 relative border border-gray-200 shadow-sm min-h-[300px] lg:min-h-0">
+                                    <img
+                                        src={product.images[0]}
+                                        alt={productName}
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+
+                                <div className="flex items-baseline justify-between px-1 shrink-0">
+                                    <h2 className="text-xl lg:text-2xl font-bold text-gray-900">{productName}</h2>
+                                    <p className="text-lg lg:text-xl font-bold text-gray-900">
+                                        {lang === 'en'
+                                            ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(product.price)
+                                            : new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', minimumFractionDigits: 0 }).format(product.price)
+                                        }
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* RIGHT: Photos & Info */}
+                            <div className="flex flex-col gap-6 h-full">
+
+                                {/* Photos Header */}
+                                <div className="flex items-center justify-between shrink-0">
+                                    <h3 className="flex items-center gap-2 text-lg font-bold text-emerald-900">
+                                        <User size={20} className="text-blue-600" />
+                                        {t.yourReferencePhotos[lang]}
+                                    </h3>
+                                    <button
+                                        onClick={() => setStep(1)}
+                                        className="text-blue-600 font-bold text-sm hover:underline"
+                                    >
+                                        {t.edit[lang]}
+                                    </button>
+                                </div>
+
+                                {/* Photos Grid */}
+                                <div className="grid grid-cols-2 gap-4 shrink-0">
+                                    {/* Face */}
+                                    <div className="aspect-square rounded-2xl bg-gray-900 relative overflow-hidden shadow-md group">
+                                        <img src={facePreview!} alt="Face" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
+
+                                        {/* Checkmark */}
+                                        <div className="absolute top-3 right-3 bg-white rounded-full p-0.5 shadow-lg">
+                                            <CheckCircle2 size={20} className="fill-emerald-500 text-white" />
+                                        </div>
+
+                                        {/* Badge */}
+                                        <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-widest">
+                                            {t.face[lang]}
+                                        </div>
                                     </div>
-                                    <div className="rounded-xl overflow-hidden bg-gray-100 aspect-[3/4] relative">
-                                        <img src={bodyPreview!} alt="Body" className="w-full h-full object-cover" />
-                                        <span className="absolute bottom-2 left-2 text-[10px] font-bold bg-black/50 text-white px-2 py-1 rounded backdrop-blur-md">{t.body[lang]}</span>
+
+                                    {/* Body */}
+                                    <div className="aspect-square rounded-2xl bg-gray-900 relative overflow-hidden shadow-md group">
+                                        <img src={bodyPreview!} alt="Body" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
+
+                                        {/* Checkmark */}
+                                        <div className="absolute top-3 right-3 bg-white rounded-full p-0.5 shadow-lg">
+                                            <CheckCircle2 size={20} className="fill-emerald-500 text-white" />
+                                        </div>
+
+                                        {/* Badge */}
+                                        <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-widest">
+                                            {t.body[lang]}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Info Box - Pushed to bottom */}
+                                <div className="mt-auto bg-blue-50 rounded-2xl p-6 flex items-start gap-4 border border-blue-100 shrink-0">
+                                    <div className="p-2 bg-blue-100 rounded-lg text-blue-600 shrink-0">
+                                        <Sparkles size={20} className="fill-current" />
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-gray-900 text-base lg:text-lg">{t.readyToGenerate[lang]}</h4>
+                                        <p className="text-sm text-gray-600 mt-1 leading-relaxed">
+                                            {t.aiProcessInfo[lang]}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Arrow */}
-                            <div className="flex justify-center text-gray-300">
-                                <ArrowRight size={48} className="hidden lg:block" />
-                                <ArrowRight size={32} className="lg:hidden rotate-90 my-4" />
-                            </div>
-
-                            {/* Target Product */}
-                            <div className="lg:col-span-1 space-y-4">
-                                <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider">{t.targetProduct[lang]}</h3>
-                                <div className="rounded-xl overflow-hidden bg-gray-100 aspect-[3/4] relative shadow-lg">
-                                    <img src={product.images[0]} alt={productName} className="w-full h-full object-cover" />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-6">
-                                        <p className="text-white font-bold text-lg">{productName}</p>
-                                        <p className="text-gray-300 text-sm">{productCategory}</p>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     )}
 

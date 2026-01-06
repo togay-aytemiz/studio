@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Hero } from '../../components/tryon/Hero';
 import Footer from '../../components/Footer';
-import FooterCta from '../../components/FooterCta';
 import DemoHeader from '../../components/DemoHeader';
 import { ProductCard, Product } from '../../components/tryon/ProductCard';
 import { ProductQuickView } from '../../components/tryon/ProductQuickView';
@@ -180,11 +179,43 @@ const TryOnDemo: React.FC = () => {
                 </section>
             </main>
 
-            <FooterCta
-                title="Markaniz icin de bunun gibi bir sey yapabiliriz."
-                description="Markaniza ozel, urun odakli yazilim hizmeti icin bize ulasin."
-                buttonLabel="Görüşme Planla"
-            />
+            {/* Custom CTA Section - Dark Green Theme */}
+            <section className="px-4 sm:px-6 lg:px-8 pb-12">
+                <div className="max-w-[1440px] mx-auto">
+                    <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-900 via-emerald-800 to-teal-900">
+                        {/* Decorative Elements */}
+                        <div className="absolute inset-0 opacity-30">
+                            <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-400 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+                            <div className="absolute bottom-0 left-0 w-64 h-64 bg-teal-400 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+                        </div>
+
+                        <div className="relative px-6 py-12 md:px-12 md:py-16 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                            <div className="md:max-w-2xl">
+                                <p className="font-['Sora'] text-xs md:text-sm font-bold uppercase tracking-[0.3em] text-emerald-200 mb-3 leading-[0.4]">
+                                    AGENS
+                                </p>
+                                <h2 className="text-2xl md:text-3xl font-bold text-white leading-tight mb-3 md:whitespace-nowrap">
+                                    {i18n.language === 'en'
+                                        ? 'We can build this for your brand too'
+                                        : 'Markanız için de bunun gibi bir şey yapabiliriz'}
+                                </h2>
+                                <p className="text-emerald-100/80 text-sm md:text-base">
+                                    {i18n.language === 'en'
+                                        ? 'Custom product-focused software development for your brand.'
+                                        : 'Markanıza özel, ürün odaklı yazılım hizmeti için bize ulaşın.'}
+                                </p>
+                            </div>
+                            <a
+                                href="/#contact"
+                                className="inline-flex items-center justify-center shrink-0 bg-white text-emerald-900 px-6 py-3 rounded-full font-bold text-sm md:text-base hover:bg-emerald-50 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0"
+                            >
+                                {i18n.language === 'en' ? 'Schedule a Call' : 'Görüşme Planla'}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <Footer />
 
             {/* Quick View Modal */}
