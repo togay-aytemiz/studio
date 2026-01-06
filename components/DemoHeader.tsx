@@ -39,14 +39,22 @@ const DemoHeader: React.FC<DemoHeaderProps> = ({ title }) => {
                     </div>
                 </div>
 
-                {/* Language Switcher */}
-                <button
-                    onClick={handleLanguageSwitch}
-                    className="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors"
-                    type="button"
-                >
-                    {i18n.language === 'tr' ? 'EN' : 'TR'}
-                </button>
+                {/* Actions */}
+                <div className="flex items-center gap-3">
+                    <a
+                        href="/#contact"
+                        className="inline-flex items-center justify-center rounded-full bg-slate-900 px-3 py-1.5 md:px-4 text-[10px] md:text-xs font-bold text-white hover:bg-slate-800 transition-colors shadow-sm whitespace-nowrap"
+                    >
+                        {i18n.language === 'en' ? 'Schedule a Call' : 'Görüşme Planla'}
+                    </a>
+                    <button
+                        onClick={handleLanguageSwitch}
+                        className="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors"
+                        type="button"
+                    >
+                        {i18n.language === 'tr' ? 'EN' : 'TR'}
+                    </button>
+                </div>
             </div>
         </header>
     );

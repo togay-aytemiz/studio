@@ -132,13 +132,68 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onGene
         if (!facePreview || !bodyPreview) return;
         setIsGenerating(true);
 
-        // Simulate API call - Short delay to transition to result page
-        setTimeout(() => {
-            // Create a result that mimics the requested output
-            const resultImages = product.images.length >= 3
-                ? product.images.slice(0, 3)
-                : [product.images[0], product.images[0], product.images[0]];
+        // Helper to convert File to Base64
+        const fileToBase64 = (file: File): Promise<string> => {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result as string);
+                reader.onerror = reject;
+            });
+        };
 
+        // Helper to convert URL to Base64 (for product images)
+        const urlToBase64 = async (url: string): Promise<string> => {
+            try {
+                const response = await fetch(url);
+                const blob = await response.blob();
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result as string);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(blob);
+                });
+            } catch (error) {
+                console.error("Error converting URL to base64:", error);
+                throw new Error("Failed to process product image.");
+            }
+        };
+
+        try {
+            // 1. Prepare Inputs
+            const faceBase64 = faceFile ? await fileToBase64(faceFile) : '';
+            const bodyBase64 = bodyFile ? await fileToBase64(bodyFile) : '';
+
+            // Convert all product images to base64
+            const garmentImagesBase64 = await Promise.all(
+                product.images.map(imgUrl => urlToBase64(imgUrl))
+            );
+
+            // 2. Call Netlify Function
+            const response = await fetch('/.netlify/functions/generate-tryon', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    garmentImages: garmentImagesBase64,
+                    bodyImage: bodyBase64,
+                    faceImage: faceBase64,
+                    description: `${product.name.en} - ${product.category.en}`, // Send English details for better prompt understanding
+                }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to generate image');
+            }
+
+            const data = await response.json();
+            const generatedImage = data.image;
+
+            if (!generatedImage) {
+                throw new Error('No image returned from server');
+            }
+
+            // 3. Create Result Object
             const result: TryOnResult = {
                 id: crypto.randomUUID(),
                 productId: product.id,
@@ -147,14 +202,19 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onGene
                 productPrice: product.price,
                 productCategory: product.category,
                 userImage: bodyPreview,
-                resultImages: resultImages,
+                resultImages: [generatedImage, generatedImage, generatedImage], // Use the generated image for all views for now
                 timestamp: Date.now(),
             };
 
             onGenerate(result);
-            setIsGenerating(false);
             onClose();
-        }, 100);
+
+        } catch (error: any) {
+            console.error('Try-On Generation Error:', error);
+            alert(lang === 'en' ? `Error: ${error.message}` : `Hata: ${error.message}`);
+        } finally {
+            setIsGenerating(false);
+        }
     };
 
     const uploadedCount = (facePreview ? 1 : 0) + (bodyPreview ? 1 : 0);

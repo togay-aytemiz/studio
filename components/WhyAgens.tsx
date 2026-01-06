@@ -55,7 +55,7 @@ const WhyAgens: React.FC = () => {
                             ))}
                         </div>
                         <div className="mt-6 md:mt-8 hidden lg:flex flex-col gap-5 lg:mt-10">
-                            <span className="text-sm text-slate-500 dark:text-slate-400 max-w-sm">
+                            <span className="text-sm text-slate-500 dark:text-slate-400 max-w-sm lg:max-w-md xl:max-w-lg leading-relaxed">
                                 {t('whyAgens.ctaLabel')}
                             </span>
                             <div className="flex items-start gap-3">
