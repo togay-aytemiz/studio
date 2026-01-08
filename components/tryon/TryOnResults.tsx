@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Product } from './ProductCard';
 import { Share2, Download, ThumbsUp, ThumbsDown, ShoppingBag, Play, ArrowLeft, Sparkles, Loader2, CheckCircle2, X, Shirt, Wand2, RefreshCcw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export interface TryOnResult {
     id: string;
@@ -40,11 +41,8 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
         { en: "Rendering high-res details...", tr: "Yüksek çözünürlüklü detaylar işleniyor..." },
     ];
 
-    const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
     const [displayedMessageIndex, setDisplayedMessageIndex] = useState(0); // What's actually shown
-    const [currentIconIndex, setCurrentIconIndex] = useState(0);
     const [displayedIconIndex, setDisplayedIconIndex] = useState(0); // What's actually shown
-    const [fadeOpacity, setFadeOpacity] = useState(1);
 
     // Icons to cycle through
     const LOADING_ICONS = [Shirt, Wand2, Sparkles, RefreshCcw];
@@ -59,11 +57,8 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
             setShowLoader(true);
             setIsFadingOut(false);
             // Reset all animations and indexes
-            setCurrentMessageIndex(0);
-            setCurrentIconIndex(0);
             setDisplayedMessageIndex(0);
             setDisplayedIconIndex(0);
-            setFadeOpacity(1);
         } else {
             // Start fade out
             setIsFadingOut(true);
@@ -78,24 +73,10 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
     useEffect(() => {
         if (!showLoader) return;
 
-        // Message and Icon rotation with proper sequencing
+        // Message and Icon rotation
         const messageInterval = setInterval(() => {
-            // Step 1: Fade out
-            setFadeOpacity(0);
-
-            // Step 2: After fade out completes, update the NEXT index
-            setTimeout(() => {
-                setCurrentMessageIndex(prev => (prev + 1) % LOADING_MESSAGES.length);
-                setCurrentIconIndex(prev => (prev + 1) % LOADING_ICONS.length);
-            }, 300);
-
-            // Step 3: After content changes, update displayed and fade in
-            setTimeout(() => {
-                setDisplayedMessageIndex(prev => (prev + 1) % LOADING_MESSAGES.length);
-                setDisplayedIconIndex(prev => (prev + 1) % LOADING_ICONS.length);
-                setFadeOpacity(1);
-            }, 350); // Slightly after content update
-
+            setDisplayedMessageIndex(prev => (prev + 1) % LOADING_MESSAGES.length);
+            setDisplayedIconIndex(prev => (prev + 1) % LOADING_ICONS.length);
         }, 2500); // Change every 2.5 seconds
 
         return () => {
@@ -127,25 +108,34 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
                                 style={{ animationDuration: '3s' }}
                             ></div>
                             <div className="absolute inset-0 bg-emerald-50 rounded-full animate-ping opacity-20" style={{ animationDuration: '2s' }}></div>
-                            <div
-                                className="relative z-10 transition-all duration-300 transform"
-                                style={{
-                                    opacity: fadeOpacity,
-                                    transform: `scale(${fadeOpacity === 0 ? 0.8 : 1})`
-                                }}
-                            >
-                                <CurrentIcon className="text-emerald-600" size={40} md-size={48} strokeWidth={1.5} />
-                            </div>
+                            <AnimatePresence mode="wait">
+                                <motion.div
+                                    key={displayedIconIndex}
+                                    className="relative z-10"
+                                    initial={{ opacity: 0, scale: 0.85 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.85 }}
+                                    transition={{ duration: 0.3 }}
+                                >
+                                    <CurrentIcon className="text-emerald-600" size={40} md-size={48} strokeWidth={1.5} />
+                                </motion.div>
+                            </AnimatePresence>
                         </div>
 
                         {/* Text Container */}
-                        <div className="space-y-4 h-16 md:h-20 flex items-center justify-center">
-                            <h2
-                                className="text-xl md:text-2xl font-bold text-gray-900 transition-opacity duration-300 ease-in-out"
-                                style={{ opacity: fadeOpacity }}
-                            >
-                                {LOADING_MESSAGES[displayedMessageIndex][lang]}
-                            </h2>
+                        <div className="flex items-center justify-center min-h-[4.5rem] md:min-h-[5.5rem] px-2">
+                            <AnimatePresence mode="wait">
+                                <motion.h2
+                                    key={displayedMessageIndex}
+                                    className="text-xl md:text-2xl font-bold text-gray-900 leading-snug text-center max-w-[20rem] md:max-w-[26rem]"
+                                    initial={{ opacity: 0, y: 8 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -8 }}
+                                    transition={{ duration: 0.3 }}
+                                >
+                                    {LOADING_MESSAGES[displayedMessageIndex][lang]}
+                                </motion.h2>
+                            </AnimatePresence>
                         </div>
                     </div>
                 </div>
