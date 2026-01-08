@@ -41,12 +41,14 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
     ];
 
     const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+    const [displayedMessageIndex, setDisplayedMessageIndex] = useState(0); // What's actually shown
     const [currentIconIndex, setCurrentIconIndex] = useState(0);
+    const [displayedIconIndex, setDisplayedIconIndex] = useState(0); // What's actually shown
     const [fadeOpacity, setFadeOpacity] = useState(1);
 
     // Icons to cycle through
     const LOADING_ICONS = [Shirt, Wand2, Sparkles, RefreshCcw];
-    const CurrentIcon = LOADING_ICONS[currentIconIndex];
+    const CurrentIcon = LOADING_ICONS[displayedIconIndex];
 
     // We'll use a local state to handle the fade-out of the loader itself
     const [showLoader, setShowLoader] = useState(isLoading);
@@ -56,9 +58,11 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
         if (isLoading) {
             setShowLoader(true);
             setIsFadingOut(false);
-            // Reset animations
+            // Reset all animations and indexes
             setCurrentMessageIndex(0);
             setCurrentIconIndex(0);
+            setDisplayedMessageIndex(0);
+            setDisplayedIconIndex(0);
             setFadeOpacity(1);
         } else {
             // Start fade out
@@ -74,17 +78,25 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
     useEffect(() => {
         if (!showLoader) return;
 
-        // Message and Icon rotation
+        // Message and Icon rotation with proper sequencing
         const messageInterval = setInterval(() => {
-            setFadeOpacity(0); // Fade out text/icon
+            // Step 1: Fade out
+            setFadeOpacity(0);
 
+            // Step 2: After fade out completes, update the NEXT index
             setTimeout(() => {
                 setCurrentMessageIndex(prev => (prev + 1) % LOADING_MESSAGES.length);
                 setCurrentIconIndex(prev => (prev + 1) % LOADING_ICONS.length);
-                setFadeOpacity(1); // Fade in text/icon
-            }, 300); // Wait for fade out to complete (faster than before)
+            }, 300);
 
-        }, 2500); // Change every 2.5 seconds for better pacing
+            // Step 3: After content changes, update displayed and fade in
+            setTimeout(() => {
+                setDisplayedMessageIndex(prev => (prev + 1) % LOADING_MESSAGES.length);
+                setDisplayedIconIndex(prev => (prev + 1) % LOADING_ICONS.length);
+                setFadeOpacity(1);
+            }, 350); // Slightly after content update
+
+        }, 2500); // Change every 2.5 seconds
 
         return () => {
             clearInterval(messageInterval);
@@ -132,7 +144,7 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
                                 className="text-xl md:text-2xl font-bold text-gray-900 transition-opacity duration-300 ease-in-out"
                                 style={{ opacity: fadeOpacity }}
                             >
-                                {LOADING_MESSAGES[currentMessageIndex][lang]}
+                                {LOADING_MESSAGES[displayedMessageIndex][lang]}
                             </h2>
                         </div>
                     </div>

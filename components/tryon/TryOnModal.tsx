@@ -460,100 +460,172 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onStar
                         </div>
                     ) : (
                         // Step 2: Review & Create Try-On
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 h-full items-start">
-
-                            {/* LEFT: Selected Product */}
-                            <div className="flex flex-col gap-4 h-full">
-                                <h3 className="flex items-center gap-2 text-lg font-bold text-emerald-900 shrink-0">
-                                    <Shirt size={20} className="text-emerald-600" />
-                                    {t.selectedProduct[lang]}
-                                </h3>
-
-                                {/* Product Image */}
-                                <div className="flex-1 rounded-3xl overflow-hidden bg-gray-100 relative border border-gray-200 shadow-sm min-h-[300px] lg:min-h-0">
-                                    <img
-                                        src={product.images[0]}
-                                        alt={productName}
-                                        className="w-full h-full object-cover"
-                                    />
+                        <>
+                            {/* MOBILE LAYOUT */}
+                            <div className="flex flex-col gap-5 lg:hidden">
+                                {/* All Photos Grid - 3 columns on mobile */}
+                                <div className="grid grid-cols-3 gap-3">
+                                    {/* Product */}
+                                    <div className="aspect-square rounded-2xl bg-gray-100 relative overflow-hidden shadow-sm border border-gray-200">
+                                        <img src={product.images[0]} alt={productName} className="w-full h-full object-cover" />
+                                        <div className="absolute bottom-2 left-2 bg-emerald-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wide">
+                                            {t.selectedProduct[lang].split(' ')[0]}
+                                        </div>
+                                    </div>
+                                    {/* Face */}
+                                    <div className="aspect-square rounded-2xl bg-gray-900 relative overflow-hidden shadow-sm">
+                                        <img src={facePreview!} alt="Face" className="w-full h-full object-cover" />
+                                        <div className="absolute top-2 right-2 bg-white rounded-full p-0.5 shadow">
+                                            <CheckCircle2 size={14} className="fill-emerald-500 text-white" />
+                                        </div>
+                                        <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-sm text-white text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wide">
+                                            {t.face[lang]}
+                                        </div>
+                                    </div>
+                                    {/* Body */}
+                                    <div className="aspect-square rounded-2xl bg-gray-900 relative overflow-hidden shadow-sm">
+                                        <img src={bodyPreview!} alt="Body" className="w-full h-full object-cover" />
+                                        <div className="absolute top-2 right-2 bg-white rounded-full p-0.5 shadow">
+                                            <CheckCircle2 size={14} className="fill-emerald-500 text-white" />
+                                        </div>
+                                        <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-sm text-white text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wide">
+                                            {t.body[lang]}
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div className="flex items-baseline justify-between px-1 shrink-0">
-                                    <h2 className="text-xl lg:text-2xl font-bold text-gray-900">{productName}</h2>
-                                    <p className="text-lg lg:text-xl font-bold text-gray-900">
+                                {/* Product Info Row */}
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <h2 className="text-base font-bold text-gray-900">{productName}</h2>
+                                        <p className="text-sm text-gray-500">{productCategory}</p>
+                                    </div>
+                                    <p className="text-lg font-bold text-emerald-600">
                                         {lang === 'en'
                                             ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(product.price)
                                             : new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', minimumFractionDigits: 0 }).format(product.price)
                                         }
                                     </p>
                                 </div>
-                            </div>
 
-                            {/* RIGHT: Photos & Info */}
-                            <div className="flex flex-col gap-6 h-full">
+                                {/* Edit Photos Link */}
+                                <button
+                                    onClick={() => setStep(1)}
+                                    className="text-blue-600 font-semibold text-sm self-start hover:underline"
+                                >
+                                    {t.edit[lang]} {t.yourReferencePhotos[lang].toLowerCase()}
+                                </button>
 
-                                {/* Photos Header */}
-                                <div className="flex items-center justify-between shrink-0">
-                                    <h3 className="flex items-center gap-2 text-lg font-bold text-emerald-900">
-                                        <User size={20} className="text-blue-600" />
-                                        {t.yourReferencePhotos[lang]}
-                                    </h3>
-                                    <button
-                                        onClick={() => setStep(1)}
-                                        className="text-blue-600 font-bold text-sm hover:underline"
-                                    >
-                                        {t.edit[lang]}
-                                    </button>
-                                </div>
-
-                                {/* Photos Grid */}
-                                <div className="grid grid-cols-2 gap-4 shrink-0">
-                                    {/* Face */}
-                                    <div className="aspect-square rounded-2xl bg-gray-900 relative overflow-hidden shadow-md group">
-                                        <img src={facePreview!} alt="Face" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
-
-                                        {/* Checkmark */}
-                                        <div className="absolute top-3 right-3 bg-white rounded-full p-0.5 shadow-lg">
-                                            <CheckCircle2 size={20} className="fill-emerald-500 text-white" />
-                                        </div>
-
-                                        {/* Badge */}
-                                        <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-widest">
-                                            {t.face[lang]}
-                                        </div>
-                                    </div>
-
-                                    {/* Body */}
-                                    <div className="aspect-square rounded-2xl bg-gray-900 relative overflow-hidden shadow-md group">
-                                        <img src={bodyPreview!} alt="Body" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
-
-                                        {/* Checkmark */}
-                                        <div className="absolute top-3 right-3 bg-white rounded-full p-0.5 shadow-lg">
-                                            <CheckCircle2 size={20} className="fill-emerald-500 text-white" />
-                                        </div>
-
-                                        {/* Badge */}
-                                        <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-widest">
-                                            {t.body[lang]}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Info Box - Pushed to bottom */}
-                                <div className="mt-auto bg-blue-50 rounded-2xl p-6 flex items-start gap-4 border border-blue-100 shrink-0">
-                                    <div className="p-2 bg-blue-100 rounded-lg text-blue-600 shrink-0">
-                                        <Sparkles size={20} className="fill-current" />
+                                {/* Info Box */}
+                                <div className="bg-blue-50 rounded-xl p-4 flex items-start gap-3 border border-blue-100">
+                                    <div className="p-1.5 bg-blue-100 rounded-lg text-blue-600 shrink-0">
+                                        <Sparkles size={16} className="fill-current" />
                                     </div>
                                     <div>
-                                        <h4 className="font-bold text-gray-900 text-base lg:text-lg">{t.readyToGenerate[lang]}</h4>
-                                        <p className="text-sm text-gray-600 mt-1 leading-relaxed">
+                                        <h4 className="font-bold text-gray-900 text-sm">{t.readyToGenerate[lang]}</h4>
+                                        <p className="text-xs text-gray-600 mt-0.5 leading-relaxed">
                                             {t.aiProcessInfo[lang]}
                                         </p>
                                     </div>
                                 </div>
                             </div>
 
-                        </div>
+                            {/* DESKTOP LAYOUT */}
+                            <div className="hidden lg:grid lg:grid-cols-2 gap-12 h-full items-start">
+
+                                {/* LEFT: Selected Product */}
+                                <div className="flex flex-col gap-4 h-full">
+                                    <h3 className="flex items-center gap-2 text-lg font-bold text-emerald-900 shrink-0">
+                                        <Shirt size={20} className="text-emerald-600" />
+                                        {t.selectedProduct[lang]}
+                                    </h3>
+
+                                    {/* Product Image */}
+                                    <div className="flex-1 rounded-3xl overflow-hidden bg-gray-100 relative border border-gray-200 shadow-sm">
+                                        <img
+                                            src={product.images[0]}
+                                            alt={productName}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </div>
+
+                                    <div className="flex items-baseline justify-between px-1 shrink-0">
+                                        <h2 className="text-2xl font-bold text-gray-900">{productName}</h2>
+                                        <p className="text-xl font-bold text-gray-900">
+                                            {lang === 'en'
+                                                ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(product.price)
+                                                : new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', minimumFractionDigits: 0 }).format(product.price)
+                                            }
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* RIGHT: Photos & Info */}
+                                <div className="flex flex-col gap-6 h-full">
+
+                                    {/* Photos Header */}
+                                    <div className="flex items-center justify-between shrink-0">
+                                        <h3 className="flex items-center gap-2 text-lg font-bold text-emerald-900">
+                                            <User size={20} className="text-blue-600" />
+                                            {t.yourReferencePhotos[lang]}
+                                        </h3>
+                                        <button
+                                            onClick={() => setStep(1)}
+                                            className="text-blue-600 font-bold text-sm hover:underline"
+                                        >
+                                            {t.edit[lang]}
+                                        </button>
+                                    </div>
+
+                                    {/* Photos Grid */}
+                                    <div className="grid grid-cols-2 gap-4 shrink-0">
+                                        {/* Face */}
+                                        <div className="aspect-square rounded-2xl bg-gray-900 relative overflow-hidden shadow-md group">
+                                            <img src={facePreview!} alt="Face" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
+
+                                            {/* Checkmark */}
+                                            <div className="absolute top-3 right-3 bg-white rounded-full p-0.5 shadow-lg">
+                                                <CheckCircle2 size={20} className="fill-emerald-500 text-white" />
+                                            </div>
+
+                                            {/* Badge */}
+                                            <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-widest">
+                                                {t.face[lang]}
+                                            </div>
+                                        </div>
+
+                                        {/* Body */}
+                                        <div className="aspect-square rounded-2xl bg-gray-900 relative overflow-hidden shadow-md group">
+                                            <img src={bodyPreview!} alt="Body" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
+
+                                            {/* Checkmark */}
+                                            <div className="absolute top-3 right-3 bg-white rounded-full p-0.5 shadow-lg">
+                                                <CheckCircle2 size={20} className="fill-emerald-500 text-white" />
+                                            </div>
+
+                                            {/* Badge */}
+                                            <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-widest">
+                                                {t.body[lang]}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Info Box - Pushed to bottom */}
+                                    <div className="mt-auto bg-blue-50 rounded-2xl p-6 flex items-start gap-4 border border-blue-100 shrink-0">
+                                        <div className="p-2 bg-blue-100 rounded-lg text-blue-600 shrink-0">
+                                            <Sparkles size={20} className="fill-current" />
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-gray-900 text-lg">{t.readyToGenerate[lang]}</h4>
+                                            <p className="text-sm text-gray-600 mt-1 leading-relaxed">
+                                                {t.aiProcessInfo[lang]}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </>
                     )}
 
                 </div>
