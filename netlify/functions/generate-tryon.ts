@@ -48,25 +48,36 @@ export const handler = async (event: any) => {
 
         // Prompt from User Reference
         const prompt = `
-    Role: Expert Virtual Try-On AI.
+    Role: Expert Virtual Try-On AI and Fashion Photographer.
     
     Task: Generate a photorealistic virtual try-on image based on the provided inputs.
 
-    Inputs:
-    1. Garment Image: The clothing item to apply.
-    2. User Body Photo: Defines the target body shape and pose.
-    3. User Face Photo: Defines the identity.
+    Inputs (in order of appearance):
+    1. User Face Photo: THE MOST IMPORTANT INPUT - This is the person's identity. The output MUST have THIS EXACT FACE.
+    2. Garment Image: The clothing item to apply.
+    3. User Body Photo: Defines the target body shape and proportions ONLY (not the face, not the pose).
 
     STRICT GUIDELINES:
 
-    1. COMPOSITION & POSE:
-       - Subject: User's face and full body must be clearly visible from head to toe.
-       - Pose: Use a clean, neutral studio standing pose with relaxed arms (you may change the body photo pose).
-       - Identity: STRICTLY preserve the identity from the Face Photo.
-       - Body Shape: STRICTLY preserve the user's original body shape and proportions.
-       - Use the Body Photo ONLY for body proportions and silhouette. Do NOT copy its pose, environment, or objects.
+    1. FACE PRESERVATION (HIGHEST PRIORITY - NON-NEGOTIABLE):
+       - The Face Photo is the PRIMARY identity reference. The generated face MUST be IDENTICAL to the Face Photo.
+       - COPY THE EXACT FACE: Same eyes, nose, lips, face shape, skin tone, hair color, hairstyle.
+       - PRESERVE FACIAL EXPRESSION: If the person is smiling in the Face Photo, they MUST smile in the output. If neutral, keep neutral.
+       - NO face modification, NO beautification, NO aging, NO changing features.
+       - The output person must be IMMEDIATELY RECOGNIZABLE as the same person in the Face Photo.
+       - This is a virtual try-on, NOT a face swap with a model. The face must be the USER's face.
 
-    2. GARMENT APPLICATION & STYLING (MANDATORY OUTFIT HARMONY):
+    2. COMPOSITION & POSE:
+       - Full body must be clearly visible from head to toe.
+       - POSE REQUIREMENT: Use a confident, fashion-forward studio pose:
+         * Preferred: One hand on hip, slight body angle, confident stance
+         * Alternative: Arms relaxed at sides with slight angle, model-like posture
+         * The pose should look professional and dynamic, like a fashion catalog
+       - Do NOT use stiff, awkward, or passport-photo-like poses.
+       - Body Shape: STRICTLY preserve the user's original body shape and proportions from Body Photo.
+       - Use the Body Photo ONLY for body proportions and silhouette. Do NOT copy its environment.
+
+    3. GARMENT APPLICATION & STYLING (MANDATORY OUTFIT HARMONY):
        - PRIMARY TASK: Replace the target clothing on the Body Photo with the Garment Image.
        - CRITICAL STYLING RULE: You are a high-end fashion stylist. Preserve the garment identity but ensure a cohesive look.
          - PRIORITY: Keep the core outfit from the Garment Image. Only adjust other pieces if there is a clear clash in color or formality.
@@ -81,7 +92,7 @@ export const handler = async (event: any) => {
        - Ensure natural fabric drape, tension points, and realistic wrinkles/folds.
        - Handle occlusions: Hair and arms/hands must properly overlap the garment if they did so in the original pose.
 
-    3. CRITICAL: BACKGROUND & LIGHTING (MUST REPLACE ORIGINAL):
+    4. CRITICAL: BACKGROUND & LIGHTING (MUST REPLACE ORIGINAL):
        - BACKGROUND: COMPLETELY REMOVE the original background. REPLACE it with a high-end, clean, OFF-WHITE STUDIO WALL.
        - The background must be solid off-white/light gray (e.g., #F5F5F5).
        - FLOORING: Matching studio floor with soft contact shadows.
@@ -89,19 +100,24 @@ export const handler = async (event: any) => {
        - DO NOT preserve the original street/room background.
        - No props, no furniture, no kitchen, no room elements, no scenery.
 
-    4. QUALITY & STYLE:
+    5. QUALITY & STYLE:
        - Result must be e-commerce compliant, photorealistic, and trustworthy.
        - High resolution, clean edges (no halos).
        - Garment color must match the product reference.
+       - The result should look like a professional fashion catalog photo.
 
     NEGATIVE PROMPT (AVOID):
+    - Different face, changed face, modified face, beautified face, different person, model face.
     - Original background, street background, outdoor background, busy background, complex background.
     - Kitchen, living room, bedroom, doors, windows, furniture, plants, appliances, decor.
     - Dark background, colored background, patterned background.
-    - Cropped body, missing feet, awkward poses, stiff arms.
+    - Stiff pose, awkward pose, passport photo pose, arms straight down.
+    - Cropped body, missing feet, awkward poses.
     - Face distortion, body reshaping.
     - Artificial lighting effects, lens flares, hard shadows.
     - Low quality, blurry, pixelated, bad anatomy, distorted hands, extra limbs.
+    
+    FINAL REMINDER: The FACE in the output MUST be EXACTLY the same as the Face Photo input. This is the most critical requirement.
     
     ${description ? `Additional Product Context: ${description}` : ''}
         `;
@@ -113,9 +129,10 @@ export const handler = async (event: any) => {
             contents: {
                 parts: [
                     { text: prompt },
+                    // FACE FIRST - Most important for identity preservation
+                    { inlineData: { mimeType: 'image/jpeg', data: faceData } },
                     { inlineData: { mimeType: 'image/jpeg', data: garmentData } },
-                    { inlineData: { mimeType: 'image/jpeg', data: bodyData } },
-                    { inlineData: { mimeType: 'image/jpeg', data: faceData } }
+                    { inlineData: { mimeType: 'image/jpeg', data: bodyData } }
                 ]
             },
             config: {
