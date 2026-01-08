@@ -43,7 +43,7 @@ const TechStack: React.FC = () => {
         ? {
             animate: { x: '-50%' },
             transition: {
-                duration: 100,
+                duration: isMobile ? 50 : 100,
                 ease: 'linear',
                 repeat: Infinity
             }

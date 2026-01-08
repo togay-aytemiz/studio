@@ -2,10 +2,12 @@
     "welcome": "Hoşgeldiniz",
     "language": "Dil",
     "nav": {
+        "whyAgens": "Neden Agens",
         "expertise": "Yeteneklerimiz",
         "process": "Süreç",
         "work": "Projeler",
         "team": "Hakkımızda",
+        "contact": "İletişim",
         "startProject": "Görüşme Planla",
         "startProjectNote": "Ücretsiz ilk değerlendirme",
         "aiIdeaAnalysis": "AI Fikir Analizi"

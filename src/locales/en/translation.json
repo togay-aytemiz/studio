@@ -2,10 +2,12 @@
     "welcome": "Welcome",
     "language": "Language",
     "nav": {
+        "whyAgens": "Why Agens",
         "expertise": "Services",
         "process": "Process",
         "work": "Projects",
         "team": "About",
+        "contact": "Contact",
         "startProject": "Let's Talk",
         "startProjectNote": "Free initial assessment",
         "aiIdeaAnalysis": "AI Idea Analysis"

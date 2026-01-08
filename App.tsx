@@ -12,6 +12,7 @@ import Work from './components/Work';
 import FounderMessage from './components/FounderMessage';
 import Team from './components/Team';
 import Contact from './components/Contact';
+import MobileSectionNav from './components/MobileSectionNav';
 import ValidatePage from './pages/ValidatePage';
 import DemoRoute from './demos/DemoRoute';
 import DemoRenderer from './demos/DemoRenderer';
@@ -64,6 +65,7 @@ const HomePage = () => (
     <main>
       <Hero />
       <TechStack />
+      <MobileSectionNav />
       <WhyAgens />
       <Expertise />
       <Process />

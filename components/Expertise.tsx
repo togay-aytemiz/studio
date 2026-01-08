@@ -1,15 +1,13 @@
-import React, { useState, useMemo } from 'react';
-import { SERVICES } from '../constants';
+import React, { useMemo } from 'react';
 import ScrollReveal from './ScrollReveal';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { CreditCard, LayoutGrid, Calendar, Bot, ChevronRight } from 'lucide-react';
 import { useTranslation, Trans } from 'react-i18next';
 
 const Expertise: React.FC = () => {
     const { t } = useTranslation();
-    const [activeTab, setActiveTab] = useState<'services' | 'capabilities'>('capabilities');
 
-    // Reusing Capability Groups Logic
+    // Capability Groups
     const CAPABILITY_GROUPS = useMemo(() => [
         {
             id: "fintech",
@@ -51,8 +49,7 @@ const Expertise: React.FC = () => {
 
     const containerVariants = {
         hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
-        exit: { opacity: 0 }
+        visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
     };
 
     const itemVariants = {
@@ -61,7 +58,7 @@ const Expertise: React.FC = () => {
     };
 
     return (
-        <section id="services" className="cv-auto bg-slate-50 dark:bg-slate-950 relative pb-20 md:pb-8">
+        <section id="services" className="cv-auto bg-slate-50 dark:bg-slate-950 relative pb-20 md:pb-40">
             {/* Background Decor */}
             <div className="absolute left-0 top-0 w-full h-[500px] bg-indigo-500/5 blur-[120px] pointer-events-none"></div>
 
@@ -90,108 +87,38 @@ const Expertise: React.FC = () => {
                 </ScrollReveal>
             </div>
 
-            {/* Sticky Tabs Navigation - Intercom Style */}
-            <div className="sticky top-14 md:static z-30 bg-slate-50/95 dark:bg-slate-950/95 backdrop-blur-md border-y border-slate-200 dark:border-white/10 mb-12 shadow-sm">
-                <div className="container mx-auto px-6">
-                    <div className="flex gap-8 overflow-x-auto no-scrollbar">
-                        <button
-                            onClick={() => setActiveTab('capabilities')}
-                            className={`relative py-4 text-xs md:text-sm font-bold tracking-widest uppercase transition-colors whitespace-nowrap ${activeTab === 'capabilities' ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
-                        >
-                            {t('expertise.tabs.capabilities', 'Sektörel Deneyim')}
-                            {activeTab === 'capabilities' && (
-                                <motion.div
-                                    layoutId="activeTabUnderline"
-                                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-900 dark:bg-white"
-                                />
-                            )}
-                        </button>
-
-                        <button
-                            onClick={() => setActiveTab('services')}
-                            className={`relative py-4 text-xs md:text-sm font-bold tracking-widest uppercase transition-colors whitespace-nowrap ${activeTab === 'services' ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}
-                        >
-                            {t('expertise.tabs.services', 'Hizmetler')}
-                            {activeTab === 'services' && (
-                                <motion.div
-                                    layoutId="activeTabUnderline"
-                                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-900 dark:bg-white"
-                                />
-                            )}
-                        </button>
-                    </div>
-                </div>
-            </div>
-
             {/* Content Grid */}
-            <div className="container mx-auto px-6 relative z-10 min-h-[400px]">
-                <AnimatePresence mode="wait">
-                    {activeTab === 'services' ? (
+            <div className="container mx-auto px-6 relative z-10">
+                <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+                >
+                    {CAPABILITY_GROUPS.map((group) => (
                         <motion.div
-                            key="services-grid"
-                            variants={containerVariants}
-                            initial="hidden"
-                            animate="visible"
-                            exit="exit"
-                            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
+                            key={group.id}
+                            variants={itemVariants}
+                            className={`bg-white dark:bg-slate-900/40 backdrop-blur-sm border border-slate-200 dark:border-white/5 rounded-2xl p-6 hover:bg-slate-50 dark:hover:bg-slate-900/60 transition-colors duration-300 group shadow-sm dark:shadow-none`}
                         >
-                            {SERVICES.map((service, index) => {
-                                const keyId = service.id.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
-                                return (
-                                    <motion.div
-                                        key={service.id}
-                                        variants={itemVariants}
-                                        className="h-full p-5 md:p-8 rounded-2xl bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-white/5 relative overflow-hidden flex flex-col hover:border-indigo-500/30 transition-all duration-300 group shadow-sm dark:shadow-none"
-                                    >
-                                        <div className="w-12 h-12 md:w-14 md:h-14 bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 rounded-xl flex items-center justify-center mb-4 md:mb-6 text-indigo-500 dark:text-indigo-400 group-hover:scale-110 transition-transform duration-300">
-                                            <service.icon size={26} strokeWidth={1.5} />
-                                        </div>
-                                        <h3 className="text-sm md:text-xl font-bold text-slate-900 dark:text-white mb-2 md:mb-3 tracking-tight">
-                                            {t(`services.items.${keyId}.title`)}
-                                        </h3>
-                                        <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm flex-grow">
-                                            {t(`services.items.${keyId}.description`)}
-                                        </p>
-                                        {/* Decorative corner */}
-                                        <div className="absolute bottom-0 right-0 w-16 h-16 bg-gradient-to-tl from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-tl-3xl pointer-events-none"></div>
-                                    </motion.div>
-                                );
-                            })}
+                            <div className="flex items-center gap-4 mb-6">
+                                <div className={`p-3 rounded-xl ${group.bg} border ${group.border} ${group.color}`}>
+                                    <group.icon size={24} />
+                                </div>
+                                <h3 className="font-bold text-slate-900 dark:text-white text-lg">{group.title}</h3>
+                            </div>
+                            <ul className="space-y-3">
+                                {Array.isArray(group.items) && group.items.map((item, idx) => (
+                                    <li key={idx} className="flex items-start gap-2.5 text-sm text-slate-600 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors">
+                                        <ChevronRight size={14} className={`mt-0.5 ${group.color} opacity-50`} />
+                                        <span>{item}</span>
+                                    </li>
+                                ))}
+                            </ul>
                         </motion.div>
-                    ) : (
-                        <motion.div
-                            key="capabilities-grid"
-                            variants={containerVariants}
-                            initial="hidden"
-                            animate="visible"
-                            exit="exit"
-                            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-                        >
-                            {CAPABILITY_GROUPS.map((group) => (
-                                <motion.div
-                                    key={group.id}
-                                    variants={itemVariants}
-                                    className={`bg-white dark:bg-slate-900/40 backdrop-blur-sm border border-slate-200 dark:border-white/5 rounded-2xl p-6 hover:bg-slate-50 dark:hover:bg-slate-900/60 transition-colors duration-300 group shadow-sm dark:shadow-none`}
-                                >
-                                    <div className="flex items-center gap-4 mb-6">
-                                        <div className={`p-3 rounded-xl ${group.bg} border ${group.border} ${group.color}`}>
-                                            <group.icon size={24} />
-                                        </div>
-                                        <h3 className="font-bold text-slate-900 dark:text-white text-lg">{group.title}</h3>
-                                    </div>
-                                    <ul className="space-y-3">
-                                        {Array.isArray(group.items) && group.items.map((item, idx) => (
-                                            <li key={idx} className="flex items-start gap-2.5 text-sm text-slate-600 dark:text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-300 transition-colors">
-                                                <ChevronRight size={14} className={`mt-0.5 ${group.color} opacity-50`} />
-                                                <span>{item}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </motion.div>
-                            ))}
-                        </motion.div>
-                    )}
-                </AnimatePresence>
+                    ))}
+                </motion.div>
             </div>
         </section>
     );

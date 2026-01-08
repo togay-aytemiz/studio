@@ -36,7 +36,7 @@ const Contact: React.FC = () => {
     const emailTheme = 'dark';
 
     try {
-          await import('../services/emailService').then(mod =>
+      await import('../services/emailService').then(mod =>
         mod.sendEmail({
           type: 'contact',
           name: formData.name,
@@ -120,7 +120,7 @@ const Contact: React.FC = () => {
   return (
     <section
       id="contact"
-      className="cv-auto scroll-mt-28 py-12 md:py-24 bg-[#020617] relative overflow-hidden flex flex-col items-center justify-start"
+      className="cv-auto md:scroll-mt-[100px] py-12 md:py-24 bg-[#020617] relative overflow-hidden flex flex-col items-center justify-start"
     >
 
       {/* Background Image - Mobile */}
@@ -196,41 +196,41 @@ const Contact: React.FC = () => {
                           transition={{ duration: 0.35, ease: 'easeOut' }}
                           className="rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8 text-slate-200 shadow-xl"
                         >
-                        <div className="flex items-center gap-3 mb-3">
-                          <div className="h-10 w-10 rounded-full bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-300">
-                            <CheckCircle2 size={20} />
+                          <div className="flex items-center gap-3 mb-3">
+                            <div className="h-10 w-10 rounded-full bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-300">
+                              <CheckCircle2 size={20} />
+                            </div>
+                            <p className="text-xl md:text-2xl font-semibold text-white">{t('contact.alerts.successTitle')}</p>
                           </div>
-                        <p className="text-xl md:text-2xl font-semibold text-white">{t('contact.alerts.successTitle')}</p>
-                        </div>
-                        <p className="text-sm md:text-base text-slate-300 leading-relaxed">
-                          {submittedContact.email && submittedContact.phone ? (
-                            <Trans
-                              i18nKey="contact.alerts.followUpBoth"
-                              values={{ email: submittedContact.email, phone: submittedContact.phone }}
-                              components={{
-                                email: <span className="font-semibold text-white" />,
-                                phone: <span className="font-semibold text-white" />
-                              }}
-                            />
-                          ) : submittedContact.phone ? (
-                            <Trans
-                              i18nKey="contact.alerts.followUpPhone"
-                              values={{ phone: submittedContact.phone }}
-                              components={{
-                                phone: <span className="font-semibold text-white" />
-                              }}
-                            />
-                          ) : (
-                            <Trans
-                              i18nKey="contact.alerts.followUpEmail"
-                              values={{ email: submittedContact.email || t('contact.alerts.emailFallback') }}
-                              components={{
-                                email: <span className="font-semibold text-white" />
-                              }}
-                            />
-                          )}
-                        </p>
-                      </motion.div>
+                          <p className="text-sm md:text-base text-slate-300 leading-relaxed">
+                            {submittedContact.email && submittedContact.phone ? (
+                              <Trans
+                                i18nKey="contact.alerts.followUpBoth"
+                                values={{ email: submittedContact.email, phone: submittedContact.phone }}
+                                components={{
+                                  email: <span className="font-semibold text-white" />,
+                                  phone: <span className="font-semibold text-white" />
+                                }}
+                              />
+                            ) : submittedContact.phone ? (
+                              <Trans
+                                i18nKey="contact.alerts.followUpPhone"
+                                values={{ phone: submittedContact.phone }}
+                                components={{
+                                  phone: <span className="font-semibold text-white" />
+                                }}
+                              />
+                            ) : (
+                              <Trans
+                                i18nKey="contact.alerts.followUpEmail"
+                                values={{ email: submittedContact.email || t('contact.alerts.emailFallback') }}
+                                components={{
+                                  email: <span className="font-semibold text-white" />
+                                }}
+                              />
+                            )}
+                          </p>
+                        </motion.div>
                       ) : (
                         <motion.form
                           key="contact-form"
@@ -241,78 +241,78 @@ const Contact: React.FC = () => {
                           onSubmit={handleSubmit}
                           className="space-y-6"
                         >
-                      <div className="space-y-6">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div className="space-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                              <div className="group">
+                                <label className={labelClasses}>{t('contact.form.name')}</label>
+                                <input
+                                  type="text"
+                                  name="name"
+                                  value={formData.name}
+                                  onChange={handleChange}
+                                  className={inputClasses}
+                                  placeholder={t('contact.form.namePlaceholder')}
+                                  required
+                                />
+                              </div>
+                              <div className="group">
+                                <label className={labelClasses}>{t('contact.form.phone')}</label>
+                                <input
+                                  type="tel"
+                                  name="phone"
+                                  value={formData.phone}
+                                  onChange={handleChange}
+                                  className={inputClasses}
+                                  placeholder={t('contact.form.phonePlaceholder')}
+                                />
+                              </div>
+                            </div>
+
+                            <div className="group">
+                              <label className={labelClasses}>{t('contact.form.email')}</label>
+                              <input
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                className={inputClasses}
+                                placeholder={t('contact.form.emailPlaceholder')}
+                              />
+                            </div>
+                          </div>
+
                           <div className="group">
-                            <label className={labelClasses}>{t('contact.form.name')}</label>
-                            <input
-                              type="text"
-                              name="name"
-                              value={formData.name}
+                            <div className="flex justify-between items-center mb-2">
+                              <label className="block text-[11px] font-bold uppercase tracking-widest text-white/70 ml-1">
+                                {t('contact.form.project')}
+                              </label>
+                            </div>
+                            <textarea
+                              name="message"
+                              value={formData.message}
                               onChange={handleChange}
-                              className={inputClasses}
-                              placeholder={t('contact.form.namePlaceholder')}
+                              rows={4}
+                              className={`${inputClasses} resize-none`}
+                              placeholder={t('contact.form.projectPlaceholder')}
                               required
-                            />
+                            ></textarea>
                           </div>
-                          <div className="group">
-                            <label className={labelClasses}>{t('contact.form.phone')}</label>
-                            <input
-                              type="tel"
-                              name="phone"
-                              value={formData.phone}
-                              onChange={handleChange}
-                              className={inputClasses}
-                              placeholder={t('contact.form.phonePlaceholder')}
-                            />
+
+
+
+                          <div className="pt-2 flex justify-end md:justify-start">
+                            <Button
+                              type="submit"
+                              size="md"
+                              className="group !px-5 !py-2.5 !text-sm md:!px-6 md:!py-3 md:!text-base"
+                              disabled={!formData.name.trim() || (!formData.email.trim() && !formData.phone.trim()) || !formData.message.trim() || status === 'sending'}
+                            >
+                              {status === 'sending' ? t('contact.form.submitting') : t('contact.form.submit')}
+                              {status !== 'sending' && (
+                                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
+                              )}
+                            </Button>
                           </div>
-                        </div>
-
-                        <div className="group">
-                          <label className={labelClasses}>{t('contact.form.email')}</label>
-                          <input
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            className={inputClasses}
-                            placeholder={t('contact.form.emailPlaceholder')}
-                          />
-                        </div>
-                      </div>
-
-                      <div className="group">
-                        <div className="flex justify-between items-center mb-2">
-                          <label className="block text-[11px] font-bold uppercase tracking-widest text-white/70 ml-1">
-                            {t('contact.form.project')}
-                          </label>
-                        </div>
-                        <textarea
-                          name="message"
-                          value={formData.message}
-                          onChange={handleChange}
-                          rows={4}
-                          className={`${inputClasses} resize-none`}
-                          placeholder={t('contact.form.projectPlaceholder')}
-                          required
-                        ></textarea>
-                      </div>
-
-
-
-                      <div className="pt-2 flex justify-end md:justify-start">
-                        <Button
-                          type="submit"
-                          size="md"
-                          className="group !px-5 !py-2.5 !text-sm md:!px-6 md:!py-3 md:!text-base"
-                          disabled={!formData.name.trim() || (!formData.email.trim() && !formData.phone.trim()) || !formData.message.trim() || status === 'sending'}
-                        >
-                          {status === 'sending' ? t('contact.form.submitting') : t('contact.form.submit')}
-                          {status !== 'sending' && (
-                            <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
-                          )}
-                        </Button>
-                      </div>
                         </motion.form>
                       )}
                     </AnimatePresence>
