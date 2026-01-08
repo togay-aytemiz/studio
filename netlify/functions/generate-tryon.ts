@@ -65,8 +65,14 @@ export const handler = async (event: any) => {
        - Identity: STRICTLY preserve the identity from the Face Photo.
        - Body Shape: STRICTLY preserve the user's original body shape and proportions.
 
-    2. GARMENT APPLICATION:
-       - Replace the clothing on the Body Photo with the Garment Image.
+    2. GARMENT APPLICATION & STYLING (MANDATORY OUTFIT HARMONY):
+       - PRIMARY TASK: Replace the target clothing on the Body Photo with the Garment Image.
+       - CRITICAL STYLING RULE: You are a high-end fashion stylist. DO NOT preserve the original accompanying clothes if they look bad or clashing.
+         - If the user wears a Jacket/Top: You MUST change the trousers/skirt and shoes if the original ones does not match the style/color of the new Jacket.
+         - REPLACE mismatched items with high-quality, neutral, or matching designer pieces.
+         - EXAMPLE: If trying on a tuxedo jacket, REMOVE jeans/shorts and GENERATE matching tuxedo trousers.
+         - EXAMPLE: If trying on a summer dress, REMOVE sneakers and GENERATE sandals or heels.
+         - Goal: A 100% cohesive, runway-ready look. If in doubt, REPLACE the accompanying items to match perfectly.
        - Ensure natural fabric drape, tension points, and realistic wrinkles/folds.
        - Handle occlusions: Hair and arms/hands must properly overlap the garment if they did so in the original pose.
 
