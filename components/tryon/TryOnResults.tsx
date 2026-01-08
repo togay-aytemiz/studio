@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Product } from './ProductCard';
-import { Share2, Download, ThumbsUp, ThumbsDown, ShoppingBag, ArrowRight, Play, ArrowLeft, Sparkles, Loader2, CheckCircle2 } from 'lucide-react';
+import { Share2, Download, ThumbsUp, ThumbsDown, ShoppingBag, ArrowRight, Play, ArrowLeft, Sparkles, Loader2, CheckCircle2, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export interface TryOnResult {
@@ -23,16 +23,11 @@ interface TryOnResultsProps {
     isLoading?: boolean;
 }
 
-const VIEW_LABELS = [
-    { label: 'VIEW 1', title: 'Front Angle', trTitle: 'Ön Açı' },
-    { label: 'VIEW 2', title: 'Side Profile', trTitle: 'Yan Profil' },
-    { label: 'VIEW 3', title: 'Close Up', trTitle: 'Yakın Çekim' },
-];
-
 export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendations, onBack, onTryAnother, isLoading = false }) => {
     const { i18n } = useTranslation();
     const lang = i18n.language === 'en' ? 'en' : 'tr';
     const [loadingProgress, setLoadingProgress] = useState(0);
+    const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
     const LOADING_MESSAGES = [
         { en: "Analyzing body pose...", tr: "Vücut duruşu analiz ediliyor..." },
@@ -49,7 +44,7 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
             const interval = setInterval(() => {
                 setLoadingProgress(prev => {
                     if (prev >= 100) return 100;
-                    return prev + 1; // 10 seconds to reach 100 roughly (100ms * 100 steps)
+                    return prev + 1;
                 });
             }, 100);
 
@@ -88,21 +83,10 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
                         </div>
                     </div>
 
-                    <div className="space-y-2">
-                        <h2 className="text-2xl font-bold text-gray-900">
+                    <div className="space-y-4">
+                        <h2 className="text-2xl font-bold text-gray-900 animate-pulse">
                             {LOADING_MESSAGES[currentMessageIndex][lang]}
                         </h2>
-                        <p className="text-gray-500 text-sm">
-                            {lang === 'en' ? 'Converting your look...' : 'Görünümünüz dönüştürülüyor...'} {Math.round(loadingProgress)}%
-                        </p>
-                    </div>
-
-                    {/* Progress Bar */}
-                    <div className="h-2 bg-gray-100 rounded-full overflow-hidden w-full">
-                        <div
-                            className="h-full bg-emerald-600 transition-all duration-300 ease-out"
-                            style={{ width: `${loadingProgress}%` }}
-                        />
                     </div>
                 </div>
             </div>
@@ -156,32 +140,25 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
 
-                    {/* Left Column: Result Images (Span 8) */}
+                    {/* Left Column: Result Image (Span 8) */}
                     <div className="lg:col-span-8 flex flex-col gap-6">
 
-                        {/* Image Triptych */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            {result.resultImages.map((img, idx) => (
-                                <div key={idx} className="aspect-[3/4] rounded-2xl overflow-hidden bg-gray-100 shadow-sm relative group cursor-zoom-in">
-                                    <img
-                                        src={img}
-                                        alt={`Result View ${idx + 1}`}
-                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                    />
-                                    {/* Gradient Overlay */}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80" />
-
-                                    {/* Text Labels */}
-                                    <div className="absolute bottom-5 left-5 text-white">
-                                        <p className="text-[10px] font-bold uppercase tracking-widest opacity-80 mb-1">
-                                            {VIEW_LABELS[idx]?.label || `VIEW ${idx + 1}`}
-                                        </p>
-                                        <p className="text-lg font-bold leading-tight">
-                                            {lang === 'en' ? VIEW_LABELS[idx]?.title : VIEW_LABELS[idx]?.trTitle}
-                                        </p>
-                                    </div>
-                                </div>
-                            ))}
+                        {/* Single Main Image with Lightbox Trigger */}
+                        <div
+                            className="aspect-[3/4] rounded-3xl overflow-hidden bg-gray-100 shadow-sm relative group cursor-zoom-in"
+                            onClick={() => setIsLightboxOpen(true)}
+                        >
+                            <img
+                                src={result.resultImages[0]}
+                                alt="Try-On Result"
+                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
+                            {/* Overlay Hint */}
+                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100 duration-300">
+                                <span className="bg-white/90 backdrop-blur text-gray-900 px-4 py-2 rounded-full font-bold text-sm shadow-lg pointer-events-none transform translate-y-4 group-hover:translate-y-0 transition-transform">
+                                    {lang === 'en' ? 'View Full Screen' : 'Tam Ekran Görüntüle'}
+                                </span>
+                            </div>
                         </div>
 
                         {/* Feedback Row */}
@@ -220,7 +197,7 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
                             <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-6">{lang === 'en' ? 'Product Details' : 'Ürün Detayları'}</h3>
                             <div className="flex gap-5 mb-8">
                                 <div className="w-24 h-32 bg-gray-100 rounded-xl overflow-hidden shrink-0 border border-gray-100">
-                                    <img src={result.productImage} alt={result.productName} className="w-full h-full object-cover" />
+                                    <img src={result.productImage} alt={result.productName.en} className="w-full h-full object-cover" />
                                 </div>
                                 <div className="flex flex-col justify-between py-1">
                                     <div>
@@ -305,6 +282,34 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
                 </div>
 
             </div>
+
+            {/* Lightbox Modal */}
+            {isLightboxOpen && (
+                <div
+                    className="fixed inset-0 z-[60] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-300"
+                    onClick={() => setIsLightboxOpen(false)}
+                >
+                    <button
+                        className="absolute top-6 right-6 p-2 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors z-50"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setIsLightboxOpen(false);
+                        }}
+                    >
+                        <X size={24} />
+                    </button>
+                    <div
+                        className="relative max-w-7xl max-h-[90vh] w-full h-full flex items-center justify-center"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <img
+                            src={result.resultImages[0]}
+                            alt="Full Screen Result"
+                            className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                        />
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

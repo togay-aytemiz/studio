@@ -7,7 +7,7 @@ import { TryOnResult } from './TryOnResults';
 interface TryOnModalProps {
     product: Product;
     onClose: () => void;
-    onGenerate: (result: TryOnResult) => void;
+    onStartGeneration: (data: any) => void;
 }
 
 type PhotoType = 'FACE' | 'BODY';
@@ -16,7 +16,7 @@ type PhotoType = 'FACE' | 'BODY';
 const GUIDE_FACE_URL = "/tryon/products/face.webp";
 const GUIDE_BODY_URL = "/tryon/products/body.webp";
 
-export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onGenerate }) => {
+export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onStartGeneration }) => {
     const { i18n } = useTranslation();
     const lang = i18n.language === 'en' ? 'en' : 'tr';
 
@@ -41,6 +41,26 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onGene
     const bodyInputRef = useRef<HTMLInputElement>(null);
 
     // Translations
+    const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+
+    const LOADING_MESSAGES = [
+        { en: "Analyzing body pose...", tr: "Vücut duruşu analiz ediliyor..." },
+        { en: "Mapping fabric dynamics...", tr: "Kumaş dinamikleri haritalanıyor..." },
+        { en: "Adjusting lighting and shadows...", tr: "Işık ve gölgeler ayarlanıyor..." },
+        { en: "Rendering final high-res details...", tr: "Son yüksek çözünürlüklü detaylar işleniyor..." },
+        { en: "Final polish...", tr: "Son dokunuşlar..." },
+    ];
+
+    useEffect(() => {
+        if (isGenerating) {
+            const interval = setInterval(() => {
+                setCurrentMessageIndex(prev => (prev + 1) % LOADING_MESSAGES.length);
+            }, 3000);
+            return () => clearInterval(interval);
+        } else {
+            setCurrentMessageIndex(0);
+        }
+    }, [isGenerating]);
     const t = {
         title: { en: 'Select Your Photos', tr: 'Fotoğraflarınızı Seçin' },
         titleShort: { en: 'Upload Photos', tr: 'Fotoğraf Yükle' },
@@ -132,27 +152,62 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onGene
         if (!facePreview || !bodyPreview) return;
         setIsGenerating(true);
 
-        // Helper to convert File to Base64
-        const fileToBase64 = (file: File): Promise<string> => {
+        // Helper to compress and resize image to reduce payload size
+        const compressImage = (file: File | Blob, maxWidth: number = 800, quality: number = 0.7): Promise<string> => {
             return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result as string);
-                reader.onerror = reject;
+                const img = new Image();
+                const url = URL.createObjectURL(file);
+
+                img.onload = () => {
+                    URL.revokeObjectURL(url);
+
+                    // Calculate new dimensions
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > maxWidth) {
+                        height = (height * maxWidth) / width;
+                        width = maxWidth;
+                    }
+
+                    // Create canvas and draw resized image
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+
+                    const ctx = canvas.getContext('2d');
+                    if (!ctx) {
+                        reject(new Error('Failed to get canvas context'));
+                        return;
+                    }
+
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    // Convert to base64 with compression
+                    const base64 = canvas.toDataURL('image/jpeg', quality);
+                    resolve(base64);
+                };
+
+                img.onerror = () => {
+                    URL.revokeObjectURL(url);
+                    reject(new Error('Failed to load image'));
+                };
+
+                img.src = url;
             });
         };
 
-        // Helper to convert URL to Base64 (for product images)
+        // Helper to convert File to compressed Base64
+        const fileToBase64 = async (file: File): Promise<string> => {
+            return compressImage(file, 800, 0.7);
+        };
+
+        // Helper to convert URL to compressed Base64 (for product images)
         const urlToBase64 = async (url: string): Promise<string> => {
             try {
                 const response = await fetch(url);
                 const blob = await response.blob();
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onloadend = () => resolve(reader.result as string);
-                    reader.onerror = reject;
-                    reader.readAsDataURL(blob);
-                });
+                return compressImage(blob, 600, 0.6); // Smaller for product images since there can be multiple
             } catch (error) {
                 console.error("Error converting URL to base64:", error);
                 throw new Error("Failed to process product image.");
@@ -169,48 +224,23 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onGene
                 product.images.map(imgUrl => urlToBase64(imgUrl))
             );
 
-            // 2. Call Netlify Function
-            const response = await fetch('/.netlify/functions/generate-tryon', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    garmentImages: garmentImagesBase64,
-                    bodyImage: bodyBase64,
-                    faceImage: faceBase64,
-                    description: `${product.name.en} - ${product.category.en}`, // Send English details for better prompt understanding
-                }),
-            });
+            // 3. Create Result Object NOT DONE HERE ANYMORE
+            // Instead, we pass the data to the parent to handle the generation and loading state
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'Failed to generate image');
-            }
-
-            const data = await response.json();
-            const generatedImage = data.image;
-
-            if (!generatedImage) {
-                throw new Error('No image returned from server');
-            }
-
-            // 3. Create Result Object
-            const result: TryOnResult = {
-                id: crypto.randomUUID(),
-                productId: product.id,
-                productName: product.name,
-                productImage: product.images[0],
-                productPrice: product.price,
-                productCategory: product.category,
-                userImage: bodyPreview,
-                resultImages: [generatedImage, generatedImage, generatedImage], // Use the generated image for all views for now
-                timestamp: Date.now(),
+            const generationData = {
+                garmentImages: garmentImagesBase64,
+                bodyImage: bodyBase64,
+                faceImage: faceBase64,
+                description: `${product.name.en} - ${product.category.en}`,
+                product: product,
+                userImagePreview: bodyPreview // Pass this for immediate preview
             };
 
-            onGenerate(result);
+            onStartGeneration(generationData);
             onClose();
 
         } catch (error: any) {
-            console.error('Try-On Generation Error:', error);
+            console.error('Try-On Preparation Error:', error);
             alert(lang === 'en' ? `Error: ${error.message}` : `Hata: ${error.message}`);
         } finally {
             setIsGenerating(false);
@@ -575,7 +605,9 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onGene
                                 {isGenerating ? (
                                     <>
                                         <Loader2 size={20} className="animate-spin" />
-                                        {t.generating[lang]}
+                                        <span className="min-w-[200px] text-left">
+                                            {LOADING_MESSAGES[currentMessageIndex][lang]}
+                                        </span>
                                     </>
                                 ) : (
                                     <>

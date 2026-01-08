@@ -137,15 +137,77 @@ const TryOnDemo: React.FC = () => {
         setTryOnProduct(null);
     };
 
-    const handleTryOnGenerate = (result: TryOnResult) => {
-        setTryOnResult(result);
-        setShowResults(true);
+    const handleStartGeneration = async (data: any) => {
+        // 1. Set Loading State & Show Results immediately
         setIsResultLoading(true);
+        setShowResults(true);
 
-        // Mock loading for 10 seconds as requested
-        setTimeout(() => {
+        // Create a temporary result to show immediate feedback (using user preview)
+        const tempResult: TryOnResult = {
+            id: 'temp-' + Date.now(),
+            productId: data.product.id,
+            productName: data.product.name,
+            productImage: data.product.images[0],
+            productPrice: data.product.price,
+            productCategory: data.product.category,
+            userImage: data.userImagePreview,
+            resultImages: [data.userImagePreview], // usage as placeholder
+            timestamp: Date.now(),
+        };
+        setTryOnResult(tempResult);
+        setTryOnProduct(null); // Close modal
+
+        try {
+            // 2. Perform API Call
+            const response = await fetch('/.netlify/functions/generate-tryon', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    garmentImages: data.garmentImages,
+                    bodyImage: data.bodyImage,
+                    faceImage: data.faceImage,
+                    description: data.description,
+                }),
+            });
+
+            // Handle non-JSON responses (like Timeout or 502 Bad Gateway)
+            const contentType = response.headers.get("content-type");
+            if (!contentType || !contentType.includes("application/json")) {
+                const text = await response.text();
+                // Check for common timeout keywords or just return the text
+                const errorMessage = text.includes("Task timed out")
+                    ? "Generation timed out (server limit). Please try again."
+                    : `Server Error: ${text.substring(0, 50)}`;
+                throw new Error(errorMessage);
+            }
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to generate image');
+            }
+
+            const responseData = await response.json();
+            const generatedImage = responseData.image;
+
+            if (!generatedImage) {
+                throw new Error('No image returned from server');
+            }
+
+            // 3. Update Result with Real Image
+            setTryOnResult(prev => prev ? {
+                ...prev,
+                resultImages: [generatedImage],
+                timestamp: Date.now()
+            } : null);
+
+        } catch (error: any) {
+            console.error("Generation Error:", error);
+            alert(`Error: ${error.message}`);
+            // Optionally close results on critical error or let user retry
+            setShowResults(false);
+        } finally {
             setIsResultLoading(false);
-        }, 10000);
+        }
     };
 
     const handleBackFromResults = () => {
@@ -252,7 +314,7 @@ const TryOnDemo: React.FC = () => {
                 <TryOnModal
                     product={tryOnProduct}
                     onClose={handleCloseTryOn}
-                    onGenerate={handleTryOnGenerate}
+                    onStartGeneration={handleStartGeneration}
                 />
             )}
 

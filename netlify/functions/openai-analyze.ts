@@ -1,3 +1,7 @@
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 const SYSTEM_PROMPT = `Sen "Agens AI", premium bir yazılım stüdyosunun hem **Dijital CTO'su** hem de unicorn deneyimine sahip bir **Ürün Stratejistisin**.
 Tonun: Profesyonel, net, ikna edici ve güven verici. Kullanıcıyı cesaretlendir, korkutma.
 
@@ -113,6 +117,29 @@ export const handler = async (event: any) => {
       headers,
       body: JSON.stringify({ error: 'Idea is too short' })
     };
+  }
+
+  // Notify Admin about the new analysis request
+  try {
+    const adminEmail = 'agens.studio@gmail.com';
+    await resend.emails.send({
+      from: 'Agens Studio <hello@mail.agens.studio>',
+      to: [adminEmail],
+      replyTo: 'agens.studio@gmail.com',
+      subject: `[ANALIZ BASLIYOR] Yeni Fikir Analizi`,
+      html: `
+        <h2>Yeni Bir Analiz İsteği Geldi</h2>
+        <p><strong>Fikir:</strong></p>
+        <blockquote style="background: #f9f9f9; padding: 10px; border-left: 4px solid #6366f1;">
+          ${idea}
+        </blockquote>
+        <p><small>Bu email, kullanıcı "Analiz Et" butonuna bastığı an gönderilmiştir. İletişim formu doldurulmasa bile bu veriyi kaydetmiş olduk.</small></p>
+      `
+    });
+    console.log('Admin notification email sent successfully.');
+  } catch (emailError) {
+    console.warn('Failed to send admin notification email:', emailError);
+    // Non-blocking: proceed with analysis even if email fails
   }
 
   try {
