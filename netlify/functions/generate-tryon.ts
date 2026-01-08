@@ -64,6 +64,7 @@ export const handler = async (event: any) => {
        - Pose: Natural standing pose, arms in a relaxed position.
        - Identity: STRICTLY preserve the identity from the Face Photo.
        - Body Shape: STRICTLY preserve the user's original body shape and proportions.
+       - Use the Body Photo ONLY for pose and body proportions. Do NOT copy its environment or objects.
 
     2. GARMENT APPLICATION & STYLING (MANDATORY OUTFIT HARMONY):
        - PRIMARY TASK: Replace the target clothing on the Body Photo with the Garment Image.
@@ -78,10 +79,11 @@ export const handler = async (event: any) => {
 
     3. CRITICAL: BACKGROUND & LIGHTING (MUST REPLACE ORIGINAL):
        - BACKGROUND: COMPLETELY REMOVE the original background. REPLACE it with a high-end, clean, OFF-WHITE STUDIO WALL.
-       - The background must be solid off-white/light gray (e.g., #F5F5F5). 
+       - The background must be solid off-white/light gray (e.g., #F5F5F5).
        - FLOORING: Matching studio floor with soft contact shadows.
        - LIGHTING: Soft, diffused studio lighting. No harsh shadows.
        - DO NOT preserve the original street/room background.
+       - No props, no furniture, no kitchen, no room elements, no scenery.
 
     4. QUALITY & STYLE:
        - Result must be e-commerce compliant, photorealistic, and trustworthy.
@@ -90,6 +92,7 @@ export const handler = async (event: any) => {
 
     NEGATIVE PROMPT (AVOID):
     - Original background, street background, outdoor background, busy background, complex background.
+    - Kitchen, living room, bedroom, doors, windows, furniture, plants, appliances, decor.
     - Dark background, colored background, patterned background.
     - Cropped body, missing feet, awkward poses, stiff arms.
     - Face distortion, body reshaping.
