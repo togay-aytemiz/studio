@@ -61,19 +61,23 @@ export const handler = async (event: any) => {
 
     1. COMPOSITION & POSE:
        - Subject: User's face and full body must be clearly visible from head to toe.
-       - Pose: Natural standing pose, arms in a relaxed position.
+       - Pose: Use a clean, neutral studio standing pose with relaxed arms (you may change the body photo pose).
        - Identity: STRICTLY preserve the identity from the Face Photo.
        - Body Shape: STRICTLY preserve the user's original body shape and proportions.
-       - Use the Body Photo ONLY for pose and body proportions. Do NOT copy its environment or objects.
+       - Use the Body Photo ONLY for body proportions and silhouette. Do NOT copy its pose, environment, or objects.
 
     2. GARMENT APPLICATION & STYLING (MANDATORY OUTFIT HARMONY):
        - PRIMARY TASK: Replace the target clothing on the Body Photo with the Garment Image.
-       - CRITICAL STYLING RULE: You are a high-end fashion stylist. DO NOT preserve the original accompanying clothes if they look bad or clashing.
-         - If the user wears a Jacket/Top: You MUST change the trousers/skirt and shoes if the original ones does not match the style/color of the new Jacket.
-         - REPLACE mismatched items with high-quality, neutral, or matching designer pieces.
-         - EXAMPLE: If trying on a tuxedo jacket, REMOVE jeans/shorts and GENERATE matching tuxedo trousers.
-         - EXAMPLE: If trying on a summer dress, REMOVE sneakers and GENERATE sandals or heels.
-         - Goal: A 100% cohesive, runway-ready look. If in doubt, REPLACE the accompanying items to match perfectly.
+       - CRITICAL STYLING RULE: You are a high-end fashion stylist. Preserve the garment identity but ensure a cohesive look.
+         - PRIORITY: Keep the core outfit from the Garment Image. Only adjust other pieces if there is a clear clash in color or formality.
+         - ACCESSORY-FIRST: Prefer adding or updating accessories (shoes, bag, belt, jewelry) before replacing core garments.
+         - CONTROLLED REPLACEMENT: Replace trousers/skirt/top only when the mismatch is severe or category-specific rules require it.
+         - CATEGORY RULES:
+           - Formal/tuxedo jacket: Replace jeans/shorts with matching formal trousers; add dress shoes.
+           - Dress: Replace sneakers with heels or elegant flats; keep silhouette clean.
+           - Casual jacket/top: Keep original bottoms unless they strongly clash; prefer accessory updates.
+         - DO NOT INVENT PROPS: No furniture/objects; only clothing and wearable accessories.
+         - Goal: A cohesive, studio-ready look without resetting the entire outfit unless necessary.
        - Ensure natural fabric drape, tension points, and realistic wrinkles/folds.
        - Handle occlusions: Hair and arms/hands must properly overlap the garment if they did so in the original pose.
 
