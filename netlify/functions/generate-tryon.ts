@@ -59,32 +59,36 @@ export const handler = async (event: any) => {
 
     STRICT GUIDELINES:
 
-    1. COMPOSITION & IDENTITY:
-       - Subject: Same user, same pose as the Body Photo.
-       - Face: STRICTLY preserve the identity from the Face Photo. Do not change features, age, gender, or expression. Do not beautify.
-       - Body: STRICTLY preserve the body shape and proportions. Do not slim or enlarge. Keep original posture and limb positions.
-       - Camera: Match original angle and distance. Full body must be visible.
+    1. COMPOSITION & POSE:
+       - Subject: User's face and full body must be clearly visible from head to toe.
+       - Pose: Natural standing pose, arms in a relaxed position.
+       - Identity: STRICTLY preserve the identity from the Face Photo.
+       - Body Shape: STRICTLY preserve the user's original body shape and proportions.
 
     2. GARMENT APPLICATION:
        - Replace the clothing on the Body Photo with the Garment Image.
        - Ensure natural fabric drape, tension points, and realistic wrinkles/folds.
        - Handle occlusions: Hair and arms/hands must properly overlap the garment if they did so in the original pose.
-       - No clipping or melting artifacts.
 
-    3. LIGHTING & BACKGROUND:
-       - Background: Clean off-white or very light neutral gray studio background.
-       - Lighting: Soft studio lighting matching the original photo's direction. Avoid hard shadows.
+    3. CRITICAL: BACKGROUND & LIGHTING (MUST REPLACE ORIGINAL):
+       - BACKGROUND: COMPLETELY REMOVE the original background. REPLACE it with a high-end, clean, OFF-WHITE STUDIO WALL.
+       - The background must be solid off-white/light gray (e.g., #F5F5F5). 
+       - FLOORING: Matching studio floor with soft contact shadows.
+       - LIGHTING: Soft, diffused studio lighting. No harsh shadows.
+       - DO NOT preserve the original street/room background.
 
-    4. QUALITY:
-       - High photorealism.
-       - Clean edges (no halos).
+    4. QUALITY & STYLE:
+       - Result must be e-commerce compliant, photorealistic, and trustworthy.
+       - High resolution, clean edges (no halos).
        - Garment color must match the product reference.
 
     NEGATIVE PROMPT (AVOID):
-    - Face distortion, body reshaping, pose modification.
-    - Complex backgrounds.
-    - Accessories not in product.
-    - Low quality, blurry, pixelated, bad anatomy, distorted hands, extra limbs, cartoon, illustration, nudity, nsfw.
+    - Original background, street background, outdoor background, busy background, complex background.
+    - Dark background, colored background, patterned background.
+    - Cropped body, missing feet, awkward poses, stiff arms.
+    - Face distortion, body reshaping.
+    - Artificial lighting effects, lens flares, hard shadows.
+    - Low quality, blurry, pixelated, bad anatomy, distorted hands, extra limbs.
     
     ${description ? `Additional Product Context: ${description}` : ''}
         `;
@@ -127,7 +131,7 @@ export const handler = async (event: any) => {
                         return {
                             statusCode: 200,
                             headers,
-                            body: JSON.stringify({ image: `data:image/png;base64,${part.inlineData.data}` })
+                            body: JSON.stringify({ image: `data: image / png; base64, ${part.inlineData.data} ` })
                         };
                     }
                 }
@@ -152,7 +156,7 @@ export const handler = async (event: any) => {
 
             // 3. Check finish reason
             if (candidate.finishReason) {
-                console.warn(`Generation finished with reason: ${candidate.finishReason}`);
+                console.warn(`Generation finished with reason: ${candidate.finishReason} `);
                 return {
                     statusCode: 500,
                     headers,

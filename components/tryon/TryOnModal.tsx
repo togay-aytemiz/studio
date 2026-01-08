@@ -8,6 +8,12 @@ interface TryOnModalProps {
     product: Product;
     onClose: () => void;
     onStartGeneration: (data: any) => void;
+    initialPhotos?: {
+        faceFile: File | null;
+        facePreview: string | null;
+        bodyFile: File | null;
+        bodyPreview: string | null;
+    };
 }
 
 type PhotoType = 'FACE' | 'BODY';
@@ -16,22 +22,21 @@ type PhotoType = 'FACE' | 'BODY';
 const GUIDE_FACE_URL = "/tryon/products/face.webp";
 const GUIDE_BODY_URL = "/tryon/products/body.webp";
 
-export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onStartGeneration }) => {
+export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onStartGeneration, initialPhotos }) => {
     const { i18n } = useTranslation();
     const lang = i18n.language === 'en' ? 'en' : 'tr';
 
-    const [step, setStep] = useState<1 | 2>(1);
+    // Initialize state from props if available
+    const [faceFile, setFaceFile] = useState<File | null>(initialPhotos?.faceFile || null);
+    const [facePreview, setFacePreview] = useState<string | null>(initialPhotos?.facePreview || null);
+    const [bodyFile, setBodyFile] = useState<File | null>(initialPhotos?.bodyFile || null);
+    const [bodyPreview, setBodyPreview] = useState<string | null>(initialPhotos?.bodyPreview || null);
+
+    // Start at step 2 if we already have both photos
+    const [step, setStep] = useState<1 | 2>(initialPhotos?.facePreview && initialPhotos?.bodyPreview ? 2 : 1);
 
     // Mobile Upload Step State: 'FACE' -> 'BODY'
     const [mobileUploadStep, setMobileUploadStep] = useState<'FACE' | 'BODY'>('FACE');
-
-    // State for Face Photo
-    const [faceFile, setFaceFile] = useState<File | null>(null);
-    const [facePreview, setFacePreview] = useState<string | null>(null);
-
-    // State for Body Photo
-    const [bodyFile, setBodyFile] = useState<File | null>(null);
-    const [bodyPreview, setBodyPreview] = useState<string | null>(null);
 
     const [isGenerating, setIsGenerating] = useState(false);
     const modalRef = useRef<HTMLDivElement>(null);
@@ -239,7 +244,14 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onStar
                 faceImage: faceBase64,
                 description: `${product.name.en} - ${product.category.en}`,
                 product: product,
-                userImagePreview: bodyPreview // Pass this for immediate preview
+                userImagePreview: bodyPreview, // Pass this for immediate preview
+                // Pass raw files back to parent for persistence
+                rawFiles: {
+                    faceFile,
+                    facePreview,
+                    bodyFile,
+                    bodyPreview
+                }
             };
 
             onStartGeneration(generationData);

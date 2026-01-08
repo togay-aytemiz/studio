@@ -118,6 +118,13 @@ const TryOnDemo: React.FC = () => {
     const [showResults, setShowResults] = useState(false);
     const [isResultLoading, setIsResultLoading] = useState(false);
 
+    const [userPhotos, setUserPhotos] = useState<{
+        faceFile: File | null;
+        facePreview: string | null;
+        bodyFile: File | null;
+        bodyPreview: string | null;
+    } | undefined>(undefined);
+
     useEffect(() => {
         // Simple language detection based on path
         const isEn = location.pathname.startsWith('/en');
@@ -138,7 +145,12 @@ const TryOnDemo: React.FC = () => {
     };
 
     const handleStartGeneration = async (data: any) => {
-        // 1. Set Loading State & Show Results immediately
+        // 1. Save User Photos for persistence
+        if (data.rawFiles) {
+            setUserPhotos(data.rawFiles);
+        }
+
+        // 2. Set Loading State & Show Results immediately
         setIsResultLoading(true);
         setShowResults(true);
 
@@ -158,7 +170,7 @@ const TryOnDemo: React.FC = () => {
         setTryOnProduct(null); // Close modal
 
         try {
-            // 2. Perform API Call
+            // 3. Perform API Call
             const response = await fetch('/.netlify/functions/generate-tryon', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -228,12 +240,26 @@ const TryOnDemo: React.FC = () => {
         // User goes back to catalog, inputs are preserved in state if needed, but for now we reset result
     };
 
+    const handleTryProductFromResults = (product: Product) => {
+        // setShowResults(false);
+        setTryOnProduct(product);
+        // implicit: TryOnModal will pick up 'userPhotos' and start at step 2
+    };
+
     const handleQuickView = (product: Product) => {
         setSelectedProduct(product);
     };
 
     const handleCloseQuickView = () => {
         setSelectedProduct(null);
+    };
+
+    // Randomize recommendations
+    const getRecommendations = (currentProductId: string) => {
+        return sampleProducts
+            .filter(p => p.id !== currentProductId)
+            .sort(() => 0.5 - Math.random()) // Simple shuffle
+            .slice(0, 5);
     };
 
     return (
@@ -316,23 +342,25 @@ const TryOnDemo: React.FC = () => {
                 />
             )}
 
+            {/* Try On Results */}
+            {showResults && tryOnResult && (
+                <TryOnResults
+                    result={tryOnResult}
+                    recommendations={getRecommendations(tryOnResult.productId)}
+                    onBack={handleBackFromResults}
+                    onTryAnother={handleTryAnother}
+                    onTryProduct={handleTryProductFromResults}
+                    isLoading={isResultLoading}
+                />
+            )}
+
             {/* Try On Modal */}
             {tryOnProduct && (
                 <TryOnModal
                     product={tryOnProduct}
                     onClose={handleCloseTryOn}
                     onStartGeneration={handleStartGeneration}
-                />
-            )}
-
-            {/* Try On Results */}
-            {showResults && tryOnResult && (
-                <TryOnResults
-                    result={tryOnResult}
-                    recommendations={sampleProducts.filter(p => p.id !== tryOnResult.productId).slice(0, 3)}
-                    onBack={handleBackFromResults}
-                    onTryAnother={handleTryAnother}
-                    isLoading={isResultLoading}
+                    initialPhotos={userPhotos}
                 />
             )}
         </div>

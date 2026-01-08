@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Product } from './ProductCard';
-import { Share2, Download, ThumbsUp, ThumbsDown, ShoppingBag, ArrowRight, Play, ArrowLeft, Sparkles, Loader2, CheckCircle2, X, Shirt, Wand2, RefreshCcw } from 'lucide-react';
+import { Share2, Download, ThumbsUp, ThumbsDown, ShoppingBag, Play, ArrowLeft, Sparkles, Loader2, CheckCircle2, X, Shirt, Wand2, RefreshCcw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export interface TryOnResult {
@@ -20,10 +20,11 @@ interface TryOnResultsProps {
     recommendations: Product[];
     onBack: () => void;
     onTryAnother: () => void;
+    onTryProduct: (product: Product) => void;
     isLoading?: boolean;
 }
 
-export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendations, onBack, onTryAnother, isLoading = false }) => {
+export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendations, onBack, onTryAnother, onTryProduct, isLoading = false }) => {
     const { i18n } = useTranslation();
     const lang = i18n.language === 'en' ? 'en' : 'tr';
     const [loadingProgress, setLoadingProgress] = useState(0);
@@ -31,10 +32,12 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
 
     const LOADING_MESSAGES = [
         { en: "Analyzing body pose...", tr: "Vücut duruşu analiz ediliyor..." },
+        { en: "Checking garment fit...", tr: "Kıyafet uyumu kontrol ediliyor..." },
         { en: "Mapping fabric dynamics...", tr: "Kumaş dinamikleri haritalanıyor..." },
+        { en: "Generating realistic folds...", tr: "Gerçekçi kıvrımlar oluşturuluyor..." },
         { en: "Adjusting lighting and shadows...", tr: "Işık ve gölgeler ayarlanıyor..." },
-        { en: "Rendering final high-res details...", tr: "Son yüksek çözünürlüklü detaylar işleniyor..." },
-        { en: "Final polish...", tr: "Son dokunuşlar..." },
+        { en: "Compositing final image...", tr: "Final görüntü birleştiriliyor..." },
+        { en: "Rendering high-res details...", tr: "Yüksek çözünürlüklü detaylar işleniyor..." },
     ];
 
     const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
@@ -47,6 +50,11 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
 
     useEffect(() => {
         if (isLoading) {
+            // Reset to start
+            setCurrentMessageIndex(0);
+            setCurrentIconIndex(0);
+            setFadeOpacity(1);
+
             // Message and Icon rotation with fade effect
             const messageInterval = setInterval(() => {
                 setFadeOpacity(0); // Fade out
@@ -129,10 +137,7 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
                         <span className="text-gray-300">/</span>
                         <span className="text-gray-900">{lang === 'en' ? 'Try-On Results' : 'Deneme Sonuçları'}</span>
                     </button>
-
-                    <button onClick={onBack} className="md:hidden p-2 -mr-2 text-gray-500">
-                        <ArrowLeft size={24} />
-                    </button>
+                    {/* Mobile back button removed as requested */}
                 </div>
             </div>
 
@@ -244,12 +249,12 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
                         <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm flex-1">
                             <div className="flex items-center justify-between mb-6">
                                 <h3 className="font-bold text-gray-900 text-lg">{lang === 'en' ? 'Try These Next' : 'Bunları da Dene'}</h3>
-                                <button className="text-emerald-600 text-sm font-bold hover:underline">{lang === 'en' ? 'View all' : 'Tümünü gör'}</button>
+                                <button onClick={onTryAnother} className="text-emerald-600 text-sm font-bold hover:underline">{lang === 'en' ? 'View all' : 'Tümünü gör'}</button>
                             </div>
 
                             <div className="space-y-6">
-                                {recommendations.slice(0, 3).map(item => (
-                                    <div key={item.id} className="flex items-center justify-between group cursor-pointer" onClick={() => onTryAnother()}>
+                                {recommendations.slice(0, 5).map(item => (
+                                    <div key={item.id} className="flex items-center justify-between group cursor-pointer" onClick={() => onTryProduct(item)}>
                                         <div className="flex items-center gap-4">
                                             <div className="w-16 h-16 rounded-xl bg-gray-100 overflow-hidden border border-gray-100">
                                                 <img src={item.images[0]} alt={item.name.en} className="w-full h-full object-cover" />
@@ -270,38 +275,7 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
                     </div>
                 </div>
 
-                {/* Banner - Emerald Theme */}
-                <div className="mt-8 lg:mt-12 w-full bg-gradient-to-br from-emerald-600 to-teal-700 rounded-[2rem] p-8 md:p-12 text-white relative overflow-hidden shadow-xl shadow-emerald-200/50">
-                    {/* Decorative Background Elements */}
-                    <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-white/20 to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none mix-blend-overlay"></div>
-                    <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-emerald-900/30 to-transparent rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 pointer-events-none"></div>
 
-                    <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
-                        <div className="max-w-2xl">
-                            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-[11px] font-bold uppercase tracking-wider mb-5 shadow-sm backdrop-blur-sm">
-                                <Sparkles size={12} className="text-emerald-200" />
-                                {lang === 'en' ? 'Ready for more?' : 'Daha fazlası için hazır mısın?'}
-                            </div>
-                            <h2 className="text-3xl md:text-5xl font-black mb-4 tracking-tight leading-tight">
-                                {lang === 'en' ? 'Try Another Product Instantly' : 'Hemen Başka Bir Ürün Dene'}
-                            </h2>
-                            <p className="text-emerald-100 text-lg md:text-xl font-medium leading-relaxed max-w-lg">
-                                {lang === 'en'
-                                    ? 'No need to re-upload. Use your current photos to see how other items from our collection fit you.'
-                                    : 'Tekrar yüklemeye gerek yok. Mevcut fotoğraflarınızı kullanarak koleksiyonumuzdaki diğer ürünlerin üzerinizde nasıl durduğunu görün.'}
-                            </p>
-                        </div>
-                        <button
-                            onClick={onTryAnother}
-                            className="group bg-white text-emerald-800 px-8 py-5 rounded-2xl font-bold text-lg hover:bg-emerald-50 transition-all shadow-xl shadow-emerald-900/20 flex items-center gap-3 whitespace-nowrap active:scale-95"
-                        >
-                            <div className="flex flex-col items-start leading-none">
-                                <span>{lang === 'en' ? 'Browse Catalog' : 'Kataloğa Göz At'}</span>
-                            </div>
-                            <ArrowRight size={24} className="group-hover:translate-x-1 transition-transform" />
-                        </button>
-                    </div>
-                </div>
 
             </div>
 
