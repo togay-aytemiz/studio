@@ -194,12 +194,26 @@ const TryOnDemo: React.FC = () => {
 
             // Check if we have valid data regardless of status code or headers
             if (responseData && responseData.image) {
+                // Preload the image before showing it to avoid flash/jump
+                const img = new Image();
+                img.src = responseData.image;
+
+                await new Promise((resolve) => {
+                    img.onload = resolve;
+                    img.onerror = resolve; // Continue even if it fails to load physically, though ideally we'd handle error
+                });
+
                 // Success! We found the image.
                 setTryOnResult(prev => prev ? {
                     ...prev,
                     resultImages: [responseData.image],
                     timestamp: Date.now()
                 } : null);
+
+                // Keep loading state true for a tiny bit longer to ensure render cycle catches up if needed, 
+                // but effectively the loader overlay in TryOnResults will handle the fade out now.
+                // We set this to false to trigger the fade-out in TryOnResults (via effect)
+                setIsResultLoading(false);
                 return;
             }
 
@@ -221,10 +235,11 @@ const TryOnDemo: React.FC = () => {
         } catch (error: any) {
             console.error("Generation Error:", error);
             alert(`Error: ${error.message}`);
+            setIsResultLoading(false); // Make sure to turn off loading on error
             // Optionally keep results open if it was a partial success or allow retry
             // setShowResults(false); 
         } finally {
-            setIsResultLoading(false);
+            // setIsResultLoading(false); // MOVED: Handled explicitly in success/error blocks to allow for image preloading
         }
     };
 

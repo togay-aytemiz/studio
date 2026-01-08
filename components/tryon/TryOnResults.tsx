@@ -48,30 +48,48 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
     const LOADING_ICONS = [Shirt, Wand2, Sparkles, RefreshCcw];
     const CurrentIcon = LOADING_ICONS[currentIconIndex];
 
+    // We'll use a local state to handle the fade-out of the loader itself
+    const [showLoader, setShowLoader] = useState(isLoading);
+    const [isFadingOut, setIsFadingOut] = useState(false);
+
     useEffect(() => {
         if (isLoading) {
-            // Reset to start
+            setShowLoader(true);
+            setIsFadingOut(false);
+            // Reset animations
             setCurrentMessageIndex(0);
             setCurrentIconIndex(0);
             setFadeOpacity(1);
-
-            // Message and Icon rotation with fade effect
-            const messageInterval = setInterval(() => {
-                setFadeOpacity(0); // Fade out
-
-                setTimeout(() => {
-                    setCurrentMessageIndex(prev => (prev + 1) % LOADING_MESSAGES.length);
-                    setCurrentIconIndex(prev => (prev + 1) % LOADING_ICONS.length);
-                    setFadeOpacity(1); // Fade in
-                }, 500); // Wait for fade out to complete
-
-            }, 3000); // Change every 3 seconds
-
-            return () => {
-                clearInterval(messageInterval);
-            };
+        } else {
+            // Start fade out
+            setIsFadingOut(true);
+            const timer = setTimeout(() => {
+                setShowLoader(false);
+                setIsFadingOut(false);
+            }, 500); // 500ms fade out duration
+            return () => clearTimeout(timer);
         }
     }, [isLoading]);
+
+    useEffect(() => {
+        if (!showLoader) return;
+
+        // Message and Icon rotation
+        const messageInterval = setInterval(() => {
+            setFadeOpacity(0); // Fade out text/icon
+
+            setTimeout(() => {
+                setCurrentMessageIndex(prev => (prev + 1) % LOADING_MESSAGES.length);
+                setCurrentIconIndex(prev => (prev + 1) % LOADING_ICONS.length);
+                setFadeOpacity(1); // Fade in text/icon
+            }, 300); // Wait for fade out to complete (faster than before)
+
+        }, 2500); // Change every 2.5 seconds for better pacing
+
+        return () => {
+            clearInterval(messageInterval);
+        };
+    }, [showLoader]);
 
     const formatPrice = (price: number): string => {
         if (lang === 'en') {
@@ -80,51 +98,47 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
         return new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', minimumFractionDigits: 0 }).format(price);
     };
 
-    if (isLoading) {
-        return (
-            <div className="fixed inset-0 z-50 bg-[#F9FAFB] flex flex-col items-center justify-center p-4">
-                <div className="max-w-md w-full text-center space-y-12">
-
-                    {/* Animated Icon Container */}
-                    <div className="relative w-32 h-32 mx-auto flex items-center justify-center">
-                        {/* Outer rotating ring */}
-                        <div className="absolute inset-0 border-4 border-gray-100 rounded-full"></div>
-                        <div
-                            className="absolute inset-0 border-4 border-emerald-500/30 rounded-full border-t-emerald-600 animate-spin"
-                            style={{ animationDuration: '3s' }}
-                        ></div>
-
-                        {/* Pulse effect background */}
-                        <div className="absolute inset-0 bg-emerald-50 rounded-full animate-ping opacity-20" style={{ animationDuration: '2s' }}></div>
-
-                        {/* Center Icon with Quote Transition */}
-                        <div
-                            className="relative z-10 transition-all duration-500 transform"
-                            style={{
-                                opacity: fadeOpacity,
-                                transform: `scale(${fadeOpacity === 0 ? 0.8 : 1})`
-                            }}
-                        >
-                            <CurrentIcon className="text-emerald-600" size={48} strokeWidth={1.5} />
-                        </div>
-                    </div>
-
-                    {/* Text Container */}
-                    <div className="space-y-4 h-20"> {/* Fixed height to prevent layout shift */}
-                        <h2
-                            className="text-2xl font-bold text-gray-900 transition-opacity duration-500 ease-in-out"
-                            style={{ opacity: fadeOpacity }}
-                        >
-                            {LOADING_MESSAGES[currentMessageIndex][lang]}
-                        </h2>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
     return (
         <div className="fixed inset-0 z-50 bg-[#F9FAFB] overflow-y-auto animate-in slide-in-from-bottom-4 duration-500 scrollbar-none">
+
+            {/* Loading Overlay */}
+            {showLoader && (
+                <div
+                    className={`fixed inset-0 z-[60] bg-[#F9FAFB] flex flex-col items-center justify-center p-4 transition-opacity duration-500 ${isFadingOut ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+                >
+                    <div className="max-w-md w-full text-center space-y-8 md:space-y-12">
+                        {/* Animated Icon Container */}
+                        <div className="relative w-24 h-24 md:w-32 md:h-32 mx-auto flex items-center justify-center">
+                            <div className="absolute inset-0 border-4 border-gray-100 rounded-full"></div>
+                            <div
+                                className="absolute inset-0 border-4 border-emerald-500/30 rounded-full border-t-emerald-600 animate-spin"
+                                style={{ animationDuration: '3s' }}
+                            ></div>
+                            <div className="absolute inset-0 bg-emerald-50 rounded-full animate-ping opacity-20" style={{ animationDuration: '2s' }}></div>
+                            <div
+                                className="relative z-10 transition-all duration-300 transform"
+                                style={{
+                                    opacity: fadeOpacity,
+                                    transform: `scale(${fadeOpacity === 0 ? 0.8 : 1})`
+                                }}
+                            >
+                                <CurrentIcon className="text-emerald-600" size={40} md-size={48} strokeWidth={1.5} />
+                            </div>
+                        </div>
+
+                        {/* Text Container */}
+                        <div className="space-y-4 h-16 md:h-20 flex items-center justify-center">
+                            <h2
+                                className="text-xl md:text-2xl font-bold text-gray-900 transition-opacity duration-300 ease-in-out"
+                                style={{ opacity: fadeOpacity }}
+                            >
+                                {LOADING_MESSAGES[currentMessageIndex][lang]}
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Navbar Breadcrumb */}
             <div className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-40">
                 <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
