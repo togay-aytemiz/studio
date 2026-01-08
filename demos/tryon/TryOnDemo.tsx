@@ -170,45 +170,52 @@ const TryOnDemo: React.FC = () => {
                 }),
             });
 
-            // Handle non-JSON responses (like Timeout or 502 Bad Gateway)
-            const contentType = response.headers.get("content-type");
-            if (!contentType || !contentType.includes("application/json")) {
-                const text = await response.text();
-                // Check for common timeout keywords or just return the text
+            // Robust Response Handling
+            const text = await response.text();
+            let responseData: any;
+
+            try {
+                responseData = JSON.parse(text);
+            } catch (e) {
+                // Not JSON
+            }
+
+            // Check if we have valid data regardless of status code or headers
+            if (responseData && responseData.image) {
+                // Success! We found the image.
+                setTryOnResult(prev => prev ? {
+                    ...prev,
+                    resultImages: [responseData.image],
+                    timestamp: Date.now()
+                } : null);
+                return;
+            }
+
+            // If no image found, check for specific errors
+            if (responseData && responseData.error) {
+                throw new Error(responseData.error);
+            }
+
+            // Handle non-JSON or other errors
+            if (!response.ok) {
                 const errorMessage = text.includes("Task timed out")
                     ? "Generation timed out (server limit). Please try again."
                     : `Server Error: ${text.substring(0, 50)}`;
                 throw new Error(errorMessage);
             }
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'Failed to generate image');
-            }
-
-            const responseData = await response.json();
-            const generatedImage = responseData.image;
-
-            if (!generatedImage) {
-                throw new Error('No image returned from server');
-            }
-
-            // 3. Update Result with Real Image
-            setTryOnResult(prev => prev ? {
-                ...prev,
-                resultImages: [generatedImage],
-                timestamp: Date.now()
-            } : null);
+            throw new Error('No image returned from server');
 
         } catch (error: any) {
             console.error("Generation Error:", error);
             alert(`Error: ${error.message}`);
-            // Optionally close results on critical error or let user retry
-            setShowResults(false);
+            // Optionally keep results open if it was a partial success or allow retry
+            // setShowResults(false); 
         } finally {
             setIsResultLoading(false);
         }
     };
+
 
     const handleBackFromResults = () => {
         setShowResults(false);

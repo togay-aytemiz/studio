@@ -153,7 +153,7 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onStar
         setIsGenerating(true);
 
         // Helper to compress and resize image to reduce payload size
-        const compressImage = (file: File | Blob, maxWidth: number = 800, quality: number = 0.7): Promise<string> => {
+        const compressImage = (file: File | Blob, maxDimension: number = 1024, quality: number = 0.7): Promise<string> => {
             return new Promise((resolve, reject) => {
                 const img = new Image();
                 const url = URL.createObjectURL(file);
@@ -161,16 +161,20 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onStar
                 img.onload = () => {
                     URL.revokeObjectURL(url);
 
-                    // Calculate new dimensions
                     let width = img.width;
                     let height = img.height;
 
-                    if (width > maxWidth) {
-                        height = (height * maxWidth) / width;
-                        width = maxWidth;
+                    // Calculate new dimensions maintaining aspect ratio
+                    if (width > maxDimension || height > maxDimension) {
+                        if (width > height) {
+                            height = Math.round((height * maxDimension) / width);
+                            width = maxDimension;
+                        } else {
+                            width = Math.round((width * maxDimension) / height);
+                            height = maxDimension;
+                        }
                     }
 
-                    // Create canvas and draw resized image
                     const canvas = document.createElement('canvas');
                     canvas.width = width;
                     canvas.height = height;
@@ -181,9 +185,11 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onStar
                         return;
                     }
 
+                    // Fill white background to prevent transparency turning black in JPEG
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.fillRect(0, 0, width, height);
                     ctx.drawImage(img, 0, 0, width, height);
 
-                    // Convert to base64 with compression
                     const base64 = canvas.toDataURL('image/jpeg', quality);
                     resolve(base64);
                 };
@@ -199,7 +205,7 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onStar
 
         // Helper to convert File to compressed Base64
         const fileToBase64 = async (file: File): Promise<string> => {
-            return compressImage(file, 800, 0.7);
+            return compressImage(file, 1024, 0.7);
         };
 
         // Helper to convert URL to compressed Base64 (for product images)
@@ -207,7 +213,7 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onStar
             try {
                 const response = await fetch(url);
                 const blob = await response.blob();
-                return compressImage(blob, 600, 0.6); // Smaller for product images since there can be multiple
+                return compressImage(blob, 1024, 0.7);
             } catch (error) {
                 console.error("Error converting URL to base64:", error);
                 throw new Error("Failed to process product image.");
@@ -219,10 +225,10 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onStar
             const faceBase64 = faceFile ? await fileToBase64(faceFile) : '';
             const bodyBase64 = bodyFile ? await fileToBase64(bodyFile) : '';
 
-            // Convert all product images to base64
-            const garmentImagesBase64 = await Promise.all(
-                product.images.map(imgUrl => urlToBase64(imgUrl))
-            );
+            // Convert ONLY the first product image to base64 to save bandwidth
+            // The backend only uses the first one anyway.
+            const firstImage = product.images[0];
+            const garmentImagesBase64 = firstImage ? [await urlToBase64(firstImage)] : [];
 
             // 3. Create Result Object NOT DONE HERE ANYMORE
             // Instead, we pass the data to the parent to handle the generation and loading state

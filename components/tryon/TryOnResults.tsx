@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Product } from './ProductCard';
-import { Share2, Download, ThumbsUp, ThumbsDown, ShoppingBag, ArrowRight, Play, ArrowLeft, Sparkles, Loader2, CheckCircle2, X } from 'lucide-react';
+import { Share2, Download, ThumbsUp, ThumbsDown, ShoppingBag, ArrowRight, Play, ArrowLeft, Sparkles, Loader2, CheckCircle2, X, Shirt, Wand2, RefreshCcw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 export interface TryOnResult {
@@ -38,26 +38,30 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
     ];
 
     const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+    const [currentIconIndex, setCurrentIconIndex] = useState(0);
+    const [fadeOpacity, setFadeOpacity] = useState(1);
+
+    // Icons to cycle through
+    const LOADING_ICONS = [Shirt, Wand2, Sparkles, RefreshCcw];
+    const CurrentIcon = LOADING_ICONS[currentIconIndex];
 
     useEffect(() => {
         if (isLoading) {
-            const interval = setInterval(() => {
-                setLoadingProgress(prev => {
-                    if (prev >= 100) return 100;
-                    return prev + 1;
-                });
-            }, 100);
-
+            // Message and Icon rotation with fade effect
             const messageInterval = setInterval(() => {
-                setCurrentMessageIndex(prev => (prev + 1) % LOADING_MESSAGES.length);
-            }, 2000);
+                setFadeOpacity(0); // Fade out
+
+                setTimeout(() => {
+                    setCurrentMessageIndex(prev => (prev + 1) % LOADING_MESSAGES.length);
+                    setCurrentIconIndex(prev => (prev + 1) % LOADING_ICONS.length);
+                    setFadeOpacity(1); // Fade in
+                }, 500); // Wait for fade out to complete
+
+            }, 3000); // Change every 3 seconds
 
             return () => {
-                clearInterval(interval);
                 clearInterval(messageInterval);
             };
-        } else {
-            setLoadingProgress(100);
         }
     }, [isLoading]);
 
@@ -71,20 +75,38 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
     if (isLoading) {
         return (
             <div className="fixed inset-0 z-50 bg-[#F9FAFB] flex flex-col items-center justify-center p-4">
-                <div className="max-w-md w-full text-center space-y-8">
-                    <div className="relative w-32 h-32 mx-auto">
+                <div className="max-w-md w-full text-center space-y-12">
+
+                    {/* Animated Icon Container */}
+                    <div className="relative w-32 h-32 mx-auto flex items-center justify-center">
+                        {/* Outer rotating ring */}
                         <div className="absolute inset-0 border-4 border-gray-100 rounded-full"></div>
                         <div
-                            className="absolute inset-0 border-4 border-emerald-600 rounded-full border-t-transparent animate-spin"
-                            style={{ animationDuration: '2s' }}
+                            className="absolute inset-0 border-4 border-emerald-500/30 rounded-full border-t-emerald-600 animate-spin"
+                            style={{ animationDuration: '3s' }}
                         ></div>
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            <Sparkles className="text-emerald-600 animate-pulse" size={32} />
+
+                        {/* Pulse effect background */}
+                        <div className="absolute inset-0 bg-emerald-50 rounded-full animate-ping opacity-20" style={{ animationDuration: '2s' }}></div>
+
+                        {/* Center Icon with Quote Transition */}
+                        <div
+                            className="relative z-10 transition-all duration-500 transform"
+                            style={{
+                                opacity: fadeOpacity,
+                                transform: `scale(${fadeOpacity === 0 ? 0.8 : 1})`
+                            }}
+                        >
+                            <CurrentIcon className="text-emerald-600" size={48} strokeWidth={1.5} />
                         </div>
                     </div>
 
-                    <div className="space-y-4">
-                        <h2 className="text-2xl font-bold text-gray-900 animate-pulse">
+                    {/* Text Container */}
+                    <div className="space-y-4 h-20"> {/* Fixed height to prevent layout shift */}
+                        <h2
+                            className="text-2xl font-bold text-gray-900 transition-opacity duration-500 ease-in-out"
+                            style={{ opacity: fadeOpacity }}
+                        >
                             {LOADING_MESSAGES[currentMessageIndex][lang]}
                         </h2>
                     </div>

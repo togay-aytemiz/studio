@@ -119,27 +119,38 @@ export const handler = async (event: any) => {
     };
   }
 
+  // Determine email status for headers
+  let emailStatus = 'Skipped';
+  let emailErrorMsg = '';
+
   // Notify Admin about the new analysis request
-  try {
-    const adminEmail = 'agens.studio@gmail.com';
-    await resend.emails.send({
-      from: 'Agens Studio <hello@mail.agens.studio>',
-      to: [adminEmail],
-      replyTo: 'agens.studio@gmail.com',
-      subject: `[ANALIZ BASLIYOR] Yeni Fikir Analizi`,
-      html: `
-        <h2>Yeni Bir Analiz İsteği Geldi</h2>
-        <p><strong>Fikir:</strong></p>
-        <blockquote style="background: #f9f9f9; padding: 10px; border-left: 4px solid #6366f1;">
-          ${idea}
-        </blockquote>
-        <p><small>Bu email, kullanıcı "Analiz Et" butonuna bastığı an gönderilmiştir. İletişim formu doldurulmasa bile bu veriyi kaydetmiş olduk.</small></p>
-      `
-    });
-    console.log('Admin notification email sent successfully.');
-  } catch (emailError) {
-    console.warn('Failed to send admin notification email:', emailError);
-    // Non-blocking: proceed with analysis even if email fails
+  if (process.env.RESEND_API_KEY) {
+    try {
+      const adminEmail = 'agens.studio@gmail.com';
+      await resend.emails.send({
+        from: 'Agens Studio <hello@mail.agens.studio>',
+        to: [adminEmail],
+        replyTo: 'agens.studio@gmail.com',
+        subject: `[ANALIZ BASLIYOR] Yeni Fikir Analizi`,
+        html: `
+          <h2>Yeni Bir Analiz İsteği Geldi</h2>
+          <p><strong>Fikir:</strong></p>
+          <blockquote style="background: #f9f9f9; padding: 10px; border-left: 4px solid #6366f1;">
+            ${idea}
+          </blockquote>
+          <p><small>Bu email, kullanıcı "Analiz Et" butonuna bastığı an gönderilmiştir. İletişim formu doldurulmasa bile bu veriyi kaydetmiş olduk.</small></p>
+        `
+      });
+      console.log('Admin notification email sent successfully.');
+      emailStatus = 'Sent';
+    } catch (emailError: any) {
+      console.warn('Failed to send admin notification email:', emailError);
+      emailStatus = 'Failed';
+      emailErrorMsg = emailError.message || String(emailError);
+    }
+  } else {
+    console.warn('RESEND_API_KEY is missing');
+    emailStatus = 'Missing_Key';
   }
 
   try {
@@ -161,11 +172,19 @@ export const handler = async (event: any) => {
       })
     });
 
+    // Add debug headers
+    const debugHeaders = {
+      ...headers,
+      'Content-Type': 'application/json',
+      'X-Email-Status': emailStatus,
+      'X-Email-Error': emailErrorMsg.substring(0, 100) // Truncate to avoid header bloat
+    };
+
     if (!response.ok) {
       const errorText = await response.text();
       return {
         statusCode: 502,
-        headers,
+        headers: debugHeaders,
         body: JSON.stringify({ error: 'OpenAI API hatası', details: errorText })
       };
     }
@@ -176,31 +195,31 @@ export const handler = async (event: any) => {
     if (!content) {
       return {
         statusCode: 502,
-        headers,
+        headers: debugHeaders,
         body: JSON.stringify({ error: 'OpenAI response empty' })
       };
     }
 
     try {
       JSON.parse(content);
-    } catch (error) {
+    } catch (error: any) {
       return {
         statusCode: 502,
-        headers,
+        headers: debugHeaders,
         body: JSON.stringify({ error: 'Invalid JSON from OpenAI', details: content })
       };
     }
 
     return {
       statusCode: 200,
-      headers: { ...headers, 'Content-Type': 'application/json' },
+      headers: debugHeaders,
       body: content
     };
   } catch (error) {
     console.error('OpenAI function error:', error);
     return {
       statusCode: 500,
-      headers,
+      headers: { ...headers, 'X-Email-Status': emailStatus }, // Return email status even on error
       body: JSON.stringify({ error: 'OpenAI request failed' })
     };
   }
