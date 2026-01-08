@@ -1,46 +1,52 @@
 import { GoogleGenAI, HarmCategory, HarmBlockThreshold } from "@google/genai";
 
-const MODEL_NAME = "gemini-2.0-flash-exp-image-generation";
+const MODEL_NAME = "gemini-3-pro-image-preview";
 
 export const handler = async (event: any) => {
+    // CORS Headers
     const headers = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Allow-Methods': 'POST, OPTIONS'
     };
 
+    // Handle OPTIONS for CORS
     if (event.httpMethod === 'OPTIONS') {
         return { statusCode: 200, headers, body: '' };
     }
 
+    // Only allow POST
     if (event.httpMethod !== 'POST') {
         return { statusCode: 405, headers, body: JSON.stringify({ error: 'Method not allowed' }) };
     }
 
+    // API Key Validation
     const apiKey = process.env.API_KEY || process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
-
     if (!apiKey) {
-        return { statusCode: 500, headers, body: JSON.stringify({ error: 'API_KEY missing' }) };
+        console.error("API_KEY missing");
+        return { statusCode: 500, headers, body: JSON.stringify({ error: 'Server configuration error: API_KEY missing' }) };
     }
 
     try {
         const body = JSON.parse(event.body || '{}');
         const { garmentImages, bodyImage, faceImage, description } = body;
 
+        // Basic Validation
         if (!garmentImages || garmentImages.length === 0 || !bodyImage || !faceImage) {
-            return { statusCode: 400, headers, body: JSON.stringify({ error: 'Missing required images' }) };
+            return { statusCode: 400, headers, body: JSON.stringify({ error: 'Missing required images (garment, body, or face)' }) };
         }
 
         const ai = new GoogleGenAI({ apiKey });
 
-        // Clean base64 strings
+        // Helper to clean base64
         const cleanBase64 = (str: string) => str.includes(',') ? str.split(',')[1] : str;
 
         const bodyData = cleanBase64(bodyImage);
         const faceData = cleanBase64(faceImage);
-        // Use first garment image for simplicity (matching reference code structure)
+        // Take the first garment image as per reference logic simplification
         const garmentData = cleanBase64(garmentImages[0]);
 
+        // Prompt from User Reference
         const prompt = `
     Role: Expert Virtual Try-On AI.
     
@@ -96,7 +102,10 @@ export const handler = async (event: any) => {
                 ]
             },
             config: {
-                responseModalities: ['Text', 'Image'],
+                imageConfig: {
+                    imageSize: '1K',
+                    aspectRatio: '3:4'
+                },
                 safetySettings: [
                     { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH },
                     { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH },
@@ -106,10 +115,11 @@ export const handler = async (event: any) => {
             }
         });
 
-        // Check for image parts in the response
+        // Response Handling from Reference
         if (response.candidates && response.candidates.length > 0) {
             const candidate = response.candidates[0];
 
+            // 1. Check for image
             if (candidate.content && candidate.content.parts) {
                 for (const part of candidate.content.parts) {
                     if (part.inlineData && part.inlineData.data) {
@@ -121,23 +131,49 @@ export const handler = async (event: any) => {
                         };
                     }
                 }
+            }
 
-                // Check for text response (refusal)
-                let textContent = "";
+            // 2. Check for text refusal
+            let textContent = "";
+            if (candidate.content && candidate.content.parts) {
                 for (const part of candidate.content.parts) {
                     if (part.text) textContent += part.text;
                 }
-                if (textContent) {
-                    console.warn("Model returned text instead of image:", textContent);
-                    return { statusCode: 500, headers, body: JSON.stringify({ error: `Model refused: ${textContent.substring(0, 100)}` }) };
-                }
+            }
+
+            if (textContent) {
+                console.warn("Model returned text instead of image:", textContent);
+                return {
+                    statusCode: 500,
+                    headers,
+                    body: JSON.stringify({ error: `Model refused to generate image: ${textContent.substring(0, 100)}...` })
+                };
+            }
+
+            // 3. Check finish reason
+            if (candidate.finishReason) {
+                console.warn(`Generation finished with reason: ${candidate.finishReason}`);
+                return {
+                    statusCode: 500,
+                    headers,
+                    body: JSON.stringify({ error: 'Safety guidelines prevented image generation. Please try a different pose or photo.' })
+                };
             }
         }
 
-        return { statusCode: 500, headers, body: JSON.stringify({ error: 'No image generated' }) };
+        console.error("No content in response:", JSON.stringify(response));
+        return {
+            statusCode: 500,
+            headers,
+            body: JSON.stringify({ error: 'No image generated. Please try again.' })
+        };
 
     } catch (error: any) {
-        console.error("Error:", error);
-        return { statusCode: 500, headers, body: JSON.stringify({ error: error.message || 'Internal Server Error' }) };
+        console.error("Gemini API Error:", error);
+        return {
+            statusCode: 500,
+            headers,
+            body: JSON.stringify({ error: error.message || 'Internal Server Error' })
+        };
     }
 };
