@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/A.svg" alt="Agens Logo" width="80" height="80" />
+  <img src="public/A.png" alt="Agens Logo" width="80" height="80" />
   
   # Agens Product Studio
   
