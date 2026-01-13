@@ -6,6 +6,11 @@
   node_bundler = "esbuild"
   directory = "netlify/functions"
 
+# Edge Functions for SEO
+[[edge_functions]]
+  function = "inject-canonical"
+  path = "/*"
+
 
 [dev]
   command = "npm run dev"
