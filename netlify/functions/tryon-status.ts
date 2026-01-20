@@ -1,4 +1,4 @@
-import { getStore } from "@netlify/blobs";
+import { connectLambda, getStore } from "@netlify/blobs";
 
 const STORE_NAME = "tryon-jobs";
 
@@ -31,6 +31,10 @@ export const handler = async (event: any) => {
 
     if (!jobId) {
         return { statusCode: 400, headers, body: JSON.stringify({ error: "Missing jobId" }) };
+    }
+
+    if (event?.blobs) {
+        connectLambda(event);
     }
 
     const store = getStore(STORE_NAME);

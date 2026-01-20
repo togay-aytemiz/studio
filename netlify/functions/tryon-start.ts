@@ -1,4 +1,4 @@
-import { getStore } from "@netlify/blobs";
+import { connectLambda, getStore } from "@netlify/blobs";
 
 const STORE_NAME = "tryon-jobs";
 const JOB_TTL_SECONDS = 60 * 60;
@@ -33,6 +33,10 @@ export const handler = async (event: any) => {
             headers,
             body: JSON.stringify({ error: "Missing required images (garment, body, or face)" }),
         };
+    }
+
+    if (event?.blobs) {
+        connectLambda(event);
     }
 
     const jobId = crypto.randomUUID();
