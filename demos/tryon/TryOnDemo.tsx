@@ -170,8 +170,7 @@ const TryOnDemo: React.FC = () => {
         setTryOnProduct(null); // Close modal
 
         try {
-            // 3. Perform API Call
-            const response = await fetch('/.netlify/functions/generate-tryon', {
+            const startResponse = await fetch('/.netlify/functions/tryon-start', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -182,55 +181,80 @@ const TryOnDemo: React.FC = () => {
                 }),
             });
 
-            // Robust Response Handling
-            const text = await response.text();
-            let responseData: any;
-
+            const startText = await startResponse.text();
+            let startData: any;
             try {
-                responseData = JSON.parse(text);
+                startData = JSON.parse(startText);
             } catch (e) {
                 // Not JSON
             }
 
-            // Check if we have valid data regardless of status code or headers
-            if (responseData && responseData.image) {
-                // Preload the image before showing it to avoid flash/jump
-                const img = new Image();
-                img.src = responseData.image;
-
-                await new Promise((resolve) => {
-                    img.onload = resolve;
-                    img.onerror = resolve; // Continue even if it fails to load physically, though ideally we'd handle error
-                });
-
-                // Success! We found the image.
-                setTryOnResult(prev => prev ? {
-                    ...prev,
-                    resultImages: [responseData.image],
-                    timestamp: Date.now()
-                } : null);
-
-                // Keep loading state true for a tiny bit longer to ensure render cycle catches up if needed, 
-                // but effectively the loader overlay in TryOnResults will handle the fade out now.
-                // We set this to false to trigger the fade-out in TryOnResults (via effect)
-                setIsResultLoading(false);
-                return;
-            }
-
-            // If no image found, check for specific errors
-            if (responseData && responseData.error) {
-                throw new Error(responseData.error);
-            }
-
-            // Handle non-JSON or other errors
-            if (!response.ok) {
-                const errorMessage = text.includes("Task timed out")
-                    ? "Generation timed out (server limit). Please try again."
-                    : `Server Error: ${text.substring(0, 50)}`;
+            if (!startResponse.ok) {
+                const errorMessage = startData?.error
+                    ? startData.error
+                    : `Server Error: ${startText.substring(0, 50)}`;
                 throw new Error(errorMessage);
             }
 
-            throw new Error('No image returned from server');
+            if (!startData?.jobId) {
+                throw new Error('No job id returned from server');
+            }
+
+            const pollIntervalMs = 2000;
+            const maxWaitMs = 2 * 60 * 1000;
+            const pollStart = Date.now();
+
+            const pollForResult = async () => {
+                while (Date.now() - pollStart < maxWaitMs) {
+                    const statusResponse = await fetch(`/.netlify/functions/tryon-status?jobId=${encodeURIComponent(startData.jobId)}`);
+                    const statusText = await statusResponse.text();
+                    let statusData: any;
+
+                    try {
+                        statusData = JSON.parse(statusText);
+                    } catch (e) {
+                        // Not JSON
+                    }
+
+                    if (!statusResponse.ok) {
+                        const errorMessage = statusData?.error
+                            ? statusData.error
+                            : `Server Error: ${statusText.substring(0, 50)}`;
+                        throw new Error(errorMessage);
+                    }
+
+                    if (statusData?.status === 'done' && statusData.image) {
+                        return statusData.image;
+                    }
+
+                    if (statusData?.status === 'error') {
+                        throw new Error(statusData.error || 'Generation failed.');
+                    }
+
+                    await new Promise((resolve) => setTimeout(resolve, pollIntervalMs));
+                }
+
+                throw new Error('Generation timed out (server limit). Please try again.');
+            };
+
+            const image = await pollForResult();
+
+            const img = new Image();
+            img.src = image;
+
+            await new Promise((resolve) => {
+                img.onload = resolve;
+                img.onerror = resolve;
+            });
+
+            setTryOnResult(prev => prev ? {
+                ...prev,
+                resultImages: [image],
+                timestamp: Date.now()
+            } : null);
+
+            setIsResultLoading(false);
+            return;
 
         } catch (error: any) {
             console.error("Generation Error:", error);
@@ -383,4 +407,3 @@ const TryOnDemo: React.FC = () => {
 };
 
 export default TryOnDemo;
-
