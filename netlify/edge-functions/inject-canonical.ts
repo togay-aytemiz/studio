@@ -3,6 +3,18 @@ import type { Context } from "@netlify/edge-functions";
 const BASE_URL = "https://www.agens.studio";
 
 export default async function handler(request: Request, context: Context) {
+    const url = new URL(request.url);
+    const pathname = url.pathname;
+
+    // Skip static assets and API routes before reading the response body.
+    if (
+        pathname.startsWith("/assets/") ||
+        pathname.startsWith("/.netlify/") ||
+        pathname.match(/\.(js|css|png|jpg|jpeg|webp|svg|ico|woff|woff2|ttf|eot)$/)
+    ) {
+        return context.next();
+    }
+
     const response = await context.next();
     const contentType = response.headers.get("content-type") || "";
 
@@ -11,18 +23,10 @@ export default async function handler(request: Request, context: Context) {
         return response;
     }
 
-    let html = await response.text();
-    const url = new URL(request.url);
-    const pathname = url.pathname;
+    const responseClone = response.clone();
 
-    // Skip static assets and API routes
-    if (
-        pathname.startsWith("/assets/") ||
-        pathname.startsWith("/.netlify/") ||
-        pathname.match(/\.(js|css|png|jpg|jpeg|webp|svg|ico|woff|woff2|ttf|eot)$/)
-    ) {
-        return response;
-    }
+    try {
+        let html = await response.text();
 
     // Determine canonical URL (normalize trailing slashes)
     const normalizedPath = pathname === "/" ? "" : pathname.replace(/\/$/, "");
@@ -54,8 +58,17 @@ export default async function handler(request: Request, context: Context) {
         `<meta property="og:locale" content="${ogLocale}"/>`
     );
 
-    return new Response(html, {
-        status: response.status,
-        headers: response.headers,
-    });
+        const headers = new Headers(response.headers);
+        headers.delete("content-length");
+        headers.delete("content-encoding");
+        headers.delete("etag");
+
+        return new Response(html, {
+            status: response.status,
+            headers,
+        });
+    } catch (error) {
+        console.error("inject-canonical error:", error);
+        return responseClone;
+    }
 }
