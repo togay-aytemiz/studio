@@ -43,7 +43,7 @@ export const handler = async (event: any) => {
     }
 
     const store = getStore(STORE_NAME);
-    const job: any = await store.getJSON(jobId);
+    const job: any = await store.get(jobId, { type: "json" });
     if (!job || !job.payload) {
         return { statusCode: 404, headers, body: JSON.stringify({ error: "Job not found" }) };
     }
