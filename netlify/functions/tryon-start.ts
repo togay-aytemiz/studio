@@ -51,19 +51,6 @@ export const handler = async (event: any) => {
 
     await store.setJSON(jobId, job, { ttl: JOB_TTL_SECONDS });
 
-    const host = event.headers?.host;
-    const proto = event.headers?.["x-forwarded-proto"] || "https";
-    if (host) {
-        const url = `${proto}://${host}/.netlify/functions/tryon-generate-background?jobId=${jobId}`;
-        try {
-            await fetch(url, { method: "POST" });
-        } catch (error) {
-            console.warn("tryon-start: background trigger failed", error);
-        }
-    } else {
-        console.warn("tryon-start: missing host header, background job not triggered");
-    }
-
     return {
         statusCode: 202,
         headers,

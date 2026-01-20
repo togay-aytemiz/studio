@@ -200,6 +200,13 @@ const TryOnDemo: React.FC = () => {
                 throw new Error('No job id returned from server');
             }
 
+            void fetch(`/.netlify/functions/tryon-generate-background?jobId=${encodeURIComponent(startData.jobId)}`, {
+                method: 'POST',
+                keepalive: true,
+            }).catch((error) => {
+                console.warn('Background try-on trigger failed:', error);
+            });
+
             const pollIntervalMs = 2000;
             const maxWaitMs = 2 * 60 * 1000;
             const pollStart = Date.now();
