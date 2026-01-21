@@ -169,6 +169,15 @@ const TryOnDemo: React.FC = () => {
         customGarmentInputRef.current?.click();
     };
 
+    const resetCustomGarment = () => {
+        if (customGarmentPreview) {
+            URL.revokeObjectURL(customGarmentPreview);
+        }
+        setCustomGarmentFile(null);
+        setCustomGarmentPreview(null);
+        setIsCustomDragActive(false);
+    };
+
     const handleCustomGarmentDragOver = (event: React.DragEvent<HTMLDivElement>) => {
         event.preventDefault();
         if (event.dataTransfer?.types && !Array.from(event.dataTransfer.types).includes('Files')) {
@@ -355,11 +364,13 @@ const TryOnDemo: React.FC = () => {
     const handleBackFromResults = () => {
         setShowResults(false);
         setTryOnResult(null);
+        resetCustomGarment();
     };
 
     const handleTryAnother = () => {
         setShowResults(false);
         setTryOnProduct(null);
+        resetCustomGarment();
         // User goes back to catalog, inputs are preserved in state if needed, but for now we reset result
     };
 
