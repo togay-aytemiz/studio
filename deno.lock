@@ -12,6 +12,7 @@
     "packageJson": {
       "dependencies": [
         "npm:@google/genai@^1.34.0",
+        "npm:@netlify/blobs@^10.5.0",
         "npm:@tailwindcss/postcss@^4.1.18",
         "npm:@types/node@^22.14.0",
         "npm:@vitejs/plugin-react@5",

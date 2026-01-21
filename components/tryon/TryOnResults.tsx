@@ -14,6 +14,7 @@ export interface TryOnResult {
     userImage: string;
     resultImages: string[];
     timestamp: number;
+    isCustom?: boolean;
 }
 
 interface TryOnResultsProps {
@@ -247,18 +248,26 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
                                         <h2 className="font-bold text-gray-900 text-lg leading-tight mb-1">{result.productName[lang]}</h2>
                                         <p className="text-sm text-gray-500">{result.productCategory[lang]}</p>
                                     </div>
-                                    <p className="text-2xl font-bold text-emerald-600">{formatPrice(result.productPrice)}</p>
+                                    {result.isCustom ? (
+                                        <p className="text-xs font-bold uppercase tracking-wider text-gray-400">
+                                            {lang === 'en' ? 'Custom Upload' : 'Özel Yükleme'}
+                                        </p>
+                                    ) : (
+                                        <p className="text-2xl font-bold text-emerald-600">{formatPrice(result.productPrice)}</p>
+                                    )}
                                 </div>
                             </div>
-                            <div className="space-y-3">
-                                <button className="w-full py-4 bg-[#0F172A] text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-black transition-all shadow-lg shadow-gray-200 active:scale-95">
-                                    <ShoppingBag size={18} />
-                                    {lang === 'en' ? 'Add to Cart' : 'Sepete Ekle'}
-                                </button>
-                                <button className="w-full py-4 bg-white border border-gray-200 text-gray-900 rounded-xl font-bold hover:bg-gray-50 transition-colors active:scale-95">
-                                    {lang === 'en' ? 'View Product Page' : 'Ürün Sayfası'}
-                                </button>
-                            </div>
+                            {!result.isCustom && (
+                                <div className="space-y-3">
+                                    <button className="w-full py-4 bg-[#0F172A] text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-black transition-all shadow-lg shadow-gray-200 active:scale-95">
+                                        <ShoppingBag size={18} />
+                                        {lang === 'en' ? 'Add to Cart' : 'Sepete Ekle'}
+                                    </button>
+                                    <button className="w-full py-4 bg-white border border-gray-200 text-gray-900 rounded-xl font-bold hover:bg-gray-50 transition-colors active:scale-95">
+                                        {lang === 'en' ? 'View Product Page' : 'Ürün Sayfası'}
+                                    </button>
+                                </div>
+                            )}
                         </div>
 
                         {/* Recommendations */}

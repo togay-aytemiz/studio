@@ -157,92 +157,40 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onStar
         if (!facePreview || !bodyPreview) return;
         setIsGenerating(true);
 
-        // Helper to compress and resize image to reduce payload size
-        const compressImage = (file: File | Blob, maxDimension: number = 1024, quality: number = 0.7): Promise<string> => {
-            return new Promise((resolve, reject) => {
-                const img = new Image();
-                const url = URL.createObjectURL(file);
-
-                img.onload = () => {
-                    URL.revokeObjectURL(url);
-
-                    let width = img.width;
-                    let height = img.height;
-
-                    // Calculate new dimensions maintaining aspect ratio
-                    if (width > maxDimension || height > maxDimension) {
-                        if (width > height) {
-                            height = Math.round((height * maxDimension) / width);
-                            width = maxDimension;
-                        } else {
-                            width = Math.round((width * maxDimension) / height);
-                            height = maxDimension;
-                        }
-                    }
-
-                    const canvas = document.createElement('canvas');
-                    canvas.width = width;
-                    canvas.height = height;
-
-                    const ctx = canvas.getContext('2d');
-                    if (!ctx) {
-                        reject(new Error('Failed to get canvas context'));
-                        return;
-                    }
-
-                    // Fill white background to prevent transparency turning black in JPEG
-                    ctx.fillStyle = '#FFFFFF';
-                    ctx.fillRect(0, 0, width, height);
-                    ctx.drawImage(img, 0, 0, width, height);
-
-                    const base64 = canvas.toDataURL('image/jpeg', quality);
-                    resolve(base64);
-                };
-
-                img.onerror = () => {
-                    URL.revokeObjectURL(url);
-                    reject(new Error('Failed to load image'));
-                };
-
-                img.src = url;
-            });
-        };
-
-        // Helper to convert File to compressed Base64
-        const fileToBase64 = async (file: File): Promise<string> => {
-            return compressImage(file, 1024, 0.7);
-        };
-
-        // Helper to convert URL to compressed Base64 (for product images)
-        const urlToBase64 = async (url: string): Promise<string> => {
-            try {
-                const response = await fetch(url);
-                const blob = await response.blob();
-                return compressImage(blob, 1024, 0.7);
-            } catch (error) {
-                console.error("Error converting URL to base64:", error);
-                throw new Error("Failed to process product image.");
+        const fetchFileFromUrl = async (url: string): Promise<File> => {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Failed to load product image.');
             }
+            const blob = await response.blob();
+            const filename = url.split('/').pop() || 'garment.jpg';
+            return new File([blob], filename, { type: blob.type || 'image/jpeg' });
         };
 
         try {
-            // 1. Prepare Inputs
-            const faceBase64 = faceFile ? await fileToBase64(faceFile) : '';
-            const bodyBase64 = bodyFile ? await fileToBase64(bodyFile) : '';
+            if (!faceFile || !bodyFile) {
+                throw new Error('Please upload face and body photos.');
+            }
 
-            // Convert ONLY the first product image to base64 to save bandwidth
-            // The backend only uses the first one anyway.
-            const firstImage = product.images[0];
-            const garmentImagesBase64 = firstImage ? [await urlToBase64(firstImage)] : [];
+            let garmentFile: File;
+            if (product.isCustom && product.customImageFile) {
+                garmentFile = product.customImageFile;
+            } else {
+                const firstImage = product.images[0];
+                if (!firstImage) {
+                    throw new Error('No garment image found.');
+                }
+                garmentFile = await fetchFileFromUrl(firstImage);
+            }
 
             // 3. Create Result Object NOT DONE HERE ANYMORE
             // Instead, we pass the data to the parent to handle the generation and loading state
 
             const generationData = {
-                garmentImages: garmentImagesBase64,
-                bodyImage: bodyBase64,
-                faceImage: faceBase64,
-                description: `${product.name.en} - ${product.category.en}`,
+                garmentFile,
+                bodyFile,
+                faceFile,
+                description: product.isCustom ? product.name.en : `${product.name.en} - ${product.category.en}`,
                 product: product,
                 userImagePreview: bodyPreview, // Pass this for immediate preview
                 // Pass raw files back to parent for persistence
@@ -500,12 +448,18 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onStar
                                         <h2 className="text-base font-bold text-gray-900">{productName}</h2>
                                         <p className="text-sm text-gray-500">{productCategory}</p>
                                     </div>
-                                    <p className="text-lg font-bold text-emerald-600">
-                                        {lang === 'en'
-                                            ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(product.price)
-                                            : new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', minimumFractionDigits: 0 }).format(product.price)
-                                        }
-                                    </p>
+                                    {product.isCustom ? (
+                                        <p className="text-xs font-bold uppercase tracking-wider text-gray-400">
+                                            {lang === 'en' ? 'Custom Upload' : 'Özel Yükleme'}
+                                        </p>
+                                    ) : (
+                                        <p className="text-lg font-bold text-emerald-600">
+                                            {lang === 'en'
+                                                ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(product.price)
+                                                : new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', minimumFractionDigits: 0 }).format(product.price)
+                                            }
+                                        </p>
+                                    )}
                                 </div>
 
                                 {/* Edit Photos Link */}
@@ -551,12 +505,18 @@ export const TryOnModal: React.FC<TryOnModalProps> = ({ product, onClose, onStar
 
                                     <div className="flex items-baseline justify-between px-1 shrink-0">
                                         <h2 className="text-2xl font-bold text-gray-900">{productName}</h2>
-                                        <p className="text-xl font-bold text-gray-900">
-                                            {lang === 'en'
-                                                ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(product.price)
-                                                : new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', minimumFractionDigits: 0 }).format(product.price)
-                                            }
-                                        </p>
+                                        {product.isCustom ? (
+                                            <p className="text-xs font-bold uppercase tracking-wider text-gray-400">
+                                                {lang === 'en' ? 'Custom Upload' : 'Özel Yükleme'}
+                                            </p>
+                                        ) : (
+                                            <p className="text-xl font-bold text-gray-900">
+                                                {lang === 'en'
+                                                    ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(product.price)
+                                                    : new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', minimumFractionDigits: 0 }).format(product.price)
+                                                }
+                                            </p>
+                                        )}
                                     </div>
                                 </div>
 

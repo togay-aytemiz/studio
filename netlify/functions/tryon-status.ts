@@ -1,15 +1,15 @@
-import { connectLambda, getStore } from "@netlify/blobs";
+const API_BASE_URL = process.env.TRYON_API_BASE_URL || "https://tryon-api-production-657d.up.railway.app";
 
-const STORE_NAME = "tryon-jobs";
+const buildHeaders = () => ({
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Content-Type": "application/json; charset=utf-8",
+    "Cache-Control": "no-store",
+});
 
 export const handler = async (event: any) => {
-    const headers = {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Content-Type",
-        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-        "Content-Type": "application/json; charset=utf-8",
-        "Cache-Control": "no-store",
-    };
+    const headers = buildHeaders();
 
     if (event.httpMethod === "OPTIONS") {
         return { statusCode: 200, headers, body: "" };
@@ -17,6 +17,11 @@ export const handler = async (event: any) => {
 
     if (event.httpMethod !== "GET" && event.httpMethod !== "POST") {
         return { statusCode: 405, headers, body: JSON.stringify({ error: "Method not allowed" }) };
+    }
+
+    const apiKey = process.env.TRYON_API_KEY;
+    if (!apiKey) {
+        return { statusCode: 500, headers, body: JSON.stringify({ error: "Server configuration error: TRYON_API_KEY missing" }) };
     }
 
     let jobId = event.queryStringParameters?.jobId;
@@ -33,24 +38,25 @@ export const handler = async (event: any) => {
         return { statusCode: 400, headers, body: JSON.stringify({ error: "Missing jobId" }) };
     }
 
-    if (event?.blobs) {
-        connectLambda(event);
-    }
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/v1/try-on/status/${encodeURIComponent(jobId)}`, {
+            method: "GET",
+            headers: {
+                "x-api-key": apiKey,
+            },
+        });
 
-    const store = getStore(STORE_NAME);
-    const job: any = await store.get(jobId, { type: "json" });
-    if (!job) {
-        return { statusCode: 404, headers, body: JSON.stringify({ error: "Job not found" }) };
+        const responseText = await response.text();
+        return {
+            statusCode: response.status,
+            headers,
+            body: responseText,
+        };
+    } catch (error: any) {
+        return {
+            statusCode: 502,
+            headers,
+            body: JSON.stringify({ error: error?.message || "Upstream request failed" }),
+        };
     }
-
-    return {
-        statusCode: 200,
-        headers,
-        body: JSON.stringify({
-            status: job.status,
-            image: job.image,
-            error: job.error,
-            updatedAt: job.updatedAt,
-        }),
-    };
 };

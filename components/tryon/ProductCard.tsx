@@ -9,6 +9,8 @@ export interface Product {
     price: number;
     images: [string, string, string]; // Exactly 3 images
     tags?: string[];
+    isCustom?: boolean;
+    customImageFile?: File | null;
 }
 
 interface ProductCardProps {

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { ArrowRight, RefreshCcw, UploadCloud } from 'lucide-react';
 import { Hero } from '../../components/tryon/Hero';
 import Footer from '../../components/Footer';
 import DemoHeader from '../../components/DemoHeader';
@@ -95,18 +96,6 @@ const sampleProducts: Product[] = [
         ],
         tags: [],
     },
-    {
-        id: '8',
-        name: { tr: 'Bol Paça Kumaş Pantolon', en: 'Wide Leg Tailored Trousers' },
-        category: { tr: 'Pantolonlar', en: 'Trousers' },
-        price: 2400,
-        images: [
-            '/tryon/products/8a.webp',
-            '/tryon/products/8b.webp',
-            '/tryon/products/8c.webp',
-        ],
-        tags: [],
-    },
 ];
 
 const TryOnDemo: React.FC = () => {
@@ -124,6 +113,10 @@ const TryOnDemo: React.FC = () => {
         bodyFile: File | null;
         bodyPreview: string | null;
     } | undefined>(undefined);
+    const [customGarmentFile, setCustomGarmentFile] = useState<File | null>(null);
+    const [customGarmentPreview, setCustomGarmentPreview] = useState<string | null>(null);
+    const [isCustomDragActive, setIsCustomDragActive] = useState(false);
+    const customGarmentInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         // Simple language detection based on path
@@ -135,6 +128,14 @@ const TryOnDemo: React.FC = () => {
         }
     }, [location.pathname, i18n]);
 
+    useEffect(() => {
+        return () => {
+            if (customGarmentPreview) {
+                URL.revokeObjectURL(customGarmentPreview);
+            }
+        };
+    }, [customGarmentPreview]);
+
     const handleTryOn = (product: Product) => {
         setSelectedProduct(null); // Close quick view if open
         setTryOnProduct(product);
@@ -142,6 +143,77 @@ const TryOnDemo: React.FC = () => {
 
     const handleCloseTryOn = () => {
         setTryOnProduct(null);
+    };
+
+    const setCustomGarmentFromFile = (file: File) => {
+        if (customGarmentPreview) {
+            URL.revokeObjectURL(customGarmentPreview);
+        }
+
+        const previewUrl = URL.createObjectURL(file);
+        setCustomGarmentFile(file);
+        setCustomGarmentPreview(previewUrl);
+    };
+
+    const handleCustomGarmentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file) {
+            return;
+        }
+
+        setCustomGarmentFromFile(file);
+        event.target.value = '';
+    };
+
+    const handleCustomGarmentUpload = () => {
+        customGarmentInputRef.current?.click();
+    };
+
+    const handleCustomGarmentDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+        event.preventDefault();
+        if (event.dataTransfer?.types && !Array.from(event.dataTransfer.types).includes('Files')) {
+            return;
+        }
+        setIsCustomDragActive(true);
+    };
+
+    const handleCustomGarmentDragLeave = () => {
+        setIsCustomDragActive(false);
+    };
+
+    const handleCustomGarmentDrop = (event: React.DragEvent<HTMLDivElement>) => {
+        event.preventDefault();
+        setIsCustomDragActive(false);
+        const file = event.dataTransfer.files?.[0];
+        if (file) {
+            setCustomGarmentFromFile(file);
+        }
+    };
+
+    const handleCustomTryOn = () => {
+        if (!customGarmentPreview || !customGarmentFile) {
+            return;
+        }
+
+        const customProduct: Product = {
+            id: 'custom-upload',
+            name: {
+                en: 'Your Upload',
+                tr: 'Kendi Yüklemen',
+            },
+            category: {
+                en: 'Custom',
+                tr: 'Özel',
+            },
+            price: 0,
+            images: [customGarmentPreview, customGarmentPreview, customGarmentPreview],
+            tags: [],
+            isCustom: true,
+            customImageFile: customGarmentFile,
+        };
+
+        setSelectedProduct(null);
+        setTryOnProduct(customProduct);
     };
 
     const handleStartGeneration = async (data: any) => {
@@ -165,20 +237,28 @@ const TryOnDemo: React.FC = () => {
             userImage: data.userImagePreview,
             resultImages: [data.userImagePreview], // usage as placeholder
             timestamp: Date.now(),
+            isCustom: data.product.isCustom,
         };
         setTryOnResult(tempResult);
         setTryOnProduct(null); // Close modal
 
         try {
+            const formData = new FormData();
+            if (data.garmentFile) {
+                formData.append('garment', data.garmentFile);
+            } else if (data.garmentUrl) {
+                formData.append('garment_url', data.garmentUrl);
+            }
+            if (data.bodyFile) {
+                formData.append('body', data.bodyFile);
+            }
+            if (data.faceFile) {
+                formData.append('face', data.faceFile);
+            }
+
             const startResponse = await fetch('/.netlify/functions/tryon-start', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    garmentImages: data.garmentImages,
-                    bodyImage: data.bodyImage,
-                    faceImage: data.faceImage,
-                    description: data.description,
-                }),
+                body: formData,
             });
 
             const startText = await startResponse.text();
@@ -190,9 +270,7 @@ const TryOnDemo: React.FC = () => {
             }
 
             if (!startResponse.ok) {
-                const errorMessage = startData?.error
-                    ? startData.error
-                    : `Server Error: ${startText.substring(0, 50)}`;
+                const errorMessage = startData?.message || startData?.error || `Server Error: ${startText.substring(0, 50)}`;
                 throw new Error(errorMessage);
             }
 
@@ -200,14 +278,7 @@ const TryOnDemo: React.FC = () => {
                 throw new Error('No job id returned from server');
             }
 
-            void fetch(`/.netlify/functions/tryon-generate-background?jobId=${encodeURIComponent(startData.jobId)}`, {
-                method: 'POST',
-                keepalive: true,
-            }).catch((error) => {
-                console.warn('Background try-on trigger failed:', error);
-            });
-
-            const pollIntervalMs = 2000;
+            const pollIntervalMs = 3500;
             const maxWaitMs = 2 * 60 * 1000;
             const pollStart = Date.now();
 
@@ -224,17 +295,19 @@ const TryOnDemo: React.FC = () => {
                     }
 
                     if (!statusResponse.ok) {
-                        const errorMessage = statusData?.error
-                            ? statusData.error
-                            : `Server Error: ${statusText.substring(0, 50)}`;
+                        const errorMessage = statusData?.message || statusData?.error || `Server Error: ${statusText.substring(0, 50)}`;
                         throw new Error(errorMessage);
+                    }
+
+                    if (statusData?.status === 'completed' && statusData?.result?.resultUrl) {
+                        return statusData.result.resultUrl;
                     }
 
                     if (statusData?.status === 'done' && statusData.image) {
                         return statusData.image;
                     }
 
-                    if (statusData?.status === 'error') {
+                    if (statusData?.status === 'failed' || statusData?.status === 'error') {
                         throw new Error(statusData.error || 'Generation failed.');
                     }
 
@@ -245,14 +318,6 @@ const TryOnDemo: React.FC = () => {
             };
 
             const image = await pollForResult();
-
-            const img = new Image();
-            img.src = image;
-
-            await new Promise((resolve) => {
-                img.onload = resolve;
-                img.onerror = resolve;
-            });
 
             setTryOnResult(prev => prev ? {
                 ...prev,
@@ -265,7 +330,19 @@ const TryOnDemo: React.FC = () => {
 
         } catch (error: any) {
             console.error("Generation Error:", error);
-            alert(`Error: ${error.message}`);
+            const defaultMessage = i18n.language === 'en'
+                ? 'Generation failed. Please try again.'
+                : 'Oluşturma başarısız oldu. Lütfen tekrar deneyin.';
+            const rawMessage = typeof error?.message === 'string' && error.message.trim().length > 0
+                ? error.message.trim()
+                : defaultMessage;
+            const isContentBlocked = /content blocked/i.test(rawMessage);
+            const userMessage = isContentBlocked
+                ? (i18n.language === 'en'
+                    ? 'The image could not be processed due to safety guidelines. Please upload a different photo.'
+                    : 'Görüntü güvenlik kuralları nedeniyle işlenemedi. Lütfen farklı bir fotoğraf yükleyin.')
+                : rawMessage;
+            alert(i18n.language === 'en' ? `Error: ${userMessage}` : `Hata: ${userMessage}`);
             setIsResultLoading(false); // Make sure to turn off loading on error
             // Optionally keep results open if it was a partial success or allow retry
             // setShowResults(false); 
@@ -308,6 +385,18 @@ const TryOnDemo: React.FC = () => {
             .slice(0, 5);
     };
 
+    const customCardCopy = {
+        title: { en: 'Upload Your Own', tr: 'Kendi Ürününü Yükle' },
+        description: {
+            en: ['Got a specific item?', 'Upload it to try on virtually.'],
+            tr: ['Özel bir parçan mı var?', 'Yükleyip sanal olarak dene.'],
+        },
+        upload: { en: 'Upload Garment', tr: 'Kıyafet Yükle' },
+        reupload: { en: 'Re-upload', tr: 'Yeniden Yükle' },
+        continue: { en: 'Continue', tr: 'Devam Et' },
+    };
+    const customPlaceholderImage = '/tryon/products/garment.webp';
+
     return (
         <div className="min-h-screen bg-white text-slate-900">
             <DemoHeader title="Virtual Try-On" />
@@ -327,6 +416,87 @@ const TryOnDemo: React.FC = () => {
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        <article
+                            className={`group relative flex flex-col bg-white rounded-xl shadow-sm border overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1 h-full ${isCustomDragActive ? 'border-emerald-400 ring-2 ring-emerald-200' : 'border-emerald-200/70'}`}
+                            onDragOver={handleCustomGarmentDragOver}
+                            onDragLeave={handleCustomGarmentDragLeave}
+                            onDrop={handleCustomGarmentDrop}
+                        >
+                            <div
+                                className={`relative w-full aspect-[4/5] bg-white overflow-hidden cursor-pointer ${isCustomDragActive ? 'ring-2 ring-inset ring-emerald-300' : ''}`}
+                                onClick={handleCustomGarmentUpload}
+                            >
+                                <img
+                                    src={customGarmentPreview || customPlaceholderImage}
+                                    alt={customCardCopy.title[i18n.language === 'en' ? 'en' : 'tr']}
+                                    className={`block w-full h-full object-cover transition-transform duration-500 transform-gpu ${customGarmentPreview ? 'group-hover:scale-105' : 'opacity-70'}`}
+                                />
+                                <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-white via-white/70 to-transparent" />
+
+                                {customGarmentPreview && (
+                                    <span className="absolute top-3 left-3 z-10 bg-emerald-600 text-white text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider shadow-sm">
+                                        {i18n.language === 'en' ? 'Custom' : 'Özel'}
+                                    </span>
+                                )}
+                            </div>
+
+                            <div className="relative p-4 flex flex-col gap-4 flex-1">
+                                <div className="pointer-events-none absolute -top-6 left-0 right-0 h-6 bg-gradient-to-b from-white/0 to-white" />
+                                <div className="flex flex-col items-center text-center gap-2">
+                                    <div className="w-14 h-14 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center">
+                                        <UploadCloud size={22} className="text-emerald-600" />
+                                    </div>
+                                    <h3 className="text-lg font-bold text-gray-900">
+                                        {customCardCopy.title[i18n.language === 'en' ? 'en' : 'tr']}
+                                    </h3>
+                                    <p className="text-sm text-gray-500 max-w-[18rem]">
+                                        <span className="block">
+                                            {customCardCopy.description[i18n.language === 'en' ? 'en' : 'tr'][0]}
+                                        </span>
+                                        <span className="block">
+                                            {customCardCopy.description[i18n.language === 'en' ? 'en' : 'tr'][1]}
+                                        </span>
+                                    </p>
+                                </div>
+
+                                <div className="mt-auto flex flex-col gap-2">
+                                    {!customGarmentPreview ? (
+                                        <button
+                                            onClick={handleCustomGarmentUpload}
+                                            className="w-full flex items-center justify-center gap-2 h-10 bg-emerald-600 text-white font-bold text-sm rounded-lg transition-all hover:bg-emerald-700 active:scale-95"
+                                        >
+                                            <UploadCloud size={16} />
+                                            {customCardCopy.upload[i18n.language === 'en' ? 'en' : 'tr']}
+                                        </button>
+                                    ) : (
+                                        <div className="grid grid-cols-2 gap-2">
+                                            <button
+                                                onClick={handleCustomGarmentUpload}
+                                                className="w-full flex items-center justify-center gap-2 h-10 bg-white border border-gray-200 text-gray-700 font-bold text-sm rounded-lg transition-all hover:bg-gray-50 active:scale-95"
+                                            >
+                                                <RefreshCcw size={16} />
+                                                {customCardCopy.reupload[i18n.language === 'en' ? 'en' : 'tr']}
+                                            </button>
+                                            <button
+                                                onClick={handleCustomTryOn}
+                                                className="w-full flex items-center justify-center gap-2 h-10 bg-gray-900 text-white font-bold text-sm rounded-lg transition-all hover:bg-black active:scale-95"
+                                            >
+                                                {customCardCopy.continue[i18n.language === 'en' ? 'en' : 'tr']}
+                                                <ArrowRight size={16} />
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            <input
+                                ref={customGarmentInputRef}
+                                type="file"
+                                accept="image/png,image/jpeg,image/webp"
+                                className="hidden"
+                                onChange={handleCustomGarmentChange}
+                            />
+                        </article>
                         {sampleProducts.map((product) => (
                             <ProductCard
                                 key={product.id}
