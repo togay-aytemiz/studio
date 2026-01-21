@@ -9,6 +9,7 @@ import { ProductCard, Product } from '../../components/tryon/ProductCard';
 import { ProductQuickView } from '../../components/tryon/ProductQuickView';
 import { TryOnModal } from '../../components/tryon/TryOnModal';
 import { TryOnResults, TryOnResult } from '../../components/tryon/TryOnResults';
+import { resizeImage } from '../../src/utils/imageUtils';
 
 // Sample products
 const sampleProducts: Product[] = [
@@ -252,17 +253,30 @@ const TryOnDemo: React.FC = () => {
         setTryOnProduct(null); // Close modal
 
         try {
+            // Optimizing images
+            let optimizedGarment = data.garmentFile;
+            let optimizedBody = data.bodyFile;
+            let optimizedFace = data.faceFile;
+
+            try {
+                if (optimizedGarment) optimizedGarment = await resizeImage(optimizedGarment);
+                if (optimizedBody) optimizedBody = await resizeImage(optimizedBody);
+                if (optimizedFace) optimizedFace = await resizeImage(optimizedFace);
+            } catch (optimizeError) {
+                console.warn("Image optimization failed, falling back to original:", optimizeError);
+            }
+
             const formData = new FormData();
-            if (data.garmentFile) {
-                formData.append('garment', data.garmentFile);
+            if (optimizedGarment) {
+                formData.append('garment', optimizedGarment);
             } else if (data.garmentUrl) {
                 formData.append('garment_url', data.garmentUrl);
             }
-            if (data.bodyFile) {
-                formData.append('body', data.bodyFile);
+            if (optimizedBody) {
+                formData.append('body', optimizedBody);
             }
-            if (data.faceFile) {
-                formData.append('face', data.faceFile);
+            if (optimizedFace) {
+                formData.append('face', optimizedFace);
             }
 
             const startResponse = await fetch('/.netlify/functions/tryon-start', {
