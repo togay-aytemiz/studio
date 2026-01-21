@@ -190,19 +190,28 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
                         {/* Single Main Image with Lightbox Trigger */}
                         <div
                             className="aspect-[3/4] rounded-3xl overflow-hidden bg-gray-100 shadow-sm relative group cursor-zoom-in"
-                            onClick={() => setIsLightboxOpen(true)}
+                            onClick={() => result.resultImages?.[0] && setIsLightboxOpen(true)}
                         >
-                            <img
-                                src={result.resultImages[0]}
-                                alt="Try-On Result"
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                            />
+                            {result.resultImages?.[0] ? (
+                                <img
+                                    src={result.resultImages[0]}
+                                    alt="Try-On Result"
+                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                />
+                            ) : (
+                                <div className="w-full h-full flex items-center justify-center bg-gray-50 text-gray-400">
+                                    <Sparkles size={48} className="animate-pulse opacity-20" />
+                                </div>
+                            )}
+
                             {/* Overlay Hint */}
-                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100 duration-300">
-                                <span className="bg-white/90 backdrop-blur text-gray-900 px-4 py-2 rounded-full font-bold text-sm shadow-lg pointer-events-none transform translate-y-4 group-hover:translate-y-0 transition-transform">
-                                    {lang === 'en' ? 'View Full Screen' : 'Tam Ekran Görüntüle'}
-                                </span>
-                            </div>
+                            {result.resultImages?.[0] && (
+                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100 duration-300">
+                                    <span className="bg-white/90 backdrop-blur text-gray-900 px-4 py-2 rounded-full font-bold text-sm shadow-lg pointer-events-none transform translate-y-4 group-hover:translate-y-0 transition-transform">
+                                        {lang === 'en' ? 'View Full Screen' : 'Tam Ekran Görüntüle'}
+                                    </span>
+                                </div>
+                            )}
                         </div>
 
                         {/* Feedback Row */}

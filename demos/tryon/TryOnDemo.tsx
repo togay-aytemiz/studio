@@ -232,7 +232,12 @@ const TryOnDemo: React.FC = () => {
             setUserPhotos(data.rawFiles);
         }
 
-        // 2. Set Loading State & Show Results immediately
+        // 1. Save User Photos for persistence
+        if (data.rawFiles) {
+            setUserPhotos(data.rawFiles);
+        }
+
+        // 2. Start Process (Loader is handled in TryOnModal)
         setIsResultLoading(true);
         setShowResults(true);
 
@@ -245,7 +250,7 @@ const TryOnDemo: React.FC = () => {
             productPrice: data.product.price,
             productCategory: data.product.category,
             userImage: data.userImagePreview,
-            resultImages: [data.userImagePreview], // usage as placeholder
+            resultImages: [], // Wait for actual result
             timestamp: Date.now(),
             isCustom: data.product.isCustom,
         };
@@ -342,13 +347,39 @@ const TryOnDemo: React.FC = () => {
 
             const image = await pollForResult();
 
-            setTryOnResult(prev => prev ? {
-                ...prev,
+            const finalResult: TryOnResult = {
+                id: startData.jobId,
+                productId: data.product.id,
+                productName: data.product.name,
+                productImage: data.product.images[0],
+                productPrice: data.product.price,
+                productCategory: data.product.category,
+                userImage: data.userImagePreview,
                 resultImages: [image],
-                timestamp: Date.now()
-            } : null);
+                timestamp: Date.now(),
+                isCustom: data.product.isCustom,
+            };
 
-            setIsResultLoading(false);
+            // Preload the image to ensure no "gray screen"
+            try {
+                await new Promise((resolve) => {
+                    const img = new Image();
+                    img.src = image;
+                    img.onload = resolve;
+                    img.onerror = resolve; // Proceed even if error, component will handle
+                    // Force proceed after 5s max
+                    setTimeout(resolve, 5000);
+                });
+            } catch (e) {
+                // Ignore preload errors
+            }
+
+            setTryOnResult(finalResult);
+            // Add requested delay for smoothness
+            setTimeout(() => {
+                setIsResultLoading(false);
+            }, 2000);
+
             return;
 
         } catch (error: any) {
