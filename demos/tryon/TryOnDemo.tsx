@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ArrowRight, RefreshCcw, UploadCloud } from 'lucide-react';
 import { Hero } from '../../components/tryon/Hero';
@@ -8,7 +8,7 @@ import DemoHeader from '../../components/DemoHeader';
 import { ProductCard, Product } from '../../components/tryon/ProductCard';
 import { ProductQuickView } from '../../components/tryon/ProductQuickView';
 import { TryOnModal } from '../../components/tryon/TryOnModal';
-import { TryOnResults, TryOnResult } from '../../components/tryon/TryOnResults';
+import { TryOnResults, TryOnResult, TryOnError } from '../../components/tryon/TryOnResults';
 import { resizeImage } from '../../src/utils/imageUtils';
 
 // Sample products
@@ -102,9 +102,11 @@ const sampleProducts: Product[] = [
 const TryOnDemo: React.FC = () => {
     const { i18n } = useTranslation();
     const location = useLocation();
+    const navigate = useNavigate();
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
     const [tryOnProduct, setTryOnProduct] = useState<Product | null>(null);
     const [tryOnResult, setTryOnResult] = useState<TryOnResult | null>(null);
+    const [tryOnError, setTryOnError] = useState<TryOnError | null>(null);
     const [showResults, setShowResults] = useState(false);
     const [isResultLoading, setIsResultLoading] = useState(false);
 
@@ -226,6 +228,30 @@ const TryOnDemo: React.FC = () => {
         setTryOnProduct(customProduct);
     };
 
+    const parseBlockedReason = (message: string) => {
+        const reasonMatch = message.match(/Reason:\s*([^)]+)/i);
+        const reasonText = reasonMatch?.[1]?.trim();
+        let reasonCode: string | undefined;
+        let severity: string | undefined;
+
+        if (reasonText) {
+            const parts = reasonText.split(':').map(part => part.trim()).filter(Boolean);
+            if (parts.length > 0) {
+                reasonCode = parts[0];
+            }
+            if (parts.length > 1) {
+                severity = parts.slice(1).join(':');
+            }
+        } else {
+            const codeMatch = message.match(/HARM_CATEGORY_[A-Z_]+|IMAGE_SAFETY/);
+            if (codeMatch) {
+                reasonCode = codeMatch[0];
+            }
+        }
+
+        return { reasonText, reasonCode, severity };
+    };
+
     const handleStartGeneration = async (data: any) => {
         // 1. Save User Photos for persistence
         if (data.rawFiles) {
@@ -238,6 +264,7 @@ const TryOnDemo: React.FC = () => {
         }
 
         // 2. Start Process (Loader is handled in TryOnModal)
+        setTryOnError(null);
         setIsResultLoading(true);
         setShowResults(true);
 
@@ -375,6 +402,7 @@ const TryOnDemo: React.FC = () => {
             }
 
             setTryOnResult(finalResult);
+            setTryOnError(null);
             // Add requested delay for smoothness
             setTimeout(() => {
                 setIsResultLoading(false);
@@ -391,12 +419,19 @@ const TryOnDemo: React.FC = () => {
                 ? error.message.trim()
                 : defaultMessage;
             const isContentBlocked = /content blocked/i.test(rawMessage);
-            const userMessage = isContentBlocked
-                ? (i18n.language === 'en'
-                    ? 'The image could not be processed due to safety guidelines. Please upload a different photo.'
-                    : 'Görüntü güvenlik kuralları nedeniyle işlenemedi. Lütfen farklı bir fotoğraf yükleyin.')
-                : rawMessage;
-            alert(i18n.language === 'en' ? `Error: ${userMessage}` : `Hata: ${userMessage}`);
+            if (isContentBlocked) {
+                const { reasonText, reasonCode, severity } = parseBlockedReason(rawMessage);
+                setTryOnError({
+                    type: 'blocked',
+                    rawMessage,
+                    reasonText,
+                    reasonCode,
+                    severity,
+                });
+            } else {
+                const userMessage = rawMessage;
+                alert(i18n.language === 'en' ? `Error: ${userMessage}` : `Hata: ${userMessage}`);
+            }
             setIsResultLoading(false); // Make sure to turn off loading on error
             // Optionally keep results open if it was a partial success or allow retry
             // setShowResults(false); 
@@ -409,14 +444,28 @@ const TryOnDemo: React.FC = () => {
     const handleBackFromResults = () => {
         setShowResults(false);
         setTryOnResult(null);
+        setTryOnError(null);
         resetCustomGarment();
     };
 
     const handleTryAnother = () => {
         setShowResults(false);
         setTryOnProduct(null);
+        setTryOnError(null);
         resetCustomGarment();
         // User goes back to catalog, inputs are preserved in state if needed, but for now we reset result
+    };
+
+    const handleStartOver = () => {
+        setShowResults(false);
+        setTryOnResult(null);
+        setTryOnError(null);
+        setTryOnProduct(null);
+        setSelectedProduct(null);
+        setUserPhotos(undefined);
+        resetCustomGarment();
+        const homePath = i18n.language === 'en' ? '/en' : '/';
+        navigate(homePath);
     };
 
     const handleTryProductFromResults = (product: Product) => {
@@ -622,7 +671,9 @@ const TryOnDemo: React.FC = () => {
                     onBack={handleBackFromResults}
                     onTryAnother={handleTryAnother}
                     onTryProduct={handleTryProductFromResults}
+                    onStartOver={handleStartOver}
                     isLoading={isResultLoading}
+                    error={tryOnError}
                 />
             )}
 

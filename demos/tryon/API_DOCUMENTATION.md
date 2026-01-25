@@ -5,6 +5,10 @@
 **Swagger UI:** `https://tryon-api-production-657d.up.railway.app/documentation`  
 *(Alternate for Dev: `http://localhost:8080`)*
 
+> **Production Note (Storage):**
+> This API currently uses the `*.r2.dev` public development URL. You may experience SSL delays or "Not Secure" warnings on the first load of a new image.
+> **For Production:** You MUST connect a Custom Domain (e.g., `cdn.your-site.com`) to the Cloudflare R2 bucket to ensure 100% reliability and speed. Update `S3_PUBLIC_URL` in env vars accordingly.
+
 ## Authentication
 
 All API requests must include the `x-api-key` header.
@@ -49,11 +53,12 @@ Frontend logic:
 You should check if the error message contains "Content Blocked".
 
 Possible blocking reasons (strings to watch for):
-The `error` field will contain one or more of these categories:
+The `error` field will contain one or more of these categories or the general `IMAGE_SAFETY` reason:
 - `HARM_CATEGORY_SEXUALLY_EXPLICIT`
 - `HARM_CATEGORY_HATE_SPEECH`
 - `HARM_CATEGORY_HARASSMENT`
 - `HARM_CATEGORY_DANGEROUS_CONTENT`
+- `IMAGE_SAFETY` (General safety filter triggered by input image)
 
 Example safety error:
 ```json
@@ -64,7 +69,10 @@ Example safety error:
 }
 ```
 
-Suggested UI action: "The image could not be processed due to safety guidelines. Please upload a different photo."
+Client integration guide:
+Clients should strictly check for the string "Content Blocked" at the start of the `error` message to distinguish safety violations from system errors.
+- If `error.startsWith("Content Blocked")` -> show an "Inappropriate Content" warning to the user.
+- Else -> show a generic "Processing Failed" message.
 
 ---
 

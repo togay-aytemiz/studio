@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Product } from './ProductCard';
-import { Share2, Download, ThumbsUp, ThumbsDown, ShoppingBag, Play, ArrowLeft, Sparkles, Loader2, CheckCircle2, X, Shirt, Wand2, RefreshCcw } from 'lucide-react';
+import { Share2, Download, ThumbsUp, ThumbsDown, ShoppingBag, Play, ArrowLeft, Sparkles, Loader2, CheckCircle2, X, Shirt, Wand2, RefreshCcw, ShieldAlert, Home, AlertTriangle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -17,20 +17,31 @@ export interface TryOnResult {
     isCustom?: boolean;
 }
 
+export interface TryOnError {
+    type: 'blocked' | 'failed';
+    rawMessage: string;
+    reasonCode?: string;
+    severity?: string;
+    reasonText?: string;
+}
+
 interface TryOnResultsProps {
     result: TryOnResult;
     recommendations: Product[];
     onBack: () => void;
     onTryAnother: () => void;
     onTryProduct: (product: Product) => void;
+    onStartOver: () => void;
     isLoading?: boolean;
+    error?: TryOnError | null;
 }
 
-export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendations, onBack, onTryAnother, onTryProduct, isLoading = false }) => {
+export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendations, onBack, onTryAnother, onTryProduct, onStartOver, isLoading = false, error = null }) => {
     const { i18n } = useTranslation();
     const lang = i18n.language === 'en' ? 'en' : 'tr';
     const [loadingProgress, setLoadingProgress] = useState(0);
     const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+    const isBlocked = error?.type === 'blocked';
 
     const LOADING_MESSAGES = [
         { en: "Analyzing body pose...", tr: "Vücut duruşu analiz ediliyor..." },
@@ -91,6 +102,203 @@ export const TryOnResults: React.FC<TryOnResultsProps> = ({ result, recommendati
         }
         return new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY', minimumFractionDigits: 0 }).format(price);
     };
+
+    const BLOCKED_REASON_LABELS: Record<string, { en: string; tr: string }> = {
+        HARM_CATEGORY_SEXUALLY_EXPLICIT: { en: 'Sexually explicit content', tr: 'Cinsel içerik' },
+        HARM_CATEGORY_HATE_SPEECH: { en: 'Hate speech', tr: 'Nefret söylemi' },
+        HARM_CATEGORY_HARASSMENT: { en: 'Harassment', tr: 'Taciz' },
+        HARM_CATEGORY_DANGEROUS_CONTENT: { en: 'Dangerous content', tr: 'Tehlikeli içerik' },
+        IMAGE_SAFETY: { en: 'Image safety filter', tr: 'Görüntü güvenliği filtresi' },
+    };
+
+    const blockedCopy = {
+        eyebrow: { en: 'Safety Check', tr: 'Güvenlik Kontrolü' },
+        title: { en: 'Content blocked', tr: 'İçerik engellendi' },
+        subtitle: {
+            en: 'We could not process this request because the uploaded content triggered safety filters.',
+            tr: 'Yüklediğiniz içerik güvenlik filtrelerine takıldığı için bu istek işlenemedi.',
+        },
+        reason: { en: 'Reason', tr: 'Neden' },
+        severity: { en: 'Severity', tr: 'Seviye' },
+        code: { en: 'Code', tr: 'Kod' },
+        whyTitle: { en: 'Why this happened', tr: 'Neden oldu?' },
+        whyBody: {
+            en: 'The system detected sensitive content in the garment or body photo. Please try a different image that aligns with safety guidelines.',
+            tr: 'Sistem, kıyafet veya vücut fotoğrafında hassas içerik algıladı. Lütfen güvenlik kurallarına uygun farklı bir görsel deneyin.',
+        },
+        garmentLabel: { en: 'Garment image', tr: 'Kıyafet görseli' },
+        bodyLabel: { en: 'Body photo', tr: 'Vücut fotoğrafı' },
+        nextTitle: { en: 'Start from scratch', tr: 'Baştan başla' },
+        nextBody: {
+            en: 'You can return to the homepage and start a fresh try-on flow with new uploads.',
+            tr: 'Ana sayfaya dönüp yeni yüklemelerle temiz bir deneme akışı başlatabilirsiniz.',
+        },
+        tipOne: {
+            en: 'Use a different garment image with neutral styling.',
+            tr: 'Daha nötr bir görünüme sahip farklı bir kıyafet görseli seçin.',
+        },
+        tipTwo: {
+            en: 'Avoid imagery that includes explicit or suggestive content.',
+            tr: 'Açık veya ima içeren görsellerden kaçının.',
+        },
+        tipThree: {
+            en: 'Ensure the photo is clear, well-lit, and uncropped.',
+            tr: 'Fotoğrafın net, iyi aydınlatılmış ve kırpılmamış olmasına dikkat edin.',
+        },
+        goHome: { en: 'Back to homepage', tr: 'Ana sayfaya dön' },
+        backToShop: { en: 'Back to shop', tr: 'Mağazaya dön' },
+        details: { en: 'Technical details', tr: 'Teknik detaylar' },
+    };
+
+    const reasonLabel = error?.reasonCode ? BLOCKED_REASON_LABELS[error.reasonCode] : undefined;
+    const reasonDisplay = reasonLabel?.[lang] || error?.reasonText || (lang === 'en' ? 'Safety filter triggered' : 'Güvenlik filtresi tetiklendi');
+    const severityDisplay = error?.severity ? error.severity.toUpperCase() : undefined;
+
+    if (isBlocked) {
+        return (
+            <div className="fixed inset-0 z-50 bg-[#F9FAFB] overflow-y-auto animate-in slide-in-from-bottom-4 duration-500 scrollbar-none">
+                <div className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-40">
+                    <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+                        <button
+                            onClick={onBack}
+                            className="group flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors"
+                        >
+                            <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+                            {lang === 'en' ? 'Back to Shop' : 'Mağazaya Dön'}
+                        </button>
+                        <button
+                            onClick={onStartOver}
+                            className="flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-600 text-white text-sm font-bold hover:bg-emerald-700 transition-all shadow-sm active:scale-95"
+                        >
+                            <Home size={16} />
+                            {blockedCopy.goHome[lang]}
+                        </button>
+                    </div>
+                </div>
+
+                <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-12">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
+                        <div className="lg:col-span-7 space-y-6">
+                            <div className="relative overflow-hidden rounded-3xl border border-rose-100 bg-white p-8 shadow-sm">
+                                <div className="absolute -top-20 -right-24 w-64 h-64 rounded-full bg-rose-100 blur-3xl opacity-70" />
+                                <div className="absolute -bottom-24 -left-20 w-64 h-64 rounded-full bg-amber-100 blur-3xl opacity-70" />
+
+                                <div className="relative">
+                                    <div className="flex items-start gap-4">
+                                        <div className="w-12 h-12 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600">
+                                            <ShieldAlert size={24} />
+                                        </div>
+                                        <div>
+                                            <p className="text-xs font-bold uppercase tracking-[0.3em] text-rose-500">
+                                                {blockedCopy.eyebrow[lang]}
+                                            </p>
+                                            <h1 className="text-3xl md:text-4xl font-black text-gray-900">
+                                                {blockedCopy.title[lang]}
+                                            </h1>
+                                        </div>
+                                    </div>
+
+                                    <p className="mt-4 text-gray-600 text-lg">
+                                        {blockedCopy.subtitle[lang]}
+                                    </p>
+
+                                    <div className="mt-6 flex flex-wrap gap-3">
+                                        <span className="px-3 py-1 rounded-full bg-rose-50 text-rose-700 text-xs font-bold uppercase tracking-wide">
+                                            {blockedCopy.reason[lang]}: {reasonDisplay}
+                                        </span>
+                                        {severityDisplay && (
+                                            <span className="px-3 py-1 rounded-full bg-amber-50 text-amber-700 text-xs font-bold uppercase tracking-wide">
+                                                {blockedCopy.severity[lang]}: {severityDisplay}
+                                            </span>
+                                        )}
+                                        {error?.reasonCode && (
+                                            <span className="px-3 py-1 rounded-full bg-gray-100 text-gray-600 text-xs font-bold uppercase tracking-wide">
+                                                {blockedCopy.code[lang]}: {error.reasonCode}
+                                            </span>
+                                        )}
+                                    </div>
+
+                                    <div className="mt-6 rounded-2xl border border-amber-200 bg-amber-50/70 p-4 text-sm text-amber-900">
+                                        <div className="flex items-center gap-2 font-semibold">
+                                            <AlertTriangle size={16} />
+                                            {blockedCopy.whyTitle[lang]}
+                                        </div>
+                                        <p className="mt-2 text-amber-900/80">
+                                            {blockedCopy.whyBody[lang]}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="grid sm:grid-cols-2 gap-4">
+                                <div className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+                                    <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400">
+                                        {blockedCopy.garmentLabel[lang]}
+                                    </p>
+                                    <div className="mt-3 aspect-[4/5] rounded-xl overflow-hidden bg-gray-100">
+                                        <img src={result.productImage} alt={blockedCopy.garmentLabel[lang]} className="w-full h-full object-cover" />
+                                    </div>
+                                </div>
+                                <div className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+                                    <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400">
+                                        {blockedCopy.bodyLabel[lang]}
+                                    </p>
+                                    <div className="mt-3 aspect-[4/5] rounded-xl overflow-hidden bg-gray-100">
+                                        <img src={result.userImage} alt={blockedCopy.bodyLabel[lang]} className="w-full h-full object-cover" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="lg:col-span-5 space-y-6">
+                            <div className="rounded-3xl border border-gray-100 bg-white p-6 shadow-sm">
+                                <h3 className="text-lg font-bold text-gray-900">{blockedCopy.nextTitle[lang]}</h3>
+                                <p className="mt-2 text-sm text-gray-500">{blockedCopy.nextBody[lang]}</p>
+
+                                <div className="mt-5 space-y-3 text-sm text-gray-600">
+                                    <div className="flex items-start gap-3">
+                                        <span className="mt-2 w-2 h-2 rounded-full bg-emerald-500" />
+                                        <span>{blockedCopy.tipOne[lang]}</span>
+                                    </div>
+                                    <div className="flex items-start gap-3">
+                                        <span className="mt-2 w-2 h-2 rounded-full bg-emerald-500" />
+                                        <span>{blockedCopy.tipTwo[lang]}</span>
+                                    </div>
+                                    <div className="flex items-start gap-3">
+                                        <span className="mt-2 w-2 h-2 rounded-full bg-emerald-500" />
+                                        <span>{blockedCopy.tipThree[lang]}</span>
+                                    </div>
+                                </div>
+
+                                <div className="mt-6 flex flex-col gap-3">
+                                    <button
+                                        onClick={onStartOver}
+                                        className="w-full py-3 bg-emerald-600 text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-100 active:scale-95"
+                                    >
+                                        <Home size={18} />
+                                        {blockedCopy.goHome[lang]}
+                                    </button>
+                                    <button
+                                        onClick={onBack}
+                                        className="w-full py-3 bg-white border border-gray-200 text-gray-700 rounded-xl font-bold hover:bg-gray-50 transition-all active:scale-95"
+                                    >
+                                        {blockedCopy.backToShop[lang]}
+                                    </button>
+                                </div>
+                            </div>
+
+                            {error?.rawMessage && (
+                                <div className="rounded-2xl border border-gray-100 bg-white p-4 text-xs text-gray-500">
+                                    <p className="font-semibold text-gray-700 mb-2">{blockedCopy.details[lang]}</p>
+                                    <p className="font-mono break-words">{error.rawMessage}</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="fixed inset-0 z-50 bg-[#F9FAFB] overflow-y-auto animate-in slide-in-from-bottom-4 duration-500 scrollbar-none">
