@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="80" viewBox="0 0 160 80">
+<!-- Original Dicebound web material: restrained monochrome grain, no external asset. -->
+<filter id="paper"><feTurbulence type="fractalNoise" baseFrequency=".32" numOctaves="3" seed="17" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+<rect width="160" height="80" filter="url(#paper)" opacity=".8"/>
+</svg>

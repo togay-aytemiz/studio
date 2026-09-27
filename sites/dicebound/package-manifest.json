@@ -1,0 +1,201 @@
+{
+  "domain": "https://dicebound.agens.studio",
+  "contact": "hello@agens.studio",
+  "publishDirectory": "public",
+  "deploymentPerformed": false,
+  "runtimeChanged": false,
+  "requiresBuild": false,
+  "requiresJavaScript": false,
+  "languages": [
+    "en",
+    "tr"
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 6999,
+      "sha256": "c131a696e385536ddc184c3d6653201697178e8cf4693bf041365ad1dd15fb17"
+    },
+    {
+      "path": "asset-provenance.json",
+      "bytes": 7566,
+      "sha256": "f1bd93189c5d75523cca85635fa71fbc781f58735e44f55eab39ed70ef120caa"
+    },
+    {
+      "path": "public/.htaccess",
+      "bytes": 770,
+      "sha256": "253ec767d3af7455e0390418f427526d4b580605f11df00eca92e3a2ea429e88"
+    },
+    {
+      "path": "public/404.html",
+      "bytes": 603,
+      "sha256": "c737cbd9f33ae34c95437cf5874beb43edaee3eefe20b9e6aed217b55d9de50b"
+    },
+    {
+      "path": "public/_headers",
+      "bytes": 445,
+      "sha256": "bc8ecdad4152571e0227911d32e7952f256d5f83b60124687a45c309dd545d0d"
+    },
+    {
+      "path": "public/assets/FONT-LICENSE.txt",
+      "bytes": 4395,
+      "sha256": "f6f60d5d4cf4f4b1fc4e41353c897a2f5a16e6396c0cd8fa8bdfd2f4586a9a68"
+    },
+    {
+      "path": "public/assets/adventure-1600.webp",
+      "bytes": 161122,
+      "sha256": "748613bc833ad5df7aa96f54c8263cb53be4fbc6b4cd4c329dcb47be0238917e"
+    },
+    {
+      "path": "public/assets/adventure-640.webp",
+      "bytes": 47912,
+      "sha256": "e14eec90642ef310d1f7efa8998a5161f68be717c4c6cda22c12ca174718ea0b"
+    },
+    {
+      "path": "public/assets/alegreya.ttf",
+      "bytes": 425288,
+      "sha256": "ba5564634b93a8f8ba57b48cd4f1ae7417d2b4656fbac779028679b00de3cf12"
+    },
+    {
+      "path": "public/assets/combat-1600.webp",
+      "bytes": 141554,
+      "sha256": "e7c10d6f17af2493a6476c683a79735824afcf24e84357086790f2a456359c65"
+    },
+    {
+      "path": "public/assets/combat-640.webp",
+      "bytes": 39384,
+      "sha256": "5718324893feb047286e6916410a792c085ea66430df46db5be454d13bc44fd6"
+    },
+    {
+      "path": "public/assets/crafting-1600.webp",
+      "bytes": 119412,
+      "sha256": "00d2431e8b7c6800fbc780625abf937ab287c1c393be3f544bd282d2e061379d"
+    },
+    {
+      "path": "public/assets/crafting-640.webp",
+      "bytes": 35094,
+      "sha256": "bb516cafc586343322b3fcf667bf657f471e06f0457b4e3693ba3f065778afad"
+    },
+    {
+      "path": "public/assets/favicon.png",
+      "bytes": 9404,
+      "sha256": "3680619134705d526e9276b5efcf64dc639a69a942489abb6ad1d17c0f539961"
+    },
+    {
+      "path": "public/assets/gathering-1600.webp",
+      "bytes": 225246,
+      "sha256": "0316e3eebec5f24066ce8b8dc4114d18c74c5a514a0946635f647e95014d152c"
+    },
+    {
+      "path": "public/assets/gathering-640.webp",
+      "bytes": 52858,
+      "sha256": "59e412923b6f11668f260c6b27f2277cd3f7a828136cda23d32e1f3581df80d4"
+    },
+    {
+      "path": "public/assets/gold-grain.svg",
+      "bytes": 422,
+      "sha256": "075a098ebdb313f47ae4bdbf49be73b4d309b11c68c50c2aa22b7abf906d6a05"
+    },
+    {
+      "path": "public/assets/hero-v03-1600.webp",
+      "bytes": 186780,
+      "sha256": "6f43149d68665a7b9af16dc42e285c1461b7908eae5f3b8614da1bee66fad17e"
+    },
+    {
+      "path": "public/assets/hero-v03-640.webp",
+      "bytes": 51522,
+      "sha256": "990b50934019ee2ad6f08affde6f656714f7695596a6bd386ba28b03dfcf8e8f"
+    },
+    {
+      "path": "public/assets/hero-v03.css",
+      "bytes": 3789,
+      "sha256": "cbc72ffea6ba1facc6d2999f406921b0f7c15487952aea58b7cb66858a17c830"
+    },
+    {
+      "path": "public/assets/hunt-1600.webp",
+      "bytes": 189780,
+      "sha256": "2931af8d1ec452c49af09038b65bd68e165824c92c8f37df9303620917b1f032"
+    },
+    {
+      "path": "public/assets/hunt-640.webp",
+      "bytes": 52846,
+      "sha256": "fbbfc03d8654dbb08700eac76d02a0088b0e2213f5057bd725ffee3b05028cec"
+    },
+    {
+      "path": "public/assets/site.css",
+      "bytes": 7268,
+      "sha256": "3ea829093d4edddcf1dee2681461d3cba4fb4ec075088d5020b8290ba2915bcf"
+    },
+    {
+      "path": "public/assets/town-1600.webp",
+      "bytes": 130704,
+      "sha256": "4372fb87dfc929bef9880d4c8aba7aa6fddbe0ba0656bc3ac64a529e76e7dab2"
+    },
+    {
+      "path": "public/assets/town-640.webp",
+      "bytes": 40046,
+      "sha256": "4716979f655a2dabe6a2200c7f5a399de88f13f572d91790fd8c947f7707efd2"
+    },
+    {
+      "path": "public/config/ios.json",
+      "bytes": 108,
+      "sha256": "a4d7789aa009791677a206e54340b07632a099d195ceae2ef42fb066df60701c"
+    },
+    {
+      "path": "public/contact.html",
+      "bytes": 2583,
+      "sha256": "7117b0c1f42ccb86583eec4318a5717ce42945209b6dcf610537070fdc78c00d"
+    },
+    {
+      "path": "public/index.html",
+      "bytes": 5140,
+      "sha256": "83e6ee19d1c5ba1ac83d77d09d2929a7c5367f6a219c43bc20716944fe7427a0"
+    },
+    {
+      "path": "public/privacy.html",
+      "bytes": 5784,
+      "sha256": "05a39699c69468318240246fdf239037730d2d2446986e4f1b940ebc2b6e572c"
+    },
+    {
+      "path": "public/robots.txt",
+      "bytes": 76,
+      "sha256": "17b00196cb8e6040072021df5e561cb3aba44472e3058c10e9fbbb038ce9fb43"
+    },
+    {
+      "path": "public/sitemap.xml",
+      "bytes": 617,
+      "sha256": "0e0092846e7099c4e4627a07739019145767992a297ffacf60d6c9aa648cfde0"
+    },
+    {
+      "path": "public/support.html",
+      "bytes": 3770,
+      "sha256": "adba45741434cec65d0c9df60fecdad46789102779504bc589860ba4833ae51f"
+    },
+    {
+      "path": "public/tr/contact.html",
+      "bytes": 2706,
+      "sha256": "95c9b517a6eab0e154a5bdaae84ea949d541f6da14cb032c428e77f26cba1d06"
+    },
+    {
+      "path": "public/tr/index.html",
+      "bytes": 5274,
+      "sha256": "e25498ba82f15d98fc457f2fc63023c34d30c3722f62e0e1e3cf8c909aa4aac4"
+    },
+    {
+      "path": "public/tr/privacy.html",
+      "bytes": 6187,
+      "sha256": "9fed30104bc3f84223e85a37ea7448a7bb8e38ce33dd3088827fa10d62381448"
+    },
+    {
+      "path": "public/tr/support.html",
+      "bytes": 3807,
+      "sha256": "2b8b108f1b67c4a344681c247ec6da48102fdb793cc5e897bf5ec404917b499a"
+    },
+    {
+      "path": "tools/export-art.cjs",
+      "bytes": 2391,
+      "sha256": "6339a1a2f7345292864d454ac3ae8d5f3b01cf970d20cbf7e80e6dbd860c4ba3"
+    }
+  ],
+  "revision": "header-v04"
+}
