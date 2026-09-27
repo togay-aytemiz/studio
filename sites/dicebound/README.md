@@ -9,6 +9,7 @@ The founder-approved EN/TR website is now part of this repository. Its design, A
 - `netlify/edge-functions/inject-canonical.ts` invokes `lib/dicebound.ts` before agency SEO rewriting. Only hostname `dicebound.agens.studio` is routed to the product. Agens, `tryon`, `vto` and `/validate` keep their existing owners.
 - Same Netlify site and deployment; no React wrapper, iframe, extra site build, tracking script or external font.
 - Static internal paths bypass the agency canonical/language transform. Public unknown paths return the Dicebound 404 with HTTP404. Internal file URLs are `noindex`.
+- Netlify production Pretty URLs rewrites relative anchors to the internal storage directory. The product edge response restores registered destinations to public URLs, including `.html` policy/support pages. Source files and artwork remain unchanged.
 - `package-manifest.json` preserves the imported package's hashes and also defines the allowed public file set. After intentional site changes, update its `public/` entries' hashes/size; register new files there. Non-public entries document the original transfer package and are not served.
 - `asset-provenance.json` retains original art/font provenance. `SOURCE-README.md` is the original portable-package guidance; this document owns integration in the Agens repository.
 

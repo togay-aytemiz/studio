@@ -8,6 +8,19 @@ const files = new Set(manifest.files
   .map(({ path }) => `/${path.slice('public/'.length)}`));
 const policy = "default-src 'self'; script-src 'none'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'";
 
+function publicLinks(html: string) {
+  // Netlify Pretty URLs rewrites relative anchors at build time using the storage
+  // directory. Restore only registered product destinations on the public host.
+  return html.replace(/\bhref=(['"])(\/_sites\/dicebound\/[^'"\s]*)\1/g, (attribute, quote, value) => {
+    const link = new URL(value, `https://${DICEBOUND_HOST}`);
+    let path = link.pathname.slice(DICEBOUND_ROOT.length);
+    const file = path.endsWith('/') ? `${path}index.html` : files.has(path) ? path : `${path}.html`;
+    if (!files.has(file)) return attribute;
+    path = file.endsWith('/index.html') ? file.slice(0, -10) : file;
+    return `href=${quote}${path}${link.search}${link.hash}${quote}`;
+  });
+}
+
 function responseHeaders(response: Response, pathname: string, internal = false) {
   const headers = new Headers(response.headers);
   // These filenames are stable; never inherit the agency's year-long immutable cache.
@@ -59,5 +72,6 @@ export async function serveDicebound(request: Request, context: Context): Promis
   }
   const headers = responseHeaders(response, target);
   if (exists && pathname !== '/404.html' && !pathname.startsWith('/config/')) headers.delete('X-Robots-Tag');
-  return new Response(request.method === 'HEAD' ? null : response.body, { status: exists && target !== '/404.html' ? 200 : 404, headers });
+  const body = request.method === 'HEAD' ? null : target.endsWith('.html') ? publicLinks(await response.text()) : response.body;
+  return new Response(body, { status: exists && target !== '/404.html' ? 200 : 404, headers });
 }
