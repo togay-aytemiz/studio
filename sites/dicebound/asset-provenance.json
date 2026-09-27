@@ -1,0 +1,127 @@
+{
+  "owner": "Dicebound / Agens Studio",
+  "images": [
+    {
+      "file": "assets/combat-640.webp",
+      "source": "ArtSource/Marketing/AppStorePageV05/E-combat-en.svg",
+      "sourceSha256": "7e31f5ef7b8ec9be2a01efb2031bfc88c6e3fad880ee242194fc512ff01aad2e",
+      "sha256": "5718324893feb047286e6916410a792c085ea66430df46db5be454d13bc44fd6",
+      "processing": "Native SVG with two headline groups omitted; original artwork/captures preserved; proportional web export"
+    },
+    {
+      "file": "assets/combat-1600.webp",
+      "source": "ArtSource/Marketing/AppStorePageV05/E-combat-en.svg",
+      "sourceSha256": "7e31f5ef7b8ec9be2a01efb2031bfc88c6e3fad880ee242194fc512ff01aad2e",
+      "sha256": "e7c10d6f17af2493a6476c683a79735824afcf24e84357086790f2a456359c65",
+      "processing": "Native SVG with two headline groups omitted; original artwork/captures preserved; proportional web export"
+    },
+    {
+      "file": "assets/town-640.webp",
+      "source": "ArtSource/Marketing/AppStoreTownV07/town-en.svg",
+      "sourceSha256": "e813b7acbb4cf954ec3d85d2c67c4b4d03d462df7166d817b4f7e00fe0ba8b65",
+      "sha256": "4716979f655a2dabe6a2200c7f5a399de88f13f572d91790fd8c947f7707efd2",
+      "processing": "Native SVG with two headline groups omitted; original artwork/captures preserved; proportional web export"
+    },
+    {
+      "file": "assets/town-1600.webp",
+      "source": "ArtSource/Marketing/AppStoreTownV07/town-en.svg",
+      "sourceSha256": "e813b7acbb4cf954ec3d85d2c67c4b4d03d462df7166d817b4f7e00fe0ba8b65",
+      "sha256": "4372fb87dfc929bef9880d4c8aba7aa6fddbe0ba0656bc3ac64a529e76e7dab2",
+      "processing": "Native SVG with two headline groups omitted; original artwork/captures preserved; proportional web export"
+    },
+    {
+      "file": "assets/hunt-640.webp",
+      "source": "ArtSource/Marketing/AppStoreSetV06/hunt-en.svg",
+      "sourceSha256": "59c37bf88a9fac44ff3fa0aeb38dd2c2c3439154fd299acc2d25e03f45575201",
+      "sha256": "fbbfc03d8654dbb08700eac76d02a0088b0e2213f5057bd725ffee3b05028cec",
+      "processing": "Native SVG with two headline groups omitted; original artwork/captures preserved; proportional web export"
+    },
+    {
+      "file": "assets/hunt-1600.webp",
+      "source": "ArtSource/Marketing/AppStoreSetV06/hunt-en.svg",
+      "sourceSha256": "59c37bf88a9fac44ff3fa0aeb38dd2c2c3439154fd299acc2d25e03f45575201",
+      "sha256": "2931af8d1ec452c49af09038b65bd68e165824c92c8f37df9303620917b1f032",
+      "processing": "Native SVG with two headline groups omitted; original artwork/captures preserved; proportional web export"
+    },
+    {
+      "file": "assets/adventure-640.webp",
+      "source": "ArtSource/Marketing/AppStoreSetV06/adventure-en.svg",
+      "sourceSha256": "3a7b9ddaa8f8d99e8dfd6865563a1cdc8cde0599c2cc18639bd00a362d11d4f1",
+      "sha256": "e14eec90642ef310d1f7efa8998a5161f68be717c4c6cda22c12ca174718ea0b",
+      "processing": "Native SVG with two headline groups omitted; original artwork/captures preserved; proportional web export"
+    },
+    {
+      "file": "assets/adventure-1600.webp",
+      "source": "ArtSource/Marketing/AppStoreSetV06/adventure-en.svg",
+      "sourceSha256": "3a7b9ddaa8f8d99e8dfd6865563a1cdc8cde0599c2cc18639bd00a362d11d4f1",
+      "sha256": "748613bc833ad5df7aa96f54c8263cb53be4fbc6b4cd4c329dcb47be0238917e",
+      "processing": "Native SVG with two headline groups omitted; original artwork/captures preserved; proportional web export"
+    },
+    {
+      "file": "assets/crafting-640.webp",
+      "source": "ArtSource/Marketing/AppStoreSetV06/crafting-en.svg",
+      "sourceSha256": "2a6492e0817137b6db0342daf68a249a776a3a6141330b12f93f59ff87a9786f",
+      "sha256": "bb516cafc586343322b3fcf667bf657f471e06f0457b4e3693ba3f065778afad",
+      "processing": "Native SVG with two headline groups omitted; original artwork/captures preserved; proportional web export"
+    },
+    {
+      "file": "assets/crafting-1600.webp",
+      "source": "ArtSource/Marketing/AppStoreSetV06/crafting-en.svg",
+      "sourceSha256": "2a6492e0817137b6db0342daf68a249a776a3a6141330b12f93f59ff87a9786f",
+      "sha256": "00d2431e8b7c6800fbc780625abf937ab287c1c393be3f544bd282d2e061379d",
+      "processing": "Native SVG with two headline groups omitted; original artwork/captures preserved; proportional web export"
+    },
+    {
+      "file": "assets/gathering-640.webp",
+      "source": "ArtSource/Marketing/AppStoreSetV06/gathering-en.svg",
+      "sourceSha256": "db0f6001a43727035c0bcde8b29a83cc3e49c3108057ec58612b508aa5b5188e",
+      "sha256": "59e412923b6f11668f260c6b27f2277cd3f7a828136cda23d32e1f3581df80d4",
+      "processing": "Native SVG with two headline groups omitted; original artwork/captures preserved; proportional web export"
+    },
+    {
+      "file": "assets/gathering-1600.webp",
+      "source": "ArtSource/Marketing/AppStoreSetV06/gathering-en.svg",
+      "sourceSha256": "db0f6001a43727035c0bcde8b29a83cc3e49c3108057ec58612b508aa5b5188e",
+      "sha256": "0316e3eebec5f24066ce8b8dc4114d18c74c5a514a0946635f647e95014d152c",
+      "processing": "Native SVG with two headline groups omitted; original artwork/captures preserved; proportional web export"
+    },
+    {
+      "file": "assets/favicon.png",
+      "source": "Assets/_Game/Art/Runtime/Brand/RogueDie-AppIcon.png",
+      "sourceSha256": "cc8ced90f21b12cc91122cc787d4f333ee0f0e68465bd63b5d15e9bde9e79454",
+      "sha256": "3680619134705d526e9276b5efcf64dc639a69a942489abb6ad1d17c0f539961"
+    },
+    {
+      "file": "assets/hero-v03-640.webp",
+      "source": "ArtSource/Marketing/LandingHeroV03/hero-composite.svg",
+      "sourceSha256": "7522d833641e747130abb34a34c0dfcf8304896d5fc1d7ee14103408f9dfbd43",
+      "sha256": "990b50934019ee2ad6f08affde6f656714f7695596a6bd386ba28b03dfcf8e8f",
+      "processing": "Original selected V01-derived text-free hero scene plus canonical card art and Blender dice; deterministic SVG composition and proportional WebP export",
+      "sourceManifest": "ArtSource/Marketing/LandingHeroV03/source.json"
+    },
+    {
+      "file": "assets/hero-v03-1600.webp",
+      "source": "ArtSource/Marketing/LandingHeroV03/hero-composite.svg",
+      "sourceSha256": "7522d833641e747130abb34a34c0dfcf8304896d5fc1d7ee14103408f9dfbd43",
+      "sha256": "6f43149d68665a7b9af16dc42e285c1461b7908eae5f3b8614da1bee66fad17e",
+      "processing": "Original selected V01-derived text-free hero scene plus canonical card art and Blender dice; deterministic SVG composition and proportional WebP export",
+      "sourceManifest": "ArtSource/Marketing/LandingHeroV03/source.json"
+    },
+    {
+      "file": "assets/gold-grain.svg",
+      "owner": "Dicebound / Agens Studio",
+      "source": "Original authored SVG fractal-noise material, seed17; no external image",
+      "sha256": "075a098ebdb313f47ae4bdbf49be73b4d309b11c68c50c2aa22b7abf906d6a05",
+      "processing": "Low-opacity CSS overlay on matte gold homepage CTA; text remains HTML"
+    }
+  ],
+  "notes": "Project-owned original artwork and authentic archived gameplay. Hero V03 is promotional artwork, not a gameplay capture. Native skill cards and Blender dice are deterministically composed over an original Imagegen environment. Existing feature capture refresh remains separate before App Store submission.",
+  "font": {
+    "file": "assets/alegreya.ttf",
+    "family": "Alegreya",
+    "license": "SIL Open Font License 1.1",
+    "licenseFile": "assets/FONT-LICENSE.txt",
+    "source": "ArtSource/Fonts/ButtonTypographyV03/Alegreya-variable.ttf",
+    "sha256": "ba5564634b93a8f8ba57b48cd4f1ae7417d2b4656fbac779028679b00de3cf12"
+  }
+}

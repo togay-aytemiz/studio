@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "actualNetlifyDev": true,
+  "diceboundJavaScriptDisabled": true,
+  "locales": [
+    "en",
+    "tr"
+  ],
+  "viewports": [
+    [
+      1440,
+      1000
+    ],
+    [
+      390,
+      844
+    ]
+  ],
+  "imagesLoaded": true,
+  "privacyNavigation": true,
+  "localeNavigation": true,
+  "tryOnReactRoute": true,
+  "agencyReactRoute": true,
+  "requestFailures": [],
+  "artImpact": "Transport-only; imported approved visuals unchanged"
+}

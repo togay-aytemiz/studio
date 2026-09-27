@@ -1,8 +1,13 @@
 import type { Context } from "@netlify/edge-functions";
 
+import { serveDicebound } from './lib/dicebound.ts';
+
 const BASE_URL = "https://www.agens.studio";
 
 export default async function handler(request: Request, context: Context) {
+    const dicebound = await serveDicebound(request, context);
+    if (dicebound) return dicebound;
+
     const url = new URL(request.url);
     const pathname = url.pathname;
 

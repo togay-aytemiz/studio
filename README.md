@@ -85,3 +85,7 @@ The app will be running at `http://localhost:5173`
 <div align="center">
   <sub>Built with ❤️ by Agens Team</sub>
 </div>
+
+## Dicebound product site
+
+The approved EN/TR Dicebound website lives in `public/_sites/dicebound/`, with hostname routing in the existing Netlify edge layer. See [integration and activation notes](sites/dicebound/README.md). The game is not a React demo and does not use the demo registry.
