@@ -67,6 +67,9 @@ try {
     assert.match(await (await invoke(`https://${host}/en/validate`)).text(), /Agency \/ TryOn/);
     assert.equal(staticReads, before, host);
   }
+  // Production Pretty URLs must not send navigation into the private storage tree.
+  globalThis.fetch = async () => new Response(`<a href='/_sites/dicebound/tr/'>TR</a><a href="/_sites/dicebound/privacy#data">Privacy</a><a href='/_sites/dicebound/tr/support?from=menu'>Support</a><a href="https://example.com/">External</a>`, { headers: { 'content-type': 'text/html' } });
+  assert.equal(await (await invoke('https://dicebound.agens.studio/')).text(), `<a href='/tr/'>TR</a><a href="/privacy.html#data">Privacy</a><a href='/tr/support.html?from=menu'>Support</a><a href="https://example.com/">External</a>`);
   // Verify that a broken/missing deployment cannot masquerade as a successful policy/page.
   globalThis.fetch = async () => new Response('missing', { status: 404 });
   assert.equal((await invoke('https://dicebound.agens.studio/config/ios.json')).status, 503);
