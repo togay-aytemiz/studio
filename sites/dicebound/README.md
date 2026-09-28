@@ -15,6 +15,20 @@ The founder-approved EN/TR website is now part of this repository. Its design, A
 
 ## Local verification
 
+### Turkish gameplay images
+
+The Turkish homepage uses five `*-tr-v1-*.webp` feature compositions. These retain the
+approved foreground artwork, masks and framing while substituting whole authentic
+Turkish game captures. No screenshot labels are redrawn. English assets and the hero
+are unchanged. `scripts/export-dicebound-tr-art.cjs <Dicebound repository>` reproduces
+the exports using Sharp, updates the TR references, provenance and public allowlist.
+This authoring dependency is not required for deployment.
+
+The source captures are archived native evidence, not fresh App Store certification.
+Town uses the same map at level 7; Adventure uses the same Frost map at stage 2-1;
+Hunt retains the early forest and Crafting retains level-10 unlocked recipes. Source
+paths and SHA-256 hashes are recorded in `asset-provenance.json`.
+
 Use Node24+ for the TypeScript-importing verification script:
 
 ```sh

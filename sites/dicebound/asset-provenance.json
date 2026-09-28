@@ -113,6 +113,194 @@
       "source": "Original authored SVG fractal-noise material, seed17; no external image",
       "sha256": "075a098ebdb313f47ae4bdbf49be73b4d309b11c68c50c2aa22b7abf906d6a05",
       "processing": "Low-opacity CSS overlay on matte gold homepage CTA; text remains HTML"
+    },
+    {
+      "file": "assets/town-tr-v1-640.webp",
+      "language": "tr",
+      "source": "ArtSource/Marketing/AppStoreTownV07/town-en.svg",
+      "sourceSha256": "e813b7acbb4cf954ec3d85d2c67c4b4d03d462df7166d817b4f7e00fe0ba8b65",
+      "inputs": [
+        {
+          "path": "Evidence/Presentation/ReadoutLegibilityRuntimeV01/R03/2400x1080/town-level7-tr.png",
+          "sha256": "ab4780cd7d6dd39e8e6cac5a832207c8a17608ad37a56721763e056d63ad0954"
+        },
+        {
+          "path": "ArtSource/Marketing/AppStoreTownV07/town-raw.png",
+          "sha256": "e49a845187652e4b78042062a4f33ceff6c6fc12458c3e031e2e5d0692d9c249"
+        }
+      ],
+      "sha256": "a01eaac6c449a64406e11f060cd23f722ab287ccbba5da541f9b71561b27b299",
+      "processing": "Approved SVG geometry, foreground artwork and masks preserved. Two promotional headline groups omitted as on EN. Only the entire gameplay image is replaced with an unretouched authentic Turkish capture; no labels reconstructed."
+    },
+    {
+      "file": "assets/town-tr-v1-1600.webp",
+      "language": "tr",
+      "source": "ArtSource/Marketing/AppStoreTownV07/town-en.svg",
+      "sourceSha256": "e813b7acbb4cf954ec3d85d2c67c4b4d03d462df7166d817b4f7e00fe0ba8b65",
+      "inputs": [
+        {
+          "path": "Evidence/Presentation/ReadoutLegibilityRuntimeV01/R03/2400x1080/town-level7-tr.png",
+          "sha256": "ab4780cd7d6dd39e8e6cac5a832207c8a17608ad37a56721763e056d63ad0954"
+        },
+        {
+          "path": "ArtSource/Marketing/AppStoreTownV07/town-raw.png",
+          "sha256": "e49a845187652e4b78042062a4f33ceff6c6fc12458c3e031e2e5d0692d9c249"
+        }
+      ],
+      "sha256": "f5ab84e317ccedbeeb32bbe74eb44a59fd509412e25130eddb032180bcbdfb7e",
+      "processing": "Approved SVG geometry, foreground artwork and masks preserved. Two promotional headline groups omitted as on EN. Only the entire gameplay image is replaced with an unretouched authentic Turkish capture; no labels reconstructed."
+    },
+    {
+      "file": "assets/hunt-tr-v1-640.webp",
+      "language": "tr",
+      "source": "ArtSource/Marketing/AppStoreSetV06/hunt-en.svg",
+      "sourceSha256": "59c37bf88a9fac44ff3fa0aeb38dd2c2c3439154fd299acc2d25e03f45575201",
+      "inputs": [
+        {
+          "path": "Evidence/Presentation/I18nV01/Native12/2400x1080/hunt-tr.png",
+          "sha256": "5150390e49bcadc1b8c98f38261d83908f4f89dd3460708a37f9e06d6753c36e"
+        },
+        {
+          "path": "ArtSource/Marketing/AppStoreSetV06/hunt-raw.png",
+          "sha256": "6629e7af5b4047fce552a142a09921723c3b29e10542d52efe33d1a83ae645f2"
+        },
+        {
+          "path": "ArtSource/Marketing/AppStoreSetV06/hunt-raw.png",
+          "sha256": "6629e7af5b4047fce552a142a09921723c3b29e10542d52efe33d1a83ae645f2"
+        }
+      ],
+      "sha256": "1641cda3bd88801bf23237109a71f3b46d0196e66de4ac0a82041c1870d91f84",
+      "processing": "Approved SVG geometry, foreground artwork and masks preserved. Two promotional headline groups omitted as on EN. Only the entire gameplay image is replaced with an unretouched authentic Turkish capture; no labels reconstructed."
+    },
+    {
+      "file": "assets/hunt-tr-v1-1600.webp",
+      "language": "tr",
+      "source": "ArtSource/Marketing/AppStoreSetV06/hunt-en.svg",
+      "sourceSha256": "59c37bf88a9fac44ff3fa0aeb38dd2c2c3439154fd299acc2d25e03f45575201",
+      "inputs": [
+        {
+          "path": "Evidence/Presentation/I18nV01/Native12/2400x1080/hunt-tr.png",
+          "sha256": "5150390e49bcadc1b8c98f38261d83908f4f89dd3460708a37f9e06d6753c36e"
+        },
+        {
+          "path": "ArtSource/Marketing/AppStoreSetV06/hunt-raw.png",
+          "sha256": "6629e7af5b4047fce552a142a09921723c3b29e10542d52efe33d1a83ae645f2"
+        },
+        {
+          "path": "ArtSource/Marketing/AppStoreSetV06/hunt-raw.png",
+          "sha256": "6629e7af5b4047fce552a142a09921723c3b29e10542d52efe33d1a83ae645f2"
+        }
+      ],
+      "sha256": "c0053d0e2bd8cf9ecaec7ebe8ea66f45ea7f7127a416a163c8d88d8e63c833ef",
+      "processing": "Approved SVG geometry, foreground artwork and masks preserved. Two promotional headline groups omitted as on EN. Only the entire gameplay image is replaced with an unretouched authentic Turkish capture; no labels reconstructed."
+    },
+    {
+      "file": "assets/adventure-tr-v1-640.webp",
+      "language": "tr",
+      "source": "ArtSource/Marketing/AppStoreSetV06/adventure-en.svg",
+      "sourceSha256": "3a7b9ddaa8f8d99e8dfd6865563a1cdc8cde0599c2cc18639bd00a362d11d4f1",
+      "inputs": [
+        {
+          "path": "Evidence/Presentation/I18nV01/Native12/2400x1080/frost-map-tr.png",
+          "sha256": "58f927f181890f4586fdbda06fa6dcc0c825b10fa7eff299161eb28321a0698b"
+        },
+        {
+          "path": "ArtSource/Marketing/AppStoreSetV06/adventure-raw.png",
+          "sha256": "cf156ef7fd7380fc81092298fca1e40f4fa7be8edb0514fae45d64334b0b1d30"
+        }
+      ],
+      "sha256": "13b37ac3b03207a814ba53d8b046dd97fc1e894c416ce9ed119a5ed9802a4307",
+      "processing": "Approved SVG geometry, foreground artwork and masks preserved. Two promotional headline groups omitted as on EN. Only the entire gameplay image is replaced with an unretouched authentic Turkish capture; no labels reconstructed."
+    },
+    {
+      "file": "assets/adventure-tr-v1-1600.webp",
+      "language": "tr",
+      "source": "ArtSource/Marketing/AppStoreSetV06/adventure-en.svg",
+      "sourceSha256": "3a7b9ddaa8f8d99e8dfd6865563a1cdc8cde0599c2cc18639bd00a362d11d4f1",
+      "inputs": [
+        {
+          "path": "Evidence/Presentation/I18nV01/Native12/2400x1080/frost-map-tr.png",
+          "sha256": "58f927f181890f4586fdbda06fa6dcc0c825b10fa7eff299161eb28321a0698b"
+        },
+        {
+          "path": "ArtSource/Marketing/AppStoreSetV06/adventure-raw.png",
+          "sha256": "cf156ef7fd7380fc81092298fca1e40f4fa7be8edb0514fae45d64334b0b1d30"
+        }
+      ],
+      "sha256": "de88d228112e54b4e5517ff89c696ead7288f7cc05ff353855b641af8c666644",
+      "processing": "Approved SVG geometry, foreground artwork and masks preserved. Two promotional headline groups omitted as on EN. Only the entire gameplay image is replaced with an unretouched authentic Turkish capture; no labels reconstructed."
+    },
+    {
+      "file": "assets/crafting-tr-v1-640.webp",
+      "language": "tr",
+      "source": "ArtSource/Marketing/AppStoreSetV06/crafting-en.svg",
+      "sourceSha256": "2a6492e0817137b6db0342daf68a249a776a3a6141330b12f93f59ff87a9786f",
+      "inputs": [
+        {
+          "path": "Evidence/Presentation/ReadoutLegibilityRuntimeV01/R03/2400x1080/mastery-family0-level10-tr.png",
+          "sha256": "fb4d1ab8d31eb40d2fd58c3458de98ecbd3dcf147bc414cea353d5f2eaa0a576"
+        },
+        {
+          "path": "ArtSource/Marketing/AppStoreSetV06/crafting-raw.png",
+          "sha256": "46469f17bc5de54b78a3e0baea0efa9b35122c9e019ae42680e979860eec95cf"
+        }
+      ],
+      "sha256": "dc1f5de282bcc04381b9978e10551439ea1212958c7a244a96558bd3f85cd2e6",
+      "processing": "Approved SVG geometry, foreground artwork and masks preserved. Two promotional headline groups omitted as on EN. Only the entire gameplay image is replaced with an unretouched authentic Turkish capture; no labels reconstructed."
+    },
+    {
+      "file": "assets/crafting-tr-v1-1600.webp",
+      "language": "tr",
+      "source": "ArtSource/Marketing/AppStoreSetV06/crafting-en.svg",
+      "sourceSha256": "2a6492e0817137b6db0342daf68a249a776a3a6141330b12f93f59ff87a9786f",
+      "inputs": [
+        {
+          "path": "Evidence/Presentation/ReadoutLegibilityRuntimeV01/R03/2400x1080/mastery-family0-level10-tr.png",
+          "sha256": "fb4d1ab8d31eb40d2fd58c3458de98ecbd3dcf147bc414cea353d5f2eaa0a576"
+        },
+        {
+          "path": "ArtSource/Marketing/AppStoreSetV06/crafting-raw.png",
+          "sha256": "46469f17bc5de54b78a3e0baea0efa9b35122c9e019ae42680e979860eec95cf"
+        }
+      ],
+      "sha256": "ce47aed1f975533fc27f0d228836bef23c9f5081713308cbebecd1fd42294ac2",
+      "processing": "Approved SVG geometry, foreground artwork and masks preserved. Two promotional headline groups omitted as on EN. Only the entire gameplay image is replaced with an unretouched authentic Turkish capture; no labels reconstructed."
+    },
+    {
+      "file": "assets/gathering-tr-v1-640.webp",
+      "language": "tr",
+      "source": "ArtSource/Marketing/AppStoreSetV06/gathering-en.svg",
+      "sourceSha256": "db0f6001a43727035c0bcde8b29a83cc3e49c3108057ec58612b508aa5b5188e",
+      "inputs": [
+        {
+          "path": "Evidence/Presentation/I18nV01/Native12/2400x1080/gathering-tr.png",
+          "sha256": "046c62e3f98d804d9957ab4bd89280e845ef13dec13e8421df36fd4d62ccd54b"
+        },
+        {
+          "path": "ArtSource/Marketing/AppStoreSetV06/gathering-raw.png",
+          "sha256": "2285ca5f8e16f69f5accd208299d933bb3614102b9b09fc150fb73ffabc9cca5"
+        }
+      ],
+      "sha256": "9246ee4fe975c66d143dbb273a8eb4796a0b7bda06d7b544ce405575ce37693b",
+      "processing": "Approved SVG geometry, foreground artwork and masks preserved. Two promotional headline groups omitted as on EN. Only the entire gameplay image is replaced with an unretouched authentic Turkish capture; no labels reconstructed."
+    },
+    {
+      "file": "assets/gathering-tr-v1-1600.webp",
+      "language": "tr",
+      "source": "ArtSource/Marketing/AppStoreSetV06/gathering-en.svg",
+      "sourceSha256": "db0f6001a43727035c0bcde8b29a83cc3e49c3108057ec58612b508aa5b5188e",
+      "inputs": [
+        {
+          "path": "Evidence/Presentation/I18nV01/Native12/2400x1080/gathering-tr.png",
+          "sha256": "046c62e3f98d804d9957ab4bd89280e845ef13dec13e8421df36fd4d62ccd54b"
+        },
+        {
+          "path": "ArtSource/Marketing/AppStoreSetV06/gathering-raw.png",
+          "sha256": "2285ca5f8e16f69f5accd208299d933bb3614102b9b09fc150fb73ffabc9cca5"
+        }
+      ],
+      "sha256": "1edb6fc4950a0a7557a8833545e0f000ca0b004da991f842023cab87130823f1",
+      "processing": "Approved SVG geometry, foreground artwork and masks preserved. Two promotional headline groups omitted as on EN. Only the entire gameplay image is replaced with an unretouched authentic Turkish capture; no labels reconstructed."
     }
   ],
   "notes": "Project-owned original artwork and authentic archived gameplay. Hero V03 is promotional artwork, not a gameplay capture. Native skill cards and Blender dice are deterministically composed over an original Imagegen environment. Existing feature capture refresh remains separate before App Store submission.",

@@ -178,8 +178,8 @@
     },
     {
       "path": "public/tr/index.html",
-      "bytes": 5274,
-      "sha256": "e25498ba82f15d98fc457f2fc63023c34d30c3722f62e0e1e3cf8c909aa4aac4"
+      "bytes": 5364,
+      "sha256": "4d42d0d43c86c6ee5e07b3f1d7aea4d39eed51e34c273a816ecfb8041cf05e0e"
     },
     {
       "path": "public/tr/privacy.html",
@@ -195,6 +195,56 @@
       "path": "tools/export-art.cjs",
       "bytes": 2391,
       "sha256": "6339a1a2f7345292864d454ac3ae8d5f3b01cf970d20cbf7e80e6dbd860c4ba3"
+    },
+    {
+      "path": "public/assets/town-tr-v1-640.webp",
+      "bytes": 39830,
+      "sha256": "a01eaac6c449a64406e11f060cd23f722ab287ccbba5da541f9b71561b27b299"
+    },
+    {
+      "path": "public/assets/town-tr-v1-1600.webp",
+      "bytes": 129606,
+      "sha256": "f5ab84e317ccedbeeb32bbe74eb44a59fd509412e25130eddb032180bcbdfb7e"
+    },
+    {
+      "path": "public/assets/hunt-tr-v1-640.webp",
+      "bytes": 52888,
+      "sha256": "1641cda3bd88801bf23237109a71f3b46d0196e66de4ac0a82041c1870d91f84"
+    },
+    {
+      "path": "public/assets/hunt-tr-v1-1600.webp",
+      "bytes": 189956,
+      "sha256": "c0053d0e2bd8cf9ecaec7ebe8ea66f45ea7f7127a416a163c8d88d8e63c833ef"
+    },
+    {
+      "path": "public/assets/adventure-tr-v1-640.webp",
+      "bytes": 47342,
+      "sha256": "13b37ac3b03207a814ba53d8b046dd97fc1e894c416ce9ed119a5ed9802a4307"
+    },
+    {
+      "path": "public/assets/adventure-tr-v1-1600.webp",
+      "bytes": 158812,
+      "sha256": "de88d228112e54b4e5517ff89c696ead7288f7cc05ff353855b641af8c666644"
+    },
+    {
+      "path": "public/assets/crafting-tr-v1-640.webp",
+      "bytes": 35776,
+      "sha256": "dc1f5de282bcc04381b9978e10551439ea1212958c7a244a96558bd3f85cd2e6"
+    },
+    {
+      "path": "public/assets/crafting-tr-v1-1600.webp",
+      "bytes": 122314,
+      "sha256": "ce47aed1f975533fc27f0d228836bef23c9f5081713308cbebecd1fd42294ac2"
+    },
+    {
+      "path": "public/assets/gathering-tr-v1-640.webp",
+      "bytes": 59166,
+      "sha256": "9246ee4fe975c66d143dbb273a8eb4796a0b7bda06d7b544ce405575ce37693b"
+    },
+    {
+      "path": "public/assets/gathering-tr-v1-1600.webp",
+      "bytes": 216718,
+      "sha256": "1edb6fc4950a0a7557a8833545e0f000ca0b004da991f842023cab87130823f1"
     }
   ],
   "revision": "header-v04"
